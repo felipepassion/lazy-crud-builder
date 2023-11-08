@@ -14,7 +14,7 @@ Este arquivo README fornece uma visão geral das tecnologias utilizadas no proje
 ## Índice
 
 1. [Tecnologias utilizadas](#tecnologias-utilizadas)
-    - [.NET Core 7.0 + Blazor WebAssembly](#net-core-70--blazor-webassembly)
+    - [.NET Core 8.0 + Blazor WebAssembly](#net-core-70--blazor-webassembly)
     - [Arquitetura DDD com Bounded Contexts](#arquitetura-ddd-com-bounded-contexts)
     - [CQRS - leitura MongoDB, Escrita PostgreSQL](#cqrs---leitura-mongodb-escrita-postgresql)
     - [RabbitMQ](#rabbitmq)
