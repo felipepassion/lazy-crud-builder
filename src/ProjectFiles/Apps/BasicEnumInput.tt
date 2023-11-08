@@ -1,0 +1,33 @@
+﻿<#
+    var isRadioButton = GetAttributesDict(field.Value).TryGetValue("RadioButton", out var enumRadioBtnVal);
+#>
+         <div class="input-secondary-item">
+<#if(!isRadioButton) { #>
+            <div class="container-input border-1px-silver">
+                <div class="cep-1 valign-text-middle inter-medium-sonic-silver-10px"><#=GetDisplayName(field)#></div>
+                <SfDropDownList CssClass="inter-normal-silver-16px"
+                                    @bind-Value="Model.<#=myName#>"
+                                    @onchange="async () => { await OnAutoSaveTriggered(); }"
+                                    name="@nameof(Model.<#=myName#>)"
+                                    <#if(isTitle) {#>   @oninput="async (x)=>{ await OnFormUpdated(()=>{ Model.<#=myName#> = (<#=myType#>)x.Value; });}" <#}#>
+                                    TValue="<#=myType#>" TItem="<#=myType#>"
+                                    placeholder="<#=GetDisplayName(field)#>"
+                                    DataSource="Enum.GetValues(typeof(<#=myType#>)).Cast<<#=myType#>>()">
+<#if(parameterTypeSwitcher.Key == field.Key) {#>
+                                <DropDownListEvents OnValueSelect="OnSelect" TItem="<#=myType#>" TValue="<#=myType#>" />
+<#}#>
+                    </SfDropDownList>
+        </div>
+<#} else {#>
+@foreach (var item in Enum.GetValues(typeof(<#=myType#>)).Cast<<#=myType#>>())
+                {
+                <div class="radio-btn-container" @onclick="@(() => Model.<#=myName#> = item)">
+                    <input type="radio" checked="@(Model.<#=myName#> == item)"   />
+                    <h2>@item.ToString().Replace("_"," ")</h2>
+                </div>
+                }
+<#}#>
+            <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
+                <ValidationMessage For="@(() => Model.<#=myName#>)"></ValidationMessage>
+            </div>
+    </div>

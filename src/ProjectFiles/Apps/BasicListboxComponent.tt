@@ -1,0 +1,112 @@
+﻿@using LazyCrud.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
+@using LazyCrud.<#= aggName #>.Enumerations;
+@using LazyCrud.<#= aggName #>.Enumerations.Enum;
+@using Pages.RegisterStepsTemplate;
+
+@inherits <#= entity.Name #>Cadastro
+
+<div class="container-informations screen">
+    <div class="box-inputs">
+        <div class="input-cnpj">
+            <div class="cnpj">
+                <div class="container-1">
+                    <div class="container-box-2 border-1px-silver">
+                        <input class="cnpj-1 valign-text-middle inter-medium-silver-16px"
+                               @bind-value="Model.CNPJ"
+                               placeholder="@Model.GetFieldPlaceholder(nameof(Model.CNPJ))" />
+                    </div>
+                </div>
+                <div class="este-campo-obrigatrio valign-text-middle inter-normal-sonic-silver-10px">
+                    <ValidationMessage For="@(() => Model.CNPJ)"></ValidationMessage>
+                </div>
+            </div>
+        </div>
+        <div class="input-secondary">
+            <div class="input-secondary-item">
+                <div class="container-input border-1px-silver">
+                    <input @bind-value="Model.Name" class="razo-social valign-text-middle inter-medium-silver-16px" placeholder="@Model.GetFieldPlaceholder(nameof(Model.Name))" />
+                </div>
+                <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
+                    <ValidationMessage For="@(() => Model.Name)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="input-secondary-item">
+                <div class="container-input border-1px-silver">
+                    <input @bind-value="Model.NameSocial" class="nome-fantasia valign-text-middle inter-medium-silver-16px" placeholder="@Model.GetFieldPlaceholder(nameof(Model.NameSocial))" />
+                </div>
+                <div class="este-campo-obrigatrio-2 valign-text-middle inter-normal-sonic-silver-10px">
+                    <ValidationMessage For="@(() => Model.NameSocial)" />
+                </div>
+            </div>
+        </div>
+        <div class="input-tertiary">
+            <div class="cdigo-sus">
+                <div class="container">
+                    <div class="container-box-1">
+                        <div class="container-input-3 border-1px-silver">
+                            <input class="cnpj-1 valign-text-middle inter-medium-silver-16px"
+                                   @bind-value="Model.UserLogin"
+                                   placeholder="@Model.GetFieldPlaceholder(nameof(Model.UserLogin))" />
+                        </div>
+                    </div>
+                </div>
+                <div class="este-campo-obrigatrio-5 inter-normal-sonic-silver-10px">
+                    <ValidationMessage For="@(() => Model.UserLogin)" />
+                </div>
+            </div>
+            <div class="left-content">
+                <div class="cdigo-cnes">
+                    <div class="container">
+                        <div class="container-box-1">
+                            <div class="container-input-1 border-1px-silver">
+                                <input @bind-value="Model.DataNascimento" type="date" class="cdigo-cnes-1 inter-medium-silver-16px" placeholder="@Model.GetFieldPlaceholder(nameof(Model.DataNascimento))" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="este-campo-obrigatrio-3 inter-normal-sonic-silver-10px">
+                        <ValidationMessage For="@(() => Model.DataNascimento)" />
+                    </div>
+                </div>
+                <div class="tipo-de-logradouro">
+                    <div class="container-input">
+                        <div class="container-titles">
+                            <div class="tipo valign-text-middle inter-medium-sonic-silver-10px">Tipo</div>
+                            <SfDropDownList CssClass="inter-normal-silver-16px"
+                                            @bind-Value="Model.Genero"
+                                            name="@nameof(Model.Genero)"
+                                            TValue="GeneroEnum" TItem="GeneroEnum"
+                                            placeholder="@Model.GetFieldPlaceholder(x=>x.Genero)"
+                                            DataSource="this.TipoLogradouros">
+                            </SfDropDownList>
+                        </div>
+                    </div>
+                    <div class="este-campo-obrigatrio inter-normal-sonic-silver-10px">
+                        <ValidationMessage For="@(() => Model.Genero)"></ValidationMessage>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    List<GeneroEnum> TipoLogradouros { get; set; } = new List<GeneroEnum>() { GeneroEnum.INDEFINIDO, GeneroEnum.MASCULINO, GeneroEnum.FEMININO };
+    [CascadingParameter] BaseMainStepsLayout<<#= entity.Name #>DTO> layout { get; set; }
+    [Inject] IJSRuntime _js { get; set; }
+
+    void OnChange(ChangeEventArgs args, Action onRefresh)
+    {
+        onRefresh();
+        layout?.RefreshHeader();
+        Context.layout?.RefreshHeader();
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            this.StateHasChanged();
+        }
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

@@ -1,0 +1,119 @@
+﻿using MediatR;
+using System.Linq.Expressions;
+using FluentValidation.Results;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
+<# if (entitiesT4.Any()) {#>
+<# foreach(var namespaces in groupEntitiesT4) { 
+var myNamespace = namespaces.Key.Replace("Entities","Queries");
+#>
+namespace <#= myNamespace #>.Models
+{
+	using Filters;
+    using Entities;
+<# foreach(var entity in namespaces) { 
+var otherNamespace = entity.Namespace.FullName; #>
+	public partial class <#= entity.Name #>QueryModel : BaseQueryModel<<#= entity.Name #>> {
+        public override Expression<Func<<#= entity.Name #>, bool>> GetFilter() => <#= entity.Name #>Filters.GetFilters(this, IsOrSpecification==true);
+<# foreach(var property in GetProperties(entity))
+{
+	var name = property.Key.Replace("[]", string.Empty);
+	if(ContainsAttribute(property.Value, "IgnorePropertyT4OnRequest")) continue;
+
+	var path = property.Key;
+	var isList = property.Value.Type.AsString.Contains("List<");
+	var propertyName = property.Value.Type.AsString;
+	var t = propertyName.Replace("System.Collections.Generic.List<","").Replace(">","");
+	
+if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
+{#>
+		<#= WritePropertySummary(property.Value) #>
+<#}
+	switch(t) {
+	case "string": #>
+		public <#= property.Value.Type.AsString #>? <#= name #>Equal { get; set; }
+		public <#= property.Value.Type.AsString #>? <#= name #>NotEqual { get; set; }
+		public <#= property.Value.Type.AsString #>? <#= name #>Contains { get; set; }
+		public <#= property.Value.Type.AsString #>? <#= name #>StartsWith { get; set; }
+<# break;
+		case "object": 
+		case "string[]": #>
+		public <#= property.Value.Type.AsString #>? <#= name #> { get; set; }
+<# break; 
+		case "System.Guid": 
+		case "System.Guid?":
+		case "bool":
+		case "bool?": 
+#>
+		public <#= property.Value.Type.AsString #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>Equal { get; set; }
+<# break; 
+		case "decimal": 
+		case "decimal?": 
+		case "double":
+		case "double?":
+		case "System.DateTimeOffset":
+		case "System.DateTimeOffset?":
+		case "int":
+		case "int?":
+		case "System.TimeOnly?":
+		case "System.TimeOnly":
+		case "System.DateOnly":
+		case "System.DateOnly?":
+		case "System.DateTime":
+		case "System.DateTime?": #>
+		public <#= property.Value.Type.AsString #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>Equal { get; set; }
+		public <#= property.Value.Type.AsString #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>NotEqual { get; set; }
+		public <#= property.Value.Type.AsString.Replace("?","") #>[]? <#= name #>Contains { get; set; }
+		public <#= property.Value.Type.AsString.Replace("?","") #>[]? <#= name #>NotContains { get; set; }
+<#if(name.Equals("Id")) continue;#>
+		public <#= propertyName #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>Since { get; set; }
+		public <#= propertyName #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>Until { get; set; }
+		public <#= propertyName #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>LessThan { get; set; }
+		public <#= propertyName #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>GreaterThan { get; set; }
+		public <#= propertyName #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>LessThanOrEqual { get; set; }
+		public <#= propertyName #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>GreaterThanOrEqual { get; set; }
+<# break; 
+default: 
+	var type = FindType(property.Value.Type.CodeType.FullName.Replace("?", string.Empty));
+    if (type is CodeEnum) { #>
+		public <#= property.Value.Type.AsString #><#= propertyName.Contains("?") ? "": "?" #> <#= name #>Equal { get; set; }
+<# } else if(!property.Value.Type.AsString.Contains("Entities")) {
+		
+        var prefix = property.Value.Type.AsString.Replace("Entities","Requests").Replace("Domain","Application.DTO");
+		if(isList)
+			prefix = prefix.Replace("System.Collections.Generic.List<","").Replace(">","");
+		else
+			continue;
+        var spplited = prefix.Split('.');
+        var propType = spplited[spplited.Length-1].Replace("[]","").Replace("?","");
+        var isArray = isList || spplited[spplited.Length-1].Contains("[]") || spplited[spplited.Length-1].Contains("List<");
+		        
+        var typeAggName = t.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"))?.Replace("Agg","");
+        if(typeAggName == null){
+            typeAggName = property.Value.Type.AsString;
+            propType = propType.Replace("DTO","");
+        }
+
+		spplited[spplited.Length-1] = propType;
+
+		var propName = string.Join(".",spplited);
+
+		var propNameType = isArray ? $"List<{propName}>" : propName;
+		var propNameNew = "";
+        if(propName == "Profissional")
+        {
+        }#>
+		public <#=propName#>[]? <#=name#>Contains { get; set; } <#=propNameNew#>
+		public <#=propName#>[]? <#=name#>NotContains { get; set; } <#=propNameNew#>
+<#}  
+break;
+} #>
+<# } #>
+	}
+<# } #>
+}
+<# } #>
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.QueryModels.cs",
+    recreateFileIfExists: true); #>

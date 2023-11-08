@@ -1,0 +1,21 @@
+﻿using LazyCrud.<#=myName#>.Domain.Aggregates.UsersAgg.Entities;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrud.Core.Domain.Attributes.T4;
+using System.ComponentModel.DataAnnotations;
+
+namespace LazyCrud.<#=myName#>.Domain.Aggregates.<#=AggName#>.Entities
+{
+    [AggregateSettingsT4, EndpointsT4(EndpointTypes.HttpAll)]
+    public class <#=AggName#>Settings : BaseAggregateSettings
+    {
+        [Required]
+        public int UserId { get; set; }
+
+        [IgnorePropertyT4OnRequest]
+        public User User { get; set; }
+    }
+}
+<# SaveOutputToSubFolder(
+    folderName: $"Aggregates/{AggName}/Entities/",
+    outputFileName: @$"{AggName}Settings.cs",
+    recreateFileIfExists: false); #>

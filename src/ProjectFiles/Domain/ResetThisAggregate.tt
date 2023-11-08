@@ -1,0 +1,27 @@
+﻿<#@ include file="..\project.tt" #>
+<#
+	var AggName = GetMyAggName();
+    var aggSettingsList = new List<string>();
+    var projects = FindDomainProjects().ToArray();
+    //var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+    
+    foreach(var project in projects) {
+        var myName = project.Name.Split('.').First();
+        var proj = FindProject(project.Name);
+        aggSettingsList.Add(proj.Name.Split('.')[0]);
+    }
+	//var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);
+
+	foreach(var aggName in aggSettingsList) {
+		string[] files = Directory.GetFiles($@"../../../{aggName}/", "*.*", SearchOption.AllDirectories);
+		foreach (string file in files)
+		{
+			var text = File.ReadAllText(file);
+			if (File.Exists(newFile))
+			{
+				File.Delete(newFile);
+			}
+		    File.WriteAllText(newFile, text);
+		}
+	}
+#>

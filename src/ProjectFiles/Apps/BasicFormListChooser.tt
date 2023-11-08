@@ -1,0 +1,10 @@
+﻿<#
+	var myTypeAggName = myType.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","");
+	var myTypeFullName = myType.Replace("Domain","Application.DTO").Replace("Entities","Requests");
+	var listiningName = myTypeFullName.Replace(aggName, myTypeAggName);
+
+	if(myAttrs.ContainsKey("TabBar")){ #>
+<#@ include file="BasicTabBarContentComponent.tt" #>
+<#} if(myAttrs.ContainsKey("ListingPicker")) {#>
+<#@ include file="BasicMiniListingPickerComponent.tt" #>
+<#}#>

@@ -1,0 +1,104 @@
+﻿<# foreach (var namespc in entities.GroupBy(p => p.Namespace.FullName)) { #>
+using <#= namespc.Key.Replace("Entities", "Repositories").Replace("Domain","Infra.Data") #>;
+using <#= namespc.Key.Replace("Entities", "Repositories") #>;
+<# } #>
+<# foreach (var namespc in entitiesT4.GroupBy(p => p.Namespace.FullName)) { #>
+using <#= namespc.Key.Replace("Entities", "Repositories").Replace("Domain","Infra.Data") #>;
+using <#= namespc.Key.Replace("Entities", "Repositories") #>;
+using <#= namespc.Key.Replace("Entities", "AppServices").Replace("Domain","Application") #>;
+<# } #>
+<# foreach (var namespc in GetServices().GroupBy(p => p.Namespace.FullName)) { #>
+using <#= namespc.Key #>;
+using <#= namespc.Key.Replace(".Interfaces","") #>;
+<# } #>
+using Microsoft.Extensions.DependencyInjection;
+using MediatR;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.CrossCutting.Infra.Log.Providers;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using LazyCrud.Core.Application.DTO.Seedwork;
+using LazyCrud.Core.Infra.IoC;
+
+namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
+
+	using Infra.Data.Context;
+<# if(entitiesT4?.Any() == true) { #>
+	using Domain.Aggregates.<#= AggName #>.CommandHandlers;
+<# } #>	
+
+    public partial class IoCFactory : IBaseIoC {
+		string connectionString;
+		
+		partial void ConfigureFactories();
+		partial void ConfigureValidators();
+		partial void ConfigureAdditionalAppServices(IServiceCollection services);
+		partial void ConfigureAdditionalRepositories();
+		partial void PreConfigureDatabase(IServiceCollection services, IConfiguration configuration);
+
+        #region Constructor
+
+        private static IoCFactory _current;
+		public static IoCFactory Current { get { return _current ?? (_current = new IoCFactory()); } }
+
+        #endregion
+
+        #region Methods
+
+        public void Configure(IConfiguration configuration, IServiceCollection services) {
+			ConfigureFactories();
+			ConfigureMediatR(services);
+			ConfigureAppServices(services);
+			ConfigureRepositories(services);
+			ConfigureDatabase(services, configuration);
+			ConfigureMappings();
+        }
+
+		void ConfigureMappings()
+		{
+			MapperFactory.Setup(this.GetType().Namespace.Replace("Infra.IoC","Domain"));
+		}
+
+		void ConfigureMediatR(IServiceCollection services)
+		{
+            services.AddMediatR((x) => { x.RegisterServicesFromAssembly(typeof(BaseCommand).GetTypeInfo().Assembly); });
+<# foreach(var entity in entitiesT4) { #>
+            services.AddMediatR((x) => { x.RegisterServicesFromAssembly(typeof(Base<#= AggName #>CommandHandler<>).GetTypeInfo().Assembly); });
+			<#break;#>
+<# } #>			
+		}
+
+		void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)
+        {
+			PreConfigureDatabase(services, configuration);
+			if(string.IsNullOrWhiteSpace(connectionString)) 
+				connectionString = configuration.GetConnectionString("DefaultConnection")!;
+			services.AddDbContext<<#= AggName #>Context>(options =>
+			options.UseSqlServer(connectionString));
+		}
+
+		void ConfigureRepositories(IServiceCollection services) {
+
+<# foreach(var entity in entities) { #>
+            services.AddScoped<I<#= entity.Name #>Repository, <#= entity.Name #>Repository>();
+<# } #>			
+			ConfigureAdditionalRepositories();
+		}
+
+		void ConfigureAppServices(IServiceCollection services) {
+
+<# foreach(var entity in entitiesT4) { #>
+            services.AddScoped<I<#= entity.Name #>AppService, <#= entity.Name #>AppService>();
+<# } #>		
+			ConfigureAdditionalAppServices(services);
+		}
+
+        #endregion
+    }
+}
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.IoCFactory.cs",
+    recreateFileIfExists: true); #>

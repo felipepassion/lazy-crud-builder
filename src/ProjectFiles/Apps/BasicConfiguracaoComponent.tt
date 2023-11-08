@@ -1,0 +1,3 @@
+﻿@inherits <#=entity.Name#>Cadastro
+
+<AddressFormFields Model="this.Model.Endereco" />

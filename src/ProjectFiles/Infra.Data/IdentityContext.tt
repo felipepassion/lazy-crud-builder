@@ -1,0 +1,47 @@
+﻿<# if (allEntities.Any()) { 
+	 foreach (var nmspc in groupAllEntities) { #>
+using <#= nmspc.Key #>; 
+using <#= nmspc.Key.Replace("Domain","Infra.Data").Replace("Entities", "Mappings") #>; 
+<# } #>
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using LazyCrud.Core.Infra.Data.Contexts;
+
+<#  
+var className = GetDefaultNamespace().Replace(".","");
+var contextName = className + "Context";
+#>
+namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Context
+{
+	public partial class <#= AggName #>Context : BaseContext
+	{
+<# foreach(var namespaces in groupAllEntities) { 
+	 foreach (var entity in namespaces) { #>
+		public DbSet<<#= entity.Name #>> <#= entity.Name #> { get; set; }
+<# } #>
+<# } #>
+
+		public <#= AggName #>Context (MediatR.IMediator mediator, DbContextOptions<<#= AggName #>Context> options, IServiceProvider scope)
+            : base(mediator, options, scope)
+        {
+        }
+
+		protected override void OnModelCreating(ModelBuilder builder)
+		{
+<# foreach(var namespaces in groupAllEntities) { 
+			 foreach (var entity in namespaces) { #>
+			builder.ApplyConfiguration(new <#= entity.Name #>Mapping());
+<# } #>
+<# } #>
+		
+			ApplyAdditionalMappings(builder);
+			base.OnModelCreating(builder);
+		}
+		partial void ApplyAdditionalMappings(ModelBuilder modelBuilder);
+<# } #>
+	}
+}
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.IdentityContext.cs", 
+    recreateFileIfExists: true); #>

@@ -1,0 +1,30 @@
+﻿
+    <div class="input-secondary">
+<#if(hasParameterSwitcher) {
+    var field= parameterTypeSwitcher;
+ var myType = field.Value.Type.AsString.Replace("System.Collections.Generic.List<","").Replace(">","");
+    var myName = field.Key.Replace("/",".");#>
+<#@ include file="BasicEnumInput.tt" #>
+<#}#>    
+<# if(title.Key != null) { var field = title; isTitle = true; #>
+<#
+    var myType = field.Value.Type.AsString.Replace("System.Collections.Generic.List<","").Replace(">","");
+    var myName = field.Key.Replace("/",".");
+	var myPropertyName = myName.Split('.').LastOrDefault() + '.';
+    myPropertyName = myPropertyName == myName ? "" : myPropertyName;
+#>
+        <div class="input-secondary-item">
+            <SfTextBox class="cnpj-1 valign-text-middle inter-medium-silver-16px form-control"
+                    @oninput="async (x)=>{ await OnFormUpdated(()=>{ Model.<#=myName#> = (<#=myType#>)x.Value; });}"                        
+                    FloatLabelType="@FloatLabelType.Auto"
+                    @bind-value="Model.<#=myName#>"
+                    @onchange="async () => { await OnAutoSaveTriggered(); }"
+                    Placeholder="<#=GetDisplayName(field)#>" />
+            <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
+                <ValidationMessage For="@(() => Model.<#=myName#>)"></ValidationMessage>
+            </div>
+        </div>
+<#}#>
+<#if(!hasParameterSwitcher) {#>
+    </div>
+<#}#>

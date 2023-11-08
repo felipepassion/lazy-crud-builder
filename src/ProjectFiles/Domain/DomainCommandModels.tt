@@ -1,0 +1,64 @@
+﻿using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
+<#foreach(var namespaces in groupEntitiesT4) {#>
+namespace <#= namespaces.Key.Replace(".Entities",".CommandModels") #>
+{
+    using Queries.Models; 
+    using <#= namespaces.Key.Replace("Domain","Application.DTO").Replace("Entities", "Requests") #>; 
+<#foreach(var entity in namespaces) {
+    var mySearchParent = $"{entity.Name}SearchableCommand";
+    var myQueryModel = $"{entity.Name}QueryModel";
+#>
+    public partial class Create<#= entity.Name #>Command : BaseRequestableCommand<<#= myQueryModel #>, <#=entity.Name#>DTO>
+    {
+        public bool UpdateIfExists { get; set; }
+        public Create<#= entity.Name #>Command(ILogRequestContext ctx, <#= entity.Name #>DTO data, bool updateIfExists = true, <#= myQueryModel #> query = null) 
+            : base(ctx, query, data) { this.UpdateIfExists = updateIfExists; }
+    }
+    public partial class Delete<#= entity.Name #>Command : BaseDeletionCommand<<#= myQueryModel #>>
+    {
+        public Delete<#= entity.Name #>Command(ILogRequestContext ctx, <#= myQueryModel #> query, bool isLogicalDeletion = true)
+            : base(ctx, query, isLogicalDeletion) { }
+    }
+      public partial class DeleteRange<#= entity.Name #>Command : BaseDeletionCommand<<#= myQueryModel #>>
+    {
+        public DeleteRange<#= entity.Name #>Command(ILogRequestContext ctx, <#= entity.Name #>QueryModel query, bool isLogicalDeletion = true)
+            : base(ctx, query, isLogicalDeletion) { }
+    }
+    public partial class UpdateRange<#= entity.Name #>Command : BaseRequestableRangeCommand<<#= myQueryModel #>, <#=entity.Name#>DTO>
+    {
+        public bool CreateIfNotExists { get; set; } = true;
+        public UpdateRange<#= entity.Name #>Command(ILogRequestContext ctx, Dictionary<<#= myQueryModel #>, <#=entity.Name#>DTO> query)
+            : base(ctx, query) { }
+        public UpdateRange<#= entity.Name #>Command(ILogRequestContext ctx, <#= myQueryModel #> query, <#=entity.Name#>DTO data)
+            : base(ctx, new Dictionary<<#= myQueryModel #>, <#=entity.Name#>DTO> { { query, data } }) { }
+    }
+    
+    public partial class Update<#= entity.Name #>Command : BaseRequestableCommand<<#= myQueryModel #>, <#=entity.Name#>DTO>
+    {
+        public bool CreateIfNotExists { get; set; } = true;
+        public Update<#= entity.Name #>Command(ILogRequestContext ctx, <#= myQueryModel #> query, <#=entity.Name#>DTO data, bool createIfNotExists = true)
+            : base(ctx, query, data) { this.CreateIfNotExists = createIfNotExists; }
+    }
+    public partial class Active<#= entity.Name #>Command : <#= mySearchParent #>
+    {
+        public Active<#= entity.Name #>Command(ILogRequestContext ctx, <#= myQueryModel #> query)
+            : base(ctx, query) { }
+    }
+    public partial class Deactive<#= entity.Name #>Command : <#= mySearchParent #>
+    {
+        public Deactive<#= entity.Name #>Command(ILogRequestContext ctx, <#= myQueryModel #> query)
+            : base(ctx, query) { }
+    }
+    public class <#= mySearchParent#> : BaseSearchableCommand<<#= myQueryModel #>> {
+        public <#= mySearchParent#>(ILogRequestContext ctx, <#= myQueryModel #> query)
+            : base(ctx, query) { }
+    }
+
+<# } #>
+}
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.DomainCommandModels.cs", 
+    recreateFileIfExists: true); #>

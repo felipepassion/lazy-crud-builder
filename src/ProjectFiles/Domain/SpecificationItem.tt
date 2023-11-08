@@ -1,0 +1,12 @@
+﻿<# if (ContainsAttribute(propValue, "jsonb")) {
+		foreach(var subProp in GetProperties(GetEntity(propValue.Type.AsFullName), true)){ 
+		propType = subProp.Value.Type.AsString;
+		propValue = subProp.Value;
+		propFullName = subProp.Value.Type.CodeType.FullName;
+		name = property.Key + "_" + subProp.Key;
+		path = property.Key + "." + subProp.Key; #>
+	<#@ include file="..\..\ProjectFiles\Domain\SpecificationSubItem.tt" #>	
+<#}#>
+<#} else  {#>
+	<#@ include file="..\..\ProjectFiles\Domain\SpecificationSubItem.tt" #>	
+<#}#>

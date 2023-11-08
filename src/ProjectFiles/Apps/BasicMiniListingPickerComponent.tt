@@ -1,0 +1,16 @@
+﻿<#
+    GetAttributesDict(field.Value).TryGetValue("ListingPicker", out attrValues);
+
+if((!isNewContainer && count>0)){#>
+    </div> 
+    <div class="input-secondary"> 
+<#}#> 
+<ListingPicker 
+    Title="<#=attrValues?.Count()>0? attrValues[0].Value.Replace("\"","") : myName#>" 
+    Model="Model.<#=myName#>"
+    T="<#=myTypeFullName#>DTO" 
+    TListining="<#=listiningName#>DTO" />
+<#if(!(!isNewContainer && count>0)){#>
+    </div> 
+    <div class="input-secondary"> 
+<#}#> 

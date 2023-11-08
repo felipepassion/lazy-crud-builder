@@ -1,0 +1,33 @@
+﻿using Saga.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Saga.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using FluentValidation;
+using Saga.Core.Application.DTO.Attributes;
+<#
+if (entitiesT4.Any()) {#>
+<# foreach(var namespaces in groupEntitiesT4) { 
+var myNamespace = namespaces.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO"); #>
+namespace <#= myNamespace #> 
+{
+	using Requests;
+<# foreach(var entity in namespaces) { 
+var otherNamespace = entity.Namespace.FullName.Replace("Domain","Application.DTO");
+var className = $"{entity.Name}ListiningDTO";
+var attrs = GetAttributesDict(entity);
+if(!attrs.Any(x=>x.Key == "EndpointsT4")) continue;
+var canGet = attrs["EndpointsT4"].Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+if(!canGet) continue;
+#>
+    public partial class <#=className#> : EntityDTO
+	{
+        <#= WriteListining(entity) #>
+    }
+<# } #>
+}
+<# } #>
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.ListiningDTO.cs", 
+    recreateFileIfExists: true); #>

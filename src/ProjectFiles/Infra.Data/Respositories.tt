@@ -1,0 +1,44 @@
+﻿<# if (entities.Any()) { #>
+using Microsoft.Extensions.Configuration;
+using <#= GetDefaultNamespace() #>.Core.Infra.Data.Repositories;
+using <#= GetDefaultNamespace() #>.<#= project.Name #>.Context;
+
+<# foreach (var nmspc in groupEntities) 
+{ #>
+using <#= nmspc.Key #>;
+<# } #>
+<#  
+var className = GetDefaultNamespace().Replace(".","");
+var contextName = AggName + "Context";
+#>
+
+<# var path = Path.GetDirectoryName(project.FullName);
+   var repositories = Directory.GetFiles(path, "*Repository.cs", SearchOption.AllDirectories).Select(p => Path.GetFileNameWithoutExtension(p));
+   foreach(var namespaces in entities.GroupBy(p => p.Namespace.FullName)) { #>
+namespace <#= namespaces.Key.Replace("Entities", "Repositories").Replace("Domain", "Infra.Data") #>
+{
+	using <#= namespaces.Key.Replace("Entities", "Repositories") #>;
+<# 	
+var isFromSameAgg = AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+foreach (var entity in namespaces) 
+{ 
+var exists = false;
+   foreach (var repo in repositories) {
+		if (repo.Equals($"I{entity.Name}Repository", StringComparison.CurrentCultureIgnoreCase)) {
+			exists = true;
+			break;
+		}
+   } 
+   if (exists) continue; #>
+	public partial class <#= entity.Name #>Repository : Repository<<#= entity.Name #>>, I<#= entity.Name #>Repository { public <#= entity.Name #>Repository(<#= contextName #> ctx) : base(ctx) { } }
+
+<# } #>
+}
+<# } #>
+<# } #>
+<#    else  {#>
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.Respositories.cs", 
+    recreateFileIfExists: true); #>

@@ -1,0 +1,14 @@
+﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
+<#
+	var entities = GetEntities("Domain", withAttribute: "EndpointsT4");
+	var entitiesT4 = GetEntities("Domain", withAttribute: "EndpointsT4", withEndpoint: "HttpPost"); 
+	var project = GetCurrentProject();
+	var myName = project.Name.Split('.').First();
+	var AggName = myName + "Agg";
+	var path = Path.GetDirectoryName(project.FullName);
+	var parentName = "Commands";
+	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+#>
+<#@ include file="..\..\ProjectFiles\Domain\AggregateSettingsEntity.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\UserEntity.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\DefaultFolders.tt" #>

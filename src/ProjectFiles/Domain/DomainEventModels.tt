@@ -1,0 +1,51 @@
+﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
+
+<#foreach(var namespaces in groupEntitiesT4) {#>
+namespace <#= namespaces.Key.Replace(".Entities",".ModelEvents") #>
+{
+    using ModelEvents;
+    using Entities;
+<#foreach(var myEntity in namespaces){#>
+    public partial class <#= myEntity.Name #>CreatedEvent : BaseEvent
+    {
+        public <#= myEntity.Name #>CreatedEvent(ILogRequestContext ctx, <#= myEntity.Name #> data) 
+            : base(ctx, data) { }
+    }
+    public partial class <#= myEntity.Name #>DeletedEvent : BaseEvent
+    {
+        public <#= myEntity.Name #>DeletedEvent(ILogRequestContext ctx, <#= myEntity.Name #> data) 
+            : base(ctx, data) { }
+    }
+    public partial class <#= myEntity.Name #>DeletedRangeEvent : BaseEvent
+    {
+        public <#= myEntity.Name #>DeletedRangeEvent(ILogRequestContext ctx, IEnumerable<<#= myEntity.Name #>> data) 
+            : base(ctx, data) { }
+    }
+    public partial class <#= myEntity.Name #>ActivatedEvent : BaseEvent
+    {
+        public <#= myEntity.Name #>ActivatedEvent(ILogRequestContext ctx, <#= myEntity.Name #> data) 
+            : base(ctx, data) { }
+    }
+    public partial class <#= myEntity.Name #>UpdatedEvent : BaseEvent
+    {
+        public <#= myEntity.Name #>UpdatedEvent(ILogRequestContext ctx, <#= myEntity.Name #> data) 
+            : base(ctx, data) { }
+    }
+    public partial class <#= myEntity.Name #>UpdatedRangeEvent : BaseEvent
+    {
+        public <#= myEntity.Name #>UpdatedRangeEvent(ILogRequestContext ctx, IEnumerable<<#= myEntity.Name #>> data) 
+            : base(ctx, data) { }
+    }
+    public partial class <#= myEntity.Name #>DeactivatedEvent : BaseEvent
+    {
+        public <#= myEntity.Name #>DeactivatedEvent(ILogRequestContext ctx, <#= myEntity.Name #> data) 
+            : base(ctx, data) { }
+    }
+<# } #>
+}
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.DomainEventModels.cs", 
+    recreateFileIfExists: true); #>

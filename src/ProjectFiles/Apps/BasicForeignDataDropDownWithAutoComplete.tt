@@ -1,0 +1,25 @@
+﻿<#
+    myTitle = props.FirstOrDefault(x=> x.Key.StartsWith(field.Key) && GetAttributesDict(x.Value).ContainsKey("Title"));
+    if(myTitle.Key == null)
+        throw new Exception($"{entity.Name}.{myName} Não possui uma propriedade [Title] definida.");
+    var foreignAggName = myType.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","");
+    myType = myType.Replace("Entities","Requests").Replace("Domain","Application.DTO").Replace(aggName, foreignAggName);
+    var myTitleName = myTitle.Key.Replace("/",".").Split('.').Last();
+    var myTitleAttrs = GetAttributesDict(myTitle.Value);
+    var titleDisplayName1 = myTitleAttrs.TryGetValue("DisplayName", out var titleAttrVal) ? titleAttrVal[0].Value.Replace("\"","") : myTitleName;
+#>
+        <div class="input-secondary-item">
+            <DropDownWithAutoComplete2  Selector="x=>x.<#=myTitleName#>"
+                                        Placeholder="<#=titleDisplayName1#>"
+                                        Query="" 
+                                        Model="@Model.<#=myName#>"
+                                        T="<#=myType#>DTO"
+                                        OnSelect="@(async(e) =>
+                                {
+                                    this.Model.<#=myName#>Id = (int)e.ItemData.Id;
+                                    await OnAutoSaveTriggered();
+                                })"></DropDownWithAutoComplete2>
+            <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
+                <ValidationMessage For="@(() => Model.<#=myName#>Id)"></ValidationMessage>
+            </div>
+        </div>

@@ -1,0 +1,40 @@
+﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+
+<# var entitiesSteps = GetMyAggregateEntities().Where(entity=>GetAttributes(entity, includeSteppableAttributes: true).Any(x=>x.ToLower().Contains("steppable"))); 
+if (entitiesSteps.Any()) {#>
+<# foreach(var namespaces in entitiesSteps.GroupBy(p => p.Namespace.FullName)) { 
+var myNamespace = namespaces.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO");
+#>
+namespace <#= myNamespace #> 
+{
+<# foreach(var entity in namespaces) { 
+var otherNamespace = entity.Namespace.FullName.Replace("Domain","Application.DTO");
+var stepsCount = int.Parse(GetAttributes(entity, includeSteppableAttributes: true).Max(x=>x.FirstOrDefault(p=>char.IsDigit(p)) ?? 1).ToString());
+
+for (int i = 1; i <= stepsCount; i++) {
+#>
+	public partial class <#= entity.Name #>Step<#=i#>DTO : <#= MyParent(entity) #>DTO
+	{
+<# foreach(var property in GetProperties(entity, includeBase: false, withAttribute: $"Step({i})"))
+{
+	//var property = prop.Type;
+	var name = property.Key.Replace("[]", string.Empty);
+    if(name.Equals("Id")) continue;
+if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
+{#>
+		<#= WritePropertySummary(property.Value) #>
+<# } #>
+		 <#= WriteProperty(property) #>
+<# } #>
+	}
+<# } #>
+<# } #>
+}
+<# } #>
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.SteppableRequestsDTO.cs", 
+    recreateFileIfExists: true); #>

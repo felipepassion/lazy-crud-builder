@@ -1,0 +1,18 @@
+﻿<#if(type is CodeEnum){#>
+<#@ include file="BasicEnumInput.tt" #>
+<#} else if(field.Value.Type.AsString.StartsWith("System.Collections.Generic")) { #>
+<#@ include file="BasicFormListChooser.tt" #>
+<#} else {
+var myAttrName = myAttrs.FirstOrDefault(x=>x.Key.Contains("Foreign"));
+KeyValuePair<string,CodeProperty> myTitle;
+switch(myAttrName.Key) { 	 
+		    case "ForeignDataSelectorDropDownWithAutoComplete":#>
+<#@ include file="BasicForeignDataDropDownWithAutoComplete.tt" #>
+<#			break;
+		    case "BasicForeignDataSelector":#>
+<#@ include file="BasicForeignDataSelector.tt" #>
+<#			break;
+			default:
+			break;
+}#>
+<#}#>

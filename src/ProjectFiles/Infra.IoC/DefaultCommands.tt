@@ -1,0 +1,11 @@
+﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
+<#
+	var entities = GetEntities("Domain", withEndpoint: "HttpPost"); 
+	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4", withEndpoint: "HttpPost"); 
+	var project = GetCurrentProject();
+	var myName = project.Name.Split('.').First();
+	var AggName = myName + "Agg";
+	var parentName = "Commands";
+	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
+#>
+<#@ include file="..\..\ProjectFiles\Infra.IoC\IoCFactory.tt" #>

@@ -1,0 +1,50 @@
+﻿using System.Linq.Expressions;
+using FluentValidation.Results;
+using LazyCrud.Core.Domain.CrossCutting;
+using LazyCrud.Core.Application.Aggregates.Common;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
+
+<# if (entities.Any()) { #>
+using <#= GetDefaultNamespace() #>.Core.Domain.Seedwork.Specification;
+<# foreach(var namespaces in groupEntities) { #>
+namespace <#= namespaces.Key.Replace("Entities", "AppServices").Replace("Domain","Application") #> {
+<#
+	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+#>
+	using Domain.Aggregates.<#= aggName #>.Entities;
+	using Domain.Aggregates.<#= aggName #>.Queries;
+	using Application.DTO.Aggregates.<#= aggName #>.Requests;
+<# foreach(var entity in namespaces) { 
+var attrs = GetAttributesDict(entity)["EndpointsT4"];
+var canSummary = attrs.Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+#>
+	public partial interface I<#= entity.Name #>AppService : IBaseAppService {	
+		public Task<<#= entity.Name #>DTO> Get(IQueryModel<<#=entity.Name#>> request);
+		public Task<int> CountAsync(IQueryModel<<#=entity.Name#>> request);
+		public Task<IEnumerable<<#= entity.Name #>DTO>> GetAll(IQueryModel<<#=entity.Name#>> request, int? page = null, int? size = null);
+		public Task<T> Select<T>(IQueryModel<<#=entity.Name#>> request, Expression<Func<Domain.Aggregates.<#= aggName #>.Entities.<#= entity.Name #>, T>> selector = null);
+		public Task<IEnumerable<T>> GetAll<T>(IQueryModel<<#=entity.Name#>> request, int? page = null, int? size = null, Expression<Func<Domain.Aggregates.<#= aggName #>.Entities.<#= entity.Name #>, T>> selector = null);
+<#if(canSummary){#>
+		public Task<IEnumerable<<#=entity.Name#>ListiningDTO>> GetAllSummary(IQueryModel<<#=entity.Name#>> request, int? page = null, int? size = null);
+<#}#>
+
+<#if(AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")))
+{
+	var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
+#>
+<#if(canCreate){#>
+		public Task<DomainResponse> Create(<#= entity.Name #>DTO request, bool updateIfExists = true, IQueryModel<<#=entity.Name#>> searchQuery = null);
+<#}#>
+		public Task<DomainResponse> Delete(IQueryModel<<#=entity.Name#>> request);
+		public Task<DomainResponse> DeleteRange(IQueryModel<<#=entity.Name#>> request);
+		public Task Update(IQueryModel<<#=entity.Name#>> searchQuery, <#= entity.Name #>DTO request, bool createIfNotExists = true);
+<# } #>
+	}
+<# } #>
+}
+<# } #>
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.IAppServices.cs", 
+    recreateFileIfExists: true); #>

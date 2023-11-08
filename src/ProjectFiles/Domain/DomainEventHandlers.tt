@@ -1,0 +1,30 @@
+﻿using MediatR;
+using LazyCrud.Core.Domain.Extensions;
+using LazyCrud.CrossCutting.Infra.Log.Providers;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events.Handles;
+<# if (entitiesT4.Count() > 0){#>
+using <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.ModelEvents;
+<# } #>
+
+namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.EventHandlers
+{
+<#foreach(var entity in entitiesT4){#>
+    public partial class <#= entity.Name #>EventHandler : BaseEventHandler,
+        INotificationHandler<<#= entity.Name #>CreatedEvent>,
+        INotificationHandler<<#= entity.Name #>DeletedEvent>,
+        INotificationHandler<<#= entity.Name #>UpdatedEvent>,
+        INotificationHandler<<#= entity.Name #>ActivatedEvent>,
+        INotificationHandler<<#= entity.Name #>DeactivatedEvent>{
+        public <#= entity.Name #>EventHandler(ILogProvider logProvider, IServiceProvider serviceProvider):base(logProvider, serviceProvider){}
+        public async Task Handle(<#= entity.Name #>CreatedEvent notification, CancellationToken cancellationToken){PublishLog(notification);}
+        public async Task Handle(<#= entity.Name #>DeletedEvent notification, CancellationToken cancellationToken){PublishLog(notification);}
+        public async Task Handle(<#= entity.Name #>ActivatedEvent notification, CancellationToken cancellationToken){PublishLog(notification);}
+        public async Task Handle(<#= entity.Name #>UpdatedEvent notification, CancellationToken cancellationToken){PublishLog(notification);}
+        public async Task Handle(<#= entity.Name #>DeactivatedEvent notification, CancellationToken cancellationToken){PublishLog(notification);}
+    }
+<# } #>
+}
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.DomainEventHandlers.cs", 
+    recreateFileIfExists: true); #>

@@ -1,0 +1,14 @@
+﻿<#@ output extension=".generated.bat" #>
+<#@ import namespace="System.Threading.Tasks" #>
+<#@ include file="..\project.tt" #>
+<#
+	var now = DateTime.Now;
+var projects = FindDomainProjects().ToArray();
+#>
+dotnet ef migrations add <#= $"{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}" #> -c ApplicationDbContext -p ..\..\..\Users.Identity
+<# foreach(var namespaces in projects) {
+	var aggName = namespaces.Name.Split('.').FirstOrDefault();
+	var name = aggName.Replace("Agg","");
+#>
+dotnet ef migrations add <#= $"{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}" #> -c <#= aggName #>Aggcontext -p <#=@$"..\..\..\{name}\"#><#=name#>.Infra.Data
+<#}#>

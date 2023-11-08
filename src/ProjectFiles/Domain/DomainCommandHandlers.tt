@@ -1,0 +1,178 @@
+﻿using MediatR;
+using FluentValidation.Results;
+using LazyCrud.Core.Domain.CrossCutting;
+using LazyCrud.Core.Application.DTO.Extensions;
+using LazyCrud.CrossCuting.Infra.Utils.Extensions;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
+
+<#foreach(var namespaces in groupEntitiesT4) {#>
+namespace <#= namespaces.Key.Replace(".Entities",".CommandHandlers") #>
+{
+<#if(entities.Any()){#>
+    using Filters;
+    using ModelEvents;
+    using Repositories;
+    using CommandModels;
+    using Entities;
+    using Specifications;
+    using Queries.Models;
+<#}#>    
+    public class Base<#= AggName #>CommandHandler<T> : BaseCommandHandler<T> where T : IEntity {public Base<#= AggName #>CommandHandler(IServiceProvider provider,IMediator mediator):base(mediator, provider){}}
+<#foreach(var entity in namespaces) {
+    var repoTypeName = $"I{entity.Name}Repository";
+	var repoVarName = $"_{ToCamelCase(entity.Name)}Repository";
+#>
+    public partial class <#= entity.Name #>CommandHandler : Base<#= AggName #>CommandHandler<<#=entity.Name#>>,
+        IRequestHandler<Create<#= entity.Name #>Command,DomainResponse>,
+        IRequestHandler<DeleteRange<#= entity.Name #>Command,DomainResponse>,
+        IRequestHandler<Delete<#= entity.Name #>Command,DomainResponse>,
+        IRequestHandler<UpdateRange<#= entity.Name #>Command,DomainResponse>,
+        IRequestHandler<Update<#= entity.Name #>Command,DomainResponse>,
+        IRequestHandler<Active<#= entity.Name #>Command,DomainResponse>,
+        IRequestHandler<Deactive<#= entity.Name #>Command,DomainResponse>
+    {
+        <#= repoTypeName #> <#= repoVarName #>;
+
+        public <#= entity.Name #>CommandHandler(IServiceProvider provider,IMediator mediator,<#= repoTypeName #> <#= repoVarName.Substring(1) #> ) : base(provider,mediator) { <#= repoVarName #> = <#= repoVarName.Substring(1) #>; }
+
+        partial void OnCreate(<#=entity.Name#> entity);
+        partial void OnUpdate(<#=entity.Name#> entity);
+
+        public async Task<DomainResponse> Handle(Create<#= entity.Name #>Command command,CancellationToken cancellationToken) {
+
+            <#= entity.Name #> entity;
+            if (command.Query != null || !string.IsNullOrWhiteSpace(command.Request.ExternalId))
+            {
+                var filter = <#= entity.Name #>Filters.GetFilters(command.Query ?? new <#= entity.Name #>QueryModel { ExternalIdEqual = command.Request.ExternalId });
+                entity = await <#= repoVarName #>.FindAsync(filter, includeAll: false);
+                if (entity != null)
+                {
+                    if (command.UpdateIfExists)
+                        return await Handle(new Update<#= entity.Name #>Command(
+                            command.Context,
+                            new Queries.Models.<#= entity.Name #>QueryModel { ExternalIdEqual = command.Request.ExternalId },
+                            command.Request),
+                        cancellationToken);
+                }
+            }
+            entity = command.Request.ProjectedAs<Entities.<#= entity.Name #>>();
+            entity.AddDomainEvent(new <#= entity.Name #>CreatedEvent(command.Context,entity));
+
+            <#= repoVarName #>.UnitOfWork.ResolveAttaches(entity);
+            var creationResult = await OnCreateAsync(entity);
+            if (!creationResult.Success) return creationResult;
+			<#= repoVarName #>.Add(entity);
+
+            return await Commit(<#= repoVarName #>.UnitOfWork, entity);
+        }
+
+        public async Task<DomainResponse> Handle(Delete<#= entity.Name #>Command command,CancellationToken cancellationToken) {
+            var filter = <#= entity.Name #>Filters.GetFilters(command.Query);
+			var entity = await <#= repoVarName #>.FindAsync(filter);
+
+            if(entity is null) {
+                return AddError($"Entity {nameof(<#= entity.Name #>)} not found with the request.");
+            }
+            
+            if (command.IsLogicalDeletion)
+                entity.Delete();
+            else
+			    <#= repoVarName #>.Delete(entity);
+
+            var deleteResult = await OnDeleteAsync(entity);
+            if (!deleteResult.Success) return deleteResult;
+
+            entity.AddDomainEvent(new <#= entity.Name #>DeletedEvent(command.Context,entity));
+            return await Commit(<#= repoVarName #>.UnitOfWork);
+        }
+
+        public async Task<DomainResponse> Handle(DeleteRange<#= entity.Name #>Command command,CancellationToken cancellationToken) {
+            var filter = <#= entity.Name #>Filters.GetFilters(command.Query);
+			var entities = await <#= repoVarName #>.FindAllAsync(filter);
+
+			<#= repoVarName #>.DeleteRange(entities);
+
+            PublishLog(command);
+            
+            return await Commit(<#= repoVarName #>.UnitOfWork);
+        }
+
+        public async Task<DomainResponse> Handle(Update<#= entity.Name #>Command command,CancellationToken cancellationToken) {
+            return await Handle(new UpdateRange<#= entity.Name #>Command(command.Context,command.Query,command.Request),cancellationToken);
+        }
+
+        public async Task<DomainResponse> Handle(UpdateRange<#= entity.Name #>Command command,CancellationToken cancellationToken) {
+            var entities = new List<<#= entity.Name #>>();
+            foreach (var item in command.Query)
+            {
+                var filter = <#= entity.Name #>Filters.GetFilters(item.Key);
+                var entity = await <#= repoVarName #>.FindAsync(filter);
+                
+                if(entity == null) {
+                    if(command.CreateIfNotExists)
+                        return await Handle(new Create<#= entity.Name #>Command(command.Context,item.Value),cancellationToken);
+                    return AddError($"Entity {nameof(<#= entity.Name #>)} not found with the request.");
+                }
+                var entityAfter = item.Value.ProjectedAs<<#= entity.Name #>>();
+                <#= repoVarName #>.UnitOfWork.ResolveAttachesOnUpdate(entity, entityAfter);
+                entity.Update(entityAfter,"Id");
+                var updateResult = await OnUpdateAsync(entity, entityAfter);
+                if (!updateResult.Success) return updateResult;
+                entity.AddDomainEvent(new <#= entity.Name #>UpdatedEvent(command.Context, entity));
+            }
+            
+            PublishLog(command);
+
+            return await Commit(<#= repoVarName #>.UnitOfWork);
+        }
+         
+        public async Task<DomainResponse> Handle(Active<#= entity.Name #>Command command,CancellationToken cancellationToken) {
+            var <#= entity.Name.ToLower() #> = await <#= repoVarName #>.FindAsync(filter: <#= entity.Name #>Filters.GetFilters(command.Query));
+            //<#= entity.Name.ToLower() #>.Disable();
+
+            PublishLog(command);
+            
+            return await Commit(<#= repoVarName #>.UnitOfWork);
+        }
+
+        public async Task<DomainResponse> Handle(Deactive<#= entity.Name #>Command command,CancellationToken cancellationToken) {
+            var <#= entity.Name.ToLower() #> = await <#= repoVarName #>.FindAsync(filter: <#= entity.Name #>Filters.GetFilters(command.Query));
+            //<#= entity.Name.ToLower() #>.Enable();
+
+            PublishLog(command);
+            
+            return await Commit(<#= repoVarName #>.UnitOfWork);
+        }
+    }
+<# } #>
+}
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.DomainCommandHandlers.cs", 
+    recreateFileIfExists: true); 
+
+if (entitiesT4.Any()) {
+    foreach(var namespaces in groupEntitiesT4) { 
+        var myNamespace = namespaces.Key.Replace("Entities","CommandHandlers");
+        foreach(var entity in namespaces) {
+        if(!ContainsAttribute(entity, "AutoGenerateDefaultFiles")) continue;
+        
+        string attr = GetAttributes(entity, includeSteppableAttributes: true).FirstOrDefault(x=>x.Contains("Step"));
+		if (string.IsNullOrWhiteSpace(attr)) attr="1";#>        
+namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.CommandHandlers {
+    using Entities;
+<# var className = $"{entity.Name}CommandHandler";#>
+    public partial class <#=className#> : Base<#= AggName#>CommandHandler<<#=entity.Name#>>
+	{
+        
+    }
+}
+<#SaveOutputToSubFolder(
+    folderName: $@"Aggregates\{AggName}\CommandHandlers", 
+    outputFileName: @$"{entity.Name}CommandHandler.cs", 
+    recreateFileIfExists: false);}
+    }   
+}#>

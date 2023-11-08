@@ -1,0 +1,43 @@
+﻿tr:hover {
+    background-color: #00ffffc2;
+    cursor: pointer;
+}
+
+.aggregate-creator {
+    margin-bottom: 50px;
+}
+
+.aggregate-container {
+}
+
+.aggregate-columns {
+    display: flex;
+    flex-direction: row;
+    gap:30px;
+    justify-content:space-between;
+    width:100%;
+}
+
+tr:hover {
+}
+
+.entities-container {
+}
+
+.aggregate-container.entities {
+    -webkit-transition: all 1s linear;
+    background-color: #808080b2;
+    width: 100%;
+}
+
+.aggregate-container.properties {
+    -webkit-transition: all 1s linear;
+    background-color: #00ffffc2 !important;
+    width: 100%;
+}
+
+tr.properties {
+    background-color: #00ffffc2 !important;
+}
+
+

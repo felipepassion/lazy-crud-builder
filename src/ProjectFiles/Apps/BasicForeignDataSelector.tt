@@ -1,0 +1,26 @@
+﻿<#
+    myTitle = props.FirstOrDefault(x=> x.Key.StartsWith(field.Key) && GetAttributesDict(x.Value).ContainsKey("Title"));
+#>
+            <div class="cdigo-cnes">
+               <div class="container">
+                   <div class="container-box-1">
+                        <div class="cidade-localidade-1 valign-text-middle inter-medium-sonic-silver-10px"><#=myDisplayName#></div>
+                        <div class="container-input-1 border-1px-silver">
+                           <ListBoxWithAutoComplete2 
+                                           Selector="x=>x.<#=myTitle.Key.Replace("/",".").Split('.').Last()#>"
+                                           Placeholder="<#=myDisplayName#>"
+                                           Model="@Model.<#=myName#>" 
+                                           Query="" 
+                                           T="<#=field.Key#>DTO"
+                                           OnSelect="@((e) =>
+                                   {
+                                       this.Model.<#=myName#>Id = int.TryParse(e.ItemData.Id, out var val) ? val : null;
+                                       OnAutoSaveTriggered();
+                                   })"></ListBoxWithAutoComplete2>
+                       </div>
+                   </div>
+               </div>
+               <div class="este-campo-obrigatrio-3 inter-normal-sonic-silver-10px">
+                               <ValidationMessage For="@(() => Model.<#=field.Key#>Id)"></ValidationMessage>
+               </div>
+           </div>

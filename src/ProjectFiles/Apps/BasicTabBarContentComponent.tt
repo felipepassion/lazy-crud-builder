@@ -1,0 +1,9 @@
+﻿<#if((!isNewContainer && count>0)){#>
+    </div> 
+    <div class="input-secondary"> 
+<#}#> 
+<TabBarContent T="<#=myTypeName#>DTO" Model="Model.<#=myName#>" />
+<#if(!(!isNewContainer && count>0)){#>
+    </div> 
+    <div class="input-secondary"> 
+<#}#> 

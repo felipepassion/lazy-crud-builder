@@ -1,0 +1,103 @@
+﻿<# if (entities.Any()) {
+#>
+using MediatR;
+using System.Linq.Expressions;
+using FluentValidation.Results;
+using LazyCrud.CrossCuting.Infra.Utils.Extensions;
+using <#= GetGrupoEmpresaName() #>.Core.Application.DTO.Extensions;
+using <#= GetGrupoEmpresaName() #>.Core.Application.Aggregates.Common;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
+using LazyCrud.Core.Domain.CrossCutting;
+
+<#foreach(var namespaces in groupEntities) {
+#>
+namespace <#= namespaces.Key.Replace("Entities", "AppServices").Replace("Domain","Application") #> {
+<#
+	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+	var isFromSameAgg = AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+#>
+	using Application.DTO.Aggregates.<#= aggName #>.Requests;
+	using Domain.Aggregates.<#= aggName #>.Queries.Models;
+	using Domain.Aggregates.<#= aggName #>.Repositories;
+	using Domain.Aggregates.<#= aggName #>.Filters;
+	using Domain.Aggregates.<#= aggName #>.Entities;
+<#
+foreach(var entity in namespaces) {
+	var responseName = $"{entity.Name}DTO";
+	var className = entity.Name + "AppService";
+	var props = GetProperties(entity);
+#>
+	public partial class <#= className #> : BaseAppService, I<#= className #> {	
+<#
+	var repoTypeName = $"I{entity.Name}Repository";
+	var repoVarName = $"_{ToCamelCase(entity.Name)}Repository";
+	var attrs = GetAttributesDict(entity)["EndpointsT4"];
+	var canSummary = attrs.Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+	var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
+#>
+		public <#= repoTypeName #> <#= repoVarName #>;
+		public <#= className #>(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, <#= repoTypeName #> <#= repoVarName.Substring(1) #>) : base(ctx, mediator) { <#= repoVarName #> = <#= repoVarName.Substring(1) #>; }	
+		public async Task<<#= responseName #>> Get(IQueryModel<<#=entity.Name#>> request) {
+            return (await <#= repoVarName #>.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<<#= responseName #>>()));
+        }
+		public void Dispose()
+        {
+			<#=repoVarName#> = null;
+        }
+		public async Task<IEnumerable<T>> GetAll<T>(IQueryModel<<#=entity.Name#>> request, int? page = null, int? size = null, Expression<Func<<#= entity.Name #>, T>> selector = null) {
+			return await <#= repoVarName #>.SelectAllAsync(
+                filter: request.GetFilter(),
+                take: size,
+                skip: page * size,
+				ascending: request.OrderByDesc != true,
+                orderBy: request.OrderBy.GetPropertyListSelector<<#= entity.Name #>>(),
+                selector: selector);
+		}
+		public async Task<T> Select<T>(IQueryModel<<#=entity.Name#>> request, Expression<Func<<#= entity.Name #>, T>> selector = null)
+        {
+            return (await <#= repoVarName #>.FindAsync(filter: request.GetFilter(), selector: selector));
+        }
+        public async Task<IEnumerable<<#= responseName #>>> GetAll(IQueryModel<<#=entity.Name#>> request, int? page = null, int? size = null) {
+            return await <#= repoVarName #>.FindAllAsync(
+                filter: request.GetFilter(),
+                take: size,
+                skip: page * size,
+				ascending: request.OrderByDesc != true,
+                orderBy: request.OrderBy.GetPropertyListSelector<<#= entity.Name #>>(),
+                selector: x => x.ProjectedAs<<#= responseName #>>());
+        }
+<#if(canSummary){#>
+		public async Task<IEnumerable<<#=entity.Name#>ListiningDTO>> GetAllSummary(IQueryModel<<#=entity.Name#>> request, int? page = null, int? size = null)
+        {
+            return await <#= repoVarName #>.FindAllAsync(
+                filter: request.GetFilter(),
+                take: size,
+                skip: page * size,
+                ascending: request.OrderByDesc != true,
+                orderBy: request.OrderBy.GetPropertyListSelector<<#= entity.Name #>>(),
+                selector: x => x.ProjectedAs<<#= entity.Name #>ListiningDTO>());
+        }
+<#}#>
+
+<#if(canCreate){#>
+		public Task<DomainResponse> Create(<#= entity.Name #>DTO request, bool updateIfExists = true, IQueryModel<<#=entity.Name#>> searchQuery = null) { return _mediator.Send(request.Command); }
+<#}#>
+		public async Task<int> CountAsync(IQueryModel<<#=entity.Name#>> request) { return await <#= repoVarName #>.CountAsync(filter: request.GetFilter()); }
+<#
+if(canCreate)
+{
+var DTOName = $"{entity.Name}QueryModel";
+#>
+		public Task Update(IQueryModel<<#=entity.Name#>> searchQuery, <#= entity.Name #>DTO request, bool createIfNotExists = true) { return _mediator.Send(request.Command); }
+		public Task<DomainResponse> DeleteRange(IQueryModel<<#=entity.Name#>> request){ return _mediator.Send(request.Command); }
+		public Task<DomainResponse> Delete(IQueryModel<<#=entity.Name#>> request){ return _mediator.Send(request.Command); }
+<# } #>
+	}
+<# } #>
+}
+<# } #>
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.AppServices.cs", 
+    recreateFileIfExists: true); #>

@@ -1,0 +1,46 @@
+﻿<#@ include file="..\project.tt" #>
+<#
+	var AggName = GetMyAggName();
+    var aggSettingsList = new List<string>();
+    var projects = FindDomainProjects().ToArray();
+    //var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+    
+    foreach(var project in projects) {
+        var myName = project.Name.Split('.').First();
+        var proj = FindProject(project.Name);
+        aggSettingsList.Add(proj.Name.Split('.')[0]);
+    }
+	//var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);
+
+	foreach(var aggName in aggSettingsList){
+		//var aggName = item.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","");
+		var projects2 = new string[]{ "Application.DTO", "Application", "Domain", "Infra.Data", "Infra.IoC" };
+		foreach(var proj in projects2){
+			AppendLineToCsProj(aggName, proj, "*.tt",
+				"<ItemGroup><None Update=\"*.tt\"><Generator>TextTemplatingFileGenerator</Generator></None></ItemGroup>");
+			AppendLineToCsProj(aggName, proj, "NoWarn", "<PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|AnyCPU'\"><NoWarn>1701;1702;8618;1998;8602;8625;8629</NoWarn></PropertyGroup><PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Release|AnyCPU'\"><NoWarn>1701;1702;8618;1998;8602;8625;8629</NoWarn></PropertyGroup>");
+		}
+#>
+
+<#= "<" + "#" + "@" #> include file="..\..\ProjectFiles\Domain\DefaultEntities.tt" <#= "#" + ">"#>
+
+<#
+		SaveOutputToSubFolder(
+			folderName: $"../../../{aggName}/{aggName}.Domain",
+			outputFileName: @$"DefaultEntities.tt", 
+			recreateFileIfExists: true);
+#>
+
+<#foreach(var item2 in projects2) { 
+var projPath = @$"..\..\ProjectFiles\{item2}\DefaultCommands.tt";
+#>
+<#= "<" + "#" + "@" #> include file="<#= projPath #>" <#= "#" + ">"#>
+
+<#
+		SaveOutputToSubFolder(
+			folderName: $"../../../{aggName}/{aggName}.{item2}", 
+			outputFileName: @$"DefaultCommands.tt", 
+			recreateFileIfExists: true);
+} 
+} #>
+

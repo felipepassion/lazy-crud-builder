@@ -1,0 +1,72 @@
+﻿<#@ import namespace="System.Threading.Tasks" #>
+<#@ include file="..\project.tt" #>
+<#@ import namespace="System.Linq" #>
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+
+<# var entities = GetMyAggregateEntities(); 
+   if (entities.Any()) {#>
+<# foreach(var namespaces in entities.GroupBy(p => p.Namespace.FullName)) { 
+var myNamespace = namespaces.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO");
+#>
+
+namespace <#= myNamespace #> 
+{
+<# foreach(var entity in namespaces) { 
+var otherNamespace = entity.Namespace.FullName.Replace("Domain","Application.DTO"); #>
+	public partial class <#= entity.Name #>DTO 
+	{
+		public string ExternalId { get; set; }
+<# foreach(var property in GetProperties(entity, includeBase: false))
+{
+	//var property = prop.Type;
+	var name = property.Key.Replace("[]", string.Empty);
+	if(ContainsAttribute(property.Value, "IgnorePropertyT4OnRequest") || ContainsAttribute(property.Value, "IgnorePropertyT4")) continue;
+
+	var path = property.Key;
+	var isList = property.Value.Type.AsString.Contains("List<");
+	var t = property.Value.Type.AsString.Replace("System.Collections.Generic.List<","").Replace(">","");
+	
+if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
+{#>
+		<#= WritePropertySummary(property.Value) #>
+<#}
+	
+	switch(t) {
+		case "string": 
+		case "string[]": 
+		case "object": 
+		case "System.Guid": 
+		case "System.Guid?":
+		case "bool":
+		case "bool?": 
+		case "int":
+		case "int?":
+		case "decimal": 
+		case "decimal?": 
+		case "double":
+		case "double?":
+		case "System.DateTimeOffset":
+		case "System.DateTimeOffset?":
+		case "System.DateTime":
+		case "System.DateTime?": #>
+<#	foreach(var attr in GetAttributes(property.Value))
+{#>
+		<#= attr #>
+<#}#>
+		public <#= property.Value.Type.AsString #> <#= name #> { get; set; }
+<# break; 
+default: 
+	var type = FindType(property.Value.Type.CodeType.FullName.Replace("?", string.Empty));
+    if (type is CodeEnum) { #>
+		public <#= property.Value.Type.AsString #> <#= name #> { get; set; }
+<# }
+break;
+} #>
+<# } #>
+	}
+<# } #>
+}
+
+<# } #>
+<# } #>

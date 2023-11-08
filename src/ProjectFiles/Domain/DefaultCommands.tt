@@ -1,0 +1,21 @@
+﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
+<#
+	var entities = GetEntities("Domain");
+	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4", withEndpoint: "HttpPost"); 
+	var project = GetCurrentProject();
+	var myName = project.Name.Split('.').First();
+	var AggName = myName + "Agg";
+	var parentName = "Commands";
+	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
+#>
+<#@ include file="..\..\ProjectFiles\Domain\DomainCommandHandlers.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\DomainCommandModels.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\DomainEventHandlers.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\DomainEventModels.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\Filters.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\IRespositories.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\ProfilesListiningMapping.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\ProfilesMapping.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\QueryModels.tt" #>
+<#@ include file="..\..\ProjectFiles\Domain\Specifications.tt" #>

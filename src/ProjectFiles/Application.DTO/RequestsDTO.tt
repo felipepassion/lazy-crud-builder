@@ -1,0 +1,52 @@
+﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using LazyCrud.Core.Application.DTO.Attributes;
+
+<# if (entities.Any()) {#>
+<# foreach(var namespaces in groupEntities) { 
+var myNamespace = namespaces.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO");
+#>
+namespace <#= myNamespace #> 
+{
+<# foreach(var entity in namespaces) { 
+var otherNamespace = entity.Namespace.FullName.Replace("Domain","Application.DTO");
+var isAggregateRoot = GetAttributes(entity, true).Contains("[AggregateSettingsT4]");
+var tType = MyParentTType(entity);
+var parentTypeStr = tType?.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO");
+
+var myClassAttrs = GetAttributes(entity).Where(x=>x.StartsWith("[H") || x.Contains("Hide"));
+foreach(var myAttr in myClassAttrs) {#> <#=myAttr#> <# } #>
+public partial class <#= entity.Name #>DTO : <#= MyParent(entity) #>DTO<#=string.IsNullOrWhiteSpace(parentTypeStr)?"":$"<{parentTypeStr}DTO>"#>
+	{
+<#if(tType.HasValue)
+{
+if(entity.Name == "AgendaProfissional")
+{
+}
+foreach(var prop in MyAbstractProperties(tType.Value.Value))
+{#>
+		<#= WriteProperty(prop, true) #>
+<#}
+}
+foreach(var property in GetProperties(entity, includeBase: false))
+{
+	if(isAggregateRoot && property.Key.Contains("AutoSaveSettings")) continue;
+	var name = property.Key.Replace("[]", string.Empty);
+    if(name.Equals("Id")) continue;
+	if(ContainsAttribute(property.Value, "IgnorePropertyT4OnRequest") || ContainsAttribute(property.Value, "IgnorePropertyT4")) continue;
+if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
+{#>
+		<#= WritePropertySummary(property.Value) #>
+<# } #>
+	    <#= WriteProperty(property, property.Value.Getter.MustImplement == true, AggName: AggName) #>
+<# } #>
+	}
+<# } #>
+}
+<# } #>
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.RequestsDTO.cs", 
+    recreateFileIfExists: true); #>

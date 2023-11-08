@@ -1,0 +1,486 @@
+﻿/* screen - container-informations */
+
+.container-informations {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 100%;
+    width: 100%;
+}
+
+    .container-informations .box-inputs {
+        align-items: flex-start;
+        border-radius: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5vw;
+        height: min-content;
+        justify-content: center;
+        padding: 16px;
+        width: 100%;
+    }
+
+    .container-informations .input-cnpj {
+        align-items: center;
+        display: flex;
+        gap: 12px;
+        height: min-content;
+        width: min-content;
+    }
+
+    .container-informations .cnpj {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: 68px;
+        justify-content: flex-end;
+        width: min-content;
+    }
+
+    .container-informations .container-1 {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: min-content;
+        margin-top: -22px;
+        width: min-content;
+    }
+
+    .container-informations .tooltip-disabled {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        height: min-content;
+        width: min-content;
+    }
+
+    .container-informations .container-box {
+        align-items: flex-end;
+        background-color: var(--eerie-black);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        height: min-content;
+        justify-content: center;
+        padding: 4px 8px;
+        width: min-content;
+    }
+
+    .container-informations .container-tex {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        height: min-content;
+        justify-content: center;
+        width: min-content;
+    }
+
+    .container-informations .box-text {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: min-content;
+        width: min-content;
+    }
+
+    .container-informations .text-description {
+        align-items: center;
+        display: flex;
+        gap: 14px;
+        height: min-content;
+        width: min-content;
+    }
+
+    .container-informations .cadastro-nacional-da-pessoa-jurdica {
+        letter-spacing: 0;
+        margin-top: -1px;
+        min-width: 143px;
+    }
+
+    .container-informations .container-box-2 {
+        align-items: flex-start;
+        background-color: var(--white);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: 52px;
+        justify-content: center;
+        overflow: hidden;
+        padding: 8px 12px;
+        width: 195px;
+    }
+
+    .container-informations .cnpj-1 {
+        align-self: stretch;
+        letter-spacing: 0;
+    }
+
+    .container-informations .este-campo-obrigatrio {
+        letter-spacing: 0;
+        min-width: 119px;
+    }
+
+    .container-informations .input-secondary {
+        align-items: top;
+        display: flex;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .container-informations .input-secondary-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: min-content;
+        justify-content: center;
+        width: 50%;
+    }
+
+    .container-informations .container-input {
+        align-items: flex-start;
+        background-color: var(--white);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: 52px;
+        justify-content: center;
+        overflow: hidden;
+        padding: 8px 12px;
+        width: 100%;
+    }
+
+    .container-informations .razo-social {
+        letter-spacing: 0;
+        margin-right: -193px;
+    }
+
+    .container-informations .este-campo-obrigatrio-1 {
+        align-self: stretch;
+        letter-spacing: 0;
+    }
+
+    .container-informations .Name-fantasia {
+        letter-spacing: 0;
+        margin-right: -193px;
+        width: 457px;
+    }
+
+    .container-informations .este-campo-obrigatrio-2 {
+        align-self: stretch;
+        letter-spacing: 0;
+    }
+
+    .container-informations .input-tertiary {
+        align-items: center;
+        align-self: stretch;
+        display: flex;
+        gap: 20px;
+        height: min-content;
+        justify-content: center;
+    }
+
+        .container-informations .input-tertiary .left-content {
+            display: flex;
+            width: 50%;
+            gap: 20px;
+            align-content: center;
+            justify-content: space-between;
+        }
+
+    .container-informations .cdigo-cnes {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: 68px;
+        justify-content: flex-end;
+    }
+
+    .container-informations .container {
+        align-items: flex-start;
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: min-content;
+        justify-content: center;
+        margin-top: -22px;
+        padding: 0;
+    }
+
+    .container-informations .tooltip-disabled-1 {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        height: min-content;
+        margin-right: -57px;
+        width: min-content;
+    }
+
+    .container-informations .cadastro-nacional-de {
+        letter-spacing: 0;
+        margin-top: -1px;
+        min-width: 185px;
+    }
+
+    .container-informations .container-box-1 {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: min-content;
+        width: 100%;
+    }
+
+    .container-informations .container-input-1 {
+        align-items: flex-start;
+        background-color: var(--white);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: 52px;
+        justify-content: center;
+        overflow: hidden;
+        padding: 8px 9px 8px 12px;
+        width: 100%;
+    }
+
+    .container-informations .cdigo-cnes-1 {
+        letter-spacing: 0;
+        width: 100%;
+    }
+
+    .container-informations .este-campo-obrigatrio-3 {
+        align-self: stretch;
+        letter-spacing: 0;
+    }
+
+    .container-informations .registro-ans {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: 68px;
+        justify-content: flex-end;
+    }
+
+    .container-informations .tooltip-disabled-2 {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        height: min-content;
+        margin-right: -41px;
+        width: min-content;
+    }
+
+    .container-informations .registro-na-agncia-nacional-de-sade {
+        letter-spacing: 0;
+        margin-top: -1px;
+        min-width: 149px;
+    }
+
+    .container-informations .container-box-3 {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: min-content;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .container-informations .container-input-2 {
+        align-items: center;
+        background-color: var(--white);
+        border-radius: 4px;
+        display: flex;
+        gap: 4px;
+        height: 52px;
+        justify-content: center;
+        overflow: hidden;
+        padding: 8px 9px 8px 12px;
+        width: 100%;
+    }
+
+    .container-informations .registro-ans-1 {
+        letter-spacing: 0;
+        width: 100%;
+    }
+
+    .container-informations .este-campo-obrigatrio-4 {
+        align-self: stretch;
+        letter-spacing: 0;
+    }
+
+    .container-informations .cdigo-sus {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: 68px;
+        justify-content: flex-end;
+        width: 50%;
+    }
+
+    .container-informations .system-nico-de-sade {
+        letter-spacing: 0;
+        margin-top: -1px;
+        min-width: 93px;
+    }
+
+    .container-informations .container-input-3 {
+        align-items: flex-start;
+        background-color: var(--white);
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: 52px;
+        justify-content: center;
+        overflow: hidden;
+        padding: 8px 9px 8px 12px;
+        width: 100%;
+    }
+
+    .container-informations .cdigo-sus-1 {
+        letter-spacing: 0;
+    }
+
+    .container-informations .este-campo-obrigatrio-5 {
+        align-self: stretch;
+        letter-spacing: 0;
+    }
+
+    .container-informations .terceirizado {
+        align-items: center;
+        background-color: var(--white);
+        border-radius: 4px;
+        display: flex;
+        gap: 36px;
+        height: 52px;
+        padding: 8px 12px;
+        width: 49%;
+    }
+
+    .container-informations .container-text {
+        align-items: flex-start;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        height: min-content;
+        justify-content: center;
+        overflow: hidden;
+        width: fit-content;
+    }
+
+    .container-informations .terceirizado-1 {
+        letter-spacing: 0;
+        margin-top: -1.5px;
+        min-width: 95px;
+    }
+
+    .container-informations .a-empresa-terceirizada {
+        letter-spacing: 0;
+        min-width: 126px;
+    }
+
+    .container-informations .container-radio {
+        align-items: center;
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        width: min-content;
+    }
+
+    .container-informations .container-radio-item {
+        align-items: center;
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+        width: min-content;
+    }
+
+    .container-informations .text {
+        align-items: center;
+        display: flex;
+        height: min-content;
+        justify-content: center;
+        width: min-content;
+    }
+
+    .container-informations .sim {
+        letter-spacing: 0;
+        margin-top: -1px;
+        min-width: 25px;
+    }
+
+    .container-informations .evaradio-button-o {
+        height: 16px;
+        min-width: 16px;
+    }
+
+    .container-informations .no {
+        letter-spacing: 0;
+        margin-top: -1px;
+        min-width: 27px;
+    }
+
+    .container-informations .box-disable {
+        border-radius: 12px;
+        height: 70px;
+        width: 100%;
+    }
+
+    .container-informations input {
+        padding: 0 !important;
+        border: none;
+    }
+
+.tipo-de-logradouro {
+    align-items: center;
+    border: 1px none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 54px;
+    width: 200px;
+}
+
+.tipo {
+    align-self: stretch;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1.00px;
+}
+
+.cep-1 {
+    align-self: stretch;
+    letter-spacing: 0;
+    line-height: normal;
+    color: var(--silver-chalice);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m);
+}
+.logradouro {
+    align-items: center;
+    border: 1px none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+    width: 100%;
+}
+
+.titles-container{
+    margin-bottom:-1vw;
+}

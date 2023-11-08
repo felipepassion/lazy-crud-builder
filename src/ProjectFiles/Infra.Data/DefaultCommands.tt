@@ -1,0 +1,17 @@
+﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
+<#
+	var allEntities = GetEntities();
+	var entities = GetEntities("Domain", withAttribute: "EndpointsT4");
+	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4");
+	//var entities = GetEntities();
+	var project = GetCurrentProject();
+	var myName = project.Name.Split('.').First();
+	var AggName = myName + "Agg";
+	var parentName = "Commands";
+	var groupAllEntities = allEntities.GroupBy(p => p.Namespace.FullName);
+	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
+#>
+<#@ include file="..\..\ProjectFiles\Infra.Data\IdentityContext.tt" #>
+<#@ include file="..\..\ProjectFiles\Infra.Data\Mappings.tt" #>
+<#@ include file="..\..\ProjectFiles\Infra.Data\Respositories.tt" #>

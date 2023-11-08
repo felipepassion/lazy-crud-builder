@@ -1,0 +1,14 @@
+﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
+<#
+	var entities = GetEntities();
+	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4");
+	var project = GetCurrentProject();
+	var myName = project.Name.Split('.').First();
+	var AggName = myName + "Agg";
+	var parentName = "Commands";
+	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
+#>
+<#@ include file="..\..\ProjectFiles\Application.DTO\RequestsDTO.tt" #>
+<#@ include file="..\..\ProjectFiles\Application.DTO\ListiningsDTO.tt" #>
+<#@ include file="..\..\ProjectFiles\Application.DTO\SteppableRequestsValidators.tt" #>

@@ -1,0 +1,73 @@
+﻿<#@ import namespace="System.Threading.Tasks" #>
+<#@ include file="..\project.tt" #>
+<# var entities = GetEntities(); 
+   if (entities.Any()) {#>
+<# foreach(var namespaces in entities.GroupBy(p => p.Namespace.FullName)) { #>
+namespace <#= namespaces.Key.Replace("Entities", "Responses").Replace("Domain","Application.DTO") #> 
+{
+<# foreach(var entity in namespaces) { #>
+	public partial class <#= entity.Name #>DTO 
+	{
+<# foreach(var property in GetProperties(entity))
+{
+	var name = property.Key.Replace("[]", string.Empty);
+	var path = property.Key;
+	var isList = property.Value.Type.AsString.Contains("List<");
+	var t = property.Value.Type.AsString.Replace("System.Collections.Generic.List<","").Replace(">","");
+
+	if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
+{#>
+		<#= WritePropertySummary(property.Value) #>
+<#}
+
+	switch(t) {
+		case "string": 
+		case "string[]": 
+		case "object": 
+		case "System.Guid": 
+		case "System.Guid?":
+		case "bool":
+		case "bool?": 
+		case "int":
+		case "int?":
+		case "decimal": 
+		case "decimal?": 
+		case "double":
+		case "System.DateTimeOffset?":
+		case "System.DateTimeOffset":
+		case "double?":
+		case "System.DateTime":
+		case "System.DateTime?": #>
+<#	foreach(var attr in GetAttributes(property.Value))
+{
+        Console.WriteLine(attr);
+}#>
+		public <#= property.Value.Type.AsString #> <#= name #> { get; set; }
+<# break; 
+default: 
+	var type = FindType(property.Value.Type.CodeType.FullName.Replace("?", string.Empty));
+    if (type is CodeEnum) { #>
+		public <#= property.Value.Type.AsString #> <#= name #> { get; set; }
+<# }
+    else {
+        var prefix = property.Value.Type.AsString.Replace("Entities","Responses").Replace("Domain","Application.DTO");
+		if(isList)
+			prefix = prefix.Replace("System.Collections.Generic.List<","").Replace(">","");
+        var spplited = prefix.Split('.');
+        var propType = "Get" + spplited[spplited.Length-1].Replace("[]","").Replace("?","") + "DTO";
+        var isArray = isList || spplited[spplited.Length-1].Contains("[]") || spplited[spplited.Length-1].Contains("List<");
+		spplited[spplited.Length-1] = propType;
+		var propName = string.Join(".",spplited);
+#>
+		public <#= propName #><#=isArray ? "[]" : "" #> <#= name #> { get; set; }
+<# }
+break;
+} #>
+<# } #>
+	}
+<# } #>
+}
+
+
+<# } #>
+<# } #>

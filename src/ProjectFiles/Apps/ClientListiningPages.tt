@@ -1,0 +1,20 @@
+﻿@using LazyCrud.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
+
+@inherits <#= AggName.Replace("Agg","") #>.WebApp.Client.Pages.DefaultDesign.BaseListiningPage
+
+@page "/<#= entity.Name #>"
+
+<<#= AggName.Replace("Agg","") #>.WebApp.Client.Pages.DefaultDesign.DefaultListining Page="this.Page"
+                                                                 Size="this.Size"
+                                                                 Title="<#=entity.Name#>"
+                                                                 T="<#= entity.Name #>ListiningDTO" 
+                                                                 AdditionalQueryString=<#= hasParameter ? $"@Query" :"\"\"" #>/>
+<# if(hasParameter) { #>
+@page "/<#= entity.Name #><#=hasParameter ? $@"/{'{'+parameterType.Key+'}'}" : ""#>"
+@code {
+    [Parameter] public string <#=parameterType.Key#> { get; set; }
+    string Query => $"<#= hasParameter ? $"{parameterType.Key}Equal={'{'+parameterType.Key+'}'}" :"" #>";
+}
+<#}#>
+<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}", @$"Index.razor", true); #>
+<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}", @$"Index.razor.css", false); #>

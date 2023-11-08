@@ -1,0 +1,33 @@
+﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using FluentValidation;
+using LazyCrud.Core.Application.DTO.Attributes;
+<#
+if (entities.Any()) {#>
+<# foreach(var namespaces in groupEntities) { 
+var myNamespace = namespaces.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO"); #>
+namespace <#= myNamespace #> 
+{
+	using Requests;
+<# foreach(var entity in namespaces) { 
+var otherNamespace = entity.Namespace.FullName.Replace("Domain","Application.DTO");
+var className = $"{entity.Name}ListiningDTO";
+var attrs = GetAttributesDict(entity);
+//if(!attrs.Any(x=>x.Key == "EndpointsT4")) continue;
+var canGet = attrs.Any(x=>x.Key == "EndpointsT4") && attrs["EndpointsT4"].Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+var myClassAttrs = GetAttributes(entity).Where(x=>x.StartsWith("[H"));
+foreach(var myAttr in myClassAttrs) {#> <#=myAttr#> <# } #>
+    public partial class <#=className#> : <#= MyNearestDefaultParent(entity) #>DTO
+	{
+        <# if(canGet) {#> <#=WriteListining(entity)#> <#}#>
+    }
+<# } #>
+}
+<# } #>
+<# } #>
+<# SaveOutputToSubFolder(
+    folderName: $"T4", 
+    outputFileName: @$"{AggName}.ListiningDTO.cs", 
+    recreateFileIfExists: true); #>

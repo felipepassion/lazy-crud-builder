@@ -1,0 +1,48 @@
+﻿<#
+    var type = FindType(field.Value.Type.CodeType.FullName.Replace("?", string.Empty));
+    var myType = field.Value.Type.AsString.Replace("System.Collections.Generic.List<","").Replace(">","");
+	var myTypeName = myType.Split('.').Last();
+    var myName = field.Key.Replace("/",".");
+	var myPropertyName = myName.Split('.').LastOrDefault();
+	var myDisplayName = myPropertyName;
+	var myAttrs = GetAttributesDict(field.Value);
+	if(myAttrs.TryGetValue("DisplayName", out var val)) {
+		myDisplayName = val.First().Value.Replace("\"","");
+	}
+switch(myTypeName) { 
+		    case "string": 
+		    case "string?": 
+		    case "object": 
+		    case "int":
+		    case "int?":
+		    case "decimal": 
+		    case "decimal?": 
+		    case "double":
+		    case "double?":
+		    case "System.Guid": 
+		    case "System.Guid?":#>
+<#@ include file="BasicTextInput.tt" #>
+<#			break;
+			case "bool":
+		    case "bool?":#>
+<#@ include file="BasicSwitchTogglerInput.tt" #>
+<#			break;
+			case "DateOnly":
+		    case "DateOnly?":
+			case "System.DateOnly":
+		    case "System.DateOnly?":
+			case "TimeOnly":
+		    case "TimeOnly?":
+		    case "DateTimeOffset":
+		    case "DateTimeOffset?":
+		    case "DateTime":
+		    case "DateTime?":#>
+<#@ include file="BasicDateTimeInput.tt" #>
+<#			break;
+			case "ImageFileInfo":#>
+<#@ include file="BasicImageInput.tt" #>
+<#			break;
+			default:#>
+<#@ include file="BasicFormInputGeneralChooser.tt" #>
+<#			break;
+}#>

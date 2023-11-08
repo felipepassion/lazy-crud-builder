@@ -1,0 +1,1 @@
+﻿<UploadFile Image="@Model.<#=myName#>" />

@@ -1,0 +1,13 @@
+﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
+<#
+	var entities = GetMyAggregateEntities(withAttribute: "EndpointsT4");
+
+	var project = GetCurrentProject();
+	var path = Path.GetDirectoryName(project.FullName);
+	var myName = project.Name.Split('.').First();
+	var AggName = myName + "Agg";
+	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+
+#>
+<#@ include file="..\..\ProjectFiles\Application\AppServices.tt" #>
+<#@ include file="..\..\ProjectFiles\Application\IAppServices.tt" #>

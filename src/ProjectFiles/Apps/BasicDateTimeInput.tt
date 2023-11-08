@@ -1,0 +1,13 @@
+﻿        <div class="input-secondary-item">
+               <SfTextBox  @bind-value="Model.<#=myName#>"
+                           <#if(isTitle) {#>   @oninput="async (x)=>{ await OnFormUpdated(()=>{ 
+                                Model.<#=myName#> = DateOnly.TryParse(x.Value.ToString(), out var val) ? val : DateOnly.MinValue;; });}" 
+                           <#}#>
+                            @onchange="async () => { await OnAutoSaveTriggered(); }"
+                            FloatLabelType="@FloatLabelType.Auto"
+                            type="date" class="cdigo-cnes-1 inter-medium-silver-16px"
+                            Placeholder="<#=GetDisplayName(field)#>" />
+            <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
+                <ValidationMessage For="@(() => Model.<#=myName#>)"></ValidationMessage>
+            </div>
+        </div>

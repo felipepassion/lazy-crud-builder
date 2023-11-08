@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Saga.Core.Application.DTO</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Seedwork\Mapping\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Addresses\Addresses.Enumerations\Addresses.Enumerations.csproj" />
+    <ProjectReference Include="..\..\Companies\Companies.Enumerations\Companies.Enumerations.csproj" />
+    <ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\CrossCuting.Infra.Utils.csproj" />
+    <ProjectReference Include="..\..\Professionals\Professionals.Enumerations\Professionals.Enumerations.csproj" />
+    <ProjectReference Include="..\..\Contracts\Contracts.Enumerations\Contracts.Enumerations.csproj" />
+    <ProjectReference Include="..\Core.Domain.CrossCutting\Core.Domain.CrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>

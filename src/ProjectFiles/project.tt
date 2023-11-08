@@ -1,0 +1,1338 @@
+﻿<#@ template hostSpecific="true" debug="true" language="C#"  #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ output extension=".generated.cs" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE80" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="EnvDTE80" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#+ public string GetGrupoEmpresaName() { return "LazyCrud"; }
+    public string GetProductName()  { return ""; }
+    public string GetDefaultNamespace() { return "LazyCrud"; }
+
+    public string GetMyAggName(){
+        var myName = GetCurrentProject().Name.Split('.').First();
+        return myName + "Agg";        
+    }
+
+    public Project FindProject(string name, bool ignorePrefix = false) {
+        
+        IServiceProvider serviceProvider = (IServiceProvider)this.Host;
+        EnvDTE.DTE dte = (EnvDTE.DTE) serviceProvider.GetCOMService(typeof(EnvDTE.DTE));
+        var src = dte.Solution.Projects.Item(2);
+        var projects = GetProjects(src).ToArray();    
+		
+        if(!name.Contains('.') && !ignorePrefix){
+            var myProject = GetCurrentProject();
+            var projectPrefix = myProject.Name.Split('.').First();
+            name = $"{projectPrefix}.{name}";   
+        }
+        foreach(var project in projects) {
+            if (project.Name == name)
+                return project;
+        }
+
+        return null;
+    }
+
+    public List<Project> FindDomainProjects() {
+        
+        IServiceProvider serviceProvider = (IServiceProvider)this.Host;
+        EnvDTE.DTE dte = (EnvDTE.DTE) serviceProvider.GetCOMService(typeof(EnvDTE.DTE));
+        var src = dte.Solution.Projects.Item(2);
+        var projects = GetProjects(src).ToArray();    
+		var result = new List<Project>();
+
+        foreach(var project in projects) {
+            if (project.Name.EndsWith(".Domain") && !project.Name.StartsWith("Core") && project.Name.Split('.').Count() == 2)
+                result.Add(project);;
+        }
+
+        return result;
+    }
+
+    Project FindProject()
+    {
+        IServiceProvider serviceProvider = this.Host as IServiceProvider;
+        DTE dte = (DTE)serviceProvider.GetService(typeof(DTE));
+        var item = dte.Solution.FindProjectItem(Host.TemplateFile);
+        if (item != null && item.ContainingProject != null)
+            return item.ContainingProject;
+        throw new InvalidOperationException("Can't find project");
+    }
+
+    public Project GetCurrentProject() {
+        var test = this;
+        IServiceProvider serviceProvider = (IServiceProvider)this.Host;
+        EnvDTE.DTE dte = (EnvDTE.DTE) serviceProvider.GetCOMService(typeof(EnvDTE.DTE));
+
+        var item = dte.Solution.FindProjectItem(this.Host.TemplateFile);
+        return item.ContainingProject;
+    }
+    
+    public List<string> GetAppServices() {
+        var project = FindProject("Application");
+        var directory = Path.GetDirectoryName(project.FileName);
+        var path = Path.Combine(directory, "Contracts");
+        var files = Directory.GetFiles(path).Select(p => Path.GetFileNameWithoutExtension(p));
+        return files.ToList();
+    }
+
+    public List<Project> GetDataProjects() {
+		
+        var provider = (IServiceProvider)this.Host;
+        var dte = provider.GetService(typeof(DTE)) as DTE;  
+        var src = dte.Solution.Projects.Item(2);
+        var projects = GetProjects(src);
+        var response = new List<Project>();
+
+        foreach(var project in projects) {
+            if (project.Name.EndsWith("Infrastructure.Data") == false || project.Name.EndsWith("Tests")) continue;
+            response.Add(project);
+        }
+
+        return response;
+    }
+
+    public List<CodeNamespace> GetAggregates() {
+        var result = new List<CodeNamespace>();
+        //var project = FindProject("Domain");
+        //GetAggregates(project.CodeModel.CodeElements, result);
+        return result;
+    }
+
+     public List<CodeInterface> GetServices() {
+        var result = new List<CodeInterface>();
+        var project = FindProject("Application");
+        GetServices(project.CodeModel.CodeElements, result);
+        return result;
+    }
+
+    public List<CodeClass> GetAggregateEntities(string projectName, string withAttribute = null, string withEndpoint = null, string withoutAttribute = null) {
+        var result = new List<CodeClass>();
+        var project = FindProject(projectName);
+        var myName = project.Name.Split('.').First();
+        var AggName = myName + "Agg";
+        GetEntities(project.CodeModel.CodeElements, result, AggName, withAttribute: withAttribute, withoutAttribute: withoutAttribute);
+        if(!string.IsNullOrWhiteSpace(withEndpoint)){
+            result = result.Where(x=> GetAttributesDict(x)["EndpointsT4"].Any(x=>x.Value.Contains(withEndpoint) || x.Value.Contains("All"))).ToList();
+        }
+        return result;
+    }
+
+    public List<CodeClass> GetMyAggregateEntities(string withAttribute = null, string withEndpoint = null, string withoutAttribute = null) {
+        var result = new List<CodeClass>();
+        var project = FindProject("Domain");
+        var myName = project.Name.Split('.').First();
+        var AggName = myName + "Agg";
+        GetEntities(project.CodeModel.CodeElements, result, AggName, withAttribute: withAttribute, withoutAttribute: withoutAttribute);
+        if(!string.IsNullOrWhiteSpace(withEndpoint)){
+            result = result.Where(x=> GetAttributesDict(x)["EndpointsT4"].Any(x=>x.Value.Contains(withEndpoint) || x.Value.Contains("All"))).ToList();
+        }
+        return result;
+    }
+
+    public List<CodeClass> GetEntities() {
+        var result = new List<CodeClass>();
+        var project = FindProject("Domain");
+        GetEntities(project.CodeModel.CodeElements, result);
+        return result;
+    }
+
+    public List<CodeClass> GetEntities(Project project) {
+        var result = new List<CodeClass>();
+        GetEntities(project.CodeModel.CodeElements, result);
+        return result;
+    }
+
+    public List<CodeClass> GetEntities(
+        string projectName,
+        string withAttribute = null,
+        bool includeOthes = false,
+        bool ignorePrefix = false,
+        string withEndpoint = null,
+        string withoutAttribute = null)	
+    {
+        var result = new List<CodeClass>();
+        var project = FindProject(projectName, ignorePrefix: ignorePrefix);
+        try{
+            GetEntities(project.CodeModel.CodeElements, result, includeOthes: includeOthes, withAttribute: withAttribute, withoutAttribute: withoutAttribute);
+        }
+        catch(Exception ex)
+        {
+        }
+        if(!string.IsNullOrWhiteSpace(withEndpoint)){
+            result = result.Where(x=> GetAttributesDict(x).ContainsKey("EndpointsT4") && GetAttributesDict(x)["EndpointsT4"].Any(x=>x.Value.Contains(withEndpoint) || x.Value.Contains("All"))).ToList();
+        }
+        return result;
+    }
+
+    private void GetEntities(CodeElements elements,
+        List<CodeClass> result,
+        string aggName = null,
+        bool includeOthes = false,
+        string withAttribute = null, 
+        string withoutAttribute = null)	
+    {		
+        if (elements == null) return;
+
+        foreach (var element in elements) {       
+            if (element is CodeNamespace) {
+                var namespc = element as CodeNamespace;
+
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    
+                    GetEntities(namespc.Members, result, aggName, includeOthes, withAttribute, withoutAttribute);
+                }
+            } else if (element is CodeClass) {
+                var clss = element as CodeClass;
+                if (clss?.Namespace?.Name?.EndsWith(".Entities") == true || includeOthes == true) {
+                    
+                    if(aggName != null) {
+                        if(clss.Namespace.Name.Split('.').FirstOrDefault(x => x.EndsWith("Agg")) != aggName)
+                            continue;
+                    }
+                    if(!string.IsNullOrWhiteSpace(withAttribute)){
+                        if(!ContainsAttribute(clss, withAttribute))
+                            continue;
+                    }
+                    if(!string.IsNullOrWhiteSpace(withoutAttribute)){
+                        if(ContainsAttribute(clss, withoutAttribute))
+                            continue;
+                    }
+                    result.Add(clss);
+                }
+                GetEntities(clss.Members, result, aggName, includeOthes, withAttribute, withoutAttribute);
+            }
+        }
+    }
+
+    public CodeClass GetEntity(string projectName, string name) {
+        var result = new List<CodeClass>();
+        var project = FindProject(projectName);
+        return GetEntityByName(project.CodeModel.CodeElements, result, name);
+    }
+
+    public CodeClass GetEntity(string name) {
+        var splitted = name.Split('.').ToArray();
+        var idx = Array.IndexOf(splitted, "Aggregates");
+        var projectName = String.Join(".",splitted.Take(idx)).Replace($"{GetGrupoEmpresaName()}.","");
+
+        var project = FindProject(projectName ?? "Domain");
+        return GetEntities(projectName: projectName, includeOthes: true)
+            .FirstOrDefault(x=>x.Name.ToLower() == name.ToLower() || x.FullName.ToLower() == name.ToLower());
+    }
+
+    private CodeClass GetEntityByName(CodeElements elements, List<CodeClass> result, string name = null)	{
+		
+        if (elements == null) return null;
+
+        foreach (var element in elements) {     
+            if(result.Any()) return result.First();
+            if (element is CodeNamespace) {
+                var namespc = element as CodeNamespace;
+
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    
+                    GetEntityByName(namespc.Members, result, name);
+                }
+            } else if (element is CodeClass) {
+                var clss = element as CodeClass;
+                if (clss?.Namespace?.Name?.EndsWith(".Entities") == true) {
+                    
+                    if(clss.Name == name){
+                        result.Add(clss);
+                        return clss;
+                    }
+                }
+                GetEntityByName(clss.Members, result, name);
+            }
+        }
+        if(result.Any()) return result.First();
+        return null;
+    }
+
+    public void GetEntity(CodeElements elements, List<CodeClass> result, string name = null)	{
+		
+        if (elements == null) return;
+
+        foreach (var element in elements) {       
+            if (element is CodeNamespace) {
+                var namespc = element as CodeNamespace;
+
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    
+                    GetEntity(namespc.Members, result, name);
+                }
+            } else if (element is CodeClass) {
+                var clss = element as CodeClass;
+                if (clss?.Namespace?.Name?.EndsWith(".Entities") == true) {
+                    
+                    if(clss.Name.ToLower() != name.ToLower() && $"{clss.Namespace.Name}.{clss.Name}" != name) {
+                        continue;
+                    }
+
+                    result.Add(clss);
+                    return;
+                }
+                GetEntity(clss.Members, result, name);
+            }
+        }
+    }
+
+    public List<CodeClass> GetDTOs() {
+        var result = new List<CodeClass>();
+        var project = FindProject("Application.DTO");
+        GetDTOs(project.CodeModel.CodeElements, result);
+        return result;
+    }
+
+    public List<CodeInterface> GetRepositories() {
+        var result = new List<CodeInterface>();
+        var project = FindProject("Domain");
+        GetRepositories(project.CodeModel.CodeElements, result);
+        return result;
+    }
+
+    private List<Project> GetProjects(Project folder) {
+        
+        var projects = new List<Project>();
+        var list = new List<string>();
+        int i = 0;
+
+        foreach (ProjectItem pj in folder.ProjectItems) {
+
+            //if(i++ == 0) continue;
+            
+
+            var project = pj.SubProject;
+            if (project == null) continue;
+            
+            list.Add(pj.Name);
+
+            if (project.Kind == ProjectKinds.vsProjectKindSolutionFolder) {
+                projects.AddRange(GetProjects(project));
+            } else {
+                projects.Add(project);
+            }
+        }
+
+        return projects;
+    }
+
+    private void GetAggregates(CodeElements elements, List<CodeNamespace> result) {
+		
+        if (elements == null) return;
+
+        foreach (var element in elements) {       
+			
+            if (element is CodeNamespace) {
+				
+                var namespc = element as CodeNamespace;
+			
+                if (namespc.FullName.Contains("Domain.Aggregates") && namespc.FullName.EndsWith("Agg")) {
+                    result.Add(namespc);
+                }
+
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    GetAggregates(namespc.Members, result);
+                }
+            }
+        }
+    }
+
+    private void GetServices(CodeElements elements, List<CodeInterface> result) {
+		
+        if (elements == null) return;
+
+        foreach (CodeElement element in elements) {       
+			
+            if (element is CodeInterface && element.FullName.Contains("Application.Services.Interfaces")) {
+                result.Add(element as CodeInterface);
+            }
+            else if (element is CodeNamespace) {
+
+                var namespc = element as CodeNamespace;
+			
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    GetServices(namespc.Members, result);
+                }
+            }
+        }
+    }
+
+    public List<CodeClass> GetAggregateEntities(CodeNamespace aggregate) {
+		
+        var entities = new List<CodeClass>();
+        GetEntities(aggregate.Members, entities);
+
+        return entities;
+    }
+
+    public List<CodeClass> GetAggregateValueObjects(CodeNamespace aggregate) {
+		
+        var valueObjects = new List<CodeClass>();
+        GetValueObjects(aggregate.Members, valueObjects);
+
+        return valueObjects;
+    }
+	
+    public string Pluralize(string word)
+    {
+        
+        if(word.EndsWith("ss") || word.Last() == 'z')
+            word += "es";
+        else if(word.Last() == 's')
+            return word;
+        else if (word.Last() == 'y')
+            word = word.Substring(0, word.Length - 1) + "ies";
+        else
+            word += 's';
+        return word;
+    }
+
+    private void GetDTOs(CodeElements elements, List<CodeClass> result)	{
+		
+        if (elements == null) return;
+
+        foreach (var element in elements) {       
+            if (element is CodeNamespace) {
+                var namespc = element as CodeNamespace;
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    GetDTOs(namespc.Members, result);
+                }
+            } else if (element is CodeClass) {
+                var clss = element as CodeClass;
+                if (clss.Namespace.Name.EndsWith(".Requests") || 
+                    clss.Namespace.Name.EndsWith(".Responses") ||
+                clss.Name == "PaginationDTO") {
+
+                    result.Add(clss);
+                }
+                GetDTOs(clss.Members, result);
+            }
+        }
+    }
+
+    public List<CodeClass> GetValueObjects() {
+        var result = new List<CodeClass>();
+        var project = FindProject("Domain");
+        GetValueObjects(project.CodeModel.CodeElements, result);
+        return result;
+    }
+
+    public List<CodeClass> GetCommands() {
+        var result = new List<CodeClass>();
+        var project = FindProject("Domain");
+        GetCommands(project.CodeModel.CodeElements, result);
+        return result;
+    }
+
+    private void GetRepositories(CodeElements elements, List<CodeInterface> result)	{
+		
+        if (elements == null) return;
+		
+        foreach (var element in elements) {       
+            if (element is CodeNamespace) {
+                var namespc = element as CodeNamespace;
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    GetRepositories(namespc.Members, result);
+                }
+            } else if (element is CodeInterface)	{
+                var interfc = element as CodeInterface;
+                if (interfc.Namespace.Name == "Repositories") result.Add(interfc);
+                GetRepositories(interfc.Members, result);
+            }
+        }
+    }
+
+    private void GetValueObjects(CodeElements elements, List<CodeClass> result)	{
+		
+        if (elements == null) return;
+
+        foreach (var element in elements) {       
+            if (element is CodeNamespace) {
+                var namespc = element as CodeNamespace;
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    GetValueObjects(namespc.Members, result);
+                }
+            } else if (element is CodeClass) {
+                var clss = element as CodeClass;
+                if (clss.Namespace.Name.EndsWith(".ValueObjects")) result.Add(clss);
+                GetValueObjects(clss.Members, result);
+            }
+        }
+    }
+
+    private void GetCommands(CodeElements elements, List<CodeClass> result)	{
+		
+        if (elements == null) return;
+
+        foreach (var element in elements) {       
+            if (element is CodeNamespace) {
+                var namespc = element as CodeNamespace;
+                if (namespc.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    GetCommands(namespc.Members, result);
+                }
+            } else if (element is CodeClass) {
+                var clss = element as CodeClass;
+                if (clss.Namespace.Name.EndsWith(".Commands")) result.Add(clss);
+                GetCommands(clss.Members, result);
+            }
+        }
+    }
+
+    // Helpers
+
+    List<CodeElement> _types = null;
+
+    public CodeElement FindType(string type) {
+		
+        if (_types == null) {
+            _types = new List<CodeElement>();
+            GetTypes(FindProject("Domain")?.CodeModel?.CodeElements, _types);
+        }
+        foreach(var item in _types) {
+		    try {
+                if (item.FullName == type) return item;
+            }
+            catch(Exception ex) {
+                throw new Exception("Error in FindType method: " + item + " - " + ex.Message);
+            }
+        }
+        
+        return null;
+    }
+
+    private void GetTypes(CodeElements elements, List<CodeElement> result)	{
+		
+        if (elements == null) return;
+
+        foreach (var element in elements) {       
+            if (element is CodeNamespace) {
+                var namesp = element as CodeNamespace;
+                if (namesp.FullName.StartsWith(GetGrupoEmpresaName())) {
+                    GetTypes(namesp.Members, result);
+                }
+            } else if (element is CodeClass) {
+                result.Add(element as CodeElement);
+                GetTypes((element as CodeClass).Members, result);
+            } else if (element is CodeEnum) {
+                result.Add(element as CodeElement);
+            }
+        }
+    }
+
+    public string WritePropertySummary(CodeProperty codeProperty)
+    {
+        if(string.IsNullOrWhiteSpace(codeProperty.DocComment)) return null;
+        string[] spplited = codeProperty.DocComment.Replace("\r","").Split('\n');
+        spplited = spplited.Take(spplited.Length-1).Skip(1).ToArray();
+        var doc = "///" + string.Join(@"", spplited.Select(x=>x.Trim()));
+        return doc;
+    }
+
+    public Dictionary<string, List<KeyValuePair<string,string>>> GetAttributesDict(CodeProperty attr)
+    {
+        return GetAttributesDict(attr.Attributes);
+    }
+    public Dictionary<string, List<KeyValuePair<string,string>>> GetAttributesDict(CodeClass attr)
+    {
+        return GetAttributesDict(attr.Attributes);
+    }
+    
+
+    public Dictionary<string, List<KeyValuePair<string,string>>> GetAttributesDict(CodeElements attrs)
+    {
+        var result = new Dictionary<string, List<KeyValuePair<string,string>>>();
+
+        foreach (CodeAttribute attr in attrs)
+        {
+            if(attr.Children.Count > 0)
+            {
+		        foreach(EnvDTE80.CodeAttributeArgument ch in attr.Children)
+		        {
+                    if(!result.ContainsKey(attr.Name))
+                        result.Add(attr.Name, new List<KeyValuePair<string,string>>{ new KeyValuePair<string,string>(string.IsNullOrWhiteSpace(ch.Name) ? "Value" : ch.Name, ch.Value) });
+                    else
+                        result[attr.Name].Add(new KeyValuePair<string,string>(string.IsNullOrWhiteSpace(ch.Name) ? "Value" : ch.Name, ch.Value));
+		        }
+            }
+            else
+            {
+                result.Add(attr.Name, new List<KeyValuePair<string,string>>());
+            }
+         }
+        
+        return result;
+    }
+
+    public List<string> GetAttributes(
+        CodeProperty clss, 
+        bool includeT4Attributes = false, 
+        bool includeDatabaseAttributes = false,
+        bool includeSteppableAttributes = false) 
+    {
+        var result = new List<string>();
+        
+        foreach (CodeAttribute attr in clss.Attributes)
+        {
+            if(!includeT4Attributes && (attr.Name.Contains("T4")))
+                continue;
+            if(!includeSteppableAttributes && (attr.Name.Contains("Step")))
+                continue;
+            if(!includeDatabaseAttributes && (attr.Name == "OneToOne" || attr.Name == "Column"))
+                continue;
+            
+            if(attr.Name == "NotRequiredOnFrontT4")
+                return new List<string>();
+
+            if(attr.Children.Count > 0)
+            {
+		        foreach(EnvDTE80.CodeAttributeArgument ch in attr.Children)
+		        {
+                    result.Add('[' + attr.Name + '(' +  ch.Value + ")]");
+		        }
+            }
+            else
+            {
+                result.Add('[' + attr.Name + "]");
+            }
+         }
+        return result;
+    }
+
+    public List<string> GetAttributes(CodeClass clss, 
+        bool includeDatabaseAttributes = false,
+        bool includeSteppableAttributes = false,
+        bool includeT4Attributes = false)
+    {
+        var result = new List<string>();
+        
+        foreach (CodeAttribute attr in clss.Attributes)
+        {
+             if(!includeT4Attributes && (attr.Name.Contains("T4")))
+                continue;
+            if(!includeSteppableAttributes && (attr.Name.Contains("Step")))
+                continue;
+            if(!includeDatabaseAttributes && (attr.Name == "OneToOne" || attr.Name == "Column"))
+                continue;
+
+            if(attr.Children.Count > 0)
+            {
+		        foreach(EnvDTE80.CodeAttributeArgument ch in attr.Children)
+		        {
+                    result.Add('[' + attr.Name + '(' +  ch.Value + ")]");
+		        }
+            }
+            else
+            {
+                result.Add('[' + attr.Name + "]");
+            }
+         }
+        return result;
+    }
+
+    public bool ContainsAttribute(CodeProperty clss, string name)
+    {
+        var result = new List<string>();
+        
+        foreach (CodeAttribute attr in clss.Attributes)
+        {
+            if(attr.Children.Count > 0)
+            {
+		        foreach(EnvDTE80.CodeAttributeArgument ch in attr.Children)
+		        {
+                    if($"{attr.Name?.ToLower()}({ch.Value})".Contains(name?.ToLower())==true) return true;
+		        }
+            }
+            else
+            {
+                if(attr.Name?.ToLower().Contains(name?.ToLower())==true) return true;
+            }
+        }
+        return false;
+    }
+    public bool ContainsAttribute(CodeClass clss, string name)
+    {
+        var result = new List<string>();
+        
+        foreach (CodeAttribute attr in clss.Attributes)
+        {
+            if(attr.Children.Count > 0)
+            {
+		        foreach(EnvDTE80.CodeAttributeArgument ch in attr.Children)
+		        {
+                    if($"{attr.Name?.ToLower()}({ch.Value})".Contains(name?.ToLower())==true) return true;
+		        }
+            }
+            else
+            {
+                if(attr.Name?.ToLower().Contains(name?.ToLower())==true) return true;
+            }
+        }
+        return false;
+    }
+    public CodeEnumPropertyInfo GetProperties(CodeEnum clss, bool includeBase = true, string withAttribute = null, bool includeParent = true) {
+        CodeEnumPropertyInfo result = null;
+        var list = new List<string>();
+        foreach(var member in clss?.Members) { 
+            list.Add((member as CodeElement).Name);
+        }
+        result = new CodeEnumPropertyInfo(clss.Name, list);
+        return result;
+    }    
+    public Dictionary<string, CodeProperty> GetProperties(CodeClass clss, bool includeBase = true, string withAttribute = null, bool includeParent = true) {
+		
+        var properties = new Dictionary<string, CodeProperty>();
+        
+        GetProperties(clss, properties, includeBase, withAttribute, includeParent);
+
+        return properties;
+    }
+    public Dictionary<string, CodeProperty> GetComplexProperties(CodeClass clss, bool includeBase = true, string withAttribute = null, bool includeParent = true) {
+		
+        var properties = new Dictionary<string, CodeProperty>();
+        
+        GetComplexProperties(clss, properties, includeBase, withAttribute, includeParent);
+
+        return properties;
+    }
+
+    public void GetProperties(CodeClass clss, Dictionary<string, CodeProperty> properties, bool includeBase = true, string withAttribute = null, bool includeParent = true) {
+        if(clss?.Members == null || (includeParent == false && clss.Name.Contains("Entity")))
+            return;
+        foreach(var member in clss?.Members) { 
+
+            if (member is CodeProperty == false) continue; 
+            
+            var property = member as CodeProperty;
+            if (property.Access.Equals(vsCMAccess.vsCMAccessPublic) == false) continue;
+	        if(ContainsAttribute(property, "IgnorePropertyT4") || property.Name.ToLower().Contains("domainevent")) continue;
+            if(!string.IsNullOrWhiteSpace(withAttribute)){
+                if(!ContainsAttribute(property, withAttribute))
+                    continue;
+            }
+            if(!properties.ContainsKey(property.Name))
+                properties.Add(property.Name, property);
+        }
+        if(includeBase == true && clss.Bases.Count > 0)
+        {
+            foreach(var b in clss.Bases)
+            {
+                //var bClss = b as CodeClass;
+                GetProperties(b as CodeClass, properties, includeBase, withAttribute, includeParent);
+            }
+        }
+    }
+    public class CodeEnumPropertyInfo
+    {
+        public CodeEnumPropertyInfo(string typeName, IEnumerable<string> values)
+        {
+            TypeName = typeName;
+            Values = values;
+        }
+
+        public string TypeName { get; set; }
+        public IEnumerable<string> Values { get; set; }
+    }
+
+    public void GetComplexProperties(CodeClass clss, Dictionary<string, CodeProperty> properties, bool includeBase = true, string withAttribute = null, bool includeParent = false) {
+        
+        if(includeParent == false && clss.Name.Contains("Entity"))
+            return;
+
+        foreach(var prop in clss.Members) { 
+                        
+            var property = prop as CodeProperty;
+            
+            if (!IsComplexType(property)) { continue; }
+            
+            var attrs = GetAttributesDict(property.Attributes);
+            var isMyStep = attrs.ContainsKey("Step") && attrs["Step"][0].Value == withAttribute.FirstOrDefault(x=>char.IsDigit(x)).ToString();
+            
+            if(!isMyStep) continue;
+
+            if (property.Access.Equals(vsCMAccess.vsCMAccessPublic) == false) continue;
+
+            var member = GetEntity(property.Type.AsFullName);
+            GetProperties(member, properties, includeBase);
+        }
+        if(includeBase == true && clss.Bases.Count > 0)
+        {
+            foreach(var b in clss.Bases)
+            {
+                GetComplexProperties(b as CodeClass, properties, includeBase, withAttribute);
+            }
+        }
+    }
+
+    public Dictionary<string, CodeProperty> GetRecursiveProperties(
+        CodeClass clss, 
+        bool includeBase = false, 
+        bool includeParent = true,
+        int? withStep = null,
+        string withoutAttribute = null) {
+        var result = new Dictionary<string, CodeProperty>();
+        GetRecursiveProperties(new List<string>(new[] { clss.FullName }), clss.Members, string.Empty, result, includeBase, includeParent, withStep, withoutAttribute);
+        if(includeBase && MyParent(clss) != null)
+            GetRecursiveProperties(new List<string>(new[] { clss.FullName }), MyParentClass(clss).Members, string.Empty, result, includeBase, includeParent, withStep, withoutAttribute);
+        return result;
+    }
+
+    public void GetRecursiveProperties(List<string> parents, 
+        CodeElements elements, string name, 
+        Dictionary<string, CodeProperty> result, 
+        bool includeBase=false,
+        bool includeParent = true,
+        int? withStep = null,
+        string withoutAttribute = null) {
+
+        if (elements == null) return;
+
+        foreach (var element in elements) {    
+		
+            var property = element as CodeProperty;
+            var company = GetGrupoEmpresaName();
+
+            if (element is CodeProperty == false){
+                continue;
+            }
+            
+            var attrsDict = GetAttributesDict(property);
+            if(attrsDict.ContainsKey("IgnorePropertyT4")){
+                continue;
+            }
+            if(withoutAttribute != null) {
+                if(attrsDict.ContainsKey(withoutAttribute)){
+                    continue;
+                }
+            }
+            
+            try{
+                if (parents.Contains(property.Type.CodeType.FullName)) continue;
+            }
+            catch(Exception ex)
+            {
+                continue;   
+            }
+
+            if (property.Type.AsString.StartsWith(company)) {
+
+                parents.Add(property.Type.CodeType.FullName);
+                
+                var members = property.Type.CodeType.Members;
+                if(AnyCodeElement(members) != true)
+                {
+                    var entity = GetEntity(property.Type.AsFullName);
+                    if(entity == null || (!includeParent && entity.Name=="Entity")) continue;
+
+                    var props = GetProperties(entity, includeBase: true, includeParent: includeParent);
+                    foreach(var item in props){
+                        result.Add(("/" + name + property.Name + "/" + item.Key + "/").Trim('/'), item.Value); 
+                    }
+                }
+
+                GetRecursiveProperties(
+                    parents, 
+                    members, name + property.Name + "/", 
+                    result, 
+                    includeBase,
+                    includeParent: includeParent,
+                    withStep: withStep,
+                    withoutAttribute: withoutAttribute);
+            }
+            else{
+            }
+            var key = ("/" + name + property.Name + "/").Trim('/');
+            if(!result.ContainsKey(key))
+                result.Add(key, property);
+        }
+    }
+
+    private bool AnyCodeElement(CodeElements elements)
+    {
+        foreach(var item in elements) return true;
+        return false;
+    }
+    public string ToCamelCase(string str) 
+    {
+        if(string.IsNullOrWhiteSpace(str)) return null;
+
+        return str[0].ToString().ToLower() + str.Substring(1, str.Length - 1);
+    }
+
+    public bool IsDerivedFrom(CodeClass entity, string fromName){
+        foreach(CodeClass item in entity.Bases){
+            if(item.Name == "Entity") {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public string MyParent(CodeClass entity){
+        foreach(CodeClass item in entity.Bases){
+            return item.Name;
+        }
+        return null;
+    }
+    public string MyNearestDefaultParent(CodeClass entity){
+        string result = null;
+        foreach(CodeClass item in entity.Bases) {
+            if(item.Name.Contains("Steppable")){
+                result = "SteppableEntity";
+            }
+            else if(item.Name.Contains("Activable")){
+                result = "ActivableEntity";
+            }
+            if(result == null && item.Name != "Entity" && item.Bases != null){
+                foreach(CodeClass b in item.Bases) return MyNearestDefaultParent(b);
+            }
+        }
+        return result ?? "Entity";
+    }
+
+    public KeyValuePair<string, CodeClass>? MyParentTType(CodeClass entity, bool includeRoot = false){
+        foreach(CodeClass item in entity.Bases){
+	        var parent = MyParentClass(entity);
+            if(!includeRoot && item.Name.Contains("Entity")) return null;
+
+	        if(parent != null && parent.FullName.Contains('<')){
+                return new KeyValuePair<string,CodeClass>(MyTType(parent), parent);
+	        }
+            return null;
+        }
+        return null;
+    }
+    public string MyTType(CodeClass obj)
+    {
+        var type = obj.FullName;
+        type = type.Substring(type.IndexOf('<')+1);
+        return type.Substring(0, type.Length-1);
+    }
+    public KeyValuePair<string,CodeProperty>[] MyAbstractProperties(CodeClass entity){
+        return GetProperties(entity).Where(x=>x.Value.Type.AsFullName == MyTType(entity)).ToArray();
+    }
+
+    public CodeClass MyParentClass(CodeClass entity){
+        foreach(CodeClass item in entity.Bases){
+            return item;
+        }
+        return null;
+    }
+
+    public List<string> ExtractAttributesWithValues(Dictionary<string, List<KeyValuePair<string,string>>> attrs, params string[] list){
+        var result = new List<string>();    
+
+        foreach(var item in list){
+            if(attrs.TryGetValue(item, out var atr))
+            {
+                var vals = string.Join(",", atr.Select(x=>x.Value));
+                if(!string.IsNullOrWhiteSpace(vals))
+                    vals = $"({vals})";
+                result.Add($"{item}{vals}");
+            }
+        }
+        return result;
+    }
+
+    public string WriteProperty(KeyValuePair<string, CodeProperty> property, bool isOverride = false, string AggName = null) {
+	    var aggName = property.Value.FullName.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+        var name = property.Key.Replace("[]", string.Empty);
+        var path = property.Key;
+        var isList = property.Value.Type.AsString.Contains("List<");
+        var t = property.Value.Type.AsString.Replace("System.Collections.Generic.List<","").Replace(">","");
+        var attrs = GetAttributesDict(property.Value);
+        
+        if(attrs.ContainsKey("MustImplementT4"))
+        {
+            isOverride = true;
+        }
+        
+        List<string> attrList = ExtractAttributesWithValues(attrs, "DisplayOnList","DisplayName","Title","Subtitle","ParameterType", "DefaultValue", "Min", "Max");
+        
+        var attr = "";
+        if(attrList.Any())
+            attr = $"[{string.Join(",",attrList)}] ";
+
+	    switch(t) {
+		    case "byte[]": 
+		    case "byte[]?": 
+		    case "string": 
+		    case "string[]": 
+		    case "object": 
+		    case "System.Guid": 
+		    case "System.Guid?":
+		    case "bool":
+		    case "bool?": 
+		    case "int":
+		    case "int?":
+		    case "decimal": 
+		    case "decimal?": 
+		    case "double":
+		    case "double?":
+		    case "System.DateOnly":
+		    case "System.TimeOnly":
+		    case "System.DateOnly?":
+		    case "System.TimeOnly?":
+		    case "System.DayOfWeek":
+		    case "System.DayOfWeek?":
+		    case "System.DateTimeOffset":
+		    case "System.DateTimeOffset?":
+		    case "System.DateTime":
+		    case "System.DateTime?": 
+		        return $"{attr}public {(isOverride == true? " override " : "")} {property.Value.Type.AsString} {name} {'{'} get; set; {'}'}";
+         break;
+        default: 
+	        var type = FindType(property.Value.Type.CodeType.FullName.Replace("?", string.Empty));
+            if (type is CodeEnum) { 
+		        return $"{attr}public {(isOverride? " override " : "")} {t} {name} {'{'} get; set; {'}'}";
+            }
+            else {
+                var prefix = property.Value.Type.AsString.Replace("Entities","Requests").Replace("Domain","Application.DTO");
+		        if(isList)
+			        prefix = prefix.Replace("System.Collections.Generic.List<","").Replace(">","");
+                var spplited = prefix.Split('.');
+                var propType = spplited[spplited.Length-1].Replace("[]","").Replace("?","") + "DTO";
+                var isArray = isList || spplited[spplited.Length-1].Contains("[]") || spplited[spplited.Length-1].Contains("List<");
+		        
+                var typeAggName = t.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"))?.Replace("Agg","");
+                if(typeAggName == null){
+                    typeAggName = property.Value.Type.AsString;
+                    propType = propType.Replace("DTO","");
+                }
+
+		        spplited[spplited.Length-1] = propType;
+
+		        var propName = string.Join(".",spplited);
+
+		        var propNameType = isArray ? $"List<{propName}>" : propName;
+		        var propNameNew = "";
+                if(propName == "Profissional")
+                {
+                }
+                
+                if(isArray || t.Split('.')[1] == "Core" || (typeAggName == t.Split('.')[1] && (attrs.ContainsKey("OneToOne") || ContainsAttribute(property.Value, "jsonb"))))
+                    propNameNew = $"= new {(isArray? $"List<{propName}>" : propName)}();";
+              
+		        return $"{attr}public {(isOverride? " override " : "")}{propNameType} {name} {'{'} get; set; {'}'} {propNameNew}";
+            }
+        } 
+    }
+
+    public bool IsComplexType(CodeProperty property)
+    {
+        if(property == null) return false;
+        var t = property.Type.AsString.Replace("System.Collections.Generic.List<","").Replace(">","");
+        var type = FindType(property.Type.CodeType.FullName.Replace("?", string.Empty));
+	    switch(t.Split('.').Last()) {
+		    case "ImageFieldInfo": 
+		    case "byte[]": 
+		    case "byte[]?": 
+		    case "string": 
+		    case "string[]": 
+		    case "object":
+		    case "System.Guid": 
+		    case "System.Guid?":
+		    case "bool":
+		    case "bool?": 
+		    case "int":
+		    case "int?":
+		    case "decimal": 
+		    case "decimal?": 
+		    case "double":
+		    case "double?":
+            case "DateOnly":
+            case "TimeOnly":
+            case "DateOnly?":
+            case "TimeOnly?":
+            case "DayOfWeek":
+		    case "DayOfWeek?":
+		    case "DateTimeOffset":
+		    case "DateTimeOffset?":
+		    case "DateTime":
+		    case "DateTime?": 
+		        return false;
+            break;
+        default:
+            if(type is CodeEnum) return false;
+            return true;
+        }
+    }
+
+    private string WriteValidator(CodeClass entity, int step, string mainEntity, bool ignoreStep) {
+        
+        var properties = GetRecursiveProperties(entity, includeParent: false);
+
+        var result = "";
+        var group = properties.GroupBy(x=> x.Key.StartsWith(x.Key.Split('/').First()) ? x.Key.Split('/').First() : "")
+            .ToDictionary(x=>x.Key, x=>x.ToArray());
+        
+        foreach(var item in group){
+            var dict = item.Value.Where(x=>x.Key.Split('/').First().StartsWith(item.Key.Split('/').First()))
+                .ToDictionary(x=>x.Key, x=>x.Value);
+            result += WriteValidator(entity, dict, step, mainEntity, ignoreStep);
+        }
+
+        foreach(CodeClass parent in entity.Bases)
+        {
+            if(parent.Name == "Entity") break;
+            result += WriteValidator(parent, step, mainEntity, ignoreStep);
+        }
+        
+        return result;
+    }
+
+    public string WriteValidator(CodeClass entity, Dictionary<string, CodeProperty> properties, int step, string mainEntity, bool ignoreStep)
+    {
+        var result = "";
+        int i = 0;
+        foreach (var property in properties.OrderBy(x=>x.Key))
+        {
+
+            var attrs2 = GetAttributes(property.Value);
+            var attrs = GetAttributesDict(property.Value);
+            var displayName = property.Key;
+
+            if(attrs.ContainsKey("Step")){
+                if(attrs["Step"].First().Value != step.ToString())
+                    return result;
+            }
+            if(attrs.ContainsKey("DisplayName")){
+                displayName = attrs["DisplayName"].First().Value.Replace("\"","'");
+            }
+            if(attrs.ContainsKey("IgnorePropertyT4OnRequest")){
+                return result;
+            }
+            
+            var isComplex = properties.Any(x=>x.Key.StartsWith(property.Key + @$"/"));
+            
+            if(attrs.ContainsKey("IgnoreValidation")){
+                if(isComplex)
+                    return result;
+                else
+                    continue;
+            }
+            
+            var attrRequiredMessage = "";
+            if(attrs.ContainsKey("RequiredT4") && attrs["RequiredT4"].FirstOrDefault().Value is not null) attrRequiredMessage = $".WithMessage({attrs["RequiredT4"].First().Value ?? ""})";
+
+            var attrUniqueMessage = $"{'"'+displayName} já existente.{'"'}";
+            if(attrs.ContainsKey("Unique") && attrs["Unique"].FirstOrDefault().Value is not null) attrUniqueMessage = $"{attrs["Unique"].First().Value ?? ""}";
+
+            var newStr = result;
+            newStr += !attrs.ContainsKey("Unique") ? "" : @$"RuleFor(x=>x).MustAsync((x, y) => BeUnique<{mainEntity}DTO>(x.ExternalId, {'"'+property.Key+'"'}, x.{property.Key.Replace("/",".")}, CancellationToken.None)).WithMessage({attrUniqueMessage}).WithName({'"'+property.Key+'"'});";            
+            newStr += @$"RuleFor(Q => Q.{property.Key.Replace("/",".")})";
+            newStr += @$"{((attrs.ContainsKey("Required") || attrs.ContainsKey("RequiredT4")) ? (isComplex? ".NotNull()" : ".NotEmpty()") : "")}{attrRequiredMessage}";
+            newStr += @";";
+
+            if(newStr != @$"RuleFor(Q => Q.{property.Key.Replace("/",".")});")
+                result = newStr;
+        }
+
+        return result;
+    }
+
+    private string WriteListining(CodeClass entity) {
+        
+        var properties = GetRecursiveProperties(entity, includeParent: false, withoutAttribute: "IgnorePropertyOnListingT4");
+
+        var result = "";
+        var group = properties
+            .GroupBy(x=> x.Key.StartsWith(x.Key.Split('/').First()) ? x.Key.Split('/').First() : "")
+            .ToDictionary(x=>x.Key, x=>x.ToArray());
+        
+        foreach(var item in group){
+            var dict = item.Value.Where(x=>x.Key.Split('/').First().StartsWith(item.Key.Split('/').First()))
+                .ToDictionary(x=>x.Key, x=>x.Value);
+            result += WriteListining(entity, dict);
+        }
+
+        foreach(CodeClass parent in entity.Bases)
+        {
+            if(parent.Name == "Entity") break;
+            result += WriteListining(parent);
+        }
+        
+        return result;
+    }
+
+    public string WriteListining(CodeClass entity, Dictionary<string, CodeProperty> properties)
+    {
+        var result = "";
+        int i = 0;
+        foreach (var property in properties.OrderBy(x=>x.Key))
+        {
+            var attrs = GetAttributesDict(property.Value);
+
+            //var isComplex = properties.Any(x=>!x.Key.Contains("ImageFileInfo") && x.Key.StartsWith(property.Key + @$"/"));
+            //if(isComplex && !property.Key.Contains("ImageFileInfo")) continue;
+
+            if(!attrs.ContainsKey("DisplayOnList") || attrs.ContainsKey("IgnorePropertyOnListingT4")){
+                continue;
+            }
+
+            
+            result += WriteProperty(new KeyValuePair<string, CodeProperty>(property.Key.Replace(@"/","_"), property.Value)).Replace("DTO>", "ListiningDTO>");
+        }
+
+        return result;
+    }
+
+    private string WriteListiningProfile(CodeClass entity) {
+        
+        var properties = GetRecursiveProperties(entity, includeParent: false, withoutAttribute: "IgnorePropertyOnListingT4");
+
+        var result = "";
+        var group = properties.GroupBy(x=> x.Key.StartsWith(x.Key.Split('/').First()) ? x.Key.Split('/').First() : "")
+            .ToDictionary(x=>x.Key, x=>x.ToArray());
+        
+        foreach(var item in group){
+            var dict = item.Value.Where(x=>x.Key.Split('/').First().StartsWith(item.Key.Split('/').First()))
+                .ToDictionary(x=>x.Key, x=>x.Value);
+            result += WriteListiningProfile(entity, dict);
+        }
+        
+        return result;
+    }
+
+    public string WriteListiningProfile(CodeClass entity, Dictionary<string, CodeProperty> properties)
+    {
+        var result = "";
+        int i = 0;
+        foreach (var property in properties.OrderBy(x=>x.Key))
+        {
+            var attrs2 = GetAttributes(property.Value);
+            var attrs = GetAttributesDict(property.Value);
+
+            var isComplex = properties.Any(x=>x.Key.StartsWith(property.Key + @$"/"));
+            if(isComplex) continue;
+
+            if(!attrs.ContainsKey("DisplayOnList")){
+                continue;
+            }
+            var propName = property.Key.Replace(@"/","_");
+            var path = string.Join(".",property.Key.Split('/'));
+            result += $".ForMember(x=>x.{propName}, opt => opt.MapFrom(x=>x.{path}))";
+            result += $"";
+        }
+        return result;
+    }
+
+    private string WriteCsvProfile(CodeClass entity) {
+        
+        var properties = GetRecursiveProperties(entity, includeParent: false);
+
+        var result = "";
+        var group = properties.GroupBy(x=> x.Key.StartsWith(x.Key.Split('/').First()) ? x.Key.Split('/').First() : "")
+            .ToDictionary(x=>x.Key, x=>x.ToArray());
+        
+        foreach(var item in group){
+            var dict = item.Value.Where(x=>x.Key.Split('/').First().StartsWith(item.Key.Split('/').First()))
+                .ToDictionary(x=>x.Key, x=>x.Value);
+            result += WriteCsvProfile(entity, dict);
+        }
+        
+        return result;
+    }
+
+    public string WriteCsvProfile(CodeClass entity, Dictionary<string, CodeProperty> properties)
+    {
+        var result = "";
+        foreach (var property in properties.OrderBy(x=>x.Key))
+        {
+            var isComplex = properties.Any(x=>x.Key.StartsWith(property.Key + @$"/"));
+            if(isComplex) continue;
+            var myAgg = property.Value.FullName.Split('.')[1];
+            var otherAgg = property.Value?.FullName?.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"))?.Replace("Agg","");
+            if(myAgg != otherAgg) continue;
+
+            var propName = property.Key.Split('/').Last();
+            var path = string.Join(".",property.Key.Split('/'));
+            result += $"Map(x=>x.{path}).Name(\"{(path.Replace(".","_"))}\");";
+            result += $"";
+        }
+        return result;
+    }
+
+    private void SaveOutput(string outputFileName, bool recreateFileIfExists = true) {
+        string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+        string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+        string outputFilePath2 = Path.Combine(templateDirectory, "Commands");
+        if(recreateFileIfExists || !File.Exists(outputFilePath)){
+            if(outputFileName.EndsWith(".tt")){
+                File.Copy("Commands.tt", outputFileName, true);
+            }
+            else{
+                File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString(), System.Text.Encoding.UTF8); 
+            }
+        }
+        this.GenerationEnvironment.Clear();
+    }
+
+    private void SaveOutputToSubFolder(string folderName, string outputFileName, bool recreateFileIfExists = true) {
+        string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+        string newDirectoryName = Path.Combine(templateDirectory,folderName);
+        CreateDirectory(newDirectoryName);
+        string outputFilePath = Path.Combine(newDirectoryName, outputFileName);
+        string outputFilePath2 = Path.Combine(templateDirectory, "Commands.tt");
+        if(recreateFileIfExists || !File.Exists(outputFilePath)){            
+            File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString(), System.Text.Encoding.UTF8); 
+        }
+        this.GenerationEnvironment.Clear();
+        if(outputFileName.EndsWith(".tt")){
+            RunT4File(outputFilePath);
+        }
+    }
+
+    public void CreateDirectory(string folderName) 
+    {
+        string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+        string newDirectoryName = Path.Combine(templateDirectory,folderName);
+        if(!Directory.Exists(newDirectoryName))
+            Directory.CreateDirectory(newDirectoryName);
+        //string outputFilePath = Path.Combine(newDirectoryName, outputFileName);
+        //File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
+    }
+
+    public void RunT4File(string outputFileName){
+
+        var engine = new Microsoft.VisualStudio.TextTemplating.Engine();
+        //host.TemplateFileValue = outputFilePath;
+        //Read the text template.
+        string input = File.ReadAllText(outputFileName);
+        //Transform the text template.
+        string output = engine.ProcessTemplate("test123", Host);
+        //string outputFileName = Path.GetFileNameWithoutExtension(templateFileName);
+        //outputFileName = Path.Combine(Path.GetDirectoryName(templateFileName), outputFileName);
+        //outputFileName = outputFileName + "1" + host.FileExtension;
+        //File.WriteAllText(outputFileName, output, host.FileEncoding);
+    }
+
+    void AppendLineToCsProj(string aggName, string projectName, string filterContains, string line){
+        var csproj = $"./src/{aggName}/{aggName}.{projectName}/{aggName}.{projectName}.csproj";
+	    var lines = File.ReadAllLines(csproj);
+	    var newLines = lines.Take(lines.Length-1).ToList();
+	    var exists = lines.Any(x=>x.Contains(filterContains));
+        if(!exists) {
+		    newLines.Add(line);
+            newLines.Add(lines.Last());
+	        File.WriteAllLines(csproj, newLines);
+        }
+	}
+
+    public string GetDisplayName(KeyValuePair<string, CodeProperty> clss)
+    {
+        
+        if(GetAttributesDict(clss.Value).TryGetValue("DisplayName", out var val))
+        {
+            return val[0].Value.Replace("\"","");
+        }
+        return clss.Key.Replace("/",".").Split('.').Last();
+    }
+#>
