@@ -1,13 +1,13 @@
-﻿using LazyCrudBuilder.Core.Domain.Attributes.T4;
-using LazyCrudBuilder.Core.Application.DTO.Attributes;
+﻿using LazyCrud.Core.Domain.Attributes.T4;
+using LazyCrud.Core.Application.DTO.Attributes;
 using System.ComponentModel.DataAnnotations;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Entities;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Entities;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities
 {
     [DoNotReplaceAfterGenerated]
     [EndpointsT4(EndpointTypes.HttpAll), Steppable(1), H2("Sidebar")]

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using LazyCrudBuilder.SystemSettings.Infra.Data.Context;
+using LazyCrud.SystemSettings.Infra.Data.Context;
 
 #nullable disable
 
-namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
+namespace LazyCrud.SystemSettings.Infra.Data.Migrations
 {
     [DbContext(typeof(SystemSettingsAggContext))]
     [Migration("20231102162500_2023_11_2_13_24_13")]
@@ -40,7 +40,7 @@ namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
                     b.ToTable("SystemPanelGroupSystemPanel");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.CargaTabela", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.CargaTabela", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +94,7 @@ namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
                     b.ToTable("CargaTabela");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,7 +139,7 @@ namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
                     b.ToTable("SystemPanel");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,7 +188,7 @@ namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
                     b.ToTable("SystemPanelGroup");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -255,7 +255,7 @@ namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
                     b.ToTable("SystemPanelSubItem");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemSettingsAggSettings", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemSettingsAggSettings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,7 +287,7 @@ namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
                     b.ToTable("SystemSettingsAggSettings");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Entities.User", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,7 +319,7 @@ namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Entities.UserProfileAccess", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Entities.UserProfileAccess", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -397,56 +397,56 @@ namespace LazyCrudBuilder.SystemSettings.Infra.Data.Migrations
 
             modelBuilder.Entity("SystemPanelGroupSystemPanel", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", null)
+                    b.HasOne("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", null)
                         .WithMany()
                         .HasForeignKey("GroupOfMenusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
+                    b.HasOne("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
                         .WithMany()
                         .HasForeignKey("SubItemsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
+                    b.HasOne("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
                         .WithMany("SubItems")
                         .HasForeignKey("SystemPanelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", null)
+                    b.HasOne("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", null)
                         .WithMany("SubItems")
                         .HasForeignKey("SystemPanelSubItemId");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Entities.UserProfileAccess", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Entities.UserProfileAccess", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", null)
+                    b.HasOne("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", null)
                         .WithMany("AccessesOfMyProfile")
                         .HasForeignKey("SystemPanelGroupId");
 
-                    b.HasOne("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
+                    b.HasOne("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
                         .WithMany("AccessesOfMyProfile")
                         .HasForeignKey("SystemPanelId");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", b =>
                 {
                     b.Navigation("AccessesOfMyProfile");
 
                     b.Navigation("SubItems");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", b =>
                 {
                     b.Navigation("AccessesOfMyProfile");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
+            modelBuilder.Entity("LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
                 {
                     b.Navigation("SubItems");
                 });

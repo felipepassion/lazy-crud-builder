@@ -1,8 +1,8 @@
 ﻿
-using LazyCrudBuilder.Users.Application.DTO.Aggregates.SystemSettingsAgg.Requests;
-using LazyCrudBuilder.Users.Enumerations;
+using LazyCrud.Users.Application.DTO.Aggregates.SystemSettingsAgg.Requests;
+using LazyCrud.Users.Enumerations;
 
-namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Requests
+namespace LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Requests
 {
     public partial class UserCurrentAccessSelectedDTO
     {

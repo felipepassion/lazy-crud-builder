@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using LazyCrudBuilder.Core.Domain.Extensions;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Providers;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events.Handles;
-using LazyCrudBuilder.MarketPlace.Domain.Aggregates.MarketPlaceAgg.ModelEvents;
+using LazyCrud.Core.Domain.Extensions;
+using LazyCrud.CrossCutting.Infra.Log.Providers;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events.Handles;
+using LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.ModelEvents;
 
-namespace LazyCrudBuilder.MarketPlace.Domain.Aggregates.MarketPlaceAgg.EventHandlers
+namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.EventHandlers
 {
     public partial class MarketPlaceAggSettingsEventHandler : BaseEventHandler,
         INotificationHandler<MarketPlaceAggSettingsCreatedEvent>,

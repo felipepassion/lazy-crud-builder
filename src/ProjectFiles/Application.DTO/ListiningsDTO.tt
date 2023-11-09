@@ -1,9 +1,9 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
-using LazyCrudBuilder.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Application.DTO.Attributes;
 <#
 if (entities.Any()) {#>
 <# foreach(var namespaces in groupEntities) { 

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Newtonsoft.Json;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
 using Serilog.Events;
 using System.Diagnostics;
 
-namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Notifications
+namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Notifications
 {
     public class BaseNotification : INotification
     {

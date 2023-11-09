@@ -1,7 +1,7 @@
-﻿using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+﻿using LazyCrud.CrossCutting.Infra.Log.Contexts;
 using Newtonsoft.Json;
 
-namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands
+namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands
 {
     public abstract class BaseRequestableCommand<T, R> : BaseCommand
         where T : class

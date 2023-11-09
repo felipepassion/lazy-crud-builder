@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using LazyCrudBuilder.Users.Infra.Data.Context;
+using LazyCrud.Users.Infra.Data.Context;
 
 #nullable disable
 
-namespace LazyCrudBuilder.Users.Infra.Data.Migrations
+namespace LazyCrud.Users.Infra.Data.Migrations
 {
     [DbContext(typeof(UsersAggContext))]
     partial class UsersAggContextModelSnapshot : ModelSnapshot
@@ -40,7 +40,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects.ContactNumero", b =>
+            modelBuilder.Entity("LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects.ContactNumero", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,7 +78,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                     b.ToTable("ContactNumero");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,7 +114,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,7 +150,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -207,7 +207,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.User", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -267,7 +267,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -297,7 +297,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                     b.ToTable("UserContact");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserCurrentAccessSelected", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserCurrentAccessSelected", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -329,7 +329,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                     b.ToTable("UserCurrentAccessSelected");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -380,7 +380,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                     b.ToTable("UserProfile");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileAccess", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileAccess", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -461,7 +461,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                     b.ToTable("UserProfileAccess");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileList", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -504,7 +504,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                     b.ToTable("UserProfileList");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UsersAggSettings", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UsersAggSettings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -541,7 +541,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                     b.ToTable("UsersAggSettings");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("LazyCrud.Users.Identity.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -639,129 +639,129 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
 
             modelBuilder.Entity("SystemPanelGroupSystemPanel", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", null)
                         .WithMany()
                         .HasForeignKey("GroupOfMenusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
                         .WithMany()
                         .HasForeignKey("SubItemsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects.ContactNumero", b =>
+            modelBuilder.Entity("LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects.ContactNumero", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", null)
                         .WithMany("Contacts")
                         .HasForeignKey("UserContactId");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelSubItem", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
                         .WithMany("SubItems")
                         .HasForeignKey("SystemPanelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
                         .WithOne("Contact")
-                        .HasForeignKey("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", "Id")
+                        .HasForeignKey("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserCurrentAccessSelected", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserCurrentAccessSelected", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
                         .WithOne("SelectedAccess")
-                        .HasForeignKey("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserCurrentAccessSelected", "Id")
+                        .HasForeignKey("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserCurrentAccessSelected", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", "UserProfile")
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", "UserProfile")
                         .WithMany()
                         .HasForeignKey("UserProfileId");
 
                     b.Navigation("UserProfile");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileAccess", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileAccess", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", null)
                         .WithMany("UserProfileAccesses")
                         .HasForeignKey("SystemPanelGroupId");
 
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", null)
                         .WithMany("AccessesOfMyProfile")
                         .HasForeignKey("SystemPanelId");
 
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", null)
                         .WithMany("Accesses")
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileList", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileList", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
                         .WithMany("Accesses")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UsersAggSettings", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UsersAggSettings", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("LazyCrud.Users.Identity.ApplicationUser", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.User", null)
                         .WithOne("ApplicationUser")
-                        .HasForeignKey("LazyCrudBuilder.Users.Identity.ApplicationUser", "Id")
+                        .HasForeignKey("LazyCrud.Users.Identity.ApplicationUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("UserProfileListUserProfile", b =>
                 {
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileList", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfileList", null)
                         .WithMany()
                         .HasForeignKey("AccessesListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", null)
+                    b.HasOne("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", null)
                         .WithMany()
                         .HasForeignKey("UserProfilesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanel", b =>
                 {
                     b.Navigation("AccessesOfMyProfile");
 
                     b.Navigation("SubItems");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities.SystemPanelGroup", b =>
                 {
                     b.Navigation("UserProfileAccesses");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.User", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.User", b =>
                 {
                     b.Navigation("Accesses");
 
@@ -775,12 +775,12 @@ namespace LazyCrudBuilder.Users.Infra.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserContact", b =>
                 {
                     b.Navigation("Contacts");
                 });
 
-            modelBuilder.Entity("LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", b =>
+            modelBuilder.Entity("LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities.UserProfile", b =>
                 {
                     b.Navigation("Accesses");
                 });

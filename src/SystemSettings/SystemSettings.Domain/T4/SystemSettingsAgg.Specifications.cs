@@ -1,6 +1,6 @@
-﻿using LazyCrudBuilder.Core.Domain.Seedwork.Specification;
+﻿using LazyCrud.Core.Domain.Seedwork.Specification;
 using Microsoft.EntityFrameworkCore;
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Specifications {
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Specifications {
 	using Entities;
    public partial class SystemPanelSubItemSpecifications {
 			

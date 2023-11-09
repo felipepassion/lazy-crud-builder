@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Linq.Expressions;
 
-namespace LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions
+namespace LazyCrud.CrossCuting.Infra.Utils.Extensions
 {
     public static class StringExtensions
     {

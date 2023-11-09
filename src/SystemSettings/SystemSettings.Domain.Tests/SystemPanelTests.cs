@@ -1,14 +1,14 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
-using LazyCrudBuilder.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppServices;
-using LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests;
-using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.CommandModels;
-using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Queries.Models;
-using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Repositories;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppServices;
+using LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests;
+using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.CommandModels;
+using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Queries.Models;
+using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Repositories;
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Tests
+namespace LazyCrud.SystemSettings.Domain.Tests
 {
     public class SystemPanelTests
     {
@@ -29,7 +29,7 @@ namespace LazyCrudBuilder.SystemSettings.Domain.Tests
             Users.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
             Users.Identity.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
 
-            LazyCrudBuilder.Core.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
+            LazyCrud.Core.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
 
             using var ServiceProvider = _serviceCollection.BuildServiceProvider();
 
@@ -70,7 +70,7 @@ namespace LazyCrudBuilder.SystemSettings.Domain.Tests
             Users.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
             Users.Identity.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
 
-            LazyCrudBuilder.Core.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
+            LazyCrud.Core.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
 
             using var ServiceProvider = _serviceCollection.BuildServiceProvider();
 
@@ -111,7 +111,7 @@ namespace LazyCrudBuilder.SystemSettings.Domain.Tests
             Users.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
             Users.Identity.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
 
-            LazyCrudBuilder.Core.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
+            LazyCrud.Core.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
 
             using var ServiceProvider = _serviceCollection.BuildServiceProvider();
 
@@ -148,7 +148,7 @@ namespace LazyCrudBuilder.SystemSettings.Domain.Tests
             Users.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
             Users.Identity.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
 
-            LazyCrudBuilder.Core.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
+            LazyCrud.Core.Infra.IoC.IoCFactory.Current.Configure(Configuration, _serviceCollection);
 
             using var ServiceProvider = _serviceCollection.BuildServiceProvider();
 

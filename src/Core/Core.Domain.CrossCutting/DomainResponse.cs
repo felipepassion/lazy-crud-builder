@@ -1,4 +1,4 @@
-﻿namespace LazyCrudBuilder.Core.Domain.CrossCutting
+﻿namespace LazyCrud.Core.Domain.CrossCutting
 {
     public class DomainResponse
     {

@@ -1,7 +1,7 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
-using LazyCrudBuilder.Core.Application.DTO.Extensions;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
+﻿using LazyCrud.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Application.DTO.Extensions;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.CrossCuting.Infra.Utils.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -14,7 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LazyCrudBuilder.Core.Infra.Data.Extensions
+namespace LazyCrud.Core.Infra.Data.Extensions
 {
     public static class EfExtensions
     {

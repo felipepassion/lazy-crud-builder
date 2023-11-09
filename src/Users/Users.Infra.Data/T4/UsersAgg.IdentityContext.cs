@@ -1,13 +1,13 @@
 ﻿
-using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities; 
-using LazyCrudBuilder.Users.Infra.Data.Aggregates.UsersAgg.Mappings; 
-using LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities; 
-using LazyCrudBuilder.Users.Infra.Data.Aggregates.SystemSettingsAgg.Mappings; 
+using LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities; 
+using LazyCrud.Users.Infra.Data.Aggregates.UsersAgg.Mappings; 
+using LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities; 
+using LazyCrud.Users.Infra.Data.Aggregates.SystemSettingsAgg.Mappings; 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using LazyCrudBuilder.Core.Infra.Data.Contexts;
+using LazyCrud.Core.Infra.Data.Contexts;
 
-namespace LazyCrudBuilder.Users.Infra.Data.Context
+namespace LazyCrud.Users.Infra.Data.Context
 {
 	public partial class UsersAggContext : BaseContext
 	{

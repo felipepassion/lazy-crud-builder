@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using LazyCrudBuilder.Core.Application.DTO.Attributes;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrudBuilder.Core.Domain.Attributes.T4;
+using LazyCrud.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.Core.Domain.Attributes.T4;
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.ValueObjects
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.ValueObjects
 {
     public class BasePainel : SteppableEntity
     {

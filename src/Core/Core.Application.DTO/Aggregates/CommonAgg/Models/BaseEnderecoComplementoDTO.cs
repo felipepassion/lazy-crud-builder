@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models
+namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public interface IBaseEnderecoComplementoDTO<T>
         where T : IBaseEnderecoDTO, new()

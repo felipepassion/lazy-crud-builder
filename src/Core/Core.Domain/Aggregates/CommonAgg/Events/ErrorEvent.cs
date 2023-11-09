@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Serilog.Events;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
 
-namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events
+namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Events
 {
     public partial class ErrorEvent : BaseEvent
     {

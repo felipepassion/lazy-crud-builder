@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace LazyCrudBuilder.Core.Application.Validators
+namespace LazyCrud.Core.Application.Validators
 {
     public static class NameValidator
     {

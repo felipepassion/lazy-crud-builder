@@ -1,7 +1,7 @@
 ﻿        
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.CommandHandlers {
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.CommandHandlers {
     using Entities;
-    using LazyCrudBuilder.Core.Domain.CrossCutting;
+    using LazyCrud.Core.Domain.CrossCutting;
     using System.Threading.Tasks;
 
     public partial class SystemPanelGroupCommandHandler : BaseSystemSettingsAggCommandHandler<SystemPanelGroup>

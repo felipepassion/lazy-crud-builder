@@ -1,4 +1,4 @@
-﻿namespace LazyCrudBuilder.Core.Tests
+﻿namespace LazyCrud.Core.Tests
 {
 
     public class CPFGenerator

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace LazyCrudBuilder.CrossCutting.Infra.Log.Contexts
+namespace LazyCrud.CrossCutting.Infra.Log.Contexts
 {
     public interface ILogRequestContext
     {

@@ -1,4 +1,4 @@
-﻿namespace LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests
+﻿namespace LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests
 {
     public partial class SystemPanelSubItemDTO
     {

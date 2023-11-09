@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>LazyCrudBuilder.MarketPlace.Infra.Data</RootNamespace>
+	  <RootNamespace>LazyCrud.MarketPlace.Infra.Data</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

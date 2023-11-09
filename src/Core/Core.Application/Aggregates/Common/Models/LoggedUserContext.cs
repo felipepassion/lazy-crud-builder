@@ -1,4 +1,4 @@
-﻿namespace LazyCrudBuilder.Core.Application.Aggregates.Common.Models
+﻿namespace LazyCrud.Core.Application.Aggregates.Common.Models
 {
     public interface ILoggedUserContext
     {

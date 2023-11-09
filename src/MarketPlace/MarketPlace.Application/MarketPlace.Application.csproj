@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>LazyCrudBuilder.Republics.Application</RootNamespace>
+	  <RootNamespace>LazyCrud.Republics.Application</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

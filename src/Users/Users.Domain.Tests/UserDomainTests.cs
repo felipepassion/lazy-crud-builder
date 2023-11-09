@@ -2,14 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
-using LazyCrudBuilder.Users.Application.Aggregates.UsersAgg.AppServices;
-using LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Requests;
-using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.CommandModels;
-using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Queries.Models;
-using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Repositories;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices;
+using LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Requests;
+using LazyCrud.Users.Domain.Aggregates.UsersAgg.CommandModels;
+using LazyCrud.Users.Domain.Aggregates.UsersAgg.Queries.Models;
+using LazyCrud.Users.Domain.Aggregates.UsersAgg.Repositories;
 
-namespace LazyCrudBuilder.Users.Domain.Tests
+namespace LazyCrud.Users.Domain.Tests
 {
     public class UserDomainTests
     {

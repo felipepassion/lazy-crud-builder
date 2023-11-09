@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using LazyCrudBuilder.Users.Infra.Data.Aggregates.IdentityAgg.Mappings;
+using LazyCrud.Users.Infra.Data.Aggregates.IdentityAgg.Mappings;
 
-namespace LazyCrudBuilder.Users.Infra.Data.Context
+namespace LazyCrud.Users.Infra.Data.Context
 {
     public partial class UsersAggContext
     {

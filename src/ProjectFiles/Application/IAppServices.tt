@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using FluentValidation.Results;
-using LazyCrudBuilder.Core.Domain.CrossCutting;
-using LazyCrudBuilder.Core.Application.Aggregates.Common;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries;
+using LazyCrud.Core.Domain.CrossCutting;
+using LazyCrud.Core.Application.Aggregates.Common;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
 
 <# if (entities.Any()) { #>
 using <#= GetDefaultNamespace() #>.Core.Domain.Seedwork.Specification;

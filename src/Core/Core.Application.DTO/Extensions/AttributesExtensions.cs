@@ -1,7 +1,7 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
+﻿using LazyCrud.Core.Application.DTO.Attributes;
 using System.Reflection;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Extensions
+namespace LazyCrud.Core.Application.DTO.Extensions
 {
     public static class AttributesExtensions
     {

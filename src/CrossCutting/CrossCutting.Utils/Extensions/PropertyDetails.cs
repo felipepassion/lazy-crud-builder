@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
+namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
 {
     public class PropertyDetails
     {

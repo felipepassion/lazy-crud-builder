@@ -1,6 +1,6 @@
-﻿using LazyCrudBuilder.Core.Domain.Seedwork.Specification;
+﻿using LazyCrud.Core.Domain.Seedwork.Specification;
 using Microsoft.EntityFrameworkCore;
-namespace LazyCrudBuilder.MarketPlace.Domain.Aggregates.MarketPlaceAgg.Specifications {
+namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.Specifications {
 	using Entities;
    public partial class MarketPlaceAggSettingsSpecifications {
 				public static Specification<MarketPlaceAggSettings> UserIdContains(params int[] values) {

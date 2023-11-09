@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Runtime.Serialization;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Seedwork
+namespace LazyCrud.Core.Application.DTO.Seedwork
 {
     [DataContract]
     public class PaginationDTO<T> : IEnumerable, IEnumerable<T>

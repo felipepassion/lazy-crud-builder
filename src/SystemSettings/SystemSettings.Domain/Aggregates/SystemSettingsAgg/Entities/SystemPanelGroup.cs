@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using LazyCrudBuilder.Core.Application.DTO.Attributes;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrudBuilder.Core.Domain.Attributes.T4;
-using LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Entities;
+using LazyCrud.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.Core.Domain.Attributes.T4;
+using LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Entities;
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities
 {
     [EndpointsT4(EndpointTypes.HttpAll), Steppable(1), H2("Grupo de Menus / Painéis"), DoNotReplaceAfterGenerated]
     public class SystemPanelGroup : SteppableEntity

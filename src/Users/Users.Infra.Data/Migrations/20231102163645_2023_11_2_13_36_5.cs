@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace LazyCrudBuilder.Users.Infra.Data.Migrations
+namespace LazyCrud.Users.Infra.Data.Migrations
 {
     /// <inheritdoc />
     public partial class _2023_11_2_13_36_5 : Migration

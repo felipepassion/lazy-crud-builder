@@ -1,7 +1,7 @@
-﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrudBuilder.Core.Domain.CrossCutting;
+﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.Core.Domain.CrossCutting;
 
-namespace LazyCrudBuilder.Core.Domain.Seedwork
+namespace LazyCrud.Core.Domain.Seedwork
 {
     public interface IUnitOfWork
     {

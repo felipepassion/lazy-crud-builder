@@ -1,7 +1,7 @@
-﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
 
-namespace LazyCrudBuilder.MarketPlace.Domain.Aggregates.MarketPlaceAgg.ModelEvents
+namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.ModelEvents
 {
     using ModelEvents;
     using Entities;

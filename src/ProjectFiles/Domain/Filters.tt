@@ -1,8 +1,8 @@
 ﻿<# if (entities.Any()) { #>
-using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
+using LazyCrud.CrossCuting.Infra.Utils.Extensions;
 using System.Linq.Expressions;
 using <#= GetDefaultNamespace() #>.Core.Domain.Seedwork.Specification;
-using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
+using LazyCrud.CrossCuting.Infra.Utils.Extensions;
 
 <# foreach(var namespaces in groupEntitiesT4) { #>
 namespace <#= namespaces.Key.Replace("Entities", "Filters") #>{

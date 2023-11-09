@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>LazyCrudBuilder.SystemSettings.Infra.Data</RootNamespace>
+	  <RootNamespace>LazyCrud.SystemSettings.Infra.Data</RootNamespace>
   </PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Core\Core.Infra.Core.Data\Core.Infra.Data.csproj" />

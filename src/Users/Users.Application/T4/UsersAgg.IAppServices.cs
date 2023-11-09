@@ -1,11 +1,11 @@
 ﻿using System.Linq.Expressions;
 using FluentValidation.Results;
-using LazyCrudBuilder.Core.Domain.CrossCutting;
-using LazyCrudBuilder.Core.Application.Aggregates.Common;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries;
+using LazyCrud.Core.Domain.CrossCutting;
+using LazyCrud.Core.Application.Aggregates.Common;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
 
-using LazyCrudBuilder.Core.Domain.Seedwork.Specification;
-namespace LazyCrudBuilder.Users.Application.Aggregates.UsersAgg.AppServices {
+using LazyCrud.Core.Domain.Seedwork.Specification;
+namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices {
 	using Domain.Aggregates.UsersAgg.Entities;
 	using Domain.Aggregates.UsersAgg.Queries;
 	using Application.DTO.Aggregates.UsersAgg.Requests;

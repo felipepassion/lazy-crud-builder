@@ -1,9 +1,9 @@
-﻿using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands;
-namespace LazyCrudBuilder.MarketPlace.Domain.Aggregates.MarketPlaceAgg.CommandModels
+﻿using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
+namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.CommandModels
 {
     using Queries.Models; 
-    using LazyCrudBuilder.MarketPlace.Application.DTO.Aggregates.MarketPlaceAgg.Requests; 
+    using LazyCrud.MarketPlace.Application.DTO.Aggregates.MarketPlaceAgg.Requests; 
     public partial class CreateMarketPlaceAggSettingsCommand : BaseRequestableCommand<MarketPlaceAggSettingsQueryModel, MarketPlaceAggSettingsDTO>
     {
         public bool UpdateIfExists { get; set; }

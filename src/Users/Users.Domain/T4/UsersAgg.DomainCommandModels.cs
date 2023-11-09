@@ -1,9 +1,9 @@
-﻿using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands;
-namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.CommandModels
+﻿using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
+namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.CommandModels
 {
     using Queries.Models; 
-    using LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Requests; 
+    using LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Requests; 
     public partial class CreateUserProfileAccessCommand : BaseRequestableCommand<UserProfileAccessQueryModel, UserProfileAccessDTO>
     {
         public bool UpdateIfExists { get; set; }

@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using LazyCrudBuilder.Core.Domain.Extensions;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Providers;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events.Handles;
-using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.ModelEvents;
+using LazyCrud.Core.Domain.Extensions;
+using LazyCrud.CrossCutting.Infra.Log.Providers;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events.Handles;
+using LazyCrud.Users.Domain.Aggregates.UsersAgg.ModelEvents;
 
-namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.EventHandlers
+namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.EventHandlers
 {
     public partial class UserProfileAccessEventHandler : BaseEventHandler,
         INotificationHandler<UserProfileAccessCreatedEvent>,

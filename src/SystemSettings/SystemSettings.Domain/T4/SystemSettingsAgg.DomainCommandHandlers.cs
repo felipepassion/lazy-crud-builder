@@ -1,14 +1,14 @@
 ﻿
 using MediatR;
 using FluentValidation.Results;
-using LazyCrudBuilder.Core.Domain.CrossCutting;
-using LazyCrudBuilder.Core.Application.DTO.Extensions;
-using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
+using LazyCrud.Core.Domain.CrossCutting;
+using LazyCrud.Core.Application.DTO.Extensions;
+using LazyCrud.CrossCuting.Infra.Utils.Extensions;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.CommandHandlers
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.CommandHandlers
 {
     using Filters;
     using ModelEvents;

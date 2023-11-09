@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>LazyCrudBuilder.CrossCutting.Infra.Log</RootNamespace>
+    <RootNamespace>LazyCrud.CrossCutting.Infra.Log</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

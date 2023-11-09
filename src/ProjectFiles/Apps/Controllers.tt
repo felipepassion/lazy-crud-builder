@@ -14,12 +14,12 @@ if (aggSettingsList.Any()) {
 var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);
 #>
 using Microsoft.AspNetCore.Mvc;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
-using LazyCrudBuilder.Core.Application.DTO.Extensions;
-using LazyCrudBuilder.Core.Application.Aggregates.Common;
-using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.Core.Application.DTO.Extensions;
+using LazyCrud.Core.Application.Aggregates.Common;
+using LazyCrud.CrossCuting.Infra.Utils.Extensions;
 using global::TollSvc.WebApp.Extensions;
-using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
+using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
 <#foreach(var namespaces in groupEntities) {
 	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 	var shortAggName = aggName.Replace("Agg","");
@@ -29,7 +29,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 	using Domain.Aggregates.<#= aggName #>.Queries.Models;
 	using Application.Aggregates.<#= aggName #>.AppServices;
 	using Domain.Aggregates.<#= aggName #>.Entities;
-	using LazyCrudBuilder.<#= aggName.Replace("Agg","") #>.Domain.Aggregates.<#= aggName #>.CommandModels;
+	using LazyCrud.<#= aggName.Replace("Agg","") #>.Domain.Aggregates.<#= aggName #>.CommandModels;
 <#
  foreach(var entity in namespaces) {
 	var responseName = $"{entity.Name}DTO";
@@ -47,8 +47,8 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 <#
 	var repoTypeName = $"I{entity.Name}AppService";
 	var serviceVarName = $"_{ToCamelCase(entity.Name)}AppService";
-	if(canCreate){#> LazyCrudBuilder.<#=aggName.Replace("Agg","")#>.Application.Aggregates.<#=aggName#>.AppServices.I<#=entity.Name#>AppService _writeService;<#}
-	if(props.ContainsKey("EmpresaId")){#> LazyCrudBuilder.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService _userService; <#}
+	if(canCreate){#> LazyCrud.<#=aggName.Replace("Agg","")#>.Application.Aggregates.<#=aggName#>.AppServices.I<#=entity.Name#>AppService _writeService;<#}
+	if(props.ContainsKey("EmpresaId")){#> LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService _userService; <#}
 #>
 <#
 	if(canGet){#>
@@ -56,10 +56,10 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 		public <#= className #>(
 			IServiceProvider scope,
 			<#if(props.ContainsKey("UserId") || props.ContainsKey("EmpresaId")){#>
-			LazyCrudBuilder.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService userService, <#}#>
+			LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService userService, <#}#>
             ILogRequestContext logRequestContext,
 			<#= repoTypeName #> <#= serviceVarName.Substring(1) #> <# if(canCreate){#>,
-			LazyCrudBuilder.<#=aggName.Replace("Agg","")#>.Application.Aggregates.<#=aggName#>.AppServices.I<#=entity.Name#>AppService writeService<#}#> )
+			LazyCrud.<#=aggName.Replace("Agg","")#>.Application.Aggregates.<#=aggName#>.AppServices.I<#=entity.Name#>AppService writeService<#}#> )
 				: base(logRequestContext, scope)
 			{ 
 				<#= serviceVarName #> = <#= serviceVarName.Substring(1) #>; 
@@ -107,7 +107,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 	if(canCreate){#>
 		
 		[HttpPost]
-		public async Task<GetHttpResponseDTO<object>> Post(LazyCrudBuilder.<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
+		public async Task<GetHttpResponseDTO<object>> Post(LazyCrud.<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
 			var loggedUserId = User.GetLoggedInUserId<int>();
 
 <#if(props.ContainsKey("EmpresaId") && aggName != "CompaniesAgg"){#>

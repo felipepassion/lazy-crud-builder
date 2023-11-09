@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     [Keyless]
     public class EventsHistory

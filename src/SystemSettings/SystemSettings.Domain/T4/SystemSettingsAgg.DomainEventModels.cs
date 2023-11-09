@@ -1,7 +1,7 @@
-﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.ModelEvents
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.ModelEvents
 {
     using ModelEvents;
     using Entities;

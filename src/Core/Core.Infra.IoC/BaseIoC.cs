@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LazyCrudBuilder.Core.Infra.IoC
+namespace LazyCrud.Core.Infra.IoC
 {
     public interface IBaseIoC
     {

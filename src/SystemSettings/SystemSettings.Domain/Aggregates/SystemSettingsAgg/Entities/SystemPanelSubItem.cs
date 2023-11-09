@@ -1,10 +1,10 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
-using LazyCrudBuilder.Core.Domain.Attributes.T4;
-using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.ValueObjects;
+﻿using LazyCrud.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Domain.Attributes.T4;
+using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.ValueObjects;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities
 {
     [Steppable(1), EndpointsT4(EndpointTypes.HttpAll), H2("Submenu"), DoNotReplaceAfterGenerated]
     public class SystemPanelSubItem : BasePainel

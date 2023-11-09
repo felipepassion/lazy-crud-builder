@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using System.Linq.Expressions;
 using FluentValidation.Results;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries;
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Queries.Models
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Queries.Models
 {
 	using Filters;
     using Entities;

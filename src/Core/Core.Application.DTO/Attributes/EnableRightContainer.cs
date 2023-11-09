@@ -1,4 +1,4 @@
-﻿namespace LazyCrudBuilder.Core.Application.DTO.Attributes
+﻿namespace LazyCrud.Core.Application.DTO.Attributes
 {
     public class EnableRightContainer : Attribute
     {

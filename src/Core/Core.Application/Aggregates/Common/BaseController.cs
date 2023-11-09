@@ -1,8 +1,8 @@
-﻿using LazyCrudBuilder.Core.Application.Aggregates.Common.Models;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+﻿using LazyCrud.Core.Application.Aggregates.Common.Models;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LazyCrudBuilder.Core.Application.Aggregates.Common
+namespace LazyCrud.Core.Application.Aggregates.Common
 {
     public class BaseController : ControllerBase
     {

@@ -4,8 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>LazyCrudBuilder.Core.Domain</AssemblyName>
-    <RootNamespace>LazyCrudBuilder.Core.Domain</RootNamespace>
+    <AssemblyName>LazyCrud.Core.Domain</AssemblyName>
+    <RootNamespace>LazyCrud.Core.Domain</RootNamespace>
 	  
   </PropertyGroup>
 

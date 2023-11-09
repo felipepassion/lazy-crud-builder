@@ -13,14 +13,14 @@ using <#= namespc.Key.Replace(".Interfaces","") #>;
 <# } #>
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Providers;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.CrossCutting.Infra.Log.Providers;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using LazyCrudBuilder.Core.Application.DTO.Seedwork;
-using LazyCrudBuilder.Core.Infra.IoC;
+using LazyCrud.Core.Application.DTO.Seedwork;
+using LazyCrud.Core.Infra.IoC;
 
 namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
 

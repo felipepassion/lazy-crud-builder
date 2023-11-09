@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
-using LazyCrudBuilder.Core.Application.DTO.Attributes;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects;
-using LazyCrudBuilder.Core.Domain.Attributes.T4;
+using LazyCrud.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrud.Core.Domain.Attributes.T4;
 
-namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities
+namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities
 {
     public class UserContact : Entity
     {

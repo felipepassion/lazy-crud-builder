@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using LazyCrudBuilder.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrud.Core.Application.DTO.Attributes;
 
-namespace LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests
+namespace LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests
 {
     public class BasePainelDTO : SteppableEntityDTO
     {

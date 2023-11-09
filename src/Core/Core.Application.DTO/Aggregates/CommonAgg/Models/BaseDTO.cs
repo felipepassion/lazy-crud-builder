@@ -1,12 +1,12 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
-using LazyCrudBuilder.Core.Application.DTO.Extensions;
-using LazyCrudBuilder.Core.Domain.CrossCutting;
+﻿using LazyCrud.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Application.DTO.Extensions;
+using LazyCrud.Core.Domain.CrossCutting;
 using MediatR;
 using System.Collections;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models
+namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public interface IEntityDTO
     {

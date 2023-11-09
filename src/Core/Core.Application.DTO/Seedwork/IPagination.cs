@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Seedwork
+namespace LazyCrud.Core.Application.DTO.Seedwork
 {
 
     /// <summary>

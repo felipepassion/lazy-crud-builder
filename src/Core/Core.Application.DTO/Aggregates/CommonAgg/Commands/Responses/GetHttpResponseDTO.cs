@@ -1,9 +1,9 @@
-﻿using LazyCrudBuilder.Core.Domain.CrossCutting;
+﻿using LazyCrud.Core.Domain.CrossCutting;
 using FluentValidation.Results;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses
+namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses
 {
     public partial class GetHttpResponseDTO : GetHttpResponseDTO<object>
     {

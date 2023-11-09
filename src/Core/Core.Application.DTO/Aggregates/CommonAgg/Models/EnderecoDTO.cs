@@ -1,8 +1,8 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
+﻿using LazyCrud.Core.Application.DTO.Attributes;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models
+namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public interface IBaseEnderecoDTO
     {

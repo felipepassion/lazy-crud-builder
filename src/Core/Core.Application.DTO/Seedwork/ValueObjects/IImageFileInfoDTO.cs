@@ -1,4 +1,4 @@
-﻿namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
+﻿namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
 {
     public interface IImageFileInfoDTO
     {

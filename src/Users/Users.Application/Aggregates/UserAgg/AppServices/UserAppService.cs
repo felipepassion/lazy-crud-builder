@@ -1,8 +1,8 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Extensions;
-using LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Requests;
-using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities;
+﻿using LazyCrud.Core.Application.DTO.Extensions;
+using LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Requests;
+using LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities;
 
-namespace LazyCrudBuilder.Users.Application.Aggregates.UsersAgg.AppServices;
+namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices;
 
 public partial class UserAppService
 {

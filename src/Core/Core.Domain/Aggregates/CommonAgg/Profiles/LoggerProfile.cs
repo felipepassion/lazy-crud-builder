@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Entries;
-using LazyCrudBuilder.CrossCutting.Infra.Log.SeedWork;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Notifications;
+using LazyCrud.CrossCutting.Infra.Log.Entries;
+using LazyCrud.CrossCutting.Infra.Log.SeedWork;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Notifications;
 
-namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Profiles
+namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Profiles
 {
     public partial class LoggerProfile : Profile
     {

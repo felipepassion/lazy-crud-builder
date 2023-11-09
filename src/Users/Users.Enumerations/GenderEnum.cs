@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LazyCrudBuilder.Users.Enumerations
+namespace LazyCrud.Users.Enumerations
 {
     public enum GenderEnum : uint
     {

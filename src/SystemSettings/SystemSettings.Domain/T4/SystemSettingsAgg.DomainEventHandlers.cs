@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using LazyCrudBuilder.Core.Domain.Extensions;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Providers;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events.Handles;
-using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.ModelEvents;
+using LazyCrud.Core.Domain.Extensions;
+using LazyCrud.CrossCutting.Infra.Log.Providers;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events.Handles;
+using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.ModelEvents;
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.EventHandlers
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.EventHandlers
 {
     public partial class SystemPanelSubItemEventHandler : BaseEventHandler,
         INotificationHandler<SystemPanelSubItemCreatedEvent>,

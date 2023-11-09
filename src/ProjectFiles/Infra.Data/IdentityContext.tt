@@ -5,7 +5,7 @@ using <#= nmspc.Key.Replace("Domain","Infra.Data").Replace("Entities", "Mappings
 <# } #>
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using LazyCrudBuilder.Core.Infra.Data.Contexts;
+using LazyCrud.Core.Infra.Data.Contexts;
 
 <#  
 var className = GetDefaultNamespace().Replace(".","");

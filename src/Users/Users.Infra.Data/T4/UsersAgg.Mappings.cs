@@ -1,9 +1,9 @@
-﻿using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities;
-using LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities;
+﻿using LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities;
+using LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LazyCrudBuilder.Users.Infra.Data.Aggregates.UsersAgg.Mappings 
+namespace LazyCrud.Users.Infra.Data.Aggregates.UsersAgg.Mappings 
 {
     public partial class UserProfileAccessMapping : IEntityTypeConfiguration<UserProfileAccess>
     {
@@ -78,7 +78,7 @@ namespace LazyCrudBuilder.Users.Infra.Data.Aggregates.UsersAgg.Mappings
 		partial void ConfigureAdditionalMapping(EntityTypeBuilder<UserContact> builder);
     }
 }
-namespace LazyCrudBuilder.Users.Infra.Data.Aggregates.SystemSettingsAgg.Mappings 
+namespace LazyCrud.Users.Infra.Data.Aggregates.SystemSettingsAgg.Mappings 
 {
     public partial class SystemPanelSubItemMapping : IEntityTypeConfiguration<SystemPanelSubItem>
     {

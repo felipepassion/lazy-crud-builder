@@ -1,3 +1,3 @@
-﻿namespace LazyCrudBuilder.Users.Enumerations
+﻿namespace LazyCrud.Users.Enumerations
 {
 }

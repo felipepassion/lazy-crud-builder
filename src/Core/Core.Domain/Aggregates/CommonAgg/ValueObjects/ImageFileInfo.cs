@@ -1,9 +1,9 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
-using LazyCrudBuilder.Core.Domain.Attributes.T4;
+﻿using LazyCrud.Core.Application.DTO.Attributes;
+using LazyCrud.Core.Domain.Attributes.T4;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     [Keyless]
     public class ImageFileInfo

@@ -1,4 +1,4 @@
-﻿namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models
+﻿namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public interface IActivableEntityDTO : IEntityDTO { public bool? Active { get; set; } }
 

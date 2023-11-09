@@ -1,11 +1,11 @@
 using CrossCutting.Application.Mail;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using LazyCrudBuilder.Core.Application.DTO.Seedwork;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Providers;
+using LazyCrud.Core.Application.DTO.Seedwork;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.CrossCutting.Infra.Log.Providers;
 
-namespace LazyCrudBuilder.Core.Infra.IoC
+namespace LazyCrud.Core.Infra.IoC
 {
     public partial class IoCFactory : IBaseIoC
     {

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using LazyCrudBuilder.Users.Identity;
-using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities;
-using LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Requests;
+using LazyCrud.Users.Identity;
+using LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities;
+using LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Requests;
 
-namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Profiles
+namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Profiles
 {
     public class UserProfileProfile : Profile
     {

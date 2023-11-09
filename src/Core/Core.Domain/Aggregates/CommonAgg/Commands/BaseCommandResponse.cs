@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands
+namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands
 {
     public class BaseCommandResponse
     {

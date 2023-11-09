@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace LazyCrudBuilder.Core.Application.DTO.Validators
+namespace LazyCrud.Core.Application.DTO.Validators
 {
     public static class PhoneNumberValidator
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace LazyCrudBuilder.Core.Domain.Seedwork.Specification {
+namespace LazyCrud.Core.Domain.Seedwork.Specification {
 
     /// <summary>
     /// A logic AND Specification

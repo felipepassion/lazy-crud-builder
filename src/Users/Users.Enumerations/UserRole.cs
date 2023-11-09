@@ -1,4 +1,4 @@
-﻿namespace LazyCrudBuilder.Users.Enumerations
+﻿namespace LazyCrud.Users.Enumerations
 {
     public enum UserRole : uint
     {

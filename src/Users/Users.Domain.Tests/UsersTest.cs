@@ -1,6 +1,6 @@
-﻿using LazyCrudBuilder.Core.Application.Validators;
+﻿using LazyCrud.Core.Application.Validators;
 
-namespace LazyCrudBuilder.Users.Domain.Tests
+namespace LazyCrud.Users.Domain.Tests
 {
     public class UsersTest
     {

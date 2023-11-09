@@ -1,9 +1,9 @@
-﻿using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
-namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Validators {
+namespace LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Validators {
     public class BaseUsersAggValidator<T> : BaseValidator<T>
         where T : EntityDTO
     {
@@ -11,7 +11,7 @@ namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Validators {
             public BaseUsersAggValidator(HttpClient db) : base(db){ }
     }
 }
-namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Validators 
+namespace LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Validators 
 {
 	using Requests;
     public partial class UserProfileAccessStep1Validator : BaseUsersAggValidator<UserProfileAccessDTO>

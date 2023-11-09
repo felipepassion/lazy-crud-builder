@@ -1,10 +1,10 @@
-﻿using LazyCrudBuilder.CrossCutting.Infra.Log.Entries;
+﻿using LazyCrud.CrossCutting.Infra.Log.Entries;
 using Serilog;
 using Serilog.Context;
 using Serilog.Core.Enrichers;
 using System.Diagnostics;
 
-namespace LazyCrudBuilder.CrossCutting.Infra.Log.Extensions
+namespace LazyCrud.CrossCutting.Infra.Log.Extensions
 {
     public static class LoggerExtensions
     {

@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
-string oldValue         =       @"C:\Users\felip\source\repos\Equipe-LazyCrud\LazyCrudBuilder.NET\back-end\src\Addresses";
-string newValue         =       @"C:\Users\felip\source\repos\Equipe-LazyCrud\LazyCrudBuilder.NET\back-end\src\TesteShow";
-string solutionFile     =       @"C:\Users\felip\source\repos\Equipe-LazyCrud\LazyCrudBuilder.NET\back-end\LazyCrudBuilder.sln";
+string oldValue         =       @"C:\Users\felip\source\repos\Equipe-LazyCrud\LazyCrud.NET\back-end\src\Addresses";
+string newValue         =       @"C:\Users\felip\source\repos\Equipe-LazyCrud\LazyCrud.NET\back-end\src\TesteShow";
+string solutionFile     =       @"C:\Users\felip\source\repos\Equipe-LazyCrud\LazyCrud.NET\back-end\LazyCrud.sln";
 
 //Chama as funções para copiar pastas e arquivos e adicionar projetos ao arquivo de solução 
 CopyFolderAndFiles(oldValue, newValue);

@@ -1,5 +1,5 @@
-﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrud.CrossCutting.Infra.Log.Contexts;
 
 <#foreach(var namespaces in groupEntitiesT4) {#>
 namespace <#= namespaces.Key.Replace(".Entities",".ModelEvents") #>

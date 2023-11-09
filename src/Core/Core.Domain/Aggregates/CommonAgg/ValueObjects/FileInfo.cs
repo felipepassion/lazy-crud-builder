@@ -1,6 +1,6 @@
-﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
 
-namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     public class ReferenceFileInfo : Entity
     {

@@ -1,5 +1,5 @@
-﻿using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands;
+﻿using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
 <#foreach(var namespaces in groupEntitiesT4) {#>
 namespace <#= namespaces.Key.Replace(".Entities",".CommandModels") #>
 {

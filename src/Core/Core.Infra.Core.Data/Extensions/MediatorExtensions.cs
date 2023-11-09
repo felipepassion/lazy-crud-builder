@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
 
-namespace LazyCrudBuilder.Core.Infra.Data.Extensions
+namespace LazyCrud.Core.Infra.Data.Extensions
 {
     public static class MediatorExtension
     {

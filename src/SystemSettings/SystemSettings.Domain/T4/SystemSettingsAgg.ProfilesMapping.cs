@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Profiles
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Profiles
 {
     public class SystemSettingsAggCoreProfile : Core.Domain.Aggregates.CommonAgg.Profiles.CoreAggProfile { }
 }
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Profiles
+namespace LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Profiles
 {
 	using Application.DTO.Aggregates.UsersAgg.Requests;
 	using Entities;
@@ -24,7 +24,7 @@ namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Profiles
 	}
 }
 
-namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Profiles
+namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Profiles
 {
 	using Application.DTO.Aggregates.SystemSettingsAgg.Requests;
 	using Entities;
