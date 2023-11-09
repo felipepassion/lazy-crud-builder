@@ -1,5 +1,6 @@
 ﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
 using LazyCrud.Core.Domain.Attributes.T4;
+using LazyCrud.Core.Domain.Attributes.T4;
 
 namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {

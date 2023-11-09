@@ -6,6 +6,7 @@ using LazyCrud.Core.Application.DTO.Attributes;
 using LazyCrud.Core.Application.DTO.Extensions;
 using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
 using LazyCrud.Core.Domain.Attributes.T4;
+using LazyCrud.Core.Domain.Attributes.T4;
 
 namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities
 {
