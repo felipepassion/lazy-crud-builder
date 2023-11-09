@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.Infra.IoC\Core.Infra.IoC.csproj" />
     <ProjectReference Include="..\MarketPlace.Application\MarketPlace.Application.csproj" />
     <ProjectReference Include="..\MarketPlace.Infra.Data\MarketPlace.Infra.Data.csproj" />
