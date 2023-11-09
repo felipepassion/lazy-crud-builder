@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
-using LazyCrud.Users.Domain.Aggregates.UsersAgg.Repositories;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Repositories;
 
 namespace Core.Tests
 {
@@ -35,11 +35,11 @@ namespace Core.Tests
 
             _serviceCollection.AddLogging(logging => logging.AddConsole());
 
-            LazyCrud.Users.Infra.IoC.IoCFactory.Current.Configure(this.Configuration, this.ServiceCollection);
+            LazyCrudBuilder.Users.Infra.IoC.IoCFactory.Current.Configure(this.Configuration, this.ServiceCollection);
 
-            LazyCrud.Users.Identity.Infra.IoC.IoCFactory.Current.Configure(this.Configuration, this.ServiceCollection);
+            LazyCrudBuilder.Users.Identity.Infra.IoC.IoCFactory.Current.Configure(this.Configuration, this.ServiceCollection);
             
-            LazyCrud.Core.Infra.IoC.IoCFactory.Current.Configure(this.Configuration, this.ServiceCollection);
+            LazyCrudBuilder.Core.Infra.IoC.IoCFactory.Current.Configure(this.Configuration, this.ServiceCollection);
 
             _userRepository = this.ServiceProvider.GetRequiredService<IUserRepository>();
             _mediator = ServiceProvider.GetRequiredService<IMediator>();

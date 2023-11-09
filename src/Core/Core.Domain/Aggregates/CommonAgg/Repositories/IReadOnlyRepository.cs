@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Repositories
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Repositories
 {
     public interface IMongoRepository<T> 
         where T : class

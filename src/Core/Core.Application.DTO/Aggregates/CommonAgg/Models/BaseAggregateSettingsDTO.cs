@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
+﻿namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public class BaseAggregateSettingsDTO : EntityDTO
     {

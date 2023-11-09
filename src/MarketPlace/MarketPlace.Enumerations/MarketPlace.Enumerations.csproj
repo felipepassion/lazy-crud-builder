@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Saga.MarketPlace.Enumerations</RootNamespace>
+	  <RootNamespace>LazyCrudBuilder.MarketPlace.Enumerations</RootNamespace>
   </PropertyGroup>
 
 </Project>

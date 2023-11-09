@@ -4,8 +4,8 @@
 @using <#=AggName.Replace("Agg","")#>.WebApp.Client.Pages.Base
 @using <#=AggName.Replace("Agg","")#>.WebApp.Client.Pages.DefaultDesign
 @using <#=AggName.Replace("Agg","")#>.WebApp.Client.Pages.RegisterStepsTemplate
-@using LazyCrud.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Requests
-@using LazyCrud.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators
+@using LazyCrudBuilder.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Requests
+@using LazyCrudBuilder.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators
 
 @layout MainLayout
 @inherits BaseStepsFormComponent<<#= entity.Name #>DTO, <#=aggName#>AggSettingsDTO, Base<#= aggName #>AggValidator<<#= entity.Name #>DTO>>

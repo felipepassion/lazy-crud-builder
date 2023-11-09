@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
 
-namespace LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Entities
+namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Entities
 {
     public class UserProfileAccess : SteppableEntity
     {

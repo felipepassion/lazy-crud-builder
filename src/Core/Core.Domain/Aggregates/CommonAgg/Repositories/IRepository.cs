@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Domain.Seedwork;
+﻿using LazyCrudBuilder.Core.Domain.Seedwork;
 using System.Linq.Expressions;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Repositories
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Repositories
 {
     public interface IRepository<T> : IDisposable
         where T : class, new()

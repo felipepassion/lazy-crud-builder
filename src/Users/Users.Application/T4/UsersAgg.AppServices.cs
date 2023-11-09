@@ -2,13 +2,13 @@
 using MediatR;
 using System.Linq.Expressions;
 using FluentValidation.Results;
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Application.Aggregates.Common;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
-using LazyCrud.Core.Domain.CrossCutting;
+using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
+using LazyCrudBuilder.Core.Application.DTO.Extensions;
+using LazyCrudBuilder.Core.Application.Aggregates.Common;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries;
+using LazyCrudBuilder.Core.Domain.CrossCutting;
 
-namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices {
+namespace LazyCrudBuilder.Users.Application.Aggregates.UsersAgg.AppServices {
 	using Application.DTO.Aggregates.UsersAgg.Requests;
 	using Domain.Aggregates.UsersAgg.Queries.Models;
 	using Domain.Aggregates.UsersAgg.Repositories;
@@ -16,7 +16,7 @@ namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices {
 	using Domain.Aggregates.UsersAgg.Entities;
 	public partial class UserProfileAccessAppService : BaseAppService, IUserProfileAccessAppService {	
 		public IUserProfileAccessRepository _userProfileAccessRepository;
-		public UserProfileAccessAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserProfileAccessRepository userProfileAccessRepository) : base(ctx, mediator) { _userProfileAccessRepository = userProfileAccessRepository; }	
+		public UserProfileAccessAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserProfileAccessRepository userProfileAccessRepository) : base(ctx, mediator) { _userProfileAccessRepository = userProfileAccessRepository; }	
 		public async Task<UserProfileAccessDTO> Get(IQueryModel<UserProfileAccess> request) {
             return (await _userProfileAccessRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<UserProfileAccessDTO>()));
         }
@@ -65,7 +65,7 @@ namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices {
 	}
 	public partial class UserCurrentAccessSelectedAppService : BaseAppService, IUserCurrentAccessSelectedAppService {	
 		public IUserCurrentAccessSelectedRepository _userCurrentAccessSelectedRepository;
-		public UserCurrentAccessSelectedAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserCurrentAccessSelectedRepository userCurrentAccessSelectedRepository) : base(ctx, mediator) { _userCurrentAccessSelectedRepository = userCurrentAccessSelectedRepository; }	
+		public UserCurrentAccessSelectedAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserCurrentAccessSelectedRepository userCurrentAccessSelectedRepository) : base(ctx, mediator) { _userCurrentAccessSelectedRepository = userCurrentAccessSelectedRepository; }	
 		public async Task<UserCurrentAccessSelectedDTO> Get(IQueryModel<UserCurrentAccessSelected> request) {
             return (await _userCurrentAccessSelectedRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<UserCurrentAccessSelectedDTO>()));
         }
@@ -114,7 +114,7 @@ namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices {
 	}
 	public partial class UserProfileListAppService : BaseAppService, IUserProfileListAppService {	
 		public IUserProfileListRepository _userProfileListRepository;
-		public UserProfileListAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserProfileListRepository userProfileListRepository) : base(ctx, mediator) { _userProfileListRepository = userProfileListRepository; }	
+		public UserProfileListAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserProfileListRepository userProfileListRepository) : base(ctx, mediator) { _userProfileListRepository = userProfileListRepository; }	
 		public async Task<UserProfileListDTO> Get(IQueryModel<UserProfileList> request) {
             return (await _userProfileListRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<UserProfileListDTO>()));
         }
@@ -163,7 +163,7 @@ namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices {
 	}
 	public partial class UserProfileAppService : BaseAppService, IUserProfileAppService {	
 		public IUserProfileRepository _userProfileRepository;
-		public UserProfileAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserProfileRepository userProfileRepository) : base(ctx, mediator) { _userProfileRepository = userProfileRepository; }	
+		public UserProfileAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserProfileRepository userProfileRepository) : base(ctx, mediator) { _userProfileRepository = userProfileRepository; }	
 		public async Task<UserProfileDTO> Get(IQueryModel<UserProfile> request) {
             return (await _userProfileRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<UserProfileDTO>()));
         }
@@ -212,7 +212,7 @@ namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices {
 	}
 	public partial class UsersAggSettingsAppService : BaseAppService, IUsersAggSettingsAppService {	
 		public IUsersAggSettingsRepository _usersAggSettingsRepository;
-		public UsersAggSettingsAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUsersAggSettingsRepository usersAggSettingsRepository) : base(ctx, mediator) { _usersAggSettingsRepository = usersAggSettingsRepository; }	
+		public UsersAggSettingsAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUsersAggSettingsRepository usersAggSettingsRepository) : base(ctx, mediator) { _usersAggSettingsRepository = usersAggSettingsRepository; }	
 		public async Task<UsersAggSettingsDTO> Get(IQueryModel<UsersAggSettings> request) {
             return (await _usersAggSettingsRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<UsersAggSettingsDTO>()));
         }
@@ -261,7 +261,7 @@ namespace LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices {
 	}
 	public partial class UserAppService : BaseAppService, IUserAppService {	
 		public IUserRepository _userRepository;
-		public UserAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserRepository userRepository) : base(ctx, mediator) { _userRepository = userRepository; }	
+		public UserAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IUserRepository userRepository) : base(ctx, mediator) { _userRepository = userRepository; }	
 		public async Task<UserDTO> Get(IQueryModel<User> request) {
             return (await _userRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<UserDTO>()));
         }

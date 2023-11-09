@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Attributes.T4;
+﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
 
-namespace LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities
+namespace LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities
 {
     [EndpointsT4(EndpointTypes.HttpAll)]
     public class SystemPanelSubItem : Entity

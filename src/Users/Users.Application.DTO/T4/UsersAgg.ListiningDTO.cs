@@ -1,10 +1,10 @@
-﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
-using LazyCrud.Core.Application.DTO.Attributes;
-namespace LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Requests 
+using LazyCrudBuilder.Core.Application.DTO.Attributes;
+namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Requests 
 {
 	using Requests;
     public partial class UserProfileAccessListiningDTO : SteppableEntityDTO
@@ -24,12 +24,12 @@ namespace LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Requests
               }
  [H1("REGISTER USER AND PROFILE ACCESSES")]  [HideTitleOnHeader]  [H2("User Registration")]     public partial class UserListiningDTO : SteppableEntityDTO
 	{
-         [DisplayOnList(2),Title] public  string Name { get; set; }[DisplayOnList(4)] public  System.DateOnly? BirthDate { get; set; }[DisplayOnList(5)] public  LazyCrud.Users.Enumerations.GenderEnum Gender { get; set; }[DisplayOnList(6)] public  string Contact_ContactNumbers { get; set; }[DisplayOnList(7),DisplayName("E-Mail")] public  string Contact_Email { get; set; }[DisplayOnList(8)] public  bool? CanUpdatePassword { get; set; }     }
+         [DisplayOnList(2),Title] public  string Name { get; set; }[DisplayOnList(4)] public  System.DateOnly? BirthDate { get; set; }[DisplayOnList(5)] public  LazyCrudBuilder.Users.Enumerations.GenderEnum Gender { get; set; }[DisplayOnList(6)] public  string Contact_ContactNumbers { get; set; }[DisplayOnList(7),DisplayName("E-Mail")] public  string Contact_Email { get; set; }[DisplayOnList(8)] public  bool? CanUpdatePassword { get; set; }     }
     public partial class UserContactListiningDTO : EntityDTO
 	{
             }
 }
-namespace LazyCrud.Users.Application.DTO.Aggregates.SystemSettingsAgg.Requests 
+namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.SystemSettingsAgg.Requests 
 {
 	using Requests;
     public partial class SystemPanelSubItemListiningDTO : EntityDTO

@@ -1,14 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Net.Http.Json;
 using System.Text;
 
-namespace LazyCrud.Core.Application.DTO.Extensions.Http
+namespace LazyCrudBuilder.Core.Application.DTO.Extensions.Http
 {
     public static class PageInitializator
     {

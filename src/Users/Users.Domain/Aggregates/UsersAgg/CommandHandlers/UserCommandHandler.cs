@@ -2,13 +2,13 @@
 using CrossCutting.Application.Mail;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Domain.CrossCutting;
-using LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities;
-using LazyCrud.Users.Domain.Aggregates.UsersAgg.Repositories;
-using LazyCrud.Users.Identity;
+using LazyCrudBuilder.Core.Application.DTO.Extensions;
+using LazyCrudBuilder.Core.Domain.CrossCutting;
+using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities;
+using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Repositories;
+using LazyCrudBuilder.Users.Identity;
 
-namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.CommandHandlers;
+namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.CommandHandlers;
 
 public partial class UserCommandHandler
 {

@@ -1,5 +1,5 @@
 ﻿        
-namespace LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Validators {
+namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Validators {
     using Requests;
     public partial class UserProfileStep1Validator : BaseUsersAggValidator<UserProfileDTO>
 	{

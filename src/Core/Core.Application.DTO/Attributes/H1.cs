@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Application.DTO.Attributes
+﻿namespace LazyCrudBuilder.Core.Application.DTO.Attributes
 {
     public class H1 : Attribute
     {

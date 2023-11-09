@@ -1,9 +1,9 @@
-﻿namespace LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Validators
+﻿namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Validators
 {
     using FluentValidation;
     using Requests;
-    using LazyCrud.Core.Application.DTO.Validators;
-    using LazyCrud.Core.Application.Validators;
+    using LazyCrudBuilder.Core.Application.DTO.Validators;
+    using LazyCrudBuilder.Core.Application.Validators;
 
     public partial class UserStep1Validator : BaseUsersAggValidator<UserDTO>
     {

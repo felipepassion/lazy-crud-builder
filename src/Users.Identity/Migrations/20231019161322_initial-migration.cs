@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace LazyCrud.Users.Identity.Migrations
+namespace LazyCrudBuilder.Users.Identity.Migrations
 {
     /// <inheritdoc />
     public partial class initialmigration : Migration

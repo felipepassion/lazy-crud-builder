@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace LazyCrud.Core.Application.Validators
+namespace LazyCrudBuilder.Core.Application.Validators
 {
     public static class CnpjValidator
     {

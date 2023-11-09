@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using LazyCrud.Core.Application.DTO.Seedwork;
+using LazyCrudBuilder.Core.Application.DTO.Seedwork;
 
-namespace LazyCrud.Users.Identity.Infra.IoC
+namespace LazyCrudBuilder.Users.Identity.Infra.IoC
 {
     public partial class IoCFactory
     {

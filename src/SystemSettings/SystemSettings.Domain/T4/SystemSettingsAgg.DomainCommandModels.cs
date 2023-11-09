@@ -1,9 +1,9 @@
-﻿using LazyCrud.CrossCutting.Infra.Log.Contexts;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
-namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.CommandModels
+﻿using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands;
+namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.CommandModels
 {
     using Queries.Models; 
-    using LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests; 
+    using LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests; 
     public partial class CreateSystemPanelSubItemCommand : BaseRequestableCommand<SystemPanelSubItemQueryModel, SystemPanelSubItemDTO>
     {
         public bool UpdateIfExists { get; set; }

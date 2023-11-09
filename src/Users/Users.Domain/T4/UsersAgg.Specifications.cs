@@ -1,6 +1,6 @@
-﻿using LazyCrud.Core.Domain.Seedwork.Specification;
+﻿using LazyCrudBuilder.Core.Domain.Seedwork.Specification;
 using Microsoft.EntityFrameworkCore;
-namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Specifications {
+namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Specifications {
 	using Entities;
    public partial class UserProfileAccessSpecifications {
 				public static Specification<UserProfileAccess> DescriptionContains(string value) {
@@ -1222,10 +1222,10 @@ namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Specifications {
             return new DirectSpecification<User>(p => p.BirthDate < value);
         }
 		
-					public static Specification<User> GenderEqual(params LazyCrud.Users.Enumerations.GenderEnum[] values) {
+					public static Specification<User> GenderEqual(params LazyCrudBuilder.Users.Enumerations.GenderEnum[] values) {
 			return new DirectSpecification<User>(p => values.Contains(p.Gender));
 		}
-		public static Specification<User> GenderNotEqual(LazyCrud.Users.Enumerations.GenderEnum value) {
+		public static Specification<User> GenderNotEqual(LazyCrudBuilder.Users.Enumerations.GenderEnum value) {
 			return new DirectSpecification<User>(p => p.Gender != value);
 		}
 	

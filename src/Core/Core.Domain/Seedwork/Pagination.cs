@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Application.DTO.Seedwork;
+﻿using LazyCrudBuilder.Core.Application.DTO.Seedwork;
 using System.Collections;
 
-namespace LazyCrud.Core.Domain.Seedwork
+namespace LazyCrudBuilder.Core.Domain.Seedwork
 {
     public class Pagination<T> : IPagination<T>
     {

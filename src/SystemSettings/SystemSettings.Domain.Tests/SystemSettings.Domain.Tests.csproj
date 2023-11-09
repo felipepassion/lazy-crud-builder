@@ -7,7 +7,7 @@
 
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
-		<RootNamespace>LazyCrud.SystemSettings.Domain.Tests</RootNamespace>
+		<RootNamespace>LazyCrudBuilder.SystemSettings.Domain.Tests</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

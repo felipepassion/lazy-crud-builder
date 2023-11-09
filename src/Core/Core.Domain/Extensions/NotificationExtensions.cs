@@ -1,11 +1,11 @@
-﻿using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Notifications;
-using LazyCrud.CrossCutting.Infra.Log.Entries;
-using LazyCrud.CrossCutting.Infra.Log.Extensions;
-using LazyCrud.CrossCutting.Infra.Log.Providers;
+﻿using LazyCrudBuilder.Core.Application.DTO.Extensions;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Notifications;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Entries;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Extensions;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Providers;
 
-namespace LazyCrud.Core.Domain.Extensions
+namespace LazyCrudBuilder.Core.Domain.Extensions
 {
     public static class NotificationExtensions
     {

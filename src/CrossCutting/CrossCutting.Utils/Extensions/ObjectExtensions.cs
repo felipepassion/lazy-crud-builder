@@ -1,4 +1,4 @@
-﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+﻿using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace LazyCrud.CrossCuting.Infra.Utils.Extensions
+namespace LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions
 {
     public static class ObjectExtensions
     {

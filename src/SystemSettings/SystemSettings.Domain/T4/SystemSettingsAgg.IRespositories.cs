@@ -1,8 +1,8 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Repositories;
-using LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Entities;
-using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities;
+﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Repositories;
+using LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Entities;
+using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities;
 
-namespace LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Repositories 
+namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.UsersAgg.Repositories 
 {
 	public partial interface IUserProfileAccessRepository : IRepository<UserProfileAccess> { }
 	public partial interface IUserProfileAccessMongoRepository : IMongoRepository<UserProfileAccess> { }
@@ -11,7 +11,7 @@ namespace LazyCrud.SystemSettings.Domain.Aggregates.UsersAgg.Repositories
 	public partial interface IUserMongoRepository : IMongoRepository<User> { }
 
 }
-namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Repositories 
+namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Repositories 
 {
 	public partial interface ISystemPanelSubItemRepository : IRepository<SystemPanelSubItem> { }
 	public partial interface ISystemPanelSubItemMongoRepository : IMongoRepository<SystemPanelSubItem> { }

@@ -1,10 +1,10 @@
-using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Attributes.T4;
-using LazyCrud.Users.Enumerations;
-using LazyCrud.Users.Identity;
+using LazyCrudBuilder.Core.Application.DTO.Attributes;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
+using LazyCrudBuilder.Users.Enumerations;
+using LazyCrudBuilder.Users.Identity;
 
-namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities
+namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities
 {
     [EndpointsT4(EndpointTypes.HttpAll), MigrationOrder(1), DoNotReplaceAfterGenerated,
         H1("REGISTER USER AND PROFILE ACCESSES"),

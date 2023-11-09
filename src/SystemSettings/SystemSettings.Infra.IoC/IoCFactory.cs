@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LazyCrud.SystemSettings.Infra.IoC
+namespace LazyCrudBuilder.SystemSettings.Infra.IoC
 {
     public partial class IoCFactory
     {

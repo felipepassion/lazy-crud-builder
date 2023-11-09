@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.AppServices
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.AppServices
 {
     public interface IAppService<T>
         where T : class

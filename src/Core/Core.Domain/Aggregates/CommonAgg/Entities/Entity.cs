@@ -2,12 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
-using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrud.Core.Domain.Attributes.T4;
+using LazyCrudBuilder.Core.Application.DTO.Attributes;
+using LazyCrudBuilder.Core.Application.DTO.Extensions;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities
 {
     public abstract class SteppableEntity : ActivableEntity
     {   

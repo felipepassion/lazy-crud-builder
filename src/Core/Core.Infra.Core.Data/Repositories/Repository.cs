@@ -1,11 +1,11 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Repositories;
-using LazyCrud.Core.Domain.Seedwork;
-using LazyCrud.Core.Infra.Data.Contexts;
-using LazyCrud.Core.Infra.Data.Extensions;
+﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Repositories;
+using LazyCrudBuilder.Core.Domain.Seedwork;
+using LazyCrudBuilder.Core.Infra.Data.Contexts;
+using LazyCrudBuilder.Core.Infra.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace LazyCrud.Core.Infra.Data.Repositories
+namespace LazyCrudBuilder.Core.Infra.Data.Repositories
 {
     public class Repository<T> : IRepository<T>
         where T : class, new()

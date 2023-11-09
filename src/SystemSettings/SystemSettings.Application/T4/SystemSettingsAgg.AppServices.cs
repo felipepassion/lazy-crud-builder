@@ -2,13 +2,13 @@
 using MediatR;
 using System.Linq.Expressions;
 using FluentValidation.Results;
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Application.Aggregates.Common;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
-using LazyCrud.Core.Domain.CrossCutting;
+using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
+using LazyCrudBuilder.Core.Application.DTO.Extensions;
+using LazyCrudBuilder.Core.Application.Aggregates.Common;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries;
+using LazyCrudBuilder.Core.Domain.CrossCutting;
 
-namespace LazyCrud.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppServices {
+namespace LazyCrudBuilder.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppServices {
 	using Application.DTO.Aggregates.SystemSettingsAgg.Requests;
 	using Domain.Aggregates.SystemSettingsAgg.Queries.Models;
 	using Domain.Aggregates.SystemSettingsAgg.Repositories;
@@ -16,7 +16,7 @@ namespace LazyCrud.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppSe
 	using Domain.Aggregates.SystemSettingsAgg.Entities;
 	public partial class SystemPanelSubItemAppService : BaseAppService, ISystemPanelSubItemAppService {	
 		public ISystemPanelSubItemRepository _systemPanelSubItemRepository;
-		public SystemPanelSubItemAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ISystemPanelSubItemRepository systemPanelSubItemRepository) : base(ctx, mediator) { _systemPanelSubItemRepository = systemPanelSubItemRepository; }	
+		public SystemPanelSubItemAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ISystemPanelSubItemRepository systemPanelSubItemRepository) : base(ctx, mediator) { _systemPanelSubItemRepository = systemPanelSubItemRepository; }	
 		public async Task<SystemPanelSubItemDTO> Get(IQueryModel<SystemPanelSubItem> request) {
             return (await _systemPanelSubItemRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<SystemPanelSubItemDTO>()));
         }
@@ -65,7 +65,7 @@ namespace LazyCrud.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppSe
 	}
 	public partial class SystemPanelAppService : BaseAppService, ISystemPanelAppService {	
 		public ISystemPanelRepository _systemPanelRepository;
-		public SystemPanelAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ISystemPanelRepository systemPanelRepository) : base(ctx, mediator) { _systemPanelRepository = systemPanelRepository; }	
+		public SystemPanelAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ISystemPanelRepository systemPanelRepository) : base(ctx, mediator) { _systemPanelRepository = systemPanelRepository; }	
 		public async Task<SystemPanelDTO> Get(IQueryModel<SystemPanel> request) {
             return (await _systemPanelRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<SystemPanelDTO>()));
         }
@@ -114,7 +114,7 @@ namespace LazyCrud.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppSe
 	}
 	public partial class SystemPanelGroupAppService : BaseAppService, ISystemPanelGroupAppService {	
 		public ISystemPanelGroupRepository _systemPanelGroupRepository;
-		public SystemPanelGroupAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ISystemPanelGroupRepository systemPanelGroupRepository) : base(ctx, mediator) { _systemPanelGroupRepository = systemPanelGroupRepository; }	
+		public SystemPanelGroupAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ISystemPanelGroupRepository systemPanelGroupRepository) : base(ctx, mediator) { _systemPanelGroupRepository = systemPanelGroupRepository; }	
 		public async Task<SystemPanelGroupDTO> Get(IQueryModel<SystemPanelGroup> request) {
             return (await _systemPanelGroupRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<SystemPanelGroupDTO>()));
         }
@@ -163,7 +163,7 @@ namespace LazyCrud.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppSe
 	}
 	public partial class CargaTabelaAppService : BaseAppService, ICargaTabelaAppService {	
 		public ICargaTabelaRepository _cargaTabelaRepository;
-		public CargaTabelaAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ICargaTabelaRepository cargaTabelaRepository) : base(ctx, mediator) { _cargaTabelaRepository = cargaTabelaRepository; }	
+		public CargaTabelaAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ICargaTabelaRepository cargaTabelaRepository) : base(ctx, mediator) { _cargaTabelaRepository = cargaTabelaRepository; }	
 		public async Task<CargaTabelaDTO> Get(IQueryModel<CargaTabela> request) {
             return (await _cargaTabelaRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<CargaTabelaDTO>()));
         }
@@ -212,7 +212,7 @@ namespace LazyCrud.SystemSettings.Application.Aggregates.SystemSettingsAgg.AppSe
 	}
 	public partial class SystemSettingsAggSettingsAppService : BaseAppService, ISystemSettingsAggSettingsAppService {	
 		public ISystemSettingsAggSettingsRepository _systemSettingsAggSettingsRepository;
-		public SystemSettingsAggSettingsAppService(IMediator mediator, LazyCrud.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ISystemSettingsAggSettingsRepository systemSettingsAggSettingsRepository) : base(ctx, mediator) { _systemSettingsAggSettingsRepository = systemSettingsAggSettingsRepository; }	
+		public SystemSettingsAggSettingsAppService(IMediator mediator, LazyCrudBuilder.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, ISystemSettingsAggSettingsRepository systemSettingsAggSettingsRepository) : base(ctx, mediator) { _systemSettingsAggSettingsRepository = systemSettingsAggSettingsRepository; }	
 		public async Task<SystemSettingsAggSettingsDTO> Get(IQueryModel<SystemSettingsAggSettings> request) {
             return (await _systemSettingsAggSettingsRepository.FindAsync(filter: request.GetFilter(), selector: x => x.ProjectedAs<SystemSettingsAggSettingsDTO>()));
         }

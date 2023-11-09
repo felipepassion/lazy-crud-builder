@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace LazyCrud.Core.Domain.Seedwork.Specification {
+namespace LazyCrudBuilder.Core.Domain.Seedwork.Specification {
 
     /// <summary>
     /// A Direct Specification is a simple implementation

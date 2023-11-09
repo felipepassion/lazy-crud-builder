@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Attributes.T4;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
 
-namespace LazyCrud.Users.Identity
+namespace LazyCrudBuilder.Users.Identity
 {
     [Table("AspNetUsers")]
     public class ApplicationUser : IdentityUser<int>, IEntity

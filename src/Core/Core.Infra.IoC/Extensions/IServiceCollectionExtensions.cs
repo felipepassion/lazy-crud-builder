@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace LazyCrud.Core.Infra.IoC.Extensions
+namespace LazyCrudBuilder.Core.Infra.IoC.Extensions
 {
     public static class IServiceCollectionExtensions
     {

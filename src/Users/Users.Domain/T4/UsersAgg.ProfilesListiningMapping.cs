@@ -1,11 +1,11 @@
-﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
 using AutoMapper;
-using LazyCrud.Core.Application.DTO.Attributes;
-namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Profiles
+using LazyCrudBuilder.Core.Application.DTO.Attributes;
+namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Profiles
 {
 	using Application.DTO.Aggregates.UsersAgg.Requests;
 	using Entities;

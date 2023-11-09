@@ -1,5 +1,5 @@
 ﻿
-namespace LazyCrud.Core.Domain.Seedwork.Specification {
+namespace LazyCrudBuilder.Core.Domain.Seedwork.Specification {
 
     /// <summary>
     /// Base class for composite specifications

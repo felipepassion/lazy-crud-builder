@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+﻿using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
 using FluentValidation;
 
-namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Validators
+namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Validators
 {
     public class BaseValidator<T> : AbstractValidator<T>, IValidator<T>
         where T : EntityDTO

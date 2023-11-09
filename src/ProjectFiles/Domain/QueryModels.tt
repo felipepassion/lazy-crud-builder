@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Linq.Expressions;
 using FluentValidation.Results;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries;
 <# if (entitiesT4.Any()) {#>
 <# foreach(var namespaces in groupEntitiesT4) { 
 var myNamespace = namespaces.Key.Replace("Entities","Queries");

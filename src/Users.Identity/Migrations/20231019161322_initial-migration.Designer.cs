@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using LazyCrud.Users.Identity;
+using LazyCrudBuilder.Users.Identity;
 
 #nullable disable
 
-namespace LazyCrud.Users.Identity.Migrations
+namespace LazyCrudBuilder.Users.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20231019161322_initial-migration")]
@@ -158,7 +158,7 @@ namespace LazyCrud.Users.Identity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("LazyCrud.Users.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("LazyCrudBuilder.Users.Identity.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -263,7 +263,7 @@ namespace LazyCrud.Users.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("LazyCrud.Users.Identity.ApplicationUser", null)
+                    b.HasOne("LazyCrudBuilder.Users.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -272,7 +272,7 @@ namespace LazyCrud.Users.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("LazyCrud.Users.Identity.ApplicationUser", null)
+                    b.HasOne("LazyCrudBuilder.Users.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -287,7 +287,7 @@ namespace LazyCrud.Users.Identity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LazyCrud.Users.Identity.ApplicationUser", null)
+                    b.HasOne("LazyCrudBuilder.Users.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -296,7 +296,7 @@ namespace LazyCrud.Users.Identity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("LazyCrud.Users.Identity.ApplicationUser", null)
+                    b.HasOne("LazyCrudBuilder.Users.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

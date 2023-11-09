@@ -1,8 +1,8 @@
-﻿using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities;
+﻿using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LazyCrud.SystemSettings.Infra.Data.Aggregates.SystemSettingsAgg.Mappings
+namespace LazyCrudBuilder.SystemSettings.Infra.Data.Aggregates.SystemSettingsAgg.Mappings
 {
     public partial class SystemPanelGroupMapping : IEntityTypeConfiguration<SystemPanelGroup>
     {

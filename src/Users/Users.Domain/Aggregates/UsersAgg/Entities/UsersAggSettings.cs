@@ -1,8 +1,8 @@
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
-using LazyCrud.Core.Domain.Attributes.T4;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
 using System.ComponentModel.DataAnnotations;
 
-namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities
+namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities
 {
     [MigrationOrder(3), AggregateSettingsT4, EndpointsT4(EndpointTypes.HttpAll)]
     public class UsersAggSettings : BaseAggregateSettings

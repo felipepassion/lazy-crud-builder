@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace LazyCrud.Users.Infra.Data.Migrations
+namespace LazyCrudBuilder.Users.Infra.Data.Migrations
 {
     /// <inheritdoc />
     public partial class _2023_10_20_12_52_24 : Migration

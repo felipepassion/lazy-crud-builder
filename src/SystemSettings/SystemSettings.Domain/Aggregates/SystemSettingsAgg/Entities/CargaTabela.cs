@@ -1,12 +1,12 @@
-﻿using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
-using LazyCrud.Core.Domain.Attributes.T4;
+﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities
+namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities
 {
     [EndpointsT4(EndpointTypes.HttpAll), Steppable(1), DoNotReplaceAfterGenerated]
     public class CargaTabela : SteppableEntity

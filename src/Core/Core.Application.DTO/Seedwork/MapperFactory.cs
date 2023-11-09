@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace LazyCrud.Core.Application.DTO.Seedwork
+namespace LazyCrudBuilder.Core.Application.DTO.Seedwork
 {
     public static class MapperFactory
     {

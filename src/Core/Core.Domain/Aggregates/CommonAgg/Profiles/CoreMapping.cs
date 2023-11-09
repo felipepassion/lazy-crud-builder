@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Profiles
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Profiles
 {
     public partial class CoreAggProfile : Profile
     {

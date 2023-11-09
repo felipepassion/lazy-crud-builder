@@ -37,7 +37,7 @@
     int count = hasParameterSwitcher ? 1 : 0;
 #>
 
-@using LazyCrud.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
+@using LazyCrudBuilder.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
 @using Pages.RegisterStepsTemplate;
 @inherits BaseCadastro<<#=entity.Name#>DTO>
 

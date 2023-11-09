@@ -1,6 +1,6 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     public class BaseAggregateSettings : Entity
     {

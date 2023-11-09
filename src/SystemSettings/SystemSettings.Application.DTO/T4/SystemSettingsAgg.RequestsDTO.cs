@@ -1,11 +1,11 @@
 ﻿
 
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using LazyCrud.Core.Application.DTO.Attributes;
+using LazyCrudBuilder.Core.Application.DTO.Attributes;
 
-namespace LazyCrud.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests 
+namespace LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests 
 {
 public partial class UserProfileAccessDTO : SteppableEntityDTO
 	{
@@ -24,11 +24,11 @@ public partial class UserDTO : EntityDTO
 	{
 	}
 }
-namespace LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests 
+namespace LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests 
 {
  [H2("Submenu")] public partial class SystemPanelSubItemDTO : BasePainelDTO
 	{
-	    public List<LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelSubItemDTO> SubItems { get; set; } = new List<LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelSubItemDTO>();
+	    public List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelSubItemDTO> SubItems { get; set; } = new List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelSubItemDTO>();
 	    public  int? SystemPanelSubItemId { get; set; }
 	    public  int SystemPanelId { get; set; }
 	    [DisplayName("É Direct link?")] public  bool IsSubItem { get; set; }
@@ -37,17 +37,17 @@ namespace LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.R
 	{
 	    [DisplayOnList(0)] public  string Icon { get; set; }
 	    [DisplayOnList,DisplayName("Menu"),Title] public  string Description { get; set; }
-	    public List<LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelGroupDTO> GroupOfMenus { get; set; } = new List<LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelGroupDTO>();
-	    public List<LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelSubItemDTO> SubItems { get; set; } = new List<LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelSubItemDTO>();
-	    public List<LazyCrud.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests.UserProfileAccessDTO> AccessesOfMyProfile { get; set; } = new List<LazyCrud.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests.UserProfileAccessDTO>();
+	    public List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelGroupDTO> GroupOfMenus { get; set; } = new List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelGroupDTO>();
+	    public List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelSubItemDTO> SubItems { get; set; } = new List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelSubItemDTO>();
+	    public List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests.UserProfileAccessDTO> AccessesOfMyProfile { get; set; } = new List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests.UserProfileAccessDTO>();
 	}
  [H2("Grupo de Menus / Painéis")] public partial class SystemPanelGroupDTO : SteppableEntityDTO
 	{
 	    public  string Icon { get; set; }
 	    [DisplayOnList,DisplayName("Description"),Title] public  string Description { get; set; }
 	    [DisplayOnList,DisplayName("Code"),Subtitle] public  string Code { get; set; }
-	    [DisplayOnList,DisplayName("Menus")] public List<LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelDTO> SubItems { get; set; } = new List<LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelDTO>();
-	    public List<LazyCrud.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests.UserProfileAccessDTO> AccessesOfMyProfile { get; set; } = new List<LazyCrud.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests.UserProfileAccessDTO>();
+	    [DisplayOnList,DisplayName("Menus")] public List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelDTO> SubItems { get; set; } = new List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Requests.SystemPanelDTO>();
+	    public List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests.UserProfileAccessDTO> AccessesOfMyProfile { get; set; } = new List<LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.UsersAgg.Requests.UserProfileAccessDTO>();
 	}
 public partial class CargaTabelaDTO : SteppableEntityDTO
 	{

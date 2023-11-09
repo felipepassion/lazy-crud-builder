@@ -1,11 +1,11 @@
-﻿using LazyCrud.CrossCuting.Infra.Utils.Extensions;
+﻿using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
 public static class AggregateCreator
 {
     static string oldValue = @"..\..\..\DefaultTemplate";
-    static string solutionFile = @"C:\Users\felip\source\repos\Equipe-LazyCrud\LazyCrud.NET\back-end\LazyCrud.sln";
+    static string solutionFile = @"C:\Users\felip\source\repos\Equipe-LazyCrud\LazyCrudBuilder.NET\back-end\LazyCrudBuilder.sln";
 
     //Função que copia as pastas e arquivos dentro da pasta especificada, para o novo diretório
     public static void DeleteAggregate(string newValue)

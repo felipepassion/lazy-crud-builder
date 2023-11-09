@@ -1,8 +1,8 @@
 ﻿
 
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
 
-namespace LazyCrud.Users.Application.DTO.Aggregates.UsersAgg.Requests
+namespace LazyCrudBuilder.Users.Application.DTO.Aggregates.UsersAgg.Requests
 {
     public partial class UserProfileAccessDTO : SteppableEntityDTO
     {

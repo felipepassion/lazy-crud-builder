@@ -1,4 +1,4 @@
-using LazyCrud.Core.Application.DTO.Validators;
+using LazyCrudBuilder.Core.Application.DTO.Validators;
 
 namespace Core.Application.DTO.Tests
 {

@@ -1,13 +1,13 @@
 ﻿using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrud.Core.Domain.CrossCutting;
-using LazyCrud.Core.Domain.Seedwork;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrudBuilder.Core.Domain.CrossCutting;
+using LazyCrudBuilder.Core.Domain.Seedwork;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands.Handles
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands.Handles
 {
     public class BaseCommandHandler<T>
         where T : IEntity

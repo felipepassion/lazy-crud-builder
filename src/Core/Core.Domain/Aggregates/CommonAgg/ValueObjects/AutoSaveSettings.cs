@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     [Keyless]
     public class AutoSaveSettings

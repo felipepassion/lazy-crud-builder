@@ -1,4 +1,4 @@
-﻿@using LazyCrud.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
+﻿@using LazyCrudBuilder.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
 
 @inherits <#= AggName.Replace("Agg","") #>.WebApp.Client.Pages.DefaultDesign.BaseListiningPage
 

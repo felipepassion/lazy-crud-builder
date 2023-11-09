@@ -1,9 +1,9 @@
-﻿using LazyCrud.CrossCuting.Infra.Utils.Extensions;
+﻿using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
 using System.Linq.Expressions;
-using LazyCrud.Core.Domain.Seedwork.Specification;
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
+using LazyCrudBuilder.Core.Domain.Seedwork.Specification;
+using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
 
-namespace LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Filters{
+namespace LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Filters{
 	using Entities;
 	using Specifications;
 	using Queries.Models;

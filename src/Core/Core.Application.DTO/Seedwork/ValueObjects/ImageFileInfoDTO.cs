@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+﻿using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
 using System.ComponentModel.DataAnnotations;
 
-namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
+namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
 {
     public class ImageFileInfoDTO : IImageFileInfoDTO
     {

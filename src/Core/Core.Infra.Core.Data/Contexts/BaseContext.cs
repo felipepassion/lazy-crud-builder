@@ -5,19 +5,19 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
-using LazyCrud.Core.Domain.Attributes.T4;
-using LazyCrud.Core.Domain.CrossCutting;
-using LazyCrud.Core.Domain.Seedwork;
-using LazyCrud.Core.Infra.Data.Extensions;
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using LazyCrudBuilder.Core.Application.DTO.Attributes;
+using LazyCrudBuilder.Core.Application.DTO.Extensions;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
+using LazyCrudBuilder.Core.Domain.CrossCutting;
+using LazyCrudBuilder.Core.Domain.Seedwork;
+using LazyCrudBuilder.Core.Infra.Data.Extensions;
+using LazyCrudBuilder.CrossCuting.Infra.Utils.Extensions;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
 
-namespace LazyCrud.Core.Infra.Data.Contexts
+namespace LazyCrudBuilder.Core.Infra.Data.Contexts
 {
     public class BaseContext : DbContext, IUnitOfWork
     {

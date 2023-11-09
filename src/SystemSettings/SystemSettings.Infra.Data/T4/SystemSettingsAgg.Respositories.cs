@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
-using LazyCrud.Core.Infra.Data.Repositories;
-using LazyCrud.SystemSettings.Infra.Data.Context;
+using LazyCrudBuilder.Core.Infra.Data.Repositories;
+using LazyCrudBuilder.SystemSettings.Infra.Data.Context;
 
-using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities;
+using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Entities;
 
-namespace LazyCrud.SystemSettings.Infra.Data.Aggregates.SystemSettingsAgg.Repositories
+namespace LazyCrudBuilder.SystemSettings.Infra.Data.Aggregates.SystemSettingsAgg.Repositories
 {
-	using LazyCrud.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Repositories;
+	using LazyCrudBuilder.SystemSettings.Domain.Aggregates.SystemSettingsAgg.Repositories;
 	public partial class SystemPanelSubItemRepository : Repository<SystemPanelSubItem>, ISystemPanelSubItemRepository { public SystemPanelSubItemRepository(SystemSettingsAggContext ctx) : base(ctx) { } }
 
 	public partial class SystemPanelRepository : Repository<SystemPanel>, ISystemPanelRepository { public SystemPanelRepository(SystemSettingsAggContext ctx) : base(ctx) { } }

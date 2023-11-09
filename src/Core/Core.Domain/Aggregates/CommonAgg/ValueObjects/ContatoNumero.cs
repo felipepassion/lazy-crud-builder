@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Attributes.T4;
+﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     public class ContactNumero : Entity
     {

@@ -1,10 +1,10 @@
-﻿using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Attributes.T4;
-using LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities;
+﻿using LazyCrudBuilder.Core.Application.DTO.Attributes;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.Attributes.T4;
+using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities;
 using System.ComponentModel;
 
-namespace LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Entities
+namespace LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Entities
 {
     public class SystemPanelGroup : Entity
     {

@@ -1,9 +1,9 @@
-﻿using LazyCrud.Core.Domain.Extensions;
-using LazyCrud.CrossCutting.Infra.Log.Providers;
+﻿using LazyCrudBuilder.Core.Domain.Extensions;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Providers;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Events.Handles
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Events.Handles
 {
     public class ExceptionEventHandler : INotificationHandler<ErrorEvent>
     {

@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.CrossCutting;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.CrossCutting;
 using System.Linq.Expressions;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries
 {
     public abstract class BaseQueryModel<T> : IQueryModel<T>
         where T:IEntity

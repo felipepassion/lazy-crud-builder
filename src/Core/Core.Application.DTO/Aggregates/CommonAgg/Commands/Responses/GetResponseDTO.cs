@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses
+﻿namespace LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses
 {
     public class GetDTO : GetDTO<object>
     {

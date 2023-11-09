@@ -4,7 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<RootNamespace>LazyCrud.Users.Identity</RootNamespace>
+		<RootNamespace>LazyCrudBuilder.Users.Identity</RootNamespace>
 	</PropertyGroup>
 	
 	<ItemGroup>

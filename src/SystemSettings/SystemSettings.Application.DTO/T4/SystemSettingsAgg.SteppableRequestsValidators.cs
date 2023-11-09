@@ -1,9 +1,9 @@
-﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using LazyCrudBuilder.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
-namespace LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Validators {
+namespace LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Validators {
     public class BaseSystemSettingsAggValidator<T> : BaseValidator<T>
         where T : EntityDTO
     {
@@ -11,7 +11,7 @@ namespace LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.V
             public BaseSystemSettingsAggValidator(HttpClient db) : base(db){ }
     }
 }
-namespace LazyCrud.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Validators 
+namespace LazyCrudBuilder.SystemSettings.Application.DTO.Aggregates.SystemSettingsAgg.Validators 
 {
 	using Requests;
     public partial class SystemPanelSubItemStep1Validator : BaseSystemSettingsAggValidator<SystemPanelSubItemDTO>

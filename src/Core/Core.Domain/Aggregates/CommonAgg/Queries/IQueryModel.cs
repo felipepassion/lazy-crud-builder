@@ -1,9 +1,9 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.CrossCutting;
+﻿using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Entities;
+using LazyCrudBuilder.Core.Domain.CrossCutting;
 using MediatR;
 using System.Linq.Expressions;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries
+namespace LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries
 {
     public interface IQueryModel<E>
         where E : IEntity

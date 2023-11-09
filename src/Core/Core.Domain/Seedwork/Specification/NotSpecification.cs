@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace LazyCrud.Core.Domain.Seedwork.Specification {
+namespace LazyCrudBuilder.Core.Domain.Seedwork.Specification {
 
     /// <summary>
     /// NotEspecification convert a original

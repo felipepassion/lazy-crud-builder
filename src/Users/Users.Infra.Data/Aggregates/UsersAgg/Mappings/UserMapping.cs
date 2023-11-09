@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using LazyCrud.Users.Domain.Aggregates.UsersAgg.Entities;
-using LazyCrud.Users.Identity;
+using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Entities;
+using LazyCrudBuilder.Users.Identity;
 
-namespace LazyCrud.Users.Infra.Data.Aggregates.UsersAgg.Mappings
+namespace LazyCrudBuilder.Users.Infra.Data.Aggregates.UsersAgg.Mappings
 {
     public partial class UsersAggSettingsMapping : IEntityTypeConfiguration<UsersAggSettings>
     {
@@ -62,7 +62,7 @@ namespace LazyCrud.Users.Infra.Data.Aggregates.UsersAgg.Mappings
     }
 }
 
-namespace LazyCrud.Users.Infra.Data.Aggregates.IdentityAgg.Mappings
+namespace LazyCrudBuilder.Users.Infra.Data.Aggregates.IdentityAgg.Mappings
 {
     public partial class ApplicationUserMapping : IEntityTypeConfiguration<ApplicationUser>
     {

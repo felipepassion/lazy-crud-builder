@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using System.Linq.Expressions;
 using FluentValidation.Results;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
-namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Queries.Models
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Queries;
+namespace LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Queries.Models
 {
 	using Filters;
     using Entities;
@@ -406,7 +406,7 @@ namespace LazyCrud.Users.Domain.Aggregates.UsersAgg.Queries.Models
 		public System.DateOnly? BirthDateGreaterThan { get; set; }
 		public System.DateOnly? BirthDateLessThanOrEqual { get; set; }
 		public System.DateOnly? BirthDateGreaterThanOrEqual { get; set; }
-		public LazyCrud.Users.Enumerations.GenderEnum? GenderEqual { get; set; }
+		public LazyCrudBuilder.Users.Enumerations.GenderEnum? GenderEqual { get; set; }
 		public bool? NeedResetPasswordEqual { get; set; }
 		public bool? NeedSendOnboardingMailEqual { get; set; }
 		public string? ProfilePictureEqual { get; set; }

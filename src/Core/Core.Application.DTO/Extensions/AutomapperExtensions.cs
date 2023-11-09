@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Application.DTO.Seedwork;
+﻿using LazyCrudBuilder.Core.Application.DTO.Seedwork;
 using System.Diagnostics;
 
-namespace LazyCrud.Core.Application.DTO.Extensions
+namespace LazyCrudBuilder.Core.Application.DTO.Extensions
 {
     public static class AutomapperExtensions
     {

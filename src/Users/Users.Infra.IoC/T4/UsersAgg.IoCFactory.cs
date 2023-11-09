@@ -1,23 +1,23 @@
 ﻿
-using LazyCrud.Users.Infra.Data.Aggregates.UsersAgg.Repositories;
-using LazyCrud.Users.Domain.Aggregates.UsersAgg.Repositories;
-using LazyCrud.Users.Infra.Data.Aggregates.SystemSettingsAgg.Repositories;
-using LazyCrud.Users.Domain.Aggregates.SystemSettingsAgg.Repositories;
-using LazyCrud.Users.Infra.Data.Aggregates.UsersAgg.Repositories;
-using LazyCrud.Users.Domain.Aggregates.UsersAgg.Repositories;
-using LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices;
+using LazyCrudBuilder.Users.Infra.Data.Aggregates.UsersAgg.Repositories;
+using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Repositories;
+using LazyCrudBuilder.Users.Infra.Data.Aggregates.SystemSettingsAgg.Repositories;
+using LazyCrudBuilder.Users.Domain.Aggregates.SystemSettingsAgg.Repositories;
+using LazyCrudBuilder.Users.Infra.Data.Aggregates.UsersAgg.Repositories;
+using LazyCrudBuilder.Users.Domain.Aggregates.UsersAgg.Repositories;
+using LazyCrudBuilder.Users.Application.Aggregates.UsersAgg.AppServices;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
-using LazyCrud.CrossCutting.Infra.Log.Providers;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Contexts;
+using LazyCrudBuilder.CrossCutting.Infra.Log.Providers;
+using LazyCrudBuilder.Core.Domain.Aggregates.CommonAgg.Commands;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using LazyCrud.Core.Application.DTO.Seedwork;
-using LazyCrud.Core.Infra.IoC;
+using LazyCrudBuilder.Core.Application.DTO.Seedwork;
+using LazyCrudBuilder.Core.Infra.IoC;
 
-namespace LazyCrud.Users.Infra.IoC {
+namespace LazyCrudBuilder.Users.Infra.IoC {
 
 	using Infra.Data.Context;
 	using Domain.Aggregates.UsersAgg.CommandHandlers;
