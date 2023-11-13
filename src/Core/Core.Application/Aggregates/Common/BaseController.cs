@@ -8,7 +8,6 @@ namespace LazyCrud.Core.Application.Aggregates.Common
     {
         protected readonly IServiceProvider _scope;
         protected readonly ILogRequestContext _logRequestContext;
-        protected readonly ILoggedUserContext _loggedUserContext;
 
         public BaseController(ILogRequestContext logRequestContext, IServiceProvider scope)
         {

@@ -18,7 +18,6 @@ using LazyCrud.CrossCutting.Infra.Log.Contexts;
 using LazyCrud.Core.Application.DTO.Extensions;
 using LazyCrud.Core.Application.Aggregates.Common;
 using LazyCrud.CrossCuting.Infra.Utils.Extensions;
-using global::TollSvc.WebApp.Extensions;
 using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
 <#foreach(var namespaces in groupEntities) {
 	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
@@ -108,7 +107,6 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 		
 		[HttpPost]
 		public async Task<GetHttpResponseDTO<object>> Post(LazyCrud.<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
-			var loggedUserId = User.GetLoggedInUserId<int>();
 
 <#if(props.ContainsKey("EmpresaId") && aggName != "CompaniesAgg"){#>
 			

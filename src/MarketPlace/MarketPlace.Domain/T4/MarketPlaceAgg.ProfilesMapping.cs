@@ -12,18 +12,9 @@ namespace LazyCrud.MarketPlace.Domain.Aggregates.UsersAgg.Profiles
 	{
 		public UsersAggProfile()
 		{
-			CreateMap<ProdutoDTO, Produto>()
-				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
-			CreateMap<Produto, ProdutoDTO>();
 			CreateMap<UserDTO, User>()
 				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
 			CreateMap<User, UserDTO>();
-			CreateMap<CarrinhoDTO, Carrinho>()
-				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
-			CreateMap<Carrinho, CarrinhoDTO>();
-			CreateMap<CategoriaprodutoDTO, Categoriaproduto>()
-				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
-			CreateMap<Categoriaproduto, CategoriaprodutoDTO>();
 			ConfigureAdditionalProfiles();
 		}
 		partial void ConfigureAdditionalProfiles();
@@ -38,9 +29,18 @@ namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.Profiles
 	{
 		public MarketPlaceAggProfile()
 		{
+			CreateMap<ProdutoDTO, Produto>()
+				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
+			CreateMap<Produto, ProdutoDTO>();
 			CreateMap<MarketPlaceAggSettingsDTO, MarketPlaceAggSettings>()
 				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
 			CreateMap<MarketPlaceAggSettings, MarketPlaceAggSettingsDTO>();
+			CreateMap<CarrinhoDTO, Carrinho>()
+				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
+			CreateMap<Carrinho, CarrinhoDTO>();
+			CreateMap<CategoriaprodutoDTO, Categoriaproduto>()
+				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
+			CreateMap<Categoriaproduto, CategoriaprodutoDTO>();
 			ConfigureAdditionalProfiles();
 		}
 		partial void ConfigureAdditionalProfiles();

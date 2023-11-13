@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
 using LazyCrud.Core.Application.DTO.Attributes;
-namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.UsersAgg.Requests 
+namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.MarketPlaceAgg.Requests 
 {
 	using Requests;
     public partial class ProdutoListiningDTO : EntityDTO
 	{
               }
-    public partial class UserListiningDTO : EntityDTO
+    public partial class MarketPlaceAggSettingsListiningDTO : EntityDTO
 	{
-            }
+              }
     public partial class CarrinhoListiningDTO : EntityDTO
 	{
               }
@@ -20,10 +20,10 @@ namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.UsersAgg.Requests
 	{
               }
 }
-namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.MarketPlaceAgg.Requests 
+namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.UsersAgg.Requests 
 {
 	using Requests;
-    public partial class MarketPlaceAggSettingsListiningDTO : EntityDTO
+    public partial class UserListiningDTO : EntityDTO
 	{
-              }
+            }
 }

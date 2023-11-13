@@ -21,7 +21,7 @@ using LazyCrud.Users.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-    
+
 namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
     public static partial class IoCFactory {
        
@@ -54,7 +54,6 @@ var aggName = namespc.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replac
                     (scope.ServiceProvider.GetRequiredService(item) as DbContext)
                         .Database.Migrate();
                 }
-                Task.Run(async () => await TablesCsvSeeder.SeedDatabase(scope));
             }
         }
     }

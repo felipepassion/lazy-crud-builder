@@ -1,6 +1,4 @@
 ﻿
-using LazyCrud.MarketPlace.Infra.Data.Aggregates.UsersAgg.Repositories;
-using LazyCrud.MarketPlace.Domain.Aggregates.UsersAgg.Repositories;
 using LazyCrud.MarketPlace.Infra.Data.Aggregates.MarketPlaceAgg.Repositories;
 using LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.Repositories;
 using LazyCrud.MarketPlace.Infra.Data.Aggregates.MarketPlaceAgg.Repositories;
@@ -74,16 +72,19 @@ namespace LazyCrud.MarketPlace.Infra.IoC {
 		void ConfigureRepositories(IServiceCollection services) {
 
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IMarketPlaceAggSettingsRepository, MarketPlaceAggSettingsRepository>();
             services.AddScoped<ICarrinhoRepository, CarrinhoRepository>();
             services.AddScoped<ICategoriaprodutoRepository, CategoriaprodutoRepository>();
-            services.AddScoped<IMarketPlaceAggSettingsRepository, MarketPlaceAggSettingsRepository>();
 			
 			ConfigureAdditionalRepositories();
 		}
 
 		void ConfigureAppServices(IServiceCollection services) {
 
+            services.AddScoped<IProdutoAppService, ProdutoAppService>();
             services.AddScoped<IMarketPlaceAggSettingsAppService, MarketPlaceAggSettingsAppService>();
+            services.AddScoped<ICarrinhoAppService, CarrinhoAppService>();
+            services.AddScoped<ICategoriaprodutoAppService, CategoriaprodutoAppService>();
 		
 			ConfigureAdditionalAppServices(services);
 		}

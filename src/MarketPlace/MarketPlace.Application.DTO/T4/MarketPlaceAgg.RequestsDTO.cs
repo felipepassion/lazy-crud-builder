@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using LazyCrud.Core.Application.DTO.Attributes;
 
-namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.UsersAgg.Requests 
+namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.MarketPlaceAgg.Requests 
 {
 public partial class ProdutoDTO : EntityDTO
 	{
@@ -14,8 +14,9 @@ public partial class ProdutoDTO : EntityDTO
 	    public  int Preco { get; set; }
 	    public  int CategoriaId { get; set; }
 	}
-public partial class UserDTO : EntityDTO
+public partial class MarketPlaceAggSettingsDTO : BaseAggregateSettingsDTO
 	{
+	    public  int UserId { get; set; }
 	}
 public partial class CarrinhoDTO : EntityDTO
 	{
@@ -28,10 +29,9 @@ public partial class CategoriaprodutoDTO : EntityDTO
 	    public LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects.ImageFileInfoDTO Nome { get; set; } = new LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects.ImageFileInfoDTO();
 	}
 }
-namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.MarketPlaceAgg.Requests 
+namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.UsersAgg.Requests 
 {
-public partial class MarketPlaceAggSettingsDTO : BaseAggregateSettingsDTO
+public partial class UserDTO : EntityDTO
 	{
-	    public  int UserId { get; set; }
 	}
 }

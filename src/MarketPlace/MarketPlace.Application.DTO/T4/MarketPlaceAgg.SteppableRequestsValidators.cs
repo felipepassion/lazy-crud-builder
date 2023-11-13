@@ -14,12 +14,42 @@ namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.MarketPlaceAgg.Validat
 namespace LazyCrud.MarketPlace.Application.DTO.Aggregates.MarketPlaceAgg.Validators 
 {
 	using Requests;
+    public partial class ProdutoStep1Validator : BaseMarketPlaceAggValidator<ProdutoDTO>
+	{
+        public ProdutoStep1Validator(HttpClient db)
+                    : base(db)
+        {
+            
+            ConfigureAdditionalValidations();
+        }
+        partial void ConfigureAdditionalValidations();
+    }
     public partial class MarketPlaceAggSettingsStep1Validator : BaseMarketPlaceAggValidator<MarketPlaceAggSettingsDTO>
 	{
         public MarketPlaceAggSettingsStep1Validator(HttpClient db)
                     : base(db)
         {
             RuleFor(Q => Q.UserId).NotEmpty();
+            ConfigureAdditionalValidations();
+        }
+        partial void ConfigureAdditionalValidations();
+    }
+    public partial class CarrinhoStep1Validator : BaseMarketPlaceAggValidator<CarrinhoDTO>
+	{
+        public CarrinhoStep1Validator(HttpClient db)
+                    : base(db)
+        {
+            
+            ConfigureAdditionalValidations();
+        }
+        partial void ConfigureAdditionalValidations();
+    }
+    public partial class CategoriaprodutoStep1Validator : BaseMarketPlaceAggValidator<CategoriaprodutoDTO>
+	{
+        public CategoriaprodutoStep1Validator(HttpClient db)
+                    : base(db)
+        {
+            
             ConfigureAdditionalValidations();
         }
         partial void ConfigureAdditionalValidations();
