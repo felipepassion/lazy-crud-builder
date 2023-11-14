@@ -7,6 +7,8 @@
 
 ## Introdução
 
+![image](https://github.com/felipepassion/lazy-crud-builder/assets/29386600/1c7cb118-e866-4e86-a696-b3c85c89b059)
+
 # Tecnologias Usadas
 
 Este arquivo README fornece uma visão geral das tecnologias utilizadas no projeto e destaca suas características e benefícios.
