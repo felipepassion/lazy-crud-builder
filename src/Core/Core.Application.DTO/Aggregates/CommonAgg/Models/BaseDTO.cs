@@ -10,21 +10,21 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public interface IEntityDTO
     {
-        public IRequest<DomainResponse> Command { get; set; }
-        public string Title { get; }
-        public string SubTitle { get; }
-        public string SubTitlePropertyName { get; }
-        public string TititleWithSubtitle { get; }
-        public string DisplayNameTitle { get; }
-        public string DisplayNameSubTitle { get; }
+        public IRequest<DomainResponse>? Command { get; set; }
+        public string? Title { get; }
+        public string? SubTitle { get; }
+        public string? SubTitlePropertyName { get; }
+        public string? TititleWithSubtitle { get; }
+        public string? DisplayNameTitle { get; }
+        public string? DisplayNameSubTitle { get; }
         public int? Id { get; set; }
-        public string ExternalId { get; set; }
+        public string? ExternalId { get; set; }
         public string[] FieldsToValidate { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public string H2AndSubTitle { get; }
-        public string CustomTitleOrH2 { get; }
-        public string H1 { get; }
-        public string H1AndTitle { get; }
+        public string? H2AndSubTitle { get; }
+        public string? CustomTitleOrH2 { get; }
+        public string? H1 { get; }
+        public string? H1AndTitle { get; }
         public bool IsSubmiting { get; set; }
         public bool IsManuallySubmiting { get; set; }
 
@@ -42,13 +42,13 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
     {
         public bool IsCreated => Id.HasValue;
 
-        public IRequest<DomainResponse> Command { get; set; }
+        public IRequest<DomainResponse>? Command { get; set; }
         public int? Id { get; set; }
-        public string ExternalId { get; set; }
+        public string? ExternalId { get; set; }
         public string[] FieldsToValidate { get; set; } = new string[0];
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public string TititleWithSubtitle => $"{Title}{(string.IsNullOrWhiteSpace(SubTitle) ? "" : $" - {SubTitle}")}";
+        public string? TititleWithSubtitle => $"{Title}{(string.IsNullOrWhiteSpace(SubTitle) ? "" : $" - {SubTitle}")}";
 
         public bool IsSubmiting { get; set; }
         public bool IsManuallySubmiting { get; set; }
@@ -135,7 +135,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             return dd?.DisplayName ?? property.Name;
         }
 
-        public string Title
+        public string? Title
         {
             get
             {
@@ -148,7 +148,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string SubTitle
+        public string? SubTitle
         {
             get
             {
@@ -161,7 +161,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string DisplayNameTitle
+        public string? DisplayNameTitle
         {
             get
             {
@@ -170,7 +170,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string DisplayNameSubTitle
+        public string? DisplayNameSubTitle
         {
             get
             {
@@ -179,7 +179,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string TitlePropertyName
+        public string? TitlePropertyName
         {
             get
             {
@@ -188,7 +188,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string H1
+        public string? H1
         {
             get
             {
@@ -196,7 +196,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string H2
+        public string? H2
         {
             get
             {
@@ -204,14 +204,14 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string H1AndTitle
+        public string? H1AndTitle
         {
             get
             {
                 return H1 + (string.IsNullOrWhiteSpace(Title) ? "" : $"{(string.IsNullOrWhiteSpace(H1) ? "" : " - ")}{Title}");
             }
         }
-        public string H2AndSubTitle
+        public string? H2AndSubTitle
         {
             get
             {
@@ -219,7 +219,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string CustomTitleOrH2
+        public string? CustomTitleOrH2
         {
             get
             {
@@ -227,7 +227,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string CustomTitleOrH1
+        public string? CustomTitleOrH1
         {
             get
             {
@@ -235,7 +235,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
-        public string SubTitlePropertyName
+        public string? SubTitlePropertyName
         {
             get
             {

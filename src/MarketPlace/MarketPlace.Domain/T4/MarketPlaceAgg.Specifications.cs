@@ -580,7 +580,26 @@ namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.Specifications {
 		
 	   }
    public partial class CategoriaprodutoSpecifications {
-			
+				public static Specification<Categoriaproduto> NomeContains(string value) {
+			return new DirectSpecification<Categoriaproduto>(p => EF.Functions.Like(p.Nome.ToLower(), $"%{value.ToLower()}%"));
+		}
+		public static Specification<Categoriaproduto> NomeStartsWith(string value) {
+			return new DirectSpecification<Categoriaproduto>(p => EF.Functions.Like(p.Nome.ToLower(), $"{value.ToLower()}%"));
+		}
+	
+		public static Specification<Categoriaproduto> NomeEqual(params string[] values) {
+			return new DirectSpecification<Categoriaproduto>(p => values.Contains(p.Nome));
+		}
+		public static Specification<Categoriaproduto> NomeNotEqual(string value) {
+			return new DirectSpecification<Categoriaproduto>(p => p.Nome != value);
+		}
+		public static Specification<Categoriaproduto> NomeIsNull() {
+            return new DirectSpecification<Categoriaproduto>(p => p.Nome == null);
+        }
+		public static Specification<Categoriaproduto> NomeIsNotNull() {
+            return new DirectSpecification<Categoriaproduto>(p => p.Nome != null);
+        }
+		
 					public static Specification<Categoriaproduto> CreatedAtContains(params System.DateTime[] values) {
             return new DirectSpecification<Categoriaproduto>(p => values.Contains(p.CreatedAt.Value));
         }

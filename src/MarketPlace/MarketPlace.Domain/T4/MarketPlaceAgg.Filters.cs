@@ -1515,6 +1515,34 @@ namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.Filters{
 			Specification<Categoriaproduto> filter = new DirectSpecification<Categoriaproduto>(p => request.IsEmpty() || !isOrSpecification);
 			if(request is not null)
 			{
+				if (!string.IsNullOrWhiteSpace(request.NomeEqual)) 
+				{
+					if (isOrSpecification)
+						filter |= CategoriaprodutoSpecifications.NomeEqual(request.NomeEqual);
+					else
+						filter &= CategoriaprodutoSpecifications.NomeEqual(request.NomeEqual);
+				}
+				if (!string.IsNullOrWhiteSpace(request.NomeNotEqual)) 
+				{
+					if (isOrSpecification)
+						filter |= CategoriaprodutoSpecifications.NomeNotEqual(request.NomeNotEqual);
+					else
+						filter &= CategoriaprodutoSpecifications.NomeNotEqual(request.NomeNotEqual);
+				}
+				if (!string.IsNullOrWhiteSpace(request.NomeContains)) 
+				{
+					if (isOrSpecification)
+						filter |= CategoriaprodutoSpecifications.NomeContains(request.NomeContains);
+					else
+						filter &= CategoriaprodutoSpecifications.NomeContains(request.NomeContains);
+				}
+				if (!string.IsNullOrWhiteSpace(request.NomeStartsWith)) 
+				{
+					if (isOrSpecification)
+						filter |= CategoriaprodutoSpecifications.NomeStartsWith(request.NomeStartsWith);
+					else
+						filter &= CategoriaprodutoSpecifications.NomeStartsWith(request.NomeStartsWith);
+				}
 				if (request.CreatedAtEqual.HasValue)
 				{
 					if (isOrSpecification)

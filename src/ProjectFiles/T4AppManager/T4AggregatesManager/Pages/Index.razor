@@ -370,7 +370,7 @@ else
             var now = DateTime.Now;
             var nowStr = $"{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}";
             var srcFolder = FindMyFolder("src");
-            var myMainServer = Directory.GetFiles(srcFolder, "*WebApp.csproj", SearchOption.AllDirectories).FirstOrDefault();
+            var myMainServer = Directory.GetFiles(srcFolder, "*WebApi.csproj", SearchOption.AllDirectories).FirstOrDefault();
             var cmd = @$"dotnet ef migrations add {nowStr} -c {info.AggName}Aggcontext -p {info.Path}\{info.AggName}.Infra.Data --startup-project {myMainServer}";
 
             var app = new CommandLineApplication

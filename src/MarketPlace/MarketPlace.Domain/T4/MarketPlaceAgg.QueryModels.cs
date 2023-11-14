@@ -209,6 +209,10 @@ namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.Queries.Models
 	}
 	public partial class CategoriaprodutoQueryModel : BaseQueryModel<Categoriaproduto> {
         public override Expression<Func<Categoriaproduto, bool>> GetFilter() => CategoriaprodutoFilters.GetFilters(this, IsOrSpecification==true);
+		public string? NomeEqual { get; set; }
+		public string? NomeNotEqual { get; set; }
+		public string? NomeContains { get; set; }
+		public string? NomeStartsWith { get; set; }
 		public System.DateTime? CreatedAtEqual { get; set; }
 		public System.DateTime? CreatedAtNotEqual { get; set; }
 		public System.DateTime[]? CreatedAtContains { get; set; }

@@ -13,5 +13,6 @@ namespace LazyCrud.MarketPlace.Domain.Aggregates.MarketPlaceAgg.Entities
         public int UsuarioId { get; set; }
     
         public int Pagamento { get; set; }
+    
     }
 }

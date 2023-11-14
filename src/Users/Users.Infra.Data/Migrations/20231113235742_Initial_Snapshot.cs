@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LazyCrud.Users.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class _2023_10_20_12_52_24 : Migration
+    public partial class Initial_Snapshot : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,7 +46,7 @@ namespace LazyCrud.Users.Infra.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InitialPage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InitialPage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsPrivateProfile = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
