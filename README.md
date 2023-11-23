@@ -26,9 +26,9 @@ Este arquivo README fornece uma visão geral das tecnologias utilizadas no proje
 
 ## Tecnologias utilizadas
 
-### .NET Core 7.0 + Blazor WebAssembly
+### .NET Core 8.0 + Blazor WebAssembly
 
-O projeto utiliza o .NET Core 7.0 e o Blazor WebAssembly. A combinação dessas tecnologias permite a criação de aplicações web que podem ser executadas offline e facilmente exportadas para dispositivos móveis e desktops com o .NET MAUI. Através do WebAssembly, é possível executar o projeto diretamente no navegador como uma aplicação de página única (SPA).
+O projeto utiliza o .NET Core 8.0 e o Blazor WebAssembly. A combinação dessas tecnologias permite a criação de aplicações web que podem ser executadas offline e facilmente exportadas para dispositivos móveis e desktops com o .NET MAUI. Através do WebAssembly, é possível executar o projeto diretamente no navegador como uma aplicação de página única (SPA).
 
 ### Arquitetura DDD com Bounded Contexts
 
