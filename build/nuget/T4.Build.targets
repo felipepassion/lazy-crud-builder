@@ -1,0 +1,23 @@
+<Project>
+ <!-- Opt-in CI/build transformation for T4 using dotnet-t4 -->
+ <PropertyGroup>
+ <!-- Set this to true in the consuming project or CI to enable T4 transform at build time -->
+ <EnableT4Build Condition="'$(EnableT4Build)' == ''">false</EnableT4Build>
+ </PropertyGroup>
+
+ <!-- Capture T4 files that came from this package via contentFiles -->
+ <PropertyGroup>
+ <_ThisPackageId>$(MSBuildThisFileName)</_ThisPackageId>
+ </PropertyGroup>
+
+ <ItemGroup Condition="'$(EnableT4Build)' == 'true'">
+ <_T4FromThisPackage Include="@(None)"
+ Condition="'%(None.NuGetPackageId)' == '$(_ThisPackageId)' and $([System.String]::Copy('%(None.Identity)').EndsWith('.tt'))" />
+ </ItemGroup>
+
+ <Target Name="RunT4TemplatesFromPackage" Condition="'$(EnableT4Build)' == 'true' and '@(_T4FromThisPackage)' != ''" BeforeTargets="BeforeCompile">
+ <Message Importance="High" Text="Running T4 transform for @(_T4FromThisPackage->'%(Filename)%(Extension)', ', ')" />
+ <!-- Requires: dotnet tool install -g dotnet-t4 -->
+ <Exec Command="dotnet-t4 &quot;%(Identity)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)" StandardOutputImportance="Low" />
+ </Target>
+</Project>

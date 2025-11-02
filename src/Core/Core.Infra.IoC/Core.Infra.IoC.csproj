@@ -5,18 +5,31 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Niu.Nutri.Core.Infra.IoC</RootNamespace>
+
+    <!-- Aggregator package: include referenced project outputs inside this single nupkg -->
+    <PackProjectReferences>false</PackProjectReferences>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CollectProjectOutputsForPack</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
-    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Serilog" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Core.Application\Core.Application.csproj" />
   </ItemGroup>
+
+  <!-- Collect outputs from all project references (direct and transitive) and include them into lib/ -->
+  <Target Name="CollectProjectOutputsForPack" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <!-- Only outputs that originate from ProjectReference (avoids bundling external packages) -->
+      <_ProjectRefOutputs Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.ReferenceSourceTarget)' == 'ProjectReference'" />
+      <TfmSpecificPackageFile Include="@(_ProjectRefOutputs)" PackagePath="lib/$(TargetFramework)" />
+    </ItemGroup>
+  </Target>
 
 </Project>

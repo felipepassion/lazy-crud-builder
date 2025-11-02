@@ -1,0 +1,17 @@
+<Project>
+ <!-- This file is embedded into the NuGet package as buildTransitive/$(PackageId).targets
+ so it can identify the current package by file name and update metadata for T4 files
+ added via contentFiles. -->
+ <PropertyGroup>
+ <_ThisPackageId>$(MSBuildThisFileName)</_ThisPackageId>
+ </PropertyGroup>
+
+ <!-- Ensure .tt from this package have the VS T4 generator and transform on build -->
+ <ItemGroup>
+ <None Update="@(None)"
+ Condition="'%(None.NuGetPackageId)' == '$(_ThisPackageId)' and $([System.String]::Copy('%(None.Identity)').EndsWith('.tt'))">
+ <Generator>TextTemplatingFileGenerator</Generator>
+ <TransformOnBuild>true</TransformOnBuild>
+ </None>
+ </ItemGroup>
+</Project>

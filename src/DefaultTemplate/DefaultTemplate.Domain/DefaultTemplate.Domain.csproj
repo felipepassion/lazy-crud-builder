@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
-    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference Include="Serilog" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,18 +64,18 @@
 <ItemGroup><None Update="*.tt"><Generator>TextTemplatingFileGenerator</Generator></None></ItemGroup>
 
 <ItemGroup>
-  <None Update="DefaultEntities.tt">
-    <LastGenOutput>DefaultEntities.generated.cs</LastGenOutput>
-  </None>
+    <None Update="DefaultEntities.tt">
+      <LastGenOutput>DefaultEntities.generated.cs</LastGenOutput>
+    </None>
 </ItemGroup>
 <ItemGroup><None Update="*.tt"><Generator>TextTemplatingFileGenerator</Generator></None></ItemGroup>
 <ItemGroup>
-  <None Update="DefaultCommands.tt">
-    <LastGenOutput>DefaultCommands.generated.cs</LastGenOutput>
-  </None>
-  <None Update="Filters.tt">
-    <LastGenOutput>Filters.cs</LastGenOutput>
-  </None>
+    <None Update="DefaultCommands.tt">
+      <LastGenOutput>DefaultCommands.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Filters.tt">
+      <LastGenOutput>Filters.cs</LastGenOutput>
+    </None>
 </ItemGroup>
 <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"><NoWarn>1701;1702;8618;1998;8602;8625;8629</NoWarn></PropertyGroup><PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'"><NoWarn>1701;1702;8618;1998;8602;8625;8629</NoWarn></PropertyGroup>
 </Project>

@@ -1,52 +1,52 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	  <RootNamespace>Niu.Nutri.DefaultTemplate.Application.DTO</RootNamespace>
-  </PropertyGroup>
+ <PropertyGroup>
+ <TargetFramework>net9.0</TargetFramework>
+ <ImplicitUsings>enable</ImplicitUsings>
+ <Nullable>enable</Nullable>
+	 <RootNamespace>Niu.Nutri.DefaultTemplate.Application.DTO</RootNamespace>
+ </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\Core.Application.DTO\Core.Application.DTO.csproj" />
-    <ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\CrossCuting.Infra.Utils.csproj" />
-    <ProjectReference Include="..\DefaultTemplate.Api.Queries\DefaultTemplate.Api.Queries.csproj" />
-  </ItemGroup>
+ <ItemGroup>
+ <ProjectReference Include="..\..\Core\Core.Application.DTO\Core.Application.DTO.csproj" />
+ <ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\CrossCuting.Infra.Utils.csproj" />
+ <ProjectReference Include="..\DefaultTemplate.Api.Queries\DefaultTemplate.Api.Queries.csproj" />
+ </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="DefaultCommands.generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DefaultCommands.tt</DependentUpon>
-    </Compile>
-    <Compile Update="RequestsDTO.generated.cs">
-      <DependentUpon>RequestsDTO.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+ <ItemGroup>
+ <Compile Update="DefaultCommands.generated.cs">
+ <DesignTime>True</DesignTime>
+ <AutoGen>True</AutoGen>
+ <DependentUpon>DefaultCommands.tt</DependentUpon>
+ </Compile>
+ <Compile Update="RequestsDTO.generated.cs">
+ <DependentUpon>RequestsDTO.tt</DependentUpon>
+ <DesignTime>True</DesignTime>
+ <AutoGen>True</AutoGen>
+ </Compile>
+ </ItemGroup>
 
-  <ItemGroup>
-    <None Update="RequestsDTO.tt">
-      <LastGenOutput>RequestsDTO.generated.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-  </ItemGroup>
+ <ItemGroup>
+ <None Update="RequestsDTO.tt">
+ <LastGenOutput>RequestsDTO.generated.cs</LastGenOutput>
+ <Generator>TextTemplatingFileGenerator</Generator>
+ </None>
+ </ItemGroup>
 
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
+ <ItemGroup>
+ <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+ </ItemGroup>
 
 <ItemGroup><None Update="*.tt"><Generator>TextTemplatingFileGenerator</Generator></None></ItemGroup>
 
 <ItemGroup>
-  <None Update="DefaultCommands.tt">
-    <LastGenOutput>DefaultCommands.generated.cs</LastGenOutput>
-  </None>
+ <None Update="DefaultCommands.tt">
+ <LastGenOutput>DefaultCommands.generated.cs</LastGenOutput>
+ </None>
 </ItemGroup>
 
 <ItemGroup>
-  <Folder Include="Aggregates\DefaultTemplateAgg\" />
+ <Folder Include="Aggregates\DefaultTemplateAgg\" />
 </ItemGroup>
 <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"><NoWarn>1701;1702;8618;1998;8602;8625;8629;CS1591</NoWarn><WarningsAsErrors>$(WarningsAsErrors);NU1605</WarningsAsErrors></PropertyGroup><PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'"><NoWarn>1701;1702;8618;1998;8602;8625;8629;CS1591</NoWarn><WarningsAsErrors>$(WarningsAsErrors);NU1605</WarningsAsErrors></PropertyGroup>
 </Project>

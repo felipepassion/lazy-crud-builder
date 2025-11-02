@@ -1,0 +1,36 @@
+<Project>
+ <!-- Common package metadata applied to all packable projects -->
+ <PropertyGroup>
+ <RepositoryUrl>https://github.com/felipepassion/lazy-crud-builder</RepositoryUrl>
+ <RepositoryType>git</RepositoryType>
+ <PackageProjectUrl>https://github.com/felipepassion/lazy-crud-builder</PackageProjectUrl>
+ <PackageReadmeFile>README.md</PackageReadmeFile>
+ <GenerateDocumentationFile>true</GenerateDocumentationFile>
+ <IncludeSymbols>true</IncludeSymbols>
+ <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+ <PackageId>$(MSBuildProjectName)</PackageId>
+ <Title>$(MSBuildProjectName)</Title>
+ <Description>Lazy CRUD Builder - $(MSBuildProjectName)</Description>
+ <Authors>felipepassion</Authors>
+ <Company>lazy-crud-builder</Company>
+ <PackageTags>lazycrud;crud;builder;dotnet</PackageTags>
+ <PublishRepositoryUrl>true</PublishRepositoryUrl>
+ <ContinuousIntegrationBuild Condition="'$(ContinuousIntegrationBuild)' == ''">true</ContinuousIntegrationBuild>
+ </PropertyGroup>
+
+ <!-- Ensure root README.md is included in the nupkg for packable projects -->
+ <ItemGroup Condition="'$(IsPackable)' == 'true'">
+ <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="" />
+ </ItemGroup>
+
+ <!-- Include T4 templates inside contentFiles so consumers receive and can run them -->
+ <ItemGroup Condition="'$(IsPackable)' == 'true'">
+ <None Include="**\*.tt" Pack="true" PackagePath="contentFiles/any/any/T4/" BuildAction="None" />
+ <None Include="**\*.ttinclude" Pack="true" PackagePath="contentFiles/any/any/T4/" BuildAction="None" />
+ </ItemGroup>
+
+ <!-- SourceLink for better debugging experience -->
+ <ItemGroup Condition="'$(IsPackable)' == 'true'">
+ <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+ </ItemGroup>
+</Project>

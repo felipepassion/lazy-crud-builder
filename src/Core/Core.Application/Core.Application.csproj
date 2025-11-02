@@ -8,24 +8,24 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CsvHelper" Version="33.0.1" />
-	  <PackageReference Include="FluentValidation" Version="11.11.0" />
-	  <PackageReference Include="MediatR" Version="12.4.1" />
-	  <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
-	  <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.3" />
-	  <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="9.0.3" />
-	  <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
-	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
-	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
-	  <PackageReference Include="Serilog" Version="4.2.0" />
+	 <PackageReference Include="CsvHelper" />
+	 <PackageReference Include="FluentValidation" />
+	 <PackageReference Include="MediatR" />
+	 <PackageReference Include="Microsoft.AspNetCore.Components" />
+	 <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" />
+	 <PackageReference Include="Microsoft.AspNetCore.Components.Forms" />
+	 <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+	 <PackageReference Include="Microsoft.EntityFrameworkCore" />
+	 <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+	 <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+	 <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+	 <PackageReference Include="Serilog" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\CrossCutting.Infra.Log.csproj" />
-	  <ProjectReference Include="..\Core.Application.Validators\Core.Application.Validators.csproj" />
-	  <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
+	 <ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\CrossCutting.Infra.Log.csproj" />
+	 <ProjectReference Include="..\Core.Application.Validators\Core.Application.Validators.csproj" />
+	 <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
 	</ItemGroup>
 
 </Project>
