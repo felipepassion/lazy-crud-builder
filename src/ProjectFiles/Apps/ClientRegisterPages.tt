@@ -1,11 +1,9 @@
 ﻿@page "/<#=entity.Name#>/cadastro"
 @page "/<#=entity.Name#>/cadastro/{id}"
 
-@using <#=AggName.Replace("Agg","")#>.WebApp.Client.Pages.Base
-@using <#=AggName.Replace("Agg","")#>.WebApp.Client.Pages.DefaultDesign
-@using <#=AggName.Replace("Agg","")#>.WebApp.Client.Pages.RegisterStepsTemplate
-@using LazyCrud.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Requests
-@using LazyCrud.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators
+@using Niu.Nutri.Shared.Blazor.Components.Layout
+@using Niu.Nutri.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Requests
+@using Niu.Nutri.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators
 
 @layout MainLayout
 @inherits BaseStepsFormComponent<<#= entity.Name #>DTO, <#=aggName#>AggSettingsDTO, Base<#= aggName #>AggValidator<<#= entity.Name #>DTO>>
@@ -16,6 +14,7 @@
                              CurrentFragment="this.CurrentFragment"
                              EnableRightContainer="<#=ContainsAttribute(entity, "EnableRightContainer").ToString().ToLower()#>"
                              EditContext="this.EditContext"
+                             Context="this.Context"
                              OnSubmitForm="this.OnSubmitForm"
                              OnSubmitFormInvalid="this.OnSubmitFormInvalid"
                              TValidator="this.TValidator" />

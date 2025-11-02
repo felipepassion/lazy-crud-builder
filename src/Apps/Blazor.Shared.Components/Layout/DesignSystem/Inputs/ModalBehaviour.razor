@@ -1,0 +1,34 @@
+@if (IsVisible)
+{
+    <div @onclick="OnClick" class="modal @GetPosition()">
+        @ChildContent
+    </div>
+}
+
+
+@code {
+
+    public enum EPositionStyle
+    {
+        Absolute,
+        Fixed,
+        Centered
+    }
+
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback OnClick { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EPositionStyle Position { get; set; }
+
+    string GetPosition()
+    {
+        return Position switch
+        {
+            EPositionStyle.Absolute => "absolute",
+            EPositionStyle.Fixed => "fixed",
+            EPositionStyle.Centered => "centered",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
+}

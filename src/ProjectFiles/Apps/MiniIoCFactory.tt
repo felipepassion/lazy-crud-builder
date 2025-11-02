@@ -1,0 +1,62 @@
+﻿<#@ include file="..\project.tt" #>
+<#
+	var AggName = GetMyAggName();
+    var aggSettingsList = new List<CodeClass>();
+    var projects = new List<Project>(){ FindProject("Domain") };
+    //var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+    
+    foreach(var project in projects) {
+        var myName = project.Name.Split('.').First();
+        if(myName == "DefaultTemplate") continue;
+        var proj = FindProject(project.Name);
+        var myEntity = GetEntity(project.Name, $"{myName}AggSettings");
+        //var attrs = GetAttributesDict(type);
+        if(myEntity != null)
+            aggSettingsList.Add(myEntity);
+    }
+#>
+using Microsoft.AspNetCore.DataProtection;
+
+namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
+    using Infra.Data.Context;
+    public static partial class IoCFactory {
+       
+		public static void InjectDependencies(this IServiceCollection services, IConfiguration configuration) {
+        <# if(AggName=="UsersAgg") { #>
+    <#= GetDefaultNamespace() #>.Users.Identity.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
+<# } #>
+<# foreach (var namespc in aggSettingsList
+    .OrderBy(x=>
+        !GetAttributesDict(x).ContainsKey("MigrationOrder") ? 1000 :
+        int.Parse(GetAttributesDict(x)["MigrationOrder"].FirstOrDefault().Value))
+    .GroupBy(p => p.Namespace.FullName)) {
+var aggName = namespc.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","");#>
+            <#= GetDefaultNamespace() #>.<#= aggName #>.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
+<# } #>
+            Niu.Nutri.Core.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
+            services.ConfigureAuthentication();
+		}
+
+        private static void ConfigureAuthentication(this IServiceCollection services)
+        {
+            services.AddDataProtection()
+                .PersistKeysToDbContext<<#= AggName #>Context>()
+                .SetApplicationName("SharedCookieApp");
+
+            services.AddAuthentication("Identity.Application")
+                .AddCookie("Identity.Application", options =>
+                {
+                    options.Cookie.Name = ".AspNet.SharedCookie";
+                });
+        }
+
+        public static void OnAppInitialized(this WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var logProvider = scope.ServiceProvider.GetRequiredService<Niu.Nutri.CrossCutting.Infra.Log.Providers.ILogProvider>();
+                logProvider.Write(new Niu.Nutri.CrossCutting.Infra.Log.Entries.LogEntry("------> APP | <#= GetCurrentProject().Name #> | STARTED <------", action: "OnAppInitialized"));
+            }
+        }
+    }
+}

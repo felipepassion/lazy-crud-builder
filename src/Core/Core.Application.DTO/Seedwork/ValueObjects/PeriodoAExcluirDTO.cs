@@ -1,6 +1,6 @@
-﻿namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
+﻿namespace Niu.Nutri.Core.Application.DTO.Seedwork.ValueObjects
 {
-    public class PeriodoACanDeleteDTO
+    public class PeriodoAExcluirDTO
     {
         public DateTime DataInicial { get; set; }
         public DateTime DataFinal { get; set; }

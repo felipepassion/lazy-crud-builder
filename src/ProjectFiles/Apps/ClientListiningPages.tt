@@ -1,14 +1,14 @@
-﻿@using LazyCrud.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
+﻿@using Niu.Nutri.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
 
-@inherits <#= AggName.Replace("Agg","") #>.WebApp.Client.Pages.DefaultDesign.BaseListiningPage
+@inherits BaseListiningPage
 
 @page "/<#= entity.Name #>"
 
-<<#= AggName.Replace("Agg","") #>.WebApp.Client.Pages.DefaultDesign.DefaultListining Page="this.Page"
-                                                                 Size="this.Size"
-                                                                 Title="<#=entity.Name#>"
-                                                                 T="<#= entity.Name #>ListiningDTO" 
-                                                                 AdditionalQueryString=<#= hasParameter ? $"@Query" :"\"\"" #>/>
+<DefaultListining Page="this.Page"
+                  Size="this.Size"
+                  Title="<#=entity.Name#>"
+                  T="<#= entity.Name #>ListiningDTO" 
+                  AdditionalQueryString=<#= hasParameter ? $"@Query" :"\"\"" #>/>
 <# if(hasParameter) { #>
 @page "/<#= entity.Name #><#=hasParameter ? $@"/{'{'+parameterType.Key+'}'}" : ""#>"
 @code {

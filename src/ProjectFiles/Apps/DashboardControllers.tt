@@ -1,0 +1,85 @@
+﻿<#@ import namespace="System.Threading.Tasks" #>
+<#@ include file="..\project.tt" #><#
+var projects = FindDomainProjects().ToArray();
+var aggSettingsList = new List<CodeClass>();
+foreach(var project in projects) {
+        var myName = project.Name.Split('.').First();
+		if(myName == "DefaultTemplate") continue;
+        aggSettingsList.AddRange(GetAggregateEntities(project.Name, withAttribute:"EndpointsT4", withoutAttribute: "DisableControllers")
+			.Where(x=>x.IsAbstract == false));
+        //var attrs = GetAttributesDict(type);
+    }
+
+if (aggSettingsList.Any()) {
+
+var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);#>
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Niu.Nutri.WebApp.Controllers;
+using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Niu.Nutri.Core.Application.Extensions;
+<#foreach(var namespaces in groupEntities) {
+	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+	var shortAggName = aggName.Replace("Agg","");
+#>
+namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
+ using Domain.Aggregates.<#= aggName #>.Queries.Models;
+ using Application.DTO.Aggregates.<#= aggName #>.Requests;
+<#
+ foreach(var entity in namespaces) {
+	var responseName = $"{entity.Name}DTO";
+	var className = entity.Name + "Controller";
+	var props = GetProperties(entity);
+	var attrs = GetAttributesDict(entity)["EndpointsT4"];
+	var canGet = attrs.Any(x=>x.Value.Contains("HttpGet") || x.Value.Contains("All"));
+	var canCount = attrs.Any(x=>x.Value.Contains("Count") || x.Value.Contains("All"));
+	var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
+	var canSummary = attrs.Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+	if(!(canGet || canCount || canCreate || canSummary)) continue;
+#>
+	[Authorize]
+	[ApiController]
+    [Route("api/[controller]")]
+	public partial class <#= className #> : BaseController {
+<#
+	if(canGet){#>
+		public <#= className #>(IServiceProvider provider) : base(provider) { }
+		[HttpGet]
+		public async Task<GetHttpResponseDTO<<#= entity.Name #>DTO>> Get([FromQuery] <#= entity.Name #>QueryModel request) {
+            return await GetAsync<<#= entity.Name #>DTO>(request);
+        }
+<#if(canCount){#>
+		[HttpGet("count")]
+		public async Task<GetHttpResponseDTO<int>> Count([FromQuery] <#= entity.Name #>QueryModel request) {
+            return await GetAsync<<#= entity.Name #>DTO, int>("count", request);
+        }
+<#}#>
+		[HttpGet("search")]
+		public async Task<GetHttpResponseDTO<List<<#= entity.Name #>DTO>>> Get([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {
+            return await SearchAsync<<#= entity.Name #>DTO>("search", request, page, size);
+        }
+<#if(canCount){#>
+		[HttpGet("summary")]
+		public async Task<GetHttpResponseDTO<List<<#= entity.Name #>ListiningDTO>>> GetSummary([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {
+            return await SearchAsync<<#= entity.Name #>ListiningDTO>("summary", request, page, size);
+        }
+<#}#>
+		[HttpGet("select")]
+		public async Task<GetHttpResponseDTO<object>> Select([FromQuery] <#= entity.Name #>QueryModel request, int? page = null, int? size = null) {
+			return await SelectAsync<<#= entity.Name #>DTO>("select", request, page, size);
+        }
+<#}
+	if(canCreate){#>
+		[HttpPost]
+		public async Task<GetHttpResponseDTO<<#= entity.Name #>DTO>> Post(<#= entity.Name #>DTO request) {
+            return await PostAsync<<#= entity.Name #>DTO>(request);
+		}
+        [HttpDelete("delete")]
+		public async Task<GetHttpResponseDTO<<#= entity.Name #>DTO>> Delete([FromQuery] <#= entity.Name #>QueryModel request) {
+            return await DeleteAsync<<#= entity.Name #>DTO>(request);
+        }
+	}
+<# } #>
+<# } #>
+}
+<# } #><# } #>

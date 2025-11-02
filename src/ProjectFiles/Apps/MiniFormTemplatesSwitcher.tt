@@ -1,0 +1,16 @@
+﻿<#
+	var myProps = props.Where(x=> GetAttributes(x.Value, includeSteppableAttributes:true)
+		.Any(p=>p.Contains($"Step({currentStep})"))).ToList();
+
+
+
+if(myProps.Any(x=>x.Value.Type.AsString.Split('.').Last().EndsWith("Address"))){#>
+	<#@ include file="BasicAddressComponent.tt" #>
+<# } else if(props.All(x=>x.Key.EndsWith("Contacts2"))) { #>
+	<#@ include file="BasicAddressComponent.tt" #>
+<# } else { #>
+	<#@ include file="MiniBasicForm.css.tt" #>
+<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"{entity.Name}{currentStep}.razor.css", true); #>
+	<#@ include file="MiniBasicForm.tt" #>
+<#}#>
+<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"{entity.Name}{currentStep}.razor", true); #>

@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Application.DTO.Seedwork;
+﻿using Niu.Nutri.Core.Application.DTO.Seedwork;
 using System.Diagnostics;
 
-namespace LazyCrud.Core.Application.DTO.Extensions
+namespace Niu.Nutri.Core.Application.DTO.Extensions
 {
     public static class AutomapperExtensions
     {
@@ -10,6 +10,7 @@ namespace LazyCrud.Core.Application.DTO.Extensions
             try
             {
                 if (obj is null) return null;
+                var test = MapperFactory.Mapper.Map<T>(obj);
                 return MapperFactory.Mapper.Map<T>(obj);
             }
             catch (Exception ex)

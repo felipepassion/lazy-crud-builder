@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using LazyCrud.Core.Domain.Extensions;
-using LazyCrud.CrossCutting.Infra.Log.Providers;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events.Handles;
+using Niu.Nutri.Core.Domain.Extensions;
+using Niu.Nutri.CrossCutting.Infra.Log.Providers;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events.Handles;
 <# if (entitiesT4.Count() > 0){#>
 using <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.ModelEvents;
 <# } #>

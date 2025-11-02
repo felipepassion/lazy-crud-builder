@@ -1,0 +1,13 @@
+img {
+    width: 16px;
+}
+
+.stars.active img {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.stars.active img:hover{
+   filter: brightness(70%);
+}
+

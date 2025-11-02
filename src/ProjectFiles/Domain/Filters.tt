@@ -1,8 +1,8 @@
 ﻿<# if (entities.Any()) { #>
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
+using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
 using System.Linq.Expressions;
 using <#= GetDefaultNamespace() #>.Core.Domain.Seedwork.Specification;
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
+using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
 
 <# foreach(var namespaces in groupEntitiesT4) { #>
 namespace <#= namespaces.Key.Replace("Entities", "Filters") #>{
@@ -20,6 +20,7 @@ namespace <#= namespaces.Key.Replace("Entities", "Filters") #>{
 		{ return request.GetFiltersSpecification(isOrSpecification).SatisfiedBy(); }
 		public static Specification<<#= entity.Name #>> GetFiltersSpecification(this <#= entity.Name #>QueryModel request, bool isOrSpecification = false) 
 		{
+			isOrSpecification = request.IsOrSpecification;
 			Specification<<#= entity.Name #>> filter = new DirectSpecification<<#= entity.Name #>>(p => request.IsEmpty() || !isOrSpecification);
 			if(request is not null)
 			{
@@ -35,6 +36,13 @@ switch(property.Value.Type.AsString) {
 						filter |= <#= entity.Name #>Specifications.<#= path #>Equal(request.<#= path #>Equal);
 					else
 						filter &= <#= entity.Name #>Specifications.<#= path #>Equal(request.<#= path #>Equal);
+				}
+				if (!string.IsNullOrWhiteSpace(request.<#= path #>NotEqual)) 
+				{
+					if (isOrSpecification)
+						filter |= <#= entity.Name #>Specifications.<#= path #>NotEqual(request.<#= path #>NotEqual);
+					else
+						filter &= <#= entity.Name #>Specifications.<#= path #>NotEqual(request.<#= path #>NotEqual);
 				}
 				if (!string.IsNullOrWhiteSpace(request.<#= path #>NotEqual)) 
 				{

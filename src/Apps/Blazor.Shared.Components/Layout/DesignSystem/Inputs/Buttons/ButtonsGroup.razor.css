@@ -1,0 +1,16 @@
+.group-of-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+::deep .button:not(.selected) {
+    background: #E3E3E3;
+    color: #A3A3A3;
+    opacity:.5;
+}
+
+    ::deep .button.selected {
+        opacity: 1;
+    }

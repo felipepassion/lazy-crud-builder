@@ -1,0 +1,19 @@
+﻿<button @onclick=@Toggle>
+    <div class="heart @(IsActive == true ? "active" : "")"></div>
+</button>
+
+@code {
+    [Parameter] public bool InitialState { get; set; }
+    private bool IsActive { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        IsActive = InitialState;
+    }
+
+    private void Toggle()
+    {
+        IsActive = !IsActive;
+        StateHasChanged();
+    }
+}

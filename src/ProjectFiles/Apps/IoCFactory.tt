@@ -5,8 +5,11 @@
     var projects = FindDomainProjects().ToArray();
     //var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
     
+
+
     foreach(var project in projects) {
         var myName = project.Name.Split('.').First();
+        if(myName == "DefaultTemplate") continue;
         var proj = FindProject(project.Name);
         var myEntity = GetEntity(project.Name, $"{myName}AggSettings");
         //var attrs = GetAttributesDict(type);
@@ -15,15 +18,26 @@
     }
 #>
 
-using LazyCrud.Core.Infra.Data.Contexts;
-using LazyCrud.Core.Infra.IoC;
-using LazyCrud.Users.Identity;
+using Niu.Nutri.Core.Infra.Data.Contexts;
+using Niu.Nutri.Core.Infra.IoC;
+using Niu.Nutri.Users.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+    
 namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
     public static partial class IoCFactory {
+        static List<Type> migrationsList = [
+                typeof(<#= GetDefaultNamespace() #>.Users.Identity.ApplicationDbContext),
+<#      int i = 0;
+foreach (var namespc in aggSettingsList
+    .OrderBy(x=>
+        !GetAttributesDict(x).ContainsKey("MigrationOrder") ? 1000 :
+        int.Parse(GetAttributesDict(x)["MigrationOrder"].FirstOrDefault().Value))
+    .GroupBy(p => p.Namespace.FullName)) {
+var aggName = namespc.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","");#>
+                typeof(<#= GetDefaultNamespace() #>.<#= aggName #>.Infra.Data.Context.<#= aggName #>AggContext),
+<# }  #>];
        
 		public static void InjectDependencies(this IServiceCollection services, IConfiguration configuration) {
 
@@ -37,23 +51,28 @@ var aggName = namespc.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replac
 #>
             <#= GetDefaultNamespace() #>.<#= aggName #>.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
 <# } #>			
-            LazyCrud.Core.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
+            Niu.Nutri.Core.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
 		}
 
         public static void Migrate(this WebApplication app)
         {
             using (var scope = app.Services.CreateScope())
             {
-                var contexts = (from asm in AppDomain.CurrentDomain.GetAssemblies()
-                                from type in asm.GetTypes()
-                                where type.IsClass && type.BaseType == typeof(BaseContext) || type.BaseType == typeof(IdentityDbContext<ApplicationUser, IdentityRole<int>, int>)
-                                select type).ToArray();
-
-                foreach (var item in contexts)
+                foreach (var item in migrationsList)
                 {
                     (scope.ServiceProvider.GetRequiredService(item) as DbContext)
                         .Database.Migrate();
                 }
+                // Task.Run(async () => await TablesCsvSeeder.SeedDatabase(scope));
+            }
+        }
+
+        public static void OnAppInitialized(this WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var logProvider = scope.ServiceProvider.GetRequiredService<Niu.Nutri.CrossCutting.Infra.Log.Providers.ILogProvider>();
+                logProvider.Write(new Niu.Nutri.CrossCutting.Infra.Log.Entries.LogEntry("------> APP | <#= GetCurrentProject().Name #> | STARTED <------", action: "OnAppInitialized"));
             }
         }
     }

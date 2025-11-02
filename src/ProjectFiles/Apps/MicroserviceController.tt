@@ -1,0 +1,133 @@
+﻿<#@ import namespace="System.Threading.Tasks" #>
+<#@ include file="..\project.tt" #>
+<#
+var projects = FindDomainProjects().ToArray();
+var aggSettingsList = new List<CodeClass>();
+foreach(var project in projects) {
+        var myName = project.Name.Split('.').First();
+        aggSettingsList.AddRange(GetAggregateEntities(project.Name, withAttribute:"EndpointsT4"));
+        //var attrs = GetAttributesDict(type);
+    }
+
+if (aggSettingsList.Any()) {
+
+var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);
+#>
+using Microsoft.AspNetCore.Mvc;
+using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+<#foreach(var namespaces in groupEntities) {
+	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+	var shortAggName = aggName.Replace("Agg","");
+#>
+namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
+	using Application.DTO.Aggregates.<#= aggName #>.Requests;
+	using Domain.Aggregates.<#= aggName #>.Queries.Models;
+	using Application.Aggregates.<#= aggName #>.AppServices;
+	using Domain.Aggregates.<#= aggName #>.Entities;
+	using Niu.Nutri.<#= aggName.Replace("Agg","") #>.Domain.Aggregates.<#= aggName #>.CommandModels;
+<#
+ foreach(var entity in namespaces) {
+	var responseName = $"{entity.Name}DTO";
+	var className = entity.Name + "Controller";
+	var props = GetProperties(entity);
+	var attrs = GetAttributesDict(entity)["EndpointsT4"];
+	var canGet = attrs.Any(x=>x.Value.Contains("HttpGet") || x.Value.Contains("All"));
+	var canCount = attrs.Any(x=>x.Value.Contains("Count") || x.Value.Contains("All"));
+	var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
+	var canSummary = attrs.Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+#>
+	[ApiController]
+    [Route("api/[controller]")]
+	public partial class <#= className #> : BaseController {
+<#
+	var repoTypeName = $"I{entity.Name}AppService";
+	var serviceVarName = $"_{ToCamelCase(entity.Name)}AppService";
+	if(props.ContainsKey("EmpresaId")){#> Niu.Nutri.<#=aggName.Replace("Agg","")#>.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService _userService; <#}
+#>
+<#
+	if(canGet){#>
+		<#= repoTypeName #> <#= serviceVarName #>;
+		public <#= className #>(
+			IServiceProvider scope,
+			<#if(props.ContainsKey("UserId") || props.ContainsKey("EmpresaId")){#>
+			Niu.Nutri.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService userService, <#}#>
+            ILogRequestContext logRequestContext,
+			<#= repoTypeName #> <#= serviceVarName.Substring(1) #>)
+				: base(logRequestContext, scope)
+			{ 
+				<#= serviceVarName #> = <#= serviceVarName.Substring(1) #>; 
+<#if(props.ContainsKey("EmpresaId")){#>
+				_userService = userService; 
+<#}#>
+<#if(canCreate){#>
+<#}#>
+			}	
+		[HttpGet]
+		public async Task<IActionResult> Get([FromQuery] <#= entity.Name #>QueryModel request) {
+
+		    var obj = await <#= serviceVarName #>.Get(request);
+            return obj == null? NotFound() : Ok(GetHttpResponseDTO.Ok(obj));
+        }
+<#if(canCount){#>
+		[HttpGet("count")]
+		public async Task<GetHttpResponseDTO<object>> Count([FromQuery] <#= entity.Name #>QueryModel request) {
+
+            return GetHttpResponseDTO.Ok(await <#= serviceVarName #>.CountAsync(request));
+        }
+<#}#>
+		[HttpGet("search")]
+		public async Task<GetHttpResponseDTO<object>> Get([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {
+
+		    var obj = await <#= serviceVarName #>.GetAll(request, page, size);
+            return GetHttpResponseDTO.Ok(obj);
+        }
+<#if(canCount){#>
+		[HttpGet("summary")]
+		public async Task<GetHttpResponseDTO<object>> GetSummary([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {
+
+		    var obj = await <#= serviceVarName #>.GetAllSummary(request, page, size);
+            return GetHttpResponseDTO.Ok(obj);
+        }
+<#}#>
+		[HttpGet("select")]
+		public async Task<IActionResult> Select([FromQuery] <#= entity.Name #>QueryModel request, int? page = null, int? size = null) {
+
+		    var obj = await <#= serviceVarName #>.GetAll(request, page, size, request.Selector.GetPropertySelector<<#=entity.Name#>>());
+            return obj == null? NotFound() : Ok(GetHttpResponseDTO.Ok(obj));
+        }
+<#}
+	if(canCreate){#>
+		
+		[HttpPost]
+		public async Task<GetHttpResponseDTO<object>> Post(Niu.Nutri.<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
+			var loggedUserId = User.GetLoggedInUserId<int>();
+
+<#if(props.ContainsKey("EmpresaId") && aggName != "CompaniesAgg"){#>
+			
+<#}#>
+			request.Command = new Create<#=entity.Name#>Command(_logRequestContext, request);
+			var result = await <#= serviceVarName #>.Create(request);
+            return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+		}
+<#}	
+var DTOName = $"{entity.Name}QueryModel";
+#>
+        [HttpDelete("delete")]
+		public async Task<GetHttpResponseDTO<object>> Delete([FromQuery] <#=entity.Name#>QueryModel request)
+        {
+            request.Command = new Delete<#=entity.Name#>Command(_logRequestContext, request);
+            var result = await <#= serviceVarName #>.Delete(request);
+            return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+        }
+        [HttpDelete("range")]
+        public async Task<GetHttpResponseDTO<object>> DeleteRange(<#=entity.Name#>QueryModel request)
+        {
+            var result = await <#= serviceVarName #>.DeleteRange(request);
+            request.Command = new DeleteRange<#=entity.Name#>Command(_logRequestContext, request);
+            return result.Success? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+        }
+	}
+<# } #>
+}
+<# } #>
+<# } #>

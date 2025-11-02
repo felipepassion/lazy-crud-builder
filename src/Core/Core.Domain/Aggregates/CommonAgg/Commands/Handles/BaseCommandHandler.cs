@@ -1,13 +1,13 @@
 ﻿using FluentValidation.Results;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrud.Core.Domain.CrossCutting;
-using LazyCrud.Core.Domain.Seedwork;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
+using Niu.Nutri.Core.Domain.CrossCutting;
+using Niu.Nutri.Core.Domain.Seedwork;
+using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands.Handles
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands.Handles
 {
     public class BaseCommandHandler<T>
         where T : IEntity
@@ -47,7 +47,7 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands.Handles
             return response;
         }
 
-        protected async Task<DomainResponse> Commit(IUnitOfWork uow, object data = null!)
+        protected async Task<DomainResponse> Commit(IUnitOfWork uow, object? data = null!)
         {
             if (ValidationResult.Errors?.Any() == true)
             {
@@ -56,13 +56,14 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands.Handles
             }
             else
             {
-                return await uow.CommitAsync((data as Entity)!);
+                return await uow.CommitAsync(data);
             }
         }
 
         protected void PublishLog<Type>(Type cmd) where Type : BaseCommand => _mediator.Publish(cmd);
 
         public async virtual Task<DomainResponse> OnCreateAsync(T entity) => await Task.FromResult(DomainResponse.Ok());
+        public async virtual Task<DomainResponse> OnAfterCreatedAsync(T entity) => await Task.FromResult(DomainResponse.Ok());
         public async virtual Task<DomainResponse> OnBeforeUpdateAsync(T entity) => await Task.FromResult(DomainResponse.Ok());
         public async virtual Task<DomainResponse> OnUpdateAsync(T entity, T entityAfter) => await Task.FromResult(DomainResponse.Ok());
         public async virtual Task<DomainResponse> OnDeleteAsync(T entity) => await Task.FromResult(DomainResponse.Ok());

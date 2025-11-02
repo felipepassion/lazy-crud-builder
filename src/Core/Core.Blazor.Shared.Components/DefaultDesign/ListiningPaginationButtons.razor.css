@@ -1,0 +1,126 @@
+﻿/* screen - container-pagination */
+
+.container-pagination {
+    align-items: center;
+    border: 0.43vw none;
+    display: flex;
+    gap: 1.74vw;
+    height: fit-content;
+    justify-content: center;
+    width: fit-content;
+    justify-content: center;
+    width: fit-content;
+    position: absolute;
+    bottom: 2vw;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+    .container-pagination .container-box-page-1 {
+        height: 2vw;
+        min-width: 2vw;
+    }
+
+    .container-pagination .container-box-page-1-2 {
+        align-items: center;
+        background-color: var(--hawkes-blue);
+        border: 0.43vw none;
+        border-radius: 0.87vw;
+        display: flex;
+        gap: 5.22vw;
+        height: 2vw;
+        justify-content: center;
+        padding: 3.48vw;
+        width: 2vw;
+    }
+
+    .container-pagination .container-text-date-1 {
+        align-items: flex-start;
+        border: 0.43vw none;
+        display: flex;
+        gap: 3.48vw;
+        height: 2vw;
+        margin-bottom: -1.96vw;
+        margin-top: -1.96vw;
+        width: fit-content;
+    }
+
+    .container-pagination .number-1 {
+        color: var(--chetwode-blue);
+        font-family: var(--font-family-inter);
+        font-size: var(--font-size-m2);
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: normal;
+        width: fit-content;
+    }
+
+    .container-pagination .container-box-page-1-3 {
+        align-items: center;
+        background-color: var(--mystic);
+        border: 0.43vw none;
+        border-radius: 0.87vw;
+        display: flex;
+        gap: 5.22vw;
+        height: 2vw;
+        justify-content: center;
+        padding: 3.48vw;
+        width: 2vw;
+    }
+
+    .container-pagination .container-text-date {
+        align-items: flex-start;
+        border: 0.43vw none;
+        display: flex;
+        gap: 3.48vw;
+        height: fit-content;
+        margin-bottom: -1.96vw;
+        margin-left: -0.43vw;
+        margin-right: -0.43vw;
+        margin-top: -1.96vw;
+        width: fit-content;
+    }
+
+    .container-pagination .number {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-top: -0.43vw;
+        width: fit-content;
+    }
+
+    .container-pagination .container-box-page-1-1 {
+        align-items: center;
+        border: 0.43vw none;
+        border-radius: 0.87vw;
+        display: flex;
+        gap: 5.22vw;
+        height: 2vw;
+        justify-content: center;
+        width: 2vw;
+    }
+
+        .container-pagination .container-box-page-1-1:hover .number-1,
+        .container-pagination .container-box-page-1-1.active .number-1,
+        .container-pagination .container-box-page-1-1:hover,
+        .container-pagination .container-box-page-1-1.active {
+            background-color: var(--chetwode-blue);
+            color: white;
+            cursor:pointer;
+        }
+
+    .container-pagination .container-text-date-2 {
+        align-items: flex-start;
+        border: 0.43vw none;
+        display: flex;
+        gap: 3.48vw;
+        height: 6.52vw;
+        margin-bottom: -1.96vw;
+        margin-left: -1.96vw;
+        margin-right: -1.96vw;
+        margin-top: -1.96vw;
+        width: fit-content;
+    }

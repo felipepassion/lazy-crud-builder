@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
+﻿namespace Niu.Nutri.Core.Application.DTO.Seedwork.ValueObjects
 {
     public class AutoSaveSettingsDTO
     {
@@ -7,12 +7,12 @@
 
         public void AddError(params string[] errors)
         {
-            this.Errors.AddRange(errors);
+            Errors.AddRange(errors);
         }
 
         public event Action OnUpdateEvent;
         public void OnUpdate() => OnUpdateEvent?.Invoke();
-        
+
         public Func<Task> TriggerAutoSave = null!;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace LazyCrud.Core.Application.Validators
+namespace Niu.Nutri.Core.Application.Validators
 {
     public static class CpfValidator
     {

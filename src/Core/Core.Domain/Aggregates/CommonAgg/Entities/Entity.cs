@@ -2,16 +2,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
-using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrud.Core.Domain.Attributes.T4;
-using LazyCrud.Core.Domain.Attributes.T4;
+using Niu.Nutri.Core.Application.DTO.Attributes;
+using Niu.Nutri.Core.Application.DTO.Extensions;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
+using Niu.Nutri.Core.Domain.Attributes.T4;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities
 {
     public abstract class SteppableEntity : ActivableEntity
-    {   
+    {
         public void ChangeStep(int newStep)
         {
             this.CurrentStep = newStep;
@@ -30,11 +29,12 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities
 
         public void Enable()
         {
-
+            this.Active = true;
         }
 
         public void Disable()
         {
+            this.Active = false;
         }
     }
 
@@ -44,6 +44,7 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities
         public string ExternalId { get; set; }
         string GetTitle();
         string GetTitlePropName();
+        DateTime? CreatedAt { get; set; }
     }
 
     public class Entity : IEntity
@@ -54,13 +55,32 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities
 
         public Entity()
         {
-            CreatedAt = CreatedAt ?? DateTime.UtcNow;
-            if (_externalId == null) _externalId = Guid.NewGuid().ToString();
+            CreatedAt ??= DateTime.UtcNow;
+            _externalId ??= Guid.NewGuid().ToString();
+        }
+
+        string _externalId;
+        public string ExternalId
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_externalId))
+                {
+                    CreatedAt ??= DateTime.UtcNow;
+                    _externalId = Guid.NewGuid().ToString();
+                }
+                return _externalId;
+            }
+            set
+            {
+                CreatedAt ??= DateTime.UtcNow;
+                this._externalId = value;
+            }
         }
 
         [IgnorePropertyT4OnRequest]
         [DisplayName("Criado em")]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 
         [IgnorePropertyT4OnRequest]
         [DisplayName("Atualizado em")]
@@ -96,17 +116,6 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities
             return property?.Name;
         }
 
-        string _externalId;
-        public string ExternalId
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(_externalId))
-                    _externalId = Guid.NewGuid().ToString();
-                return _externalId;
-            }
-            set { this._externalId = value; }
-        }
 
         [IgnorePropertyT4OnRequest]
         public bool IsDeleted { get; set; }

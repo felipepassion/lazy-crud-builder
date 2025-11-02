@@ -1,0 +1,91 @@
+﻿@using TollSvc.WebApp.Client.Pages.DefaultDesign;
+@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
+@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Models;
+@using Niu.Living.Core.Application.DTO.Attributes;
+@using System.Reflection;
+@using Niu.Living.Users.Application.DTO.Aggregates.UsersAgg.Requests;
+
+@inherits DefaultListiningBase
+
+@inject IJSRuntime JSRuntime
+
+@typeparam T where T : EntityDTO, new()
+
+<div class="container-conteudo-secao-principal">
+    @if (Context != null)
+    {
+        <ListiningHeader Context="Context" RedirectNewRegisterAsPage=RedirectNewRegisterAsPage HideNewRegisterButton=this.HideNewRegisterButton Title="@Title" T="T" />
+        <ListiningItem Context="Context" HideActiveColumn=HideActiveColumn @ref="_listiningLayuout" T="T" />
+    }
+    else
+    {
+        <TollSvc.WebApp.Client.Pages.Shared.GenericComponents.Loading />
+    }
+</div>
+
+@if (Context != null)
+{
+    <CadastroModal HideNavigationButtons=HideNavigationButtonsOnRegisterModal @ref=Context.RegisterModal />
+}
+
+@code
+{
+    [Parameter] public string AdditionalQueryString { get; set; }
+    [Parameter] public string OrderBy { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public int? Page { get; set; }
+    [Parameter] public int? Size { get; set; }
+    [Parameter] public bool? OrderByDesc { get; set; } = true;
+    [Parameter] public bool OpenNewPageOnRegisterButtonClicked { get; set; }
+    [Parameter] public bool HideNewRegisterButton { get; set; }
+    [Parameter] public bool RedirectNewRegisterAsPage { get; set; }
+    [Parameter] public bool HideNavigationButtonsOnRegisterModal { get; set; }
+    [Parameter] public bool HideActiveColumn { get; set; }
+
+    IListiningContext Context;
+    [Inject] HttpClient _http { get; set; }
+    [Inject] NavigationManager _navigationManager { get; set; }
+    ListiningItem<T>? _listiningLayuout;
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    [Inject] public UserCurrentAccessSelectedDTO CachedUserSession { get; set; }
+
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+        var myId = user.GetUserId();
+
+        var myRoute = new T().GetMyTypeName();
+        var route = $"{new UserDTO().GetRoute()}/{myRoute}/access/{CachedUserSession.SelectedPage.SystemPanelId}/{myId}/{CachedUserSession.SelectedPage.Id}";
+        this.CachedUserSession.AccessOfThisPage = (await _http.GetFromJsonAsync<GetHttpResponseDTO<UserProfileAccessDTO>>
+            (route))?.Data ?? new UserProfileAccessDTO();
+
+        if (Context == null || Context.QueryString != AdditionalQueryString)
+        {
+            var route2 = $"{new T().GetRoute()}/count?{AdditionalQueryString}";
+            int.TryParse((await _http.GetFromJsonAsync<GetHttpResponseDTO>(route2))?.Data.ToString(), out var totalOfItens);
+
+            var properties = new T().ExtractPropertyInfos("DisplayOnList")?
+                .OrderBy(x => x.info?.GetCustomAttribute<DisplayOnList>()?.Order);
+
+            Context = new ListiningContext(
+                _navigationManager,
+                Title,
+                totalOfItens,
+                properties,
+                async () => { /*todo: add new IoC refresher*/ },
+                AdditionalQueryString,
+                Page,
+                Size,
+                OrderBy,
+                orderByDescending: OrderByDesc,
+                 OpenNewPageOnRegisterButtonClicked);
+
+            //await base.OnAfterRenderAsync(firstRender);
+            await base.OnInitializedAsync();
+        }
+    }
+}

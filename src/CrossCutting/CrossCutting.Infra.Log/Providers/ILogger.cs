@@ -1,7 +1,7 @@
-﻿using LazyCrud.CrossCutting.Infra.Log.Entries;
+﻿using Niu.Nutri.CrossCutting.Infra.Log.Entries;
 using Serilog;
 
-namespace LazyCrud.CrossCutting.Infra.Log.Providers
+namespace Niu.Nutri.CrossCutting.Infra.Log.Providers
 {
     public interface ILogProvider
     {

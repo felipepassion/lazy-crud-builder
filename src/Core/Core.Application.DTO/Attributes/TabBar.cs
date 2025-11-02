@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Application.DTO.Attributes
+﻿namespace Niu.Nutri.Core.Application.DTO.Attributes
 {
     public class TabBar : Attribute
     {

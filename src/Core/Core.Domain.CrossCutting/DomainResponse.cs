@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Domain.CrossCutting
+﻿namespace Niu.Nutri.Core.Domain.CrossCutting
 {
     public class DomainResponse
     {
@@ -11,7 +11,7 @@
         {
             Data = data;
         }
-        
+
         public DomainResponse(Dictionary<string, string> errors)
         {
             foreach (var item in errors)
@@ -36,7 +36,7 @@
             {
                 try
                 {
-                    Errors = errors.ToDictionary(x => x ?? "error");
+                    Errors = errors.ToDictionary(x => "Error", x => x ?? "error");
                 }
                 catch (Exception)
                 {

@@ -1,0 +1,35 @@
+<AnimatedModal @bind-Args="Args" @ref=MyModal>
+    <div class="screen">
+        <div class="description-container">@Description</div>
+        <div class="buttons-container">
+            <button type="button" class="cancel" @onclick="OnBtnCancelClicked">Cancelar</button>
+            <button type="button" class="confirm-and-save" @onclick="OnBtnOkClicked">Confirmar</button>
+        </div>
+    </div>
+</AnimatedModal>
+
+@code {
+    public AnimatedModal MyModal { get; set; } = default!;
+    [Parameter] public object[] Args { get; set; } = Array.Empty<object>();
+
+    [Parameter] public string Description { get; set; } = string.Empty;
+
+    [Parameter] public Func<AnimatedModal, object[], Task>? OnButtonOkClick { get; set; }
+    [Parameter] public Func<AnimatedModal, object[], Task>? OnButtonCancelClick { get; set; }
+
+    public Task Open(params object[] args) => MyModal?.Open(args);
+    public void Close(bool invokeCallback = false) => MyModal.Close(invokeCallback);
+
+    async Task OnBtnOkClicked()
+    {
+        MyModal?.Close();
+        if (OnButtonOkClick != null)
+            await OnButtonOkClick(MyModal, Args);
+    }
+    async Task OnBtnCancelClicked()
+    {
+        MyModal?.Close();
+        if (OnButtonCancelClick != null)
+            await OnButtonCancelClick(MyModal, Args);
+    }
+}

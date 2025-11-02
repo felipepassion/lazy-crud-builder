@@ -1,0 +1,102 @@
+@using Niu.Nutri.Shared.Blazor.Components.Layout.DesignSystem.Inputs.Buttons
+
+<div class="box-inputs">
+    <div class="input-secondary">
+        <ButtonsGroup ToItemString="DateButtonsTypeExtensions.ToString"
+                      BtnClass="mealBtn"
+                      SelectedValue="DateButtonsType.Today"
+                      OnBtnClick="OnClick"
+                      @ref=_buttonsGroup
+                      @bind-Value="this.Type"
+                      @bind-Value:after="async ()=> await ValueChanged.InvokeAsync(Value)"
+                      Items="Enum.GetValues<DateButtonsType>().Select(x=>(DateButtonsType?)x)" />
+    </div>
+
+    <div class="input-secondary">
+        <div class="input-secondary-item">
+            <BirthDateInputs BtnClass="mealDate"
+                             Value="Value"
+                             ValueExpression="() => Value"
+                             T="DateOnly?" ValueChanged="OnValueChanged" />
+
+            <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
+                <ValidationMessage For="ErrorValidationExpression"></ValidationMessage>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public System.Linq.Expressions.Expression<Func<DateOnly?>> ErrorValidationExpression { get; set; } = null!;
+    [Parameter] public DateOnly? Value { get; set; }
+    [Parameter] public EventCallback<DateOnly?> ValueChanged { get; set; }
+    ButtonsGroup<DateButtonsType?> _buttonsGroup { get; set; } = default!;
+
+    bool _showCustomDate;
+    DateButtonsType? Type { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        Value ??= DateOnly.FromDateTime(DateTime.Now);
+        SetType();
+        await ValueChanged.InvokeAsync(Value);
+        await InvokeAsync(this.StateHasChanged);
+        await base.OnInitializedAsync();
+    }
+
+    async Task OnValueChanged(DateOnly? val)
+    {
+        Value = val;
+        SetType();
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    void SetType()
+    {
+        if (Value == DateOnly.FromDateTime(DateTime.Now.Date))
+        {
+            Type = DateButtonsType.Today;
+            _showCustomDate = false;
+        }
+        else if (Value == DateOnly.FromDateTime(DateTime.Now.AddDays(-1)))
+        {
+            Type = DateButtonsType.Yesterday;
+            _showCustomDate = false;
+        }
+        else
+        {
+            Type = DateButtonsType.Custom;
+            _showCustomDate = true;
+        }
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        _buttonsGroup.RefreshMe();
+        if (firstRender)
+        {
+        }
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task OnClick(DateButtonsType? type)
+    {
+        switch (type)
+        {
+            case DateButtonsType.Yesterday:
+                Value = DateOnly.FromDateTime(DateTime.Now.AddDays(-1));
+                break;
+            case DateButtonsType.Today:
+                Value = DateOnly.FromDateTime(DateTime.Now);
+                break;
+            case DateButtonsType.Custom:
+                Value = null;
+                break;
+            default:
+                throw new NotImplementedException(type.ToString());
+        }
+        _showCustomDate = Value == null;
+        await ValueChanged.InvokeAsync(Value);
+        await this.InvokeAsync(StateHasChanged);
+    }
+}

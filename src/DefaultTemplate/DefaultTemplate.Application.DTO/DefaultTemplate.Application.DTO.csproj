@@ -1,15 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>LazyCrud.DefaultTemplate.Application.DTO</RootNamespace>
+	  <RootNamespace>Niu.Nutri.DefaultTemplate.Application.DTO</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.Application.DTO\Core.Application.DTO.csproj" />
     <ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\CrossCuting.Infra.Utils.csproj" />
+    <ProjectReference Include="..\DefaultTemplate.Api.Queries\DefaultTemplate.Api.Queries.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,5 +48,5 @@
 <ItemGroup>
   <Folder Include="Aggregates\DefaultTemplateAgg\" />
 </ItemGroup>
-<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"><NoWarn>1701;1702;8618;1998;8602;8625;8629</NoWarn></PropertyGroup><PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'"><NoWarn>1701;1702;8618;1998;8602;8625;8629</NoWarn></PropertyGroup>
+<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"><NoWarn>1701;1702;8618;1998;8602;8625;8629;CS1591</NoWarn><WarningsAsErrors>$(WarningsAsErrors);NU1605</WarningsAsErrors></PropertyGroup><PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'"><NoWarn>1701;1702;8618;1998;8602;8625;8629;CS1591</NoWarn><WarningsAsErrors>$(WarningsAsErrors);NU1605</WarningsAsErrors></PropertyGroup>
 </Project>

@@ -14,16 +14,7 @@ var contextName = className + "Context";
    foreach(var namespaces in entities.GroupBy(p => p.Namespace.FullName)) { #>
 namespace <#= namespaces.Key.Replace("Entities", "Repositories") #> 
 {
-<# foreach (var entity in namespaces) 
-{ 
-                var exists = false;
-   foreach (var repo in repositories) {
-		if (repo.Equals($"I{entity.Name}Repository", StringComparison.CurrentCultureIgnoreCase)) {
-			exists = true;
-			break;
-		}
-   } 
-   if (exists) continue; #>
+<# foreach (var entity in namespaces) { #>
 	public partial interface I<#= entity.Name #>Repository : IRepository<<#= entity.Name #>> { }
 	public partial interface I<#= entity.Name #>MongoRepository : IMongoRepository<<#= entity.Name #>> { }
 

@@ -1,29 +1,28 @@
-﻿<# foreach (var namespc in entities.GroupBy(p => p.Namespace.FullName)) { #>
-using <#= namespc.Key.Replace("Entities", "Repositories").Replace("Domain","Infra.Data") #>;
-using <#= namespc.Key.Replace("Entities", "Repositories") #>;
-<# } #>
-<# foreach (var namespc in entitiesT4.GroupBy(p => p.Namespace.FullName)) { #>
-using <#= namespc.Key.Replace("Entities", "Repositories").Replace("Domain","Infra.Data") #>;
-using <#= namespc.Key.Replace("Entities", "Repositories") #>;
+﻿<# foreach (var namespc in entitiesT4.GroupBy(p => p.Namespace.FullName)) { #>
 using <#= namespc.Key.Replace("Entities", "AppServices").Replace("Domain","Application") #>;
+<# } #>
+<# foreach (var namespc in entities.GroupBy(p => p.Namespace.FullName)) { #>
+using <#= namespc.Key.Replace("Entities", "Repositories").Replace("Domain","Infra.Data") #>;
+using <#= namespc.Key.Replace("Entities", "Repositories") #>;
 <# } #>
 <# foreach (var namespc in GetServices().GroupBy(p => p.Namespace.FullName)) { #>
 using <#= namespc.Key #>;
 using <#= namespc.Key.Replace(".Interfaces","") #>;
 <# } #>
 using Microsoft.Extensions.DependencyInjection;
-using MediatR;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
-using LazyCrud.CrossCutting.Infra.Log.Providers;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using LazyCrud.Core.Application.DTO.Seedwork;
-using LazyCrud.Core.Infra.IoC;
+using Niu.Nutri.Core.Application.DTO.Seedwork;
+using Niu.Nutri.Core.Infra.IoC;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
-
+	using Core.Infra.IoC.Extensions;
+    using Core.Api.Middlewares;
 	using Infra.Data.Context;
 <# if(entitiesT4?.Any() == true) { #>
 	using Domain.Aggregates.<#= AggName #>.CommandHandlers;
@@ -54,6 +53,34 @@ namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
 			ConfigureRepositories(services);
 			ConfigureDatabase(services, configuration);
 			ConfigureMappings();
+			ConfigureMiddleware(services);
+			ConfigureControllers(services);
+        }
+
+		void ConfigureControllers(IServiceCollection services)
+		{
+			services.AddControllers().AddNewtonsoftJson(options =>
+			{
+				//options.SerializerSettings.Converters.Add(new StringEnumConverter());
+				// Use the default property (Pascal) casing
+				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+				var settings = options.SerializerSettings;
+				settings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
+				settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+				settings.MissingMemberHandling = MissingMemberHandling.Ignore;
+				settings.NullValueHandling = NullValueHandling.Ignore;
+				settings.PreserveReferencesHandling = PreserveReferencesHandling.None;
+				settings.DefaultValueHandling = DefaultValueHandling.Ignore;
+				settings.Formatting = Formatting.Indented;
+				settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+				options.AllowInputFormatterExceptionMessages = false;
+				//settings.Converters.Add(new TiimeOnlyJsonConverter());
+			}).AddBadRequestCustomValidator();;
+		}
+
+		void ConfigureMiddleware(IServiceCollection services)
+        {
+            services.AddScoped<ErrorHandlingMiddleware>();
         }
 
 		void ConfigureMappings()
@@ -76,7 +103,7 @@ namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
 			if(string.IsNullOrWhiteSpace(connectionString)) 
 				connectionString = configuration.GetConnectionString("DefaultConnection")!;
 			services.AddDbContext<<#= AggName #>Context>(options =>
-			options.UseSqlServer(connectionString));
+			options.UseNpgsql(connectionString));
 		}
 
 		void ConfigureRepositories(IServiceCollection services) {

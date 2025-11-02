@@ -10,11 +10,11 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
-<#+ public string GetGrupoEmpresaName() { return "LazyCrud"; }
-    public string GetProductName()  { return ""; }
-    public string GetDefaultNamespace() { return "LazyCrud"; }
+<#+ public string GetGrupoEmpresaName() { return "Niu"; }
+    public string GetProductName()  { return "Nutri"; }
+    public string GetDefaultNamespace() { return $"{GetGrupoEmpresaName()}.{GetProductName()}"; }
 
-    public string GetMyAggName(){
+    public string GetMyAggName() {
         var myName = GetCurrentProject().Name.Split('.').First();
         return myName + "Agg";        
     }
@@ -23,7 +23,7 @@
         
         IServiceProvider serviceProvider = (IServiceProvider)this.Host;
         EnvDTE.DTE dte = (EnvDTE.DTE) serviceProvider.GetCOMService(typeof(EnvDTE.DTE));
-        var src = dte.Solution.Projects.Item(2);
+        var src = dte.Solution.Projects.Item(1);
         var projects = GetProjects(src).ToArray();    
 		
         if(!name.Contains('.') && !ignorePrefix){
@@ -112,6 +112,17 @@
         return result;
     }
 
+    public List<CodeClass> GetAggregateEntities(Project project, string withAttribute = null, string withEndpoint = null, string withoutAttribute = null) {
+        var result = new List<CodeClass>();
+        var myName = project.Name.Split('.').First();
+        var AggName = myName + "Agg";
+        GetEntities(project.CodeModel.CodeElements, result, AggName, withAttribute: withAttribute, withoutAttribute: withoutAttribute);
+        if(!string.IsNullOrWhiteSpace(withEndpoint)){
+            result = result.Where(x=> GetAttributesDict(x)["EndpointsT4"].Any(x=>x.Value.Contains(withEndpoint) || x.Value.Contains("All"))).ToList();
+        }
+        return result;
+    }
+
     public List<CodeClass> GetAggregateEntities(string projectName, string withAttribute = null, string withEndpoint = null, string withoutAttribute = null) {
         var result = new List<CodeClass>();
         var project = FindProject(projectName);
@@ -158,13 +169,12 @@
         string withoutAttribute = null)	
     {
         var result = new List<CodeClass>();
+        
+
         var project = FindProject(projectName, ignorePrefix: ignorePrefix);
-        try{
-            GetEntities(project.CodeModel.CodeElements, result, includeOthes: includeOthes, withAttribute: withAttribute, withoutAttribute: withoutAttribute);
-        }
-        catch(Exception ex)
-        {
-        }
+
+        GetEntities(project?.CodeModel?.CodeElements, result, includeOthes: includeOthes, withAttribute: withAttribute, withoutAttribute: withoutAttribute);
+        
         if(!string.IsNullOrWhiteSpace(withEndpoint)){
             result = result.Where(x=> GetAttributesDict(x).ContainsKey("EndpointsT4") && GetAttributesDict(x)["EndpointsT4"].Any(x=>x.Value.Contains(withEndpoint) || x.Value.Contains("All"))).ToList();
         }
@@ -302,12 +312,8 @@
         
         var projects = new List<Project>();
         var list = new List<string>();
-        int i = 0;
 
         foreach (ProjectItem pj in folder.ProjectItems) {
-
-            //if(i++ == 0) continue;
-            
 
             var project = pj.SubProject;
             if (project == null) continue;
@@ -501,7 +507,7 @@
                 if (item.FullName == type) return item;
             }
             catch(Exception ex) {
-                throw new Exception("Error in FindType method: " + item + " - " + ex.Message);
+                // throw new Exception("Error in FindType method: " + item + " - " + ex.Message);
             }
         }
         
@@ -816,7 +822,7 @@
             try{
                 if (parents.Contains(property.Type.CodeType.FullName)) continue;
             }
-            catch(Exception ex)
+            catch
             {
                 continue;   
             }
@@ -948,10 +954,13 @@
         var isList = property.Value.Type.AsString.Contains("List<");
         var t = property.Value.Type.AsString.Replace("System.Collections.Generic.List<","").Replace(">","");
         var attrs = GetAttributesDict(property.Value);
+        var isRequired = attrs.ContainsKey("Required") || (t != "string" && attrs.ContainsKey("RequiredT4"));
+        isOverride = attrs.ContainsKey("MustImplementT4");
         
-        if(attrs.ContainsKey("MustImplementT4"))
+
+        if(!isRequired)
         {
-            isOverride = true;
+        	t += "?";
         }
         
         List<string> attrList = ExtractAttributesWithValues(attrs, "DisplayOnList","DisplayName","Title","Subtitle","ParameterType", "DefaultValue", "Min", "Max");
@@ -959,11 +968,12 @@
         var attr = "";
         if(attrList.Any())
             attr = $"[{string.Join(",",attrList)}] ";
-
+        
 	    switch(t) {
 		    case "byte[]": 
 		    case "byte[]?": 
 		    case "string": 
+		    case "string?": 
 		    case "string[]": 
 		    case "object": 
 		    case "System.Guid": 
@@ -986,12 +996,12 @@
 		    case "System.DateTimeOffset?":
 		    case "System.DateTime":
 		    case "System.DateTime?": 
-		        return $"{attr}public {(isOverride == true? " override " : "")} {property.Value.Type.AsString} {name} {'{'} get; set; {'}'}";
+		        return $"{attr}public {(isOverride? "override" : "")} {t} {name} {'{'} get; set; {'}'}";
          break;
         default: 
 	        var type = FindType(property.Value.Type.CodeType.FullName.Replace("?", string.Empty));
             if (type is CodeEnum) { 
-		        return $"{attr}public {(isOverride? " override " : "")} {t} {name} {'{'} get; set; {'}'}";
+		        return $"{attr}public {(isOverride? " override " : "")} {t.Replace("??","?")} {name} {'{'} get; set; {'}'}";
             }
             else {
                 var prefix = property.Value.Type.AsString.Replace("Entities","Requests").Replace("Domain","Application.DTO");
@@ -1002,6 +1012,7 @@
                 var isArray = isList || spplited[spplited.Length-1].Contains("[]") || spplited[spplited.Length-1].Contains("List<");
 		        
                 var typeAggName = t.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"))?.Replace("Agg","");
+                var typeLocationAgg = t.Replace(GetDefaultNamespace()+".","").Split('.')[0];
                 if(typeAggName == null){
                     typeAggName = property.Value.Type.AsString;
                     propType = propType.Replace("DTO","");
@@ -1012,14 +1023,23 @@
 		        var propName = string.Join(".",spplited);
 
 		        var propNameType = isArray ? $"List<{propName}>" : propName;
+                if(!isRequired && !propNameType.Contains("?"))
+                {
+                    propNameType += "?";
+                }
+
 		        var propNameNew = "";
-                if(propName == "Profissional")
+                if(name == "Contact")
                 {
                 }
                 
-                if(isArray || t.Split('.')[1] == "Core" || (typeAggName == t.Split('.')[1] && (attrs.ContainsKey("OneToOne") || ContainsAttribute(property.Value, "jsonb"))))
-                    propNameNew = $"= new {(isArray? $"List<{propName}>" : propName)}();";
-              
+                if(!attrs.ContainsKey("NullableProperty"))
+                    if(isArray || typeLocationAgg == "Core" || ((attrs.ContainsKey("OneToOne") || ContainsAttribute(property.Value, "jsonb")))){
+                        propNameNew = $"= new();";
+                        propNameType = propNameType.Replace("?","");
+                    }
+              if(isArray)
+                propNameType = propNameType.Replace("?","");
 		        return $"{attr}public {(isOverride? " override " : "")}{propNameType} {name} {'{'} get; set; {'}'} {propNameNew}";
             }
         } 
@@ -1035,6 +1055,7 @@
 		    case "byte[]": 
 		    case "byte[]?": 
 		    case "string": 
+		    case "string?": 
 		    case "string[]": 
 		    case "object":
 		    case "System.Guid": 
@@ -1091,7 +1112,6 @@
     public string WriteValidator(CodeClass entity, Dictionary<string, CodeProperty> properties, int step, string mainEntity, bool ignoreStep)
     {
         var result = "";
-        int i = 0;
         foreach (var property in properties.OrderBy(x=>x.Key))
         {
 
@@ -1179,6 +1199,7 @@
 
             
             result += WriteProperty(new KeyValuePair<string, CodeProperty>(property.Key.Replace(@"/","_"), property.Value)).Replace("DTO>", "ListiningDTO>");
+            result = result.Replace("override", "");
         }
 
         return result;
@@ -1248,7 +1269,7 @@
         {
             var isComplex = properties.Any(x=>x.Key.StartsWith(property.Key + @$"/"));
             if(isComplex) continue;
-            var myAgg = property.Value.FullName.Split('.')[1];
+            var myAgg = property.Value.FullName.Replace(this.GetDefaultNamespace(),"").Split('.')[1];
             var otherAgg = property.Value?.FullName?.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"))?.Replace("Agg","");
             if(myAgg != otherAgg) continue;
 
@@ -1336,3 +1357,4 @@
         return clss.Key.Replace("/",".").Split('.').Last();
     }
 #>
+

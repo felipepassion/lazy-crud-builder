@@ -37,8 +37,7 @@
     int count = hasParameterSwitcher ? 1 : 0;
 #>
 
-@using LazyCrud.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
-@using Pages.RegisterStepsTemplate;
+@using Niu.Nutri.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
 @inherits BaseCadastro<<#=entity.Name#>DTO>
 
 <div class="container-informations screen">
@@ -77,7 +76,6 @@ count++;
 </div>
 
 @code {
-    [CascadingParameter] BaseMainStepsLayout<<#= entity.Name #>DTO> layout { get; set; }
 <#if(hasParameterSwitcher) {#>
     [Inject] NavigationManager NavigationManager { get; set; }
     void OnSelect(SelectEventArgs<<#=parameterTypeSwitcher.Value.Type.AsFullName#>> eventCallback)

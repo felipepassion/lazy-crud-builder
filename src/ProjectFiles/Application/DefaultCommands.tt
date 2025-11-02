@@ -1,6 +1,6 @@
 ﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
 <#
-	var entities = GetMyAggregateEntities(withAttribute: "EndpointsT4");
+	var entities = GetMyAggregateEntities(withAttribute: "EndpointsT4").Where(x=>x.IsAbstract == false);
 
 	var project = GetCurrentProject();
 	var path = Path.GetDirectoryName(project.FullName);

@@ -1,0 +1,38 @@
+﻿<#@ include file="..\project.tt" #>
+<#
+	var AggName = GetMyAggName();
+	var entitiesT4 = new List<CodeClass>();
+	var projects = FindDomainProjects()/*.Where(x=>x.Name.Contains("Contracts"))*/.ToArray();
+	foreach(var item in projects){
+		entitiesT4.AddRange(GetAggregateEntities(item.Name, withAttribute: "EndpointsT4", withEndpoint: "HttpPost", withoutAttribute: "DoNotReplaceAfterGenerated")
+			.Where(x=> /*x.Name == "AgendaProfissional" &&*/  !ContainsAttribute(x,"AggregateSettingsT4"))); 
+	}
+
+foreach (var entity in entitiesT4) { 
+	var aggName = entity.FullName.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","");
+	var attrs = GetAttributesDict(entity);
+	var isStep = attrs.ContainsKey("Steppable");
+	var props = GetRecursiveProperties(entity, includeBase:true, includeParent: true);
+	
+	var parameterType = props.FirstOrDefault(x=> GetAttributesDict(x.Value).ContainsKey("ParameterType"));
+    var hasParameter = parameterType.Key != null && !parameterType.Key.Contains(@"/");
+	var myFileNameSplit = System.Text.RegularExpressions.Regex.Split(entity.Name, @"(?=\p{Lu}\p{Ll})|(?<=\p{Ll})(?=\p{Lu})").ToArray();
+    for(var i =0; i<myFileNameSplit.Length; i++){
+        myFileNameSplit[i] = myFileNameSplit[i].Substring(0,myFileNameSplit[i].Length >3? 3 : myFileNameSplit[i].Length);
+    }
+    var myFileName = string.Join("",myFileNameSplit);
+
+	var parameterTypeSwitcher = props.FirstOrDefault(x=> GetAttributesDict(x.Value).ContainsKey("ParameterTypePageSwitcher"));
+    var hasParameterSwitcher = parameterTypeSwitcher.Key != null;
+	if(isStep) {
+		var stepsCount = int.Parse(attrs["Steppable"].FirstOrDefault().Value ?? "1");
+		for(int currentStep=1;currentStep<=stepsCount;currentStep++) { #>
+<#@ include file="MiniFormTemplatesSwitcher.tt" #>
+		<#}#>
+	<#}#>
+<#if(isStep && !ContainsAttribute(entity, "DoNotReplaceBaseCadastroPageAfterGenerated")){#>
+	<#@ include file="MiniClientRegisterPages.tt" #>
+<#}#>
+<# } #>
+<#+
+#>

@@ -1,29 +1,44 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>LazyCrud.Core.Application.DTO</RootNamespace>
+    <RootNamespace>Niu.Nutri.Core.Application.DTO</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.7.1" />
-    <PackageReference Include="MediatR" Version="12.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="8.0.0-rc.2.23480.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <Compile Remove="Aggregates\CommonAgg\Commands\**" />
+    <Compile Remove="Seedwork\Mapping\**" />
+    <EmbeddedResource Remove="Aggregates\CommonAgg\Commands\**" />
+    <EmbeddedResource Remove="Seedwork\Mapping\**" />
+    <None Remove="Aggregates\CommonAgg\Commands\**" />
+    <None Remove="Seedwork\Mapping\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Seedwork\Mapping\" />
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="9.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\Http\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\CrossCuting.Infra.Utils.csproj" />
+    <ProjectReference Include="..\Core.Api.Queries\Core.Api.Queries.csproj" />
+    <ProjectReference Include="..\Core.Application.DTO.Http.Models\Core.Application.DTO.Http.Models.csproj" />
     <ProjectReference Include="..\Core.Application.Validators\Core.Application.Validators.csproj" />
-    <ProjectReference Include="..\Core.Domain.CrossCutting\Core.Domain.CrossCutting.csproj" />
+    <ProjectReference Include="..\Core.Enumeration\Core.Enumeration.csproj" />
   </ItemGroup>
 
 </Project>

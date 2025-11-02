@@ -1,0 +1,148 @@
+﻿
+
+
+.modal-icon-upload-file {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 60px;
+    padding: 12px;
+    margin:0 auto;
+    transition: 0.5s;
+    background-color: var(--white);
+    -webkit-box-shadow: 0px 3px 8px 0px rgb(140 129 247 / 75%);
+    -moz-box-shadow: 0px 3px 8px 0px rgb(140 129 247 / 75%);
+    box-shadow: 0px 3px 8px 0px rgb(140 129 247 / 75%);
+}
+
+.modal-icon-upload-file:hover {
+    background-color: var(--cosmic-cobalt);
+    opacity: .4;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.modal-icon-upload-file:hover .container-border {
+    background-color: transparent;
+}
+
+.container-conteudo-icon-upload-file {
+    display: flex;
+    flex-flow: column;
+    place-content: center;
+    text-align: center;
+    width: 100%;
+    border: none;
+}
+
+.container-titulo {
+    display: flex;
+    width: 100%;
+    place-content: center;
+}
+
+.container-titulo .titulo {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1.00px;
+    width: fit-content;
+    color: var(--silver-chalice);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xl2);
+    font-style: normal;
+    font-weight: 600;
+}
+
+.texto-normal,
+.primary-texto-normal {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.primary-texto-normal {
+    color: #C22133;
+}
+
+.container-icon-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+::deep span.bi.bi-image-fill {
+    font-size: 25px;
+    display: flex;
+    place-content: center;
+}
+
+
+.control_wrapper {
+    width: 1100px;
+}
+
+.custom-file.e-control-wrapper {
+    margin: 5px 0 -8px 0;
+}
+
+.custom-file .e-file-select-wrap {
+    padding: 0px;
+    margin-left: -100px
+}
+
+.custom-file button.e-css.e-btn.e-upload-browse-btn {
+    margin-left: 130px;
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    font-family: inherit;
+    color: #ff4081;
+    text-decoration: underline;
+    cursor: pointer;
+    box-shadow: none;
+    text-transform: capitalize;
+}
+
+    .custom-file button.e-css.e-btn.e-upload-browse-btn:hover {
+        background: none !important;
+        border: none;
+        padding: 0 !important;
+        font-family: inherit;
+        color: #ff4081;
+        text-decoration: underline;
+        cursor: pointer;
+        box-shadow: none;
+        text-transform: capitalize;
+    }
+
+
+
+.bi-trash-fill {
+    color: red;
+    height: 50px;
+    width: 50px;
+    font-size: 20pt;
+    margin-left: -25px;
+    margin-top:-10px;
+}
+
+.bi-trash-fill:hover {
+    cursor:pointer;
+    opacity:.7;
+}
+
+.image-area-container{
+    display:flex;
+}
+
+.input_browser {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+

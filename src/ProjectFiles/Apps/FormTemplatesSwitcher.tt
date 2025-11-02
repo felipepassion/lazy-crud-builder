@@ -4,7 +4,7 @@
 
 
 
-if(myProps.Any(x=>x.Value.Type.AsString.Split('.').Last().EndsWith("Endereco"))){#>
+if(myProps.Any(x=>x.Value.Type.AsString.Split('.').Last().EndsWith("Address"))){#>
 	<#@ include file="BasicAddressComponent.tt" #>
 <# } else if(props.All(x=>x.Key.EndsWith("Contacts2"))) { #>
 	<#@ include file="BasicAddressComponent.tt" #>

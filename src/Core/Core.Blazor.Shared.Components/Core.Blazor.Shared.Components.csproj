@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>Niu.Living.Core.Blazor.Shared.Components</RootNamespace>
+		<StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+		<NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Chat\Chat.Application.DTO\Chat.Application.DTO.csproj" />
+	</ItemGroup>
+
+</Project>

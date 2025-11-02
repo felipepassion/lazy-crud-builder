@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Repositories
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Repositories
 {
     public interface IMongoRepository<T> 
         where T : class
@@ -21,5 +21,14 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Repositories
         Task RenameCollection(string newName, string oldName);
         Task DropCollection(string collectionName);
         Task Duoplicate(string newName);
+        Task<IEnumerable<K>> SelectAllAsync<K>(
+            Expression<Func<T, bool>> filter,
+            Expression<Func<T, K>> selector,
+                Expression<Func<T, object>>[]? orderBy = null,
+            bool ascending = true,
+            int? skip = null,
+            int? take = null,
+            bool includeAll = true,
+            params Expression<Func<T, object>>[] include);
     }
 }

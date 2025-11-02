@@ -1,0 +1,155 @@
+﻿/* screen - filters-list-card */
+
+.filters-list-card {
+    align-items: center;
+    background-color: var(--white);
+    border: 0.47vw solid;
+    border-color: var(--purple-heart);
+    display: flex;
+    gap: 3.74vw;
+    height: fit-content;
+    justify-content: center;
+    min-height: 102.34vw;
+    min-width: 100.0vw;
+    padding: 5.61vw;
+    width: 100%;
+}
+
+    .filters-list-card .container-filters {
+        align-items: flex-start;
+        border: 0.47vw none;
+        display: flex;
+        flex-direction: column;
+        gap: 5.61vw;
+        width: fit-content;
+    }
+
+    .filters-list-card .frame-71 {
+        align-items: flex-start;
+        border: 0.47vw none;
+        display: flex;
+        flex-direction: column;
+        gap: 1.87vw;
+        width: fit-content;
+    }
+
+    .filters-list-card .frame-654 {
+        align-items: center;
+        align-self: stretch;
+        border-bottom-style: solid;
+        border-bottom-width: 0.47vw;
+        border-color: transparent;
+        display: flex;
+        gap: 3.74vw;
+        padding: 1.87vw 0.0vw;
+    }
+
+    .filters-list-card .instituies {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-top: -0.47vw;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .filters-list-card .frame-716 {
+        align-items: flex-start;
+        border: 0.47vw none;
+        display: flex;
+        flex-direction: column;
+        gap: 3.74vw;
+        width: fit-content;
+    }
+
+    .filters-list-card .frame-373 {
+        align-items: center;
+        border-style: none;
+        display: flex;
+        gap: 3.74vw;
+        width: 88.79vw;
+    }
+
+    .filters-list-card .rectangle-12 {
+        background-color: var(--chetwode-blue);
+        border: 0.47vw none;
+        border-radius: 46.73vw;
+        height: 2.8vw;
+        min-width: 2.8vw;
+    }
+
+    .filters-list-card .frame-654-1 {
+        align-items: center;
+        border-bottom-style: solid;
+        border-bottom-width: 0.47vw;
+        border-color: transparent;
+        display: flex;
+        flex: 1;
+        gap: 3.74vw;
+        padding: 1.87vw 0.0vw;
+    }
+
+    .filters-list-card .grupo-empresa {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-top: -0.47vw;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .filters-list-card .frame-70 {
+        align-items: center;
+        border-color: transparent;
+        border-right-style: solid;
+        border-right-width: 0.47vw;
+        display: flex;
+        gap: 3.74vw;
+        width: 88.79vw;
+    }
+
+    .filters-list-card .rectangle-12-1 {
+        background-color: var(--alto);
+        border: 0.47vw none;
+        border-radius: 46.73vw;
+        height: 2.8vw;
+        min-width: 2.8vw;
+    }
+
+    .filters-list-card .empresa {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-top: -0.47vw;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .filters-list-card .place {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-top: -0.47vw;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .filters-list-card .status {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-top: -0.47vw;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .filters-list-card .actives {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-top: -0.47vw;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .filters-list-card .inactives {
+        letter-spacing: 0;
+        line-height: normal;
+        margin-top: -0.47vw;
+        text-align: center;
+        width: fit-content;
+    }

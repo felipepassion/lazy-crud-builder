@@ -1,4 +1,4 @@
-﻿
+﻿<# if(title.Key != null) {#>
     <div class="input-secondary">
 <#if(hasParameterSwitcher) {
     var field= parameterTypeSwitcher;
@@ -14,12 +14,10 @@
     myPropertyName = myPropertyName == myName ? "" : myPropertyName;
 #>
         <div class="input-secondary-item">
-            <SfTextBox class="cnpj-1 valign-text-middle inter-medium-silver-16px form-control"
-                    @oninput="async (x)=>{ await OnFormUpdated(()=>{ Model.<#=myName#> = (<#=myType#>)x.Value; });}"                        
-                    FloatLabelType="@FloatLabelType.Auto"
-                    @bind-value="Model.<#=myName#>"
-                    @onchange="async () => { await OnAutoSaveTriggered(); }"
-                    Placeholder="<#=GetDisplayName(field)#>" />
+			<TextInput Placeholder="<#=myName#>"
+			           @bind-Value:after="OnFormUpdated"
+			           @bind-Value="Model.<#=myName#>" />
+			
             <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
                 <ValidationMessage For="@(() => Model.<#=myName#>)"></ValidationMessage>
             </div>
@@ -27,4 +25,5 @@
 <#}#>
 <#if(!hasParameterSwitcher) {#>
     </div>
+<#}#>
 <#}#>

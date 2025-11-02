@@ -1,16 +1,18 @@
 ﻿using AutoMapper;
 
-namespace LazyCrud.Core.Application.DTO.Seedwork
+namespace Niu.Nutri.Core.Application.DTO.Seedwork
 {
     public static class MapperFactory
     {
-        static Mapper _mapper;
+        static Mapper? _mapper;
+        
+        static List<Profile?>? _profiles { get; set; }
+        
         public static Mapper Mapper { get { return _mapper ?? throw new Exception("Mapper Not Initialized"); } }
-        static List<Profile?> _profiles { get; set; }
 
         public static void Setup(string nmspc)
         {
-            _profiles = _profiles ?? new List<Profile>();
+            _profiles = _profiles ?? new List<Profile?>();
 
             var assmbs = AppDomain.CurrentDomain.GetType().Namespace;
 

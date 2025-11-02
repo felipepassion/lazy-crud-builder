@@ -1,0 +1,15 @@
+.date {
+    display: flex;
+    padding: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.date_inputs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}

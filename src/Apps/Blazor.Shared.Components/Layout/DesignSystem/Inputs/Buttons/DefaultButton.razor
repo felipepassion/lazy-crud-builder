@@ -1,0 +1,64 @@
+﻿@using Niu.Nutri.Shared.Blazor.Components.Layout.DesignSystem.Inputs.Buttons.Enums
+
+<button type="@ButtonType" class="@this.GetSizeClass() @this.GetButtonTypeClass() @this.GetButtonWidth() button @this.Class" @onclick="OnClick">
+    @if (!string.IsNullOrWhiteSpace(this.IconPath))
+    {
+        <img src="@IconPath" alt="Icon" class="@Class"/>
+    }
+    @if (ChildContent is null && DisableText is false)
+    {
+        @Text
+    }
+    else
+    {
+        @ChildContent
+    }
+</button>
+
+@code {
+    [Parameter] public bool DisableText { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public ButtonSizes Size { get; set; }
+    [Parameter] public ButtonTypes Type { get; set; }
+    [Parameter] public EventCallback OnClick { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? ImgClass { get; set; }
+    [Parameter] public string? IconPath { get; set; }
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public bool? MobileFullWidth { get; set; }
+    [Parameter] public string? ButtonType { get; set; }
+
+    string GetSizeClass()
+    {
+        return this.Size switch
+        {
+            ButtonSizes.Small => "small",
+            ButtonSizes.Medium => "medium",
+            ButtonSizes.Large => "large",
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    string GetButtonTypeClass()
+    {
+        return this.Type switch
+        {
+            ButtonTypes.Primary => "primary",
+            ButtonTypes.Secondary => "secondary",
+            ButtonTypes.Tertiary => "tertiary",
+            ButtonTypes.TertiaryOptions => "tertiary-options",
+            _ => "null"
+        };
+    }
+
+    string GetButtonWidth()
+    {
+        return this.MobileFullWidth switch
+        {
+            true => "mobile-full-width",
+            false => "",
+            _ => ""
+        };
+    }
+}

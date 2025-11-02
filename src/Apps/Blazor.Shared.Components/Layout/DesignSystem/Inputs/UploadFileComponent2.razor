@@ -1,0 +1,41 @@
+<div class="input-upload-item">
+    <label for="fileInput" class="file-label">
+        <span>Abrir Câmera / Escolher Foto</span>
+        <img src="./icons/popup/upload-icon.svg" alt="" />
+    </label>
+    <InputFile id="fileInput"
+               class="file-input"
+               hidden
+               accept="image/*"
+               OnChange="SingleUpload" />
+    <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
+        <ValidationMessage For="@(() => Image)" />
+    </div>
+    @if (Image is not null)
+    {
+        <img src="@($"data:image/png;base64,{Convert.ToBase64String(Image)}")" alt="Meal Photo" class="mealPhoto-preview" />
+    }
+</div>
+
+@code {
+    [Parameter] public required byte[] Image { get; set; }
+    [Parameter] public required EventCallback<byte[]> ImageChanged { get; set; }
+
+    [Parameter] public Func<Task>? OnImageChanged { get; set; }
+
+    private async Task SingleUpload(InputFileChangeEventArgs e)
+    {
+        MemoryStream ms = new MemoryStream();
+        await e.File.OpenReadStream().CopyToAsync(ms);
+        var bytes = ms.ToArray();
+
+        Image = bytes;
+
+        await ImageChanged.InvokeAsync(Image);
+
+        if (OnImageChanged != null)
+            await OnImageChanged();
+
+        await this.InvokeAsync(StateHasChanged);
+    }
+}

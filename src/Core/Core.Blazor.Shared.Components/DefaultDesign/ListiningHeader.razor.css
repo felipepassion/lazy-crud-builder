@@ -1,0 +1,67 @@
+﻿/* screen - 21_9674 */
+
+.container-header-paginas-aplicacao {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+}
+
+.container-titulos-paginas-aplicacao {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+}
+
+.subtitulo-pagina {
+    font-size: 18px;
+    font-weight: 600;
+    color: #C22133;
+    font-family: "Inter", Helvetica;
+}
+
+.titulo-pagina {
+    font-size: 26px;
+    font-weight: 600;
+    color: #C22133;
+    font-family: "Inter", Helvetica;
+}
+
+.container-btn-novo-cadastro {
+    display: flex;
+    width: auto;
+    height: 100%;
+}
+
+.btn-novo-cadastro {
+    align-items: center;
+    background-color: var(--chetwode-blue);
+    display: flex;
+    height: 50px;
+    width: 200px;
+    justify-content: center;
+    position: relative;
+    border-image: initial;
+    border-radius: 50px;
+    margin: 0px 10px 0px 0px;
+    opacity: 100%;
+    transition: 0.3s;
+    color: #fff;
+}
+
+.btn-novo-cadastro:hover {
+    opacity: 50%;
+    transition: 0.3s;
+    color: #000;
+}
+
+.titulo-btn-novo-cadastro {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: "Inter", Helvetica;
+}

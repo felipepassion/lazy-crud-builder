@@ -1,0 +1,67 @@
+﻿/* screen - 21_9998 */
+
+.container-list-card {
+    align-items: flex-start;
+    border: 0.12vw none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.0vw;
+    width: fit-content;
+    position: absolute;
+    left: 50.23vw;
+    top: 5vw;
+    background-color: white;
+    padding: .5vw;
+}
+
+.option {
+    align-items: center;
+    border-color: transparent;
+    border-right-style: solid;
+    border-right-width: 0.12vw;
+    display: flex;
+    gap: 1.0vw;
+    width: 100%;
+}
+
+.container-list-card .option:hover {
+    background-color: var(--chetwode-blue);
+    cursor: pointer;
+}
+.container-list-card .option:hover div {
+}
+    .container-list-card .option:hover img {
+        fill: white;
+    }
+
+.uilarrow-growth {
+    height: 2.49vw;
+    min-width: 2.49vw;
+}
+
+.container-title {
+    align-items: center;
+    border-bottom-style: solid;
+    border-bottom-width: 0.12vw;
+    border-color: transparent;
+    display: flex;
+    flex: 1;
+    gap: 1.0vw;
+    padding: 0.5vw 0.0vw;
+}
+
+.crescente {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -0.12vw;
+    text-align: center;
+    width: fit-content;
+}
+
+.line-separated {
+    height: 0.12vw;
+    margin-left: -0.06vw;
+    margin-right: -0.06vw;
+    width: 100%;
+    object-fit: cover;
+}

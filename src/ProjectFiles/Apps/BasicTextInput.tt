@@ -1,11 +1,8 @@
 ﻿        <div class="input-secondary-item">
-            <SfTextBox @bind-value="Model.<#=myName#>"
-                <#if(isTitle) {#>   @oninput="async (x)=>{ await OnFormUpdated(()=>{ Model.<#=myName#> = (<#=myType#>)x.Value; });}" <#}#>
-                    class="razo-social valign-text-middle inter-medium-silver-16px form-control"
-                    FloatLabelType='@FloatLabelType.Auto'
-                    @onchange="async () => { await OnAutoSaveTriggered(); }"
-                    Placeholder="<#=myDisplayName#>" />
-            </div>
+			<TextInput Label="<#=myName#>" Placeholder="<#=myName#>"
+					    @bind-Value:after="OnFormUpdated"
+                        @bind-Value="Model.<#=myName#>" />
             <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
                 <ValidationMessage For="@(() => Model.<#=myName#>)"></ValidationMessage>
+			</div>
         </div>

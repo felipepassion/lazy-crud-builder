@@ -1,10 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace LazyCrud.Core.Application.Validators
+namespace Niu.Nutri.Core.Application.Validators
 {
     public static class NameValidator
     {
-        public static bool ValidName(string name)
+        public static bool ValidName(string? name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -13,27 +13,13 @@ namespace LazyCrud.Core.Application.Validators
 
             name = name.Trim();
 
-            char firstChar = name[0];
-            for (int i = 1; i < name.Length; i++)
-            {
-                if (name[i] != firstChar)
-                {
-                    break;
-                }
-
-                if (i == name.Length - 1)
-                {
-                    return false; 
-                }
-            }
-
-            var regex = new Regex(@"^[\p{L} \.'\-]+$");
-            if (!regex.IsMatch(name))
+            if (name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length <= 1)
             {
                 return false;
             }
 
-            return true;
+            var regex = new Regex(@"^[\p{L}]+(?:\s+[\p{L}]+)+$");
+            return regex.IsMatch(name);
         }
     }
 }

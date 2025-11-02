@@ -1,7 +1,7 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Notifications;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
+﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Notifications;
+using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Events
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events
 {
     public class BaseEvent : BaseNotification
     {

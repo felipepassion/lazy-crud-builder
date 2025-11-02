@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Application.Aggregates.Common.Models
+﻿namespace Niu.Nutri.Core.Application.Aggregates.Common.Models
 {
     public interface ILoggedUserContext
     {

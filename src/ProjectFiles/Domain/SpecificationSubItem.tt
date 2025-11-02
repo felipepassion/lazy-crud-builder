@@ -1,17 +1,21 @@
 ﻿<#switch(propType) {
 	case "string": 
+	case "string?": 
 	case "System.Guid": 
 	case "System.Guid?": 
 if(propType  == "string") { #>
 		public static Specification<<#= entity.Name #>> <#= name #>Contains(<#= propType #> value) {
 			return new DirectSpecification<<#= entity.Name #>>(p => EF.Functions.Like(p.<#= path #>.ToLower(), $"%{value.ToLower()}%"));
 		}
+		public static Specification<<#= entity.Name #>> <#= name #>NotContains(<#= propType #> value) {
+			return new DirectSpecification<<#= entity.Name #>>(p => !EF.Functions.Like(p.<#= path #>.ToLower(), $"%{value.ToLower()}%"));
+		}
 		public static Specification<<#= entity.Name #>> <#= name #>StartsWith(<#= propType #> value) {
 			return new DirectSpecification<<#= entity.Name #>>(p => EF.Functions.Like(p.<#= path #>.ToLower(), $"{value.ToLower()}%"));
 		}
 <#}#>	
-		public static Specification<<#= entity.Name #>> <#= name #>Equal(params <#= propType #>[] values) {
-			return new DirectSpecification<<#= entity.Name #>>(p => values.Contains(p.<#= path #>));
+		public static Specification<<#= entity.Name #>> <#= name #>Equal(<#= propType #> value) {
+			return new DirectSpecification<<#= entity.Name #>>(p => value.ToLower() == (p.<#= path #>.ToLower()));
 		}
 		public static Specification<<#= entity.Name #>> <#= name #>NotEqual(<#= propType #> value) {
 			return new DirectSpecification<<#= entity.Name #>>(p => p.<#= path #> != value);

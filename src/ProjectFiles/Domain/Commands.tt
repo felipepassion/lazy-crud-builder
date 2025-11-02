@@ -29,7 +29,7 @@
 			folderName: $"../../../{aggName}/{aggName}.Domain",
 			outputFileName: @$"DefaultEntities.tt", 
 			recreateFileIfExists: true);
-#>
+#>	
 
 <#foreach(var item2 in projects2) { 
 var projPath = @$"..\..\ProjectFiles\{item2}\DefaultCommands.tt";

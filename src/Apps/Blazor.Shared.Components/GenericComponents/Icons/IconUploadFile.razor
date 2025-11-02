@@ -1,0 +1,163 @@
+﻿@using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+@using Niu.Nutri.Core.Application.DTO.Seedwork.ValueObjects
+
+@* @using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Inputs *@
+
+<div class="control-section">
+    <div class="control_wrapper">
+        <div id="dropArea">
+            <div class="images-area">
+
+                @foreach (var image in this.Images)
+                {
+                    <div class="image-area-container">
+                        <img class="upload-image" alt="Image" src="@image.Src" />
+                        <span class="bi bi-trash-fill" title="Remove" @onclick="()=>RemoveImage(image)"></span>
+                    </div>
+                }
+
+            </div>
+            <div class="input_browser">
+              @*   @if (IsCapture)
+                { *@
+                    @* <SfUploader DropArea="#customDropArea"
+                                AllowMultiple=true @ref="uploadObj"
+                                CssClass="@CssClass"
+                                AutoUpload="true"
+                                AllowedExtensions="image/*"
+                                HtmlAttributes="_atributes">
+                        <UploaderButtons Browse="TAKE PICTURE"></UploaderButtons>
+                        <UploaderTemplates>
+                            <Template>
+                                <div>
+                                    <h1>teste</h1>
+                                </div>
+                            </Template>
+                        </UploaderTemplates>
+                        <UploaderEvents ValueChange="OnChange"></UploaderEvents>
+                    </SfUploader>
+                    <div id="customDropArea" style="color:cadetblue; background-color:red"></div>
+                }
+
+                <SfUploader AllowMultiple=true @ref="uploadObj" CssClass="@CssClass" AutoUpload="true" AllowedExtensions="image/*">
+                    <UploaderButtons Browse="SELECT FILE"></UploaderButtons>
+                    <UploaderTemplates>
+                        <Template>
+
+                        </Template>
+                    </UploaderTemplates>
+                    <UploaderEvents ValueChange="OnChange"></UploaderEvents>
+                </SfUploader> *@
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+@code {
+    // private async Task onFileRemove()
+    // {
+    //     await uploadObj.RemoveAsync();
+    // }
+
+    //private SfUploader uploadObj { get; set; }
+    public string CssClass = "custom-file";
+
+    private string fileSize { get; set; }
+
+    //Hidden:Lines
+    private string canonicalURL { get; set; }
+
+    [Parameter] public List<ImageFileInfoDTO> Images { get; set; } = new List<ImageFileInfoDTO>();
+    [Parameter] public EventCallback<List<ImageFileInfoDTO>> ImagesChanged { get; set; }
+
+    [Parameter] public string ImageSrc { get; set; }
+    [Parameter] public EventCallback<string> ImageSrcChanged { get; set; }
+
+    [Parameter] public bool Titulo { get; set; }
+    [Parameter] public string ActionText { get; set; }
+    [Parameter] public string Icon { get; set; }
+    [Parameter] public bool IsCapture { get; set; }
+
+    string key = Guid.NewGuid().ToString();
+    [Parameter] public IImageFileInfoDTO Image { get; set; }
+    //SfUploader uploader { get; set; }
+
+    [Parameter] public string Formats { get; set; }
+
+    bool uploading;
+
+    [Parameter] public bool DisableDescription { get; set; }
+
+    [Parameter] public Func<Task>? OnImageChanged { get; set; }
+
+    private Dictionary<string, object> _atributes = new Dictionary<string, object>()
+    {
+        { "capture", "environment" }
+    };
+
+    [Inject] IJSRuntime _js { get; set; }
+
+    async Task RemoveImage(ImageFileInfoDTO img)
+    {
+        this.Images.Remove(img);
+        if (OnImageChanged != null)
+        {
+            await OnImageChanged();
+            await ImageSrcChanged.InvokeAsync(ImageSrc);
+        }
+        this.StateHasChanged();
+    }
+
+    void OnClick()
+    {
+        _js.InvokeVoidAsync("clickMe2", this.key);
+    }
+
+    private bool validateIcon()
+    {
+        return (string.IsNullOrEmpty(Icon)) ? true : false;
+    }
+
+    [Inject] HttpClient _http { get; set; }
+
+    public static byte[] ConverteStreamToByteArray(Stream stream)
+    {
+        byte[] byteArray = new byte[16 * 1024];
+        using (MemoryStream mStream = new MemoryStream())
+        {
+            int bit;
+            while ((bit = stream.Read(byteArray, 0, byteArray.Length)) > 0)
+            {
+                mStream.Write(byteArray, 0, bit);
+            }
+            return mStream.ToArray();
+        }
+    }
+
+    public static byte[] ReadFully(Stream input)
+    {
+        using (MemoryStream ms = new MemoryStream())
+        {
+            input.CopyTo(ms);
+            return ms.ToArray();
+        }
+    }
+
+    public static byte[] ReadFully2(Stream input)
+    {
+        byte[] buffer = new byte[16 * 1024];
+        using (MemoryStream ms = new MemoryStream())
+        {
+            int read;
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                ms.Write(buffer, 0, read);
+            }
+            return ms.ToArray();
+        }
+    }
+}

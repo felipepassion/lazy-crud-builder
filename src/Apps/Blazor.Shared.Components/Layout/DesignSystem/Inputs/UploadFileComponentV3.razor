@@ -1,0 +1,186 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Net.Http.Headers
+@using System.Net.Http.Json
+
+@inject HttpClient Http
+
+<div class="input-upload-item">
+    @if (!ShowCombinedButton)
+    {
+        <InputFile id="@GetInputId()" style="display: none;" accept="image/*" OnChange="OnInputChanged" />
+        <label class="file-label @(IsProcessing ? "disabled" : "")" for="@GetInputId()">
+            <span>Abrir Câmera / Escolher Foto</span>
+            <img src="./icons/popup/upload-icon.svg" alt="Ícone Upload" />
+        </label>
+    }
+    else
+    {
+        <div class="buttons-container">
+            <InputFile id="@GetCameraInputId()" accept="image/*" capture="environment" style="display: none;" OnChange="OnInputChanged" />
+            <label class="btn btn-camera @(IsProcessing ? "disabled" : "")" for="@GetCameraInputId()">
+                <span>Abrir Câmera</span>
+            </label>
+
+            <InputFile id="@GetGalleryInputId()" accept="image/*" style="display: none;" OnChange="OnInputChanged" />
+            <label class="btn btn-gallery @(IsProcessing ? "disabled" : "")" for="@GetGalleryInputId()">
+                <span>Escolher Foto</span>
+            </label>
+        </div>
+    }
+
+    <div id="loadingIndicator_@(ComponentId)" style="display: none;" class="d-flex align-items-center my-2">
+        @if (IsProcessing)
+        {
+            <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                <span class="visually-hidden">Processando...</span>
+            </div>
+            <span class="text-muted">Enviando imagem...</span>
+        }
+    </div>
+
+    @if (!IsProcessing && !string.IsNullOrEmpty(AlertMessage))
+    {
+        <div class="@AlertClass mt-1" role="alert" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+            @((MarkupString)AlertMessage)
+        </div>
+    }
+
+    <img id="imagePreview_@(ComponentId)" alt="Preview da Foto" class="mealPhoto-preview" style="display: @(!string.IsNullOrEmpty(_previewSrc) ? "block" : "none");" src="@_previewSrc" />
+</div>
+
+@code {
+    // Configurações públicas
+    [Parameter] public bool ShowCombinedButton { get; set; } = false;
+    [Parameter] public bool UploadAsImage { get; set; } = true; // true -> /api/images | false -> /api/files
+    [Parameter] public string? UploadPathPrefix { get; set; } // e.g., "users/profile"
+    [Parameter] public string? ApiBase { get; set; } // e.g., "https://images.myapp.com" (sem barra no fim)
+
+    // Sempre trabalhamos com URL da imagem
+    [Parameter] public string? ImageUrl { get; set; }
+    [Parameter] public EventCallback<string?> ImageUrlChanged { get; set; }
+
+    // Retorno do servidor
+    [Parameter] public string? UploadedFileName { get; set; }
+    [Parameter] public EventCallback<string?> UploadedFileNameChanged { get; set; }
+
+    private const long MaxUploadSize = 20 * 1024 * 1024; // 20 MB
+
+    private string AlertMessage { get; set; } = "";
+    private string AlertClass { get; set; } = "";
+    private bool IsProcessing { get; set; } = false;
+    private string _previewSrc = "";
+
+    private readonly string ComponentId = Guid.NewGuid().ToString("N");
+    private string GetInputId() => $"nativeFileInput_{ComponentId}";
+    private string GetCameraInputId() => $"cameraInput_{ComponentId}";
+    private string GetGalleryInputId() => $"galleryInput_{ComponentId}";
+
+    protected override void OnParametersSet()
+    {
+        // Mantém o preview em sincronia com a URL recebida externamente
+        if (!IsProcessing)
+        {
+            _previewSrc = ImageUrl ?? _previewSrc;
+        }
+    }
+
+    private string BuildEndpoint(string path)
+        => string.IsNullOrWhiteSpace(ApiBase) ? path : $"{ApiBase!.TrimEnd('/')}{path}";
+
+    private async Task OnInputChanged(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file is null)
+        {
+            SetAlert("alert alert-info", "Nenhuma imagem selecionada.");
+            return;
+        }
+
+        try
+        {
+            IsProcessing = true;
+            StateHasChanged();
+
+            // Lê os bytes para preview e para upload
+            byte[] bytes;
+            using (var read = file.OpenReadStream(MaxUploadSize))
+            using (var ms = new MemoryStream())
+            {
+                await read.CopyToAsync(ms);
+                bytes = ms.ToArray();
+            }
+
+            // Preview local imediato (data URL) até finalizar upload
+            var localPreview = $"data:{file.ContentType};base64,{Convert.ToBase64String(bytes)}";
+            _previewSrc = localPreview;
+
+            // Monta o form-data
+            var uploadPath = UploadAsImage ? "/api/images" : "/api/files";
+            var fileName = BuildServerFileName(file.Name);
+
+            using var content = new MultipartFormDataContent();
+            var fileContent = new ByteArrayContent(bytes);
+            fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse(file.ContentType ?? "application/octet-stream");
+            content.Add(new StringContent(fileName), "fileName");
+            content.Add(fileContent, name: "file", fileName: file.Name);
+
+            var response = await Http.PostAsync(BuildEndpoint(uploadPath), content);
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                SetAlert("alert alert-danger", $"Falha ao enviar imagem: {response.StatusCode}. {error}");
+                return;
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<UploadResponse>();
+            UploadedFileName = result?.FileName;
+            await UploadedFileNameChanged.InvokeAsync(UploadedFileName);
+
+            // Constrói a URL final acessível do servidor e propaga via bind
+            if (!string.IsNullOrWhiteSpace(UploadedFileName))
+            {
+                var downloadPath = (UploadAsImage ? "/api/images/" : "/api/files/") + UploadedFileName;
+                var serverUrl = BuildEndpoint(downloadPath);
+                ImageUrl = serverUrl;
+                _previewSrc = serverUrl;
+                await ImageUrlChanged.InvokeAsync(ImageUrl);
+            }
+
+            SetAlert("alert alert-success", "Imagem enviada com sucesso!");
+        }
+        catch (IOException)
+        {
+            SetAlert("alert alert-danger", "Arquivo muito grande ou erro de leitura.");
+        }
+        catch (Exception ex)
+        {
+            SetAlert("alert alert-danger", $"Erro inesperado: {ex.Message}");
+        }
+        finally
+        {
+            IsProcessing = false;
+            StateHasChanged();
+        }
+    }
+
+    private string BuildServerFileName(string selectedFileName)
+    {
+        if (string.IsNullOrWhiteSpace(UploadPathPrefix))
+            return selectedFileName;
+
+        // Normaliza separadores para '/'
+        var norm = string.Join('/', UploadPathPrefix.Split('/', '\\', StringSplitOptions.RemoveEmptyEntries));
+        return $"{norm}/{selectedFileName}";
+    }
+
+    private void SetAlert(string cssClass, string message)
+    {
+        AlertClass = cssClass;
+        AlertMessage = message;
+    }
+
+    private sealed class UploadResponse
+    {
+        public string? FileName { get; set; }
+    }
+}

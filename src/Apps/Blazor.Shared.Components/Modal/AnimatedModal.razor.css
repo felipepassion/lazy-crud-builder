@@ -1,0 +1,89 @@
+﻿
+/* Reescrita do CSS do Animated Modal */
+
+.modal-popup {
+    display: grid;
+    background-color: #808080b2 !important;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: #808080b2 !important;
+    padding: 10px;
+    overflow: hidden !important;
+    position: fixed;
+    bottom: 5%;
+    top: 0;
+    z-index: 99999;
+    left: 0;
+    overflow: hidden !important;
+}
+
+/* Fim da Reescrita do CSS do Animated Modal */
+
+.container-modal {
+    display: flex;
+    width: 100%;
+/*    height: 80%;*/
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.conteudo-modal {
+    display: grid;
+    align-items: center;
+    height: fit-content;
+    background: #fff;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 #808080b2, 0 6px 20px 0 #808080b2;
+}
+
+.cabecalho-modal {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    width: 100%;
+    z-index: 100;
+    /* place-content: flex-end; */
+    align-items: center;
+}
+
+.corpo-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    overflow: auto;
+}
+
+    .corpo-modal {
+
+    }
+
+    ::deep .icon-fechar-modal {
+        font-size: 20px;
+        /*    background-color: red;*/
+        border-radius: 50px;
+        padding: 4px;
+        color: #fff;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    ::deep .icon-fechar-modal:hover {
+        opacity: 50%;
+        transition: 0.3s;
+    }
+
+
+/*@media(max-width:768px){
+    .conteudo-modal {
+        width: 100%;
+        height: 80%;
+        overflow: auto;
+    }
+    .frame-802 {
+        width:100%;
+    }
+}*/

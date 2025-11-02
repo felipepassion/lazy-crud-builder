@@ -1,19 +1,14 @@
-﻿using MediatR;
-using System.Linq.Expressions;
-using FluentValidation.Results;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Queries;
-<# if (entitiesT4.Any()) {#>
+﻿<# if (entitiesT4.Any()) {#>
 <# foreach(var namespaces in groupEntitiesT4) { 
 var myNamespace = namespaces.Key.Replace("Entities","Queries");
 #>
 namespace <#= myNamespace #>.Models
 {
-	using Filters;
-    using Entities;
+    using Core.Api.Queries;
+	using Enumerations;
 <# foreach(var entity in namespaces) { 
 var otherNamespace = entity.Namespace.FullName; #>
-	public partial class <#= entity.Name #>QueryModel : BaseQueryModel<<#= entity.Name #>> {
-        public override Expression<Func<<#= entity.Name #>, bool>> GetFilter() => <#= entity.Name #>Filters.GetFilters(this, IsOrSpecification==true);
+	public partial class <#= entity.Name #>QueryModel : BaseQueryModel {
 <# foreach(var property in GetProperties(entity))
 {
 	var name = property.Key.Replace("[]", string.Empty);
@@ -29,10 +24,12 @@ if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
 		<#= WritePropertySummary(property.Value) #>
 <#}
 	switch(t) {
+	case "string?": 
 	case "string": #>
 		public <#= property.Value.Type.AsString #>? <#= name #>Equal { get; set; }
 		public <#= property.Value.Type.AsString #>? <#= name #>NotEqual { get; set; }
 		public <#= property.Value.Type.AsString #>? <#= name #>Contains { get; set; }
+		public <#= property.Value.Type.AsString #>? <#= name #>NotContains { get; set; }
 		public <#= property.Value.Type.AsString #>? <#= name #>StartsWith { get; set; }
 <# break;
 		case "object": 

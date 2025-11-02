@@ -1,0 +1,31 @@
+﻿using System;
+using Niu.Nutri.Core.Application.DTO.Attributes;
+
+namespace Niu.Nutri.Core.Domain.Attributes.T4
+{
+    /// <summary>
+    /// Attribute used to mark a navigation property that should be detached or excluded
+    /// from T4-based code generation, mapping or serialization processes.
+    /// </summary>
+    /// <remarks>
+    /// Apply this attribute to navigation or reference properties when you want to
+    /// prevent T4 templates, mappers or serializers from traversing or including
+    /// the marked property (for example, to avoid circular references or exclude
+    /// large related entities from generated DTOs).
+    ///
+    /// This attribute is a simple marker and does not currently expose any
+    /// configurable properties. If additional configuration is required later,
+    /// add properties to this attribute class.
+    /// </remarks>
+    [H1("Detach Navigation Property")]
+    [Category("Code Generation (T4)", "Detach/ignore navigation during T4 generation to avoid loops or heavy loads.")]
+    public class DettachNavigationProperty : Attribute
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DettachNavigationProperty"/> attribute.
+        /// </summary>
+        public DettachNavigationProperty()
+        {
+        }
+    }
+}

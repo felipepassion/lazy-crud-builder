@@ -13,13 +13,13 @@ namespace CrossCuting.Infra.Utils.Extensions
             return (type.IsValueType & type.IsPrimitive);
         }
 
-        public static T Copy<T>(this T originalObject, string[] namesToValidate = null, string[] namesToIgnore = null)
+        public static T Copy<T>(this T originalObject, string[]? namesToValidate = null, string[]? namesToIgnore = null)
             where T : new()
         {
             return InternalCopy<T>(originalObject, new Dictionary<Object, T>(new ReferenceEqualityComparer()), namesToValidate, namesToIgnore);
         }
 
-        private static T InternalCopy<T>(T originalObject, IDictionary<Object, T> visited, string[] namesToValidate, string[] namesToIgnore = null)
+        private static T InternalCopy<T>(T originalObject, IDictionary<Object, T> visited, string[] namesToValidate, string[]? namesToIgnore = null)
             where T : new()
         {
             if (originalObject == null) return default(T);
@@ -31,7 +31,7 @@ namespace CrossCuting.Infra.Utils.Extensions
             if (typeToReflect.IsArray)
             {
                 var arrayType = typeToReflect.GetElementType();
-                if (IsPrimitive(arrayType) == false)
+                if (IsPrimitive(arrayType!) == false)
                 {
                     Array clonedArray = (Array)cloneObject;
                     clonedArray.ForEach((array, indices) =>
@@ -82,7 +82,7 @@ namespace CrossCuting.Infra.Utils.Extensions
                 if (filter != null && filter(fieldInfo) == false) continue;
                 if (IsPrimitive(fieldInfo.FieldType)) continue;
                 var originalFieldValue = (T)fieldInfo.GetValue(originalObject);
-                var clonedFieldValue = InternalCopy(originalFieldValue, visited, namesToValidate);
+                var clonedFieldValue = InternalCopy(originalFieldValue, visited!, namesToValidate);
                 fieldInfo.SetValue(cloneObject, clonedFieldValue);
             }
         }

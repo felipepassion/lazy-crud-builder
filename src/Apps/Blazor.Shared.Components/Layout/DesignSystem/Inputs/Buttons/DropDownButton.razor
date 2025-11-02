@@ -1,0 +1,59 @@
+﻿@using Niu.Nutri.Shared.Blazor.Components.Layout.DesignSystem.Inputs.Buttons.Enums
+@typeparam T
+
+<div class="dropdown-button">
+    <DefaultButton Size="@ButtonsSize"
+                   Icon="@Icon"
+                   IconPath="@IconPath"
+                   Type="@ButtonsType"
+                   Class="@Class"
+                   ImgClass="ImgClass"
+                   OnClick="MostrarDropdown">@SelectedValue</DefaultButton>
+
+    <ModalBehaviour OnClick="MostrarDropdown" IsVisible="IsOpen" Position="ModalBehaviour.EPositionStyle.Absolute">
+        <div class="dropdown-container">
+            @if (ReceivedValues != null && ReceivedValues.Count > 0)
+            {
+                @for (int i = 0; i < ReceivedValues.Count; i++)
+                {
+                    var currentValue = i;
+                    <DefaultButton Size="@ButtonOptionsSize"
+                                   Type="@ButtonOptionsType"
+                                   OnClick="() => 
+                                   HandleItemSelected(ReceivedValues[currentValue])"> 
+                                   @ReceivedValues[currentValue] 
+                               </DefaultButton>
+                }
+            }
+        </div>
+    </ModalBehaviour>
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public List<T> ReceivedValues { get; set; } = new List<T>();
+    [Parameter] public T? SelectedValue { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? ImgClass { get; set; }
+    [Parameter] public string? IconPath { get; set; }
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public EventCallback<T> OnItemSelected { get; set; }
+    [Parameter] public ButtonTypes ButtonsType { get; set; }
+    [Parameter] public ButtonSizes ButtonsSize { get; set; } 
+    [Parameter] public ButtonTypes ButtonOptionsType { get; set; }
+    [Parameter] public ButtonSizes ButtonOptionsSize { get; set; }
+
+    bool IsOpen { get; set; } = false;
+
+    void MostrarDropdown()
+    {
+        IsOpen = !IsOpen;
+    }
+
+    private async Task HandleItemSelected(T selectedItem)
+    {
+        SelectedValue = selectedItem;
+        await OnItemSelected.InvokeAsync(selectedItem);
+        IsOpen = false;
+    }
+}

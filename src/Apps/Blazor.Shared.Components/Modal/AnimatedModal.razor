@@ -1,0 +1,87 @@
+﻿@using Niu.Nutri.Shared.Blazor.Forms.Modal
+
+@inherits BaseModal
+
+@if (IsOpen)
+{
+    <div class="modal-popup" id="modal_@MyId">
+        <div class="container-modal">
+            <CascadingValue Value=this>
+                <div class="conteudo-modal">
+                    <div class="@CssHeader">
+                        @if (this.HeaderContent == null)
+                        {
+                            <div class="cabecalho-modal">
+                                <div class="btn-closemodal close-modal_@MyId">
+                                    <img src="icons/popup/close.svg"
+                                         id="btn-close"
+                                         class="icon-fechar-modal"
+                                         @onclick="()=>Close(true)"></img>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            @this.HeaderContent
+                        }
+                        @if (!string.IsNullOrWhiteSpace(base.GetModalTitle()))
+                        {
+                            <div class="modal-title">
+                                <span class="title-modal">@base.GetModalTitle()</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="corpo-modal">
+                        <div class="@CssBody">
+                            @if (this.ChildFragment != null)
+                            {
+                                @this.ChildFragment
+                            }
+                            else if (this.ChildContent != null)
+                            {
+                                @this.ChildContent
+                            }
+                        </div>
+                    </div>
+                    @if (!this.DisableFooter)
+                    {
+                        <div class="@CssFooter">
+                            @if (this.FooterContent == null)
+                            {
+                                <div class="rodape-modal">
+                                    <a style="display:none" id="btn_@MyId" href="#modal_@MyId">Open Modal</a>
+                                </div>
+                            }
+                            else
+                            {
+                                @this.FooterContent
+                            }
+                        </div>
+                    }
+                </div>
+            </CascadingValue>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter] public string CssModal { get; set; }
+    [Parameter] public string CssContent { get; set; }
+
+    [Parameter] public string CssHeader { get; set; }
+    [Parameter] public string CssClose { get; set; }
+    [Parameter] public RenderFragment HeaderContent { get; set; }
+
+    [Parameter] public string CssBody { get; set; }
+    [Parameter] public RenderFragment BodyContent { get; set; }
+
+    [Parameter] public string CssFooter { get; set; }
+    [Parameter] public RenderFragment FooterContent { get; set; }
+
+    [Parameter] public bool DisableFooter { get; set; } = false;
+
+    // Support default slot content
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

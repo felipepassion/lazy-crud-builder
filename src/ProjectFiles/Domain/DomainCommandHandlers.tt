@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using FluentValidation.Results;
-using LazyCrud.Core.Domain.CrossCutting;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
+using Niu.Nutri.Core.Domain.CrossCutting;
+using Niu.Nutri.Core.Application.DTO.Extensions;
+using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
 
 <#foreach(var namespaces in groupEntitiesT4) {#>
 namespace <#= namespaces.Key.Replace(".Entities",".CommandHandlers") #>
@@ -16,8 +14,8 @@ namespace <#= namespaces.Key.Replace(".Entities",".CommandHandlers") #>
     using Repositories;
     using CommandModels;
     using Entities;
-    using Specifications;
     using Queries.Models;
+    using Application.DTO.Aggregates.<#= AggName #>.Requests;
 <#}#>    
     public class Base<#= AggName #>CommandHandler<T> : BaseCommandHandler<T> where T : IEntity {public Base<#= AggName #>CommandHandler(IServiceProvider provider,IMediator mediator):base(mediator, provider){}}
 <#foreach(var entity in namespaces) {
@@ -65,7 +63,9 @@ namespace <#= namespaces.Key.Replace(".Entities",".CommandHandlers") #>
             if (!creationResult.Success) return creationResult;
 			<#= repoVarName #>.Add(entity);
 
-            return await Commit(<#= repoVarName #>.UnitOfWork, entity);
+            var result = await Commit(<#= repoVarName #>.UnitOfWork, entity.ProjectedAs<<#= entity.Name #>DTO>());
+            result.Data = entity.ProjectedAs<<#= entity.Name #>DTO>();
+            return result;
         }
 
         public async Task<DomainResponse> Handle(Delete<#= entity.Name #>Command command,CancellationToken cancellationToken) {
@@ -107,8 +107,7 @@ namespace <#= namespaces.Key.Replace(".Entities",".CommandHandlers") #>
             var entities = new List<<#= entity.Name #>>();
             foreach (var item in command.Query)
             {
-                var filter = <#= entity.Name #>Filters.GetFilters(item.Key);
-                var entity = await <#= repoVarName #>.FindAsync(filter);
+                var entity = command.Entity as <#= entity.Name #> ?? await <#= repoVarName #>.FindAsync(<#= entity.Name #>Filters.GetFilters(item.Key));
                 
                 if(entity == null) {
                     if(command.CreateIfNotExists)
@@ -125,7 +124,7 @@ namespace <#= namespaces.Key.Replace(".Entities",".CommandHandlers") #>
             
             PublishLog(command);
 
-            return await Commit(<#= repoVarName #>.UnitOfWork);
+            return await Commit(<#= repoVarName #>.UnitOfWork, command.Entity.ProjectedAs<<#= entity.Name #>DTO>());
         }
          
         public async Task<DomainResponse> Handle(Active<#= entity.Name #>Command command,CancellationToken cancellationToken) {

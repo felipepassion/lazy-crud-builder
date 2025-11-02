@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Serilog.Events;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
+using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Events
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events
 {
     public partial class ErrorEvent : BaseEvent
     {
@@ -18,7 +18,7 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Events
             this.RequestObject = requestObject;
         }
 
-        public ErrorEvent(ILogRequestContext logRequestContext, Exception ex, string title, object content = null, LogEventLevel logType = LogEventLevel.Error)
+        public ErrorEvent(ILogRequestContext logRequestContext, Exception ex, string title, object? content = null, LogEventLevel logType = LogEventLevel.Error)
             : this(null, logRequestContext, ex, logType)
         {
             this.Title = title;

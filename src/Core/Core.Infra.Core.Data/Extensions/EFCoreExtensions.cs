@@ -1,20 +1,12 @@
-﻿using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Niu.Nutri.Core.Application.DTO.Attributes;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
+using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LazyCrud.Core.Infra.Data.Extensions
+namespace Niu.Nutri.Core.Infra.Data.Extensions
 {
     public static class EfExtensions
     {
@@ -65,25 +57,26 @@ namespace LazyCrud.Core.Infra.Data.Extensions
                 var entityNavigations = new List<INavigation>();
                 if (stack.Count <= maxDepth)
                 {
-                    foreach (var navigation in entityType.GetNavigations())
+                    if (entityType != null)
                     {
-                        if (includedNavigations.Add(navigation))
-                            entityNavigations.Add(navigation);
-                    }
-
-                    var listIncludes = entityType.ClrType.GetProperties()
-                        .Where(x => x.GetCustomAttributes<ListingPicker>().Any())
-                        .ToDictionary(x => clrEntityType.Name + x.PropertyType.FullName.Substring(19).Split(',')[0].Split(".").Last(), x => x.Name);
-                    if (listIncludes.Any())
-                    {
-                        foreach (var navigation2 in entityType.GetDeclaredReferencingForeignKeys().Where(x => x.PrincipalToDependent == null))
+                        foreach (var navigation in entityType.GetNavigations())
                         {
-                            if (listIncludes.ContainsKey(navigation2.DeclaringEntityType.Name))
-                                yield return listIncludes[navigation2.DeclaringEntityType.Name];
+                            if (includedNavigations.Add(navigation))
+                                entityNavigations.Add(navigation);
+                        }
+
+                        var listIncludes = entityType.ClrType.GetProperties()
+                            .Where(x => x.GetCustomAttributes<ListingPicker>().Any())
+                            .ToDictionary(x => clrEntityType.Name + x.PropertyType.FullName?.Substring(19).Split(',')[0].Split(".").Last(), x => x.Name);
+                        if (listIncludes.Any())
+                        {
+                            foreach (var navigation2 in entityType.GetDeclaredReferencingForeignKeys().Where(x => x.PrincipalToDependent == null))
+                            {
+                                if (listIncludes.ContainsKey(navigation2.DeclaringEntityType.Name))
+                                    yield return listIncludes[navigation2.DeclaringEntityType.Name];
+                            }
                         }
                     }
-
-
                 }
                 if (entityNavigations.Count == 0)
                 {
@@ -123,7 +116,7 @@ namespace LazyCrud.Core.Infra.Data.Extensions
             {
                 var entityNavigations = new List<INavigation>();
 
-                if (stack.Count <= maxDepth)
+                if (stack.Count <= maxDepth && entityType != null)
                 {
                     foreach (var navigation in entityType.GetNavigations())
                     {

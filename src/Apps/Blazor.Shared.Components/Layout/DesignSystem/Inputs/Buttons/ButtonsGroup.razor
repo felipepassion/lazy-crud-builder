@@ -1,0 +1,69 @@
+﻿@using System.Diagnostics.CodeAnalysis
+
+@typeparam T
+
+<div class="group-of-buttons">
+    @foreach (var item in Items)
+    {
+        <DefaultButton IconPath="@(ToIconPathString is null ? null : ToIconPathString(item))"
+                       Class="@($"{(_isSelected(item) ? "selected" : "")} {BtnClass}")"
+                       Size="@(Size ?? Enums.ButtonSizes.Small)"
+                       DisableText="this.DisableText"
+                       ButtonType="button"
+                       Text="@(ToItemString == null ? item!.ToString() : ToItemString(item))"
+                       OnClick="async ()=>{ await OnBtnClick2(item);}" />
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Gets or sets the value of the input. This should be used with two-way binding.
+    /// </summary>
+    /// <example>
+    /// @bind-Value="model.PropertyName"
+    /// </example>
+    [Parameter]
+    public T? Value { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets a callback that updates the bound value.
+    /// </summary>
+    [Parameter] public EventCallback<T> ValueChanged { get; set; }
+
+    bool _isSelected(T item) => Value != null && Value?.ToString() == item!.ToString();
+
+    [Parameter] public required IEnumerable<T> Items { get; set; }
+    [Parameter] public string BtnClass { get; set; }
+    [Parameter] public bool DisableText { get; set; }
+    [Parameter] public Enums.ButtonSizes? Size { get; set; } = Enums.ButtonSizes.Small;
+    [Parameter] public T? SelectedValue { get; set; }
+
+    [Parameter] public Func<T, string>? ToItemString { get; set; }
+    [Parameter] public Func<T, string>? ToIconPathString { get; set; }
+
+    [Parameter] public required Func<T?, Task>? OnBtnClick { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        if (Value == null && this.SelectedValue != null)
+        {
+            Value = SelectedValue;
+            await this.ValueChanged.InvokeAsync(this.Value);
+            this.StateHasChanged();
+        }
+        await base.OnInitializedAsync();
+    }
+
+    async Task OnBtnClick2(T item)
+    {
+        Value = item;
+        await this.ValueChanged.InvokeAsync(this.Value);
+        if (OnBtnClick != null)
+        {
+            await this.OnBtnClick(item);
+        }
+        this.StateHasChanged();
+    }
+
+    public void RefreshMe() => this.StateHasChanged();
+}

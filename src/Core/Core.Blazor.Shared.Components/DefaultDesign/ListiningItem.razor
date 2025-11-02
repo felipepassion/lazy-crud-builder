@@ -1,0 +1,174 @@
+﻿@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
+@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+@using Niu.Living.Users.Application.DTO.Aggregates.UsersAgg.Requests;
+@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Models;
+@using Niu.Living.Core.Application.DTO.Attributes;
+@using Syncfusion.Blazor.DropDowns;
+@using System.Collections.Generic;
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Grids;
+@using System.ComponentModel;
+@using System.Reflection;
+@using Syncfusion.XlsIO;
+@using System.IO;
+
+@inject IJSRuntime Runtime;
+
+@typeparam T where T : EntityDTO, new()
+
+<div class="columms-list">
+    @if (Model == null)
+    {
+        <TollSvc.WebApp.Client.Pages.Shared.GenericComponents.Loading />
+    }
+    else
+    {
+        <SfButton OnClick="CsvExport" Content="CSV Export"></SfButton>
+        <SfGrid @ref="DefaultGrid" class="" Toolbar="@(new List<string>() { "Search", "ExcelExport","PdfExport" })"
+                AllowPdfExport="true" AllowExcelExport="true" DataSource="@this.Model" AllowFiltering="true" AllowPaging="true">
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
+            <GridPageSettings PageCount="5"></GridPageSettings>
+            <GridColumns>
+                @foreach (var item in Context.Properties)
+                {
+                    if (item.info.PropertyType.Name == "ImageFileInfoDTO" || item.info.Name == "Icon")
+                    {
+                        <GridColumn TextAlign="TextAlign.Left"
+                                    Field="@item.info.Name"
+                                    HeaderText="@(item.info.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? item.info.Name)"
+                                    Width="150">
+                            <Template>
+                                <img class="listining-icon" src="@((context.GetType().GetProperty(item.info.Name)?.GetValue(context)?.ToString()) ?? "/imgs/components/autosave-btn/autosave.svg")">
+                            </Template>
+                        </GridColumn>
+                    }
+                    else
+                    {
+                        <GridColumn TextAlign="TextAlign.Left"
+                                    Field="@item.info.Name"
+                                    HeaderText="@(item.info.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? item.info.Name)"
+                                    Width="150"></GridColumn>
+                    }
+                }
+                @if (!HideActiveColumn && Model is IActivableEntityDTO[])
+                {
+                    <GridColumn TextAlign="TextAlign.Left"
+                                Field="Active"
+                                HeaderText="Active"
+                                Width="150">
+                        <Template>
+                            <p>@((context as IActivableEntityDTO)?.Active == true ? "ACTIVE" : "INACTIVE")</p>
+                        </Template>
+                    </GridColumn>
+                }
+                @if (true || CachedUserSession?.AccessOfThisPage.CanDelete == true)
+                {
+                    <GridColumn TextAlign="TextAlign.Left"
+                                HeaderText="CanDelete"
+                                Width="150">
+                        <Template>
+                            <SfIcon IconCss="bi bi-trash-fill"
+                                    @onmouseover="()=>{ this.isMouseHoverTrashBtn = true; }"
+                                    @onmouseout="()=>{ this.isMouseHoverTrashBtn = false; }" />
+                        </Template>
+                    </GridColumn>
+                }
+            </GridColumns>
+            @if (true || this.CachedUserSession?.AccessOfThisPage.CanUpdate == true)
+            {
+                <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="T" OnRecordClick="OnRecordClicked" />
+            }
+        </SfGrid>
+        @if (!_initialized)
+        {
+            <h1>Loading Data...</h1>
+            <TollSvc.WebApp.Client.Pages.Shared.GenericComponents.Loading />
+        }
+    }
+</div>
+
+@code {
+    private SfGrid<T> DefaultGrid;
+    [Inject] HttpClient _http { get; set; }
+    List<string> allProps = new List<string>();
+    [CascadingParameter] public T[] Model { get; set; } = new T[0];
+    [Parameter] public IListiningContext Context { get; set; }
+    bool isMouseHoverTrashBtn = false;
+    [Inject] public UserCurrentAccessSelectedDTO CachedUserSession { get; set; }
+    [Parameter] public bool HideActiveColumn { get; set; }
+    bool _initialized = false;
+
+    public async Task RefreshListining()
+    {
+        this.Model = (await _http.GetFromJsonAsync<GetHttpResponseDTO<T[]>>(
+               $"{new T().GetRoute()}/summary?Page={Context.Page}&Size={Context.Size}&OrderBy={Context.OrderBy}&OrderByDesc={Context.OrderByDesc}&{Context.QueryString}"))?.Data as T[] ?? new T[0];
+        await InvokeAsync(this.StateHasChanged);
+        _initialized = true;
+    }
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id.Contains("pdfexport"))  //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExportToPdfAsync();
+        }
+        if (args.Item.Id.Contains("excelexport")) //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExportToExcelAsync();
+        }
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+        Context.PaginationLayoutRefresh = this.RefreshListining;
+        if (Context != null)
+        {
+            await RefreshListining();
+        }
+        await base.OnInitializedAsync();
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public async void CsvExport()
+    {
+        using (ExcelEngine excelEngine = new ExcelEngine())
+        {
+            IApplication application = excelEngine.Excel;
+            application.DefaultVersion = ExcelVersion.Excel2013;
+            IWorkbook workbook = application.Workbooks.Create(1);
+            IWorksheet worksheet = workbook.Worksheets[0];
+
+            //Import the data to worksheet
+            worksheet.ImportData(Model, 2, 1, true);
+
+            MemoryStream stream = new MemoryStream();
+            workbook.SaveAs(stream, ";"); // save the workbook with different delimiter
+                                          //to download the memory stream as file
+            await Runtime.InvokeVoidAsync("exportSave", new object[] { "export.csv", Convert.ToBase64String(stream.ToArray()) });
+        }
+    }
+
+    public async Task OnRecordClicked(RecordClickEventArgs<T>? element)
+    {
+        if (element != null)
+        {
+            if (this.isMouseHoverTrashBtn)
+            {
+                this.isMouseHoverTrashBtn = false;
+                var result = await _http.DeleteAsync<T>(x => x.ExternalId == element.RowData.ExternalId);
+                if (result.Success)
+                {
+            await RefreshListining();
+                }
+            }
+            else
+            {
+                Context.OpenRegisterModal<T>(element.RowData.ExternalId);
+            }
+        }
+    }
+}

@@ -1,0 +1,241 @@
+﻿@typeparam T
+
+@inherits InputBase<T>
+
+<div class="form @_focusClass">
+    <div class="input-area @(Disabled ? "disabled" : "")">
+
+        @if (!string.IsNullOrWhiteSpace(this.Label))
+        {
+            <label>@this.Label</label>
+        }
+
+        <span>
+            <input @onfocusin="@this.OnFocusIn"
+                   @onfocusout="@this.OnFocusOut"
+                   @oninput="OnValueSearchChanged"
+                   placeholder="@this.Placeholder"
+                   value="@(this.ToStringText is null ? this.Value : this.ToStringText(this.Value!))"
+                   disabled="@this.Disabled"
+                   class="@Class"
+                   @onchange="AfterValueChanged"
+                   @onselect="@this.ValueSelected"
+                   @attributes="this.AdditionalAttributes" />
+
+            <img class="arrow_default @this._arrowClass open"
+                 @onmouseover="@this.OnMouseHoverArrowToggler"
+                 @onmouseleave="@this.OnMouseLeaveArrowToggler"
+                 @onclick=OnArrowClicked
+                 src="/imgs/arrow1.svg" />
+        </span>
+
+        @if (this.Value is not null)
+        {
+            <img @onclick=OnClearBtnClicked class="arrow_default @this._arrowClass close" src="/imgs/x-close.svg" />
+        }
+
+    </div>
+    <div class="list-options @this._optionClass"
+         @onmouseover="@this.OnMouseHoverAutoComplete"
+         @onmouseleave="@this.OnMouseLeaveAutoComplete">
+        <ul>
+            @if (_isLoading)
+            {
+                <li class="option">
+                    <Loading />
+                </li>
+            }
+            else
+            {
+                @foreach (var option in this._options)
+                {
+                    <li class="option" @onclick="async ()=>await OnOptionClicked(option)">
+                        @(ToStringText == null ? option!.ToString() : ToStringText(option))
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Class { get; set; } = string.Empty;
+    [Parameter] public Func<Task> AfterValueChanged { get; set; } = (async () => { await Task.CompletedTask; });
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public IEnumerable<T>? DataSet { get; set; } = new List<T>();
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public bool ReadOnly { get; set; }
+    [Parameter] public EventCallback ValueSelected { get; set; }
+    [Parameter] public Action? OnClearButtonClicked { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public Func<T, string>? ToStringText { get; set; }
+    [Parameter] public bool PreserveOptionsOnTypying { get; set; } = true;
+
+    HashSet<T> _options { get; set; } = [];
+
+    bool _isVisible = false;
+    bool _isHoverAutoCompleteWindow;
+    bool _isHoverAutoArrowToggler;
+    bool _initialized = false;
+
+    bool _isLoading => this.DataSet is null;
+
+    string? _optionClass => _isVisible ? "options_active" : "options_inactive";
+    string? _arrowClass => _isVisible ? "arrow_active" : "arrow_inactive";
+    string? _focusClass => _isVisible ? "focus-in" : "focus-out";
+    string? _oldInput = null;
+
+    protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out T result, [NotNullWhen(false)] out string? validationErrorMessage)
+    {
+        if (typeof(T) == typeof(string))
+        {
+            result = (T)(object)value!;
+            validationErrorMessage = null;
+            return true;
+        }
+        else
+        {
+            throw new InvalidOperationException($"The type {typeof(T)} is not supported.");
+        }
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (this.ReadOnly && !this.AdditionalAttributes?.ContainsKey("readonly") == true)
+            {
+                // this.AdditionalAttributes.Add("readonly", "readonly");
+            }
+        }
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task OnOptionClicked(T opt)
+    {
+        this.Value = opt;
+        _isVisible = false;
+        await ValueChanged.InvokeAsync(this.Value);
+        await ValueSelected.InvokeAsync(this.Value);
+        this.StateHasChanged();
+    }
+
+    void OnMouseHoverAutoComplete()
+    {
+        _isHoverAutoCompleteWindow = true;
+    }
+
+    void OnMouseLeaveAutoComplete()
+    {
+        _isHoverAutoCompleteWindow = false;
+    }
+
+    void OnMouseHoverArrowToggler()
+    {
+        _isHoverAutoArrowToggler = true;
+    }
+
+    void OnMouseLeaveArrowToggler()
+    {
+        _isHoverAutoArrowToggler = false;
+    }
+
+    async Task OnArrowClicked()
+    {
+        if (Disabled == true) return;
+
+        if (_isHoverAutoArrowToggler)
+        {
+            if (_isVisible)
+            {
+                _isVisible = false;
+                this.StateHasChanged();
+            }
+            else
+            {
+                await OnFocusIn();
+            }
+        }
+    }
+
+    private async Task OnFocusIn()
+    {
+        if (!_isVisible)
+        {
+            _isVisible = true;
+            await this.OnValueSearchChanged(new ChangeEventArgs() { Value = this.Value });
+            this.StateHasChanged();
+        }
+    }
+
+    private async Task OnFocusOut()
+    {
+        if (!_isHoverAutoArrowToggler)
+        {
+            if (!_isHoverAutoCompleteWindow)
+            {
+                _isVisible = false;
+                this.StateHasChanged();
+            }
+        }
+    }
+
+    async Task OnClearBtnClicked()
+    {
+        if (Disabled) return;
+
+        this.Value = default;
+        _isVisible = false;
+
+        if (ValueChanged.HasDelegate)
+            await ValueChanged.InvokeAsync(this.Value ?? default);
+        if (ValueSelected.HasDelegate)
+            await ValueSelected.InvokeAsync(this.Value ?? default);
+
+        if (this.OnClearButtonClicked is not null)
+            this.OnClearButtonClicked();
+
+        this.StateHasChanged();
+    }
+
+    private async Task OnValueSearchChanged(ChangeEventArgs e)
+    {
+        try
+        {
+            this.Value = (T?)(object?)e.Value;
+        }
+        catch
+        {
+
+        }
+
+        var isValueDiff = true; // _oldInput != this.Value;
+        var isValueNull = this.Value is not null;
+
+        if (isValueDiff || !_initialized)
+        {
+            _initialized = true;
+
+            await ValueChanged.InvokeAsync(this.Value);
+
+            this.DataSet ??= (new List<T>());
+
+            if (PreserveOptionsOnTypying)
+                this._options = this.DataSet.OrderByDescending(x => x?.ToString()?.StartsWith(e.Value?.ToString() ?? string.Empty, StringComparison.InvariantCultureIgnoreCase) == true)
+                    .Distinct()
+                    .ToHashSet();
+            else
+                this._options = this.DataSet.Where(x => x?.ToString()?.Contains(e.Value?.ToString() ?? string.Empty, StringComparison.InvariantCultureIgnoreCase) == true)
+                    .Distinct()
+                    .ToHashSet();
+
+            _oldInput = e.Value?.ToString();
+
+            this.StateHasChanged();
+        }
+    }
+
+    void RefreshOptions() => this._options = new();
+
+    public async Task RefreshMe() => await OnValueSearchChanged(new ChangeEventArgs { Value = this.Value });
+}

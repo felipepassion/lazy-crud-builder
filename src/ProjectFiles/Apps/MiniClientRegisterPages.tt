@@ -1,0 +1,34 @@
+﻿@page "/<#=entity.Name#>/cadastro"
+@page "/<#=entity.Name#>/cadastro/{id}"
+
+@using Niu.Nutri.Shared.Blazor.Components.Layout
+@using Niu.Nutri.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Requests
+@using Niu.Nutri.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators
+
+@layout MainLayout
+@inherits BaseStepsFormComponent<<#= entity.Name #>DTO, <#=aggName#>AggSettingsDTO, Base<#= aggName #>AggValidator<<#= entity.Name #>DTO>>
+
+<CascadingValue Value="this.Context">
+    <CascadingValue Value="layout">
+        <BaseMainStepsLayout @ref="layout" ModelType="<#= entity.Name #>DTO" AutoSaveSettings="AutoSaveSettings"
+                             CurrentFragment="this.CurrentFragment"
+                             EnableRightContainer="<#=ContainsAttribute(entity, "EnableRightContainer").ToString().ToLower()#>"
+                             Context="Context"
+                             EditContext="this.EditContext"
+                             OnSubmitForm="this.OnSubmitForm"
+                             OnSubmitFormInvalid="this.OnSubmitFormInvalid"
+                             TValidator="this.TValidator" />
+    </CascadingValue>
+</CascadingValue>
+<# if(hasParameter) { #>
+@page "/<#=entity.Name#>/<#=$@"{'{'+parameterType.Key+'}'}/"#>cadastro"
+@page "/<#=entity.Name#>/<#=$@"{'{'+parameterType.Key+'}'}/{{id}}/"#>cadastro"
+
+@code {
+    [Parameter] public string <#=parameterType.Key#> { get; set; }
+}
+<#}#>
+<#
+    SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", "Cadastro.razor", true); 
+    SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"Cadastro.razor.css", true); 
+#>

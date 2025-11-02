@@ -128,10 +128,12 @@
     }
 
     .container-informations .input-secondary {
-        align-items: top;
         display: flex;
-        gap: 20px;
         width: 100%;
+        align-content: center;
+        align-items: center;
+        gap: 5%;
+        justify-content: start;
     }
 
     .container-informations .input-secondary-item {
@@ -140,7 +142,7 @@
         gap: 4px;
         height: min-content;
         justify-content: center;
-        width: 50%;
+        width: 100%;
     }
 
     .container-informations .container-input {
@@ -483,4 +485,17 @@
 
 .titles-container{
     margin-bottom:-1vw;
+}
+.titles-container {
+    margin-bottom: -1vw;
+}
+
+.input-secondary-item.image-upload-container {
+    justify-content: center;
+}
+
+::deep .input-secondary-item.image-upload-container img{
+    max-width:60px;
+    max-height:60px;
+    border-radius: 50%;
 }

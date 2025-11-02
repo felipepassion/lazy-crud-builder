@@ -6,6 +6,13 @@
 	var myPropertyName = myName.Split('.').LastOrDefault();
 	var myDisplayName = myPropertyName;
 	var myAttrs = GetAttributesDict(field.Value);
+	var isRequired = false;
+	
+	if(entity.Name == "SystemPanelGroup")
+	{
+
+	}
+
 	if(myAttrs.TryGetValue("DisplayName", out var val)) {
 		myDisplayName = val.First().Value.Replace("\"","");
 	}
@@ -39,7 +46,8 @@ switch(myTypeName) {
 		    case "DateTime?":#>
 <#@ include file="BasicDateTimeInput.tt" #>
 <#			break;
-			case "ImageFileInfo":#>
+			case "byte[]?":
+			case "byte[]":#>
 <#@ include file="BasicImageInput.tt" #>
 <#			break;
 			default:#>

@@ -1,0 +1,225 @@
+﻿@using System.IO
+@using System.Diagnostics
+@using Microsoft.JSInterop
+@using Microsoft.AspNetCore.Components.Forms
+
+@implements IAsyncDisposable
+
+@inject IJSRuntime JSRuntime
+
+<div class="input-upload-item">
+    @if (!ShowCombinedButton)
+    {
+        <InputFile id="@GetInputId()" style="display: none;" accept="image/*" OnChange="OnInputChanged" />
+        <label class="file-label @(IsProcessing ? "disabled" : "")" for="@GetInputId()" @onclick="OpenDefault">
+            <span>Abrir Câmera / Escolher Foto</span>
+            <img src="./icons/popup/upload-icon.svg" alt="Ícone Upload" />
+        </label>
+    }
+    else
+    {
+        <div class="buttons-container">
+            <InputFile id="@GetCameraInputId()" accept="image/*" style="display: none;" OnChange="OnInputChanged" />
+            <label class="btn btn-camera @(IsProcessing ? "disabled" : "")" @onclick="OpenCamera">
+                <span>Abrir Câmera</span>
+            </label>
+
+            <InputFile id="@GetGalleryInputId()" accept="image/*" style="display: none;" OnChange="OnInputChanged" />
+            <label class="btn btn-gallery @(IsProcessing ? "disabled" : "")" @onclick="OpenGallery">
+                <span>Escolher Foto</span>
+            </label>
+        </div>
+    }
+
+    <div id="loadingIndicator_@(ComponentId)" style="display: none;" class="d-flex align-items-center my-2">
+        @if (IsProcessing)
+        {
+            <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                <span class="visually-hidden">Processando...</span>
+            </div>
+            <span class="text-muted">Processando imagem...</span>
+        }
+    </div>
+
+    @if (!IsProcessing && !string.IsNullOrEmpty(AlertMessage))
+    {
+        <div class="@AlertClass mt-1" role="alert" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+            @((MarkupString)AlertMessage)
+        </div>
+    }
+
+    <img id="imagePreview_@(ComponentId)" alt="Preview da Foto" class="mealPhoto-preview" style="display: @(Image != null && Image.Length > 0 ? "block" : "none");" src="@_previewSrc" />
+</div>
+
+@code {
+    [Parameter] public byte[]? Image { get; set; }
+    [Parameter] public EventCallback<byte[]> ImageChanged { get; set; }
+    [Parameter] public bool IsFromGalery { get; set; } = false;
+    [Parameter] public bool ShowCombinedButton { get; set; } = false;
+
+    private const int MaxWidthOrHeight = 1280;
+    private const int JpegQuality = 75;
+
+    private string AlertMessage { get; set; } = "";
+    private string AlertClass { get; set; } = "";
+    private bool IsProcessing { get; set; } = false;
+    private string _previewSrc = "";
+
+    private string GetInputId() => $"nativeFileInput_{ComponentId}";
+    private string GetCameraInputId() => $"cameraInput_{ComponentId}";
+    private string GetGalleryInputId() => $"galleryInput_{ComponentId}";
+
+    private DotNetObjectReference<UploadFileComponent>? dotNetRef;
+    private readonly string ComponentId = Guid.NewGuid().ToString("N");
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            dotNetRef = DotNetObjectReference.Create(this);
+            try
+            {
+                await JSRuntime.InvokeVoidAsync("imageUtils.initializeFileUpload",
+                    GetInputId(),
+                    $"imagePreview_{ComponentId}",
+                    $"loadingIndicator_{ComponentId}",
+                    dotNetRef);
+
+                if (ShowCombinedButton)
+                {
+                    await JSRuntime.InvokeVoidAsync("imageUtils.initializeFileUpload",
+                        GetCameraInputId(),
+                        $"imagePreview_{ComponentId}",
+                        $"loadingIndicator_{ComponentId}",
+                        dotNetRef);
+
+                    await JSRuntime.InvokeVoidAsync("imageUtils.initializeFileUpload",
+                        GetGalleryInputId(),
+                        $"imagePreview_{ComponentId}",
+                        $"loadingIndicator_{ComponentId}",
+                        dotNetRef);
+                }
+
+                if (Image != null && Image.Length > 0)
+                {
+                    _previewSrc = $"data:image/png;base64,{Convert.ToBase64String(Image)}";
+                }
+                else
+                {
+                    _previewSrc = "";
+                }
+                StateHasChanged();
+            }
+            catch (JSException jsEx)
+            {
+                Console.Error.WriteLine($"Erro ao inicializar JS: {jsEx.Message}");
+                SetAlert("alert alert-danger", "Erro ao inicializar componente de upload.");
+                StateHasChanged();
+            }
+        }
+    }
+
+    private async Task OpenCamera()
+    {
+        if (!IsProcessing)
+            await JSRuntime.InvokeVoidAsync("openNativeCamera");
+    }
+
+    private async Task OpenGallery()
+    {
+        if (!IsProcessing)
+            await JSRuntime.InvokeVoidAsync("openCameraOrGallery", GetGalleryInputId(), true);
+    }
+
+    private async Task OpenDefault()
+    {
+        //sif (!IsProcessing)
+        //await JSRuntime.InvokeVoidAsync("imageUtils.openGallery", GetInputId());
+    }
+
+    [JSInvokable]
+    public void HandleJsProcessingStart()
+    {
+        IsProcessing = true;
+        AlertMessage = "";
+        AlertClass = "";
+        InvokeAsync(StateHasChanged);
+    }
+
+    [JSInvokable]
+    public void HandleJsProcessingEnd()
+    {
+        IsProcessing = false;
+        InvokeAsync(StateHasChanged);
+    }
+
+    [JSInvokable]
+    public async Task HandleJsCallback(string? base64Data, string? errorMessage)
+    {
+        IsProcessing = false;
+
+        if (errorMessage != null)
+        {
+            SetAlert("alert alert-danger", errorMessage);
+            Image = null;
+            _previewSrc = "";
+        }
+        else if (!string.IsNullOrEmpty(base64Data))
+        {
+            try
+            {
+                Image = Convert.FromBase64String(base64Data);
+                SetAlert("alert alert-success", "Imagem carregada com sucesso!");
+                _previewSrc = $"data:image/jpeg;base64,{base64Data}";
+            }
+            catch (FormatException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro ao converter Base64 recebido do JS: {ex.Message}");
+                SetAlert("alert alert-danger", "Erro ao processar dados da imagem.");
+                Image = null;
+                _previewSrc = "";
+            }
+            finally
+            {
+                IsProcessing = false;
+            }
+        }
+        else
+        {
+            SetAlert("alert alert-info", errorMessage ?? "Nenhuma imagem selecionada.");
+            Image = null;
+            _previewSrc = "";
+            IsProcessing = false;
+        }
+
+        await ImageChanged.InvokeAsync(Image ?? Array.Empty<byte>());
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnInputChanged(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            using var stream = file.OpenReadStream();
+            using var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            Image = ms.ToArray();
+            _previewSrc = $"data:image/jpeg;base64,{Convert.ToBase64String(Image)}";
+            await ImageChanged.InvokeAsync(Image);
+            StateHasChanged();
+        }
+    }
+
+    private void SetAlert(string cssClass, string message)
+    {
+        AlertClass = cssClass;
+        AlertMessage = message;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        dotNetRef?.Dispose();
+        await Task.CompletedTask;
+    }
+}

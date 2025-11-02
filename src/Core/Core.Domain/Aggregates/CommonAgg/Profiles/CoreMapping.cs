@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+using Niu.Nutri.Core.Application.DTO.Seedwork.ValueObjects;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.ValueObjects;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Profiles
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Profiles
 {
     public partial class CoreAggProfile : Profile
     {
@@ -10,7 +11,8 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Profiles
         {
             CreateMap<AutoSaveSettings, AutoSaveSettingsDTO>()
                 .ReverseMap();
-            CreateMap<ContactNumero, ContactNumeroDTO>().ReverseMap();
+            CreateMap<ImageFileInfo, ImageFileInfoDTO>()
+                .ReverseMap();
         }
     }
 }

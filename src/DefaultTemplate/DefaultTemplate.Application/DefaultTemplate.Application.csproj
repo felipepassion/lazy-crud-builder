@@ -1,16 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>LazyCrud.Republics.Application</RootNamespace>
+	  <RootNamespace>Niu.Nutri.DefaultTemplate.Application</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Aggregates\**" />
     <EmbeddedResource Remove="Aggregates\**" />
     <None Remove="Aggregates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="Serilog" Version="4.2.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,219 @@
+﻿@using System.Text.RegularExpressions
+@using System.Diagnostics.CodeAnalysis
+@using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+@using Niu.Nutri.Shared.Blazor.Components.Layout.DesignSystem.Inputs.Buttons.Enums
+
+@typeparam T
+
+@inherits InputBase<T>
+
+<div class="text @(Disabled ? "disabled" : "")">
+
+    @if (!String.IsNullOrEmpty(this.Label))
+    {
+        <label>@this.Label</label>
+    }
+
+    <input type="@this.Type"
+           class="@this.Class"
+           min="@this.MinRange"
+           max="@this.MaxRange"
+           placeholder="@this.Placeholder"
+           value="@this.Value"
+           maxlength="@this.CurrentMaxLength"
+           @onchange="@this.AfterValueChanged"
+           minlength="@this.InputMinLenght"
+           disabled="@this.Disabled"
+           @oninput="OnValueChanged"
+           @oninput:preventDefault=@PreventDefault
+           @onkeydown=OnKeyDown
+           @onkeydown:preventDefault=@PreventDefault />
+</div>
+
+@code {
+    [Parameter] public Func<Task> AfterValueChanged { get; set; } = (async () => { await Task.CompletedTask; });
+    [Parameter] public ButtonSizes? Size { get; set; }
+    [Parameter] public ButtonType? TypeButton { get; set; } = ButtonType.NONE;
+    [Parameter] public IEnumerable<Masks> Masks { get; set; } = [];
+    [Parameter] public Func<Task>? OnInput { get; set; }
+
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? InputMinLenght { get; set; }
+    [Parameter] public string? InputMaxLenght { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public int? MinRange { get; set; }
+    [Parameter] public int? MaxRange { get; set; }
+    [Parameter] public required string Type { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+
+    private bool PreventDefault = false;
+    private Masks? activeMask;
+    private string? CurrentMaxLength
+    {
+        get
+        {
+            // Se uma máscara foi detectada para o input atual...
+            if (activeMask.HasValue)
+            {
+                return activeMask.Value switch
+                {
+                    Inputs.Masks.CPF => "14",          // Formato: ###.###.###-##
+                    Inputs.Masks.Phone => "15",        // Formato: (DD) #####-####
+                    Inputs.Masks.Email => null,        // Retornar null REMOVE o atributo maxlength do input
+                    _ => InputMaxLenght
+                };
+            }
+
+            // Se nenhuma máscara está ativa (ex: input vazio), define um limite inicial
+            // baseado na maior máscara numérica possível para uma melhor UX.
+            if (Masks.Any(m => m != Inputs.Masks.Email))
+            {
+                return Masks.Where(m => m != Inputs.Masks.Email).Max(m => m switch
+                {
+                    Inputs.Masks.CPF => 14,
+                    Inputs.Masks.Phone => 15,
+                    _ => 0
+                }).ToString();
+            }
+
+            // Fallback para o maxlength padrão ou nenhum.
+            return InputMaxLenght;
+        }
+    }
+
+    protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out T result, [NotNullWhen(false)] out string validationErrorMessage)
+    {
+        var cleanValue = Masks.Any(m => m != Inputs.Masks.Email) ? value.RemoveMask() : value;
+
+        if (typeof(T) == typeof(string))
+        {
+            result = (T)(object)value;
+            validationErrorMessage = null!;
+
+            return true;
+        }
+
+        try
+        {
+            var converter = System.ComponentModel.TypeDescriptor.GetConverter(typeof(T));
+            if (converter != null && converter.IsValid(cleanValue))
+            {
+                result = (T)converter.ConvertFromString(cleanValue!)!;
+                validationErrorMessage = null!;
+                return true;
+            }
+        }
+        catch (Exception)
+        {
+        }
+
+        result = default;
+        validationErrorMessage = $"Não foi possível converter o valor '{value}' para o tipo {typeof(T).Name}.";
+        return false;
+    }
+
+    private async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(e?.Key)) return;
+
+        if (e.Key == "Backspace" || e.Key == "Delete" || e.Key == "Tab" || e.Key.StartsWith("Arrow"))
+        {
+            PreventDefault = false;
+            return;
+        }
+
+        if (this.TypeButton == ButtonType.NUMBER)
+        {
+            if (!char.IsDigit(e.Key, 0))
+            {
+                PreventDefault = true;
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(InputMaxLenght) && this.Value is not null)
+            {
+                int.TryParse(InputMaxLenght, out int maxLength);
+                if (this.Value is int currentValue && currentValue >= maxLength)
+                {
+                    PreventDefault = true;
+                    return;
+                }
+
+            }
+        }
+
+        if (Masks.Any())
+        {
+            if (e.Key.Length > 1)
+            {
+                PreventDefault = false;
+            }
+            else
+            {
+                PreventDefault = !this.Masks.Any(x => x.IsValidByMask(e.Key));
+            }
+        }
+        else
+        {
+            PreventDefault = false;
+        }
+    }
+
+    bool FormatPhone => this.Masks.Contains(Inputs.Masks.Phone);
+    bool FormatEmail => this.Masks.Contains(Inputs.Masks.Email);
+    bool FormatCPF => this.Masks.Contains(Inputs.Masks.CPF);
+
+    private bool IsAllValidMask(string value)
+    {
+        // -> refatorar a funcao da linha 40, o IsAllValidMask, para permitir o delete com o backspace
+        // -> se o e.Key == backspace o PreventDefault deve ser false;
+
+        return this.Masks.Any(x => x.IsValidByMask(value));
+    }
+
+    private async Task OnValueChanged(ChangeEventArgs e)
+    {
+        string inputValue = e.Value?.ToString() ?? string.Empty;
+        string formattedValue = inputValue;
+
+        if (Masks.Any())
+        {
+            activeMask = null;
+
+            if (Masks.Contains(Inputs.Masks.Email) && inputValue.Contains('@'))
+            {
+                activeMask = Inputs.Masks.Email;
+            }
+            else if (Masks.Contains(Inputs.Masks.Email) && inputValue.Any(char.IsLetter))
+            {
+                activeMask = Inputs.Masks.Email;
+            }
+            else
+            {
+                var digitsOnly = inputValue.RemoveMask();
+                if (digitsOnly.Length > 0)
+                {
+                    if (Masks.Contains(Inputs.Masks.CPF) && digitsOnly.Length > 9)
+                    {
+                        activeMask = Inputs.Masks.CPF;
+                    }
+                    else if (Masks.Contains(Inputs.Masks.Phone))
+                    {
+                        activeMask = Inputs.Masks.Phone;
+                    }
+                }
+            }
+
+            if (activeMask.HasValue && activeMask.Value != Inputs.Masks.Email)
+                formattedValue = activeMask.Value.GetValueByMask(inputValue);
+        }
+
+        CurrentValueAsString = formattedValue;
+
+        if (OnInput is not null)
+            await OnInput.Invoke();
+    }
+
+
+}

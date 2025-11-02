@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.AppServices
+﻿namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.AppServices
 {
     public interface IAppService<T>
         where T : class

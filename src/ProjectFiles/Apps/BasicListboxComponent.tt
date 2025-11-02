@@ -1,6 +1,6 @@
-﻿@using LazyCrud.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
-@using LazyCrud.<#= aggName #>.Enumerations;
-@using LazyCrud.<#= aggName #>.Enumerations.Enum;
+﻿@using Niu.Nutri.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
+@using Niu.Nutri.<#= aggName #>.Enumerations;
+@using Niu.Nutri.<#= aggName #>.Enumerations.Enum;
 @using Pages.RegisterStepsTemplate;
 
 @inherits <#= entity.Name #>Cadastro

@@ -1,0 +1,27 @@
+﻿using Niu.Nutri.Core.Application.DTO.Attributes;
+using System;
+
+namespace Niu.Nutri.Core.Domain.Attributes.T4
+{
+    /// <summary>
+    /// Marks a property or entity step with a specific position used by multi-step forms or processes.
+    /// </summary>
+    [H1("Form Step")]
+    [Category("UI/Forms", "Defines the step order/position inside a multi-step form or process.")]
+    public class Step : Attribute
+    {
+        /// <summary>
+        /// Gets or sets the position of the step.
+        /// </summary>
+        public int Position { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Step"/> attribute with the given position.
+        /// </summary>
+        /// <param name="position">The position of the step.</param>
+        public Step(int position)
+        {
+            Position = position;
+        }
+    }
+}

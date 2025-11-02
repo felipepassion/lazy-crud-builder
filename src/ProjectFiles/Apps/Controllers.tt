@@ -1,34 +1,30 @@
 ﻿<#@ import namespace="System.Threading.Tasks" #>
-<#@ include file="..\project.tt" #>
-<#
+<#@ include file="..\project.tt" #><#
 var projects = FindDomainProjects().ToArray();
 var aggSettingsList = new List<CodeClass>();
 foreach(var project in projects) {
         var myName = project.Name.Split('.').First();
-        aggSettingsList.AddRange(GetAggregateEntities(project.Name, withAttribute:"EndpointsT4"));
+		if(myName == "DefaultTemplate") continue;
+        aggSettingsList.AddRange(GetAggregateEntities(project.Name, withAttribute:"EndpointsT4", withoutAttribute: "DisableControllers")
+			.Where(x=>x.IsAbstract == false));
         //var attrs = GetAttributesDict(type);
     }
 
 if (aggSettingsList.Any()) {
 
-var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);
-#>
+var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);#>
 using Microsoft.AspNetCore.Mvc;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Application.Aggregates.Common;
-using LazyCrud.CrossCuting.Infra.Utils.Extensions;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
+using Microsoft.AspNetCore.Authorization;
+using Niu.Nutri.WebApp.Controllers;
+using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Niu.Nutri.Core.Application.Extensions;
 <#foreach(var namespaces in groupEntities) {
 	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 	var shortAggName = aggName.Replace("Agg","");
 #>
 namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
-	using Application.DTO.Aggregates.<#= aggName #>.Requests;
-	using Domain.Aggregates.<#= aggName #>.Queries.Models;
-	using Application.Aggregates.<#= aggName #>.AppServices;
-	using Domain.Aggregates.<#= aggName #>.Entities;
-	using LazyCrud.<#= aggName.Replace("Agg","") #>.Domain.Aggregates.<#= aggName #>.CommandModels;
+ using Domain.Aggregates.<#= aggName #>.Queries.Models;
+ using Application.DTO.Aggregates.<#= aggName #>.Requests;
 <#
  foreach(var entity in namespaces) {
 	var responseName = $"{entity.Name}DTO";
@@ -39,101 +35,65 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 	var canCount = attrs.Any(x=>x.Value.Contains("Count") || x.Value.Contains("All"));
 	var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
 	var canSummary = attrs.Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+	if(!(canGet || canCount || canCreate || canSummary)) continue;
 #>
+	[Authorize]
 	[ApiController]
     [Route("api/[controller]")]
 	public partial class <#= className #> : BaseController {
 <#
-	var repoTypeName = $"I{entity.Name}AppService";
-	var serviceVarName = $"_{ToCamelCase(entity.Name)}AppService";
-	if(canCreate){#> LazyCrud.<#=aggName.Replace("Agg","")#>.Application.Aggregates.<#=aggName#>.AppServices.I<#=entity.Name#>AppService _writeService;<#}
-	if(props.ContainsKey("EmpresaId")){#> LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService _userService; <#}
-#>
-<#
 	if(canGet){#>
-		<#= repoTypeName #> <#= serviceVarName #>;
-		public <#= className #>(
-			IServiceProvider scope,
-			<#if(props.ContainsKey("UserId") || props.ContainsKey("EmpresaId")){#>
-			LazyCrud.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService userService, <#}#>
-            ILogRequestContext logRequestContext,
-			<#= repoTypeName #> <#= serviceVarName.Substring(1) #> <# if(canCreate){#>,
-			LazyCrud.<#=aggName.Replace("Agg","")#>.Application.Aggregates.<#=aggName#>.AppServices.I<#=entity.Name#>AppService writeService<#}#> )
-				: base(logRequestContext, scope)
-			{ 
-				<#= serviceVarName #> = <#= serviceVarName.Substring(1) #>; 
-<#if(props.ContainsKey("EmpresaId")){#>
-				_userService = userService; 
-<#}#>
-<#if(canCreate){#>
-				_writeService = writeService; 
-<#}#>
-			}	
+		public <#= className #>(IServiceProvider provider) : base(provider) { }
 		[HttpGet]
-		public async Task<IActionResult> Get([FromQuery] <#= entity.Name #>QueryModel request) {
-
-		    var obj = await <#= serviceVarName #>.Get(request);
-            return obj == null? NotFound() : Ok(GetHttpResponseDTO.Ok(obj));
+		public async Task<GetHttpResponseDTO<<#= entity.Name #>DTO>> Get([FromQuery] <#= entity.Name #>QueryModel request) {
+<#if(props.ContainsKey("UserId") && aggName != "CompaniesAgg"){#>
+			var loggedUserId = User.GetLoggedInUserId<int>();
+			request.UserIdEqual = loggedUserId;
+<#}#>
+			return await GetAsync<<#= entity.Name #>DTO>(request);
         }
 <#if(canCount){#>
 		[HttpGet("count")]
-		public async Task<GetHttpResponseDTO<object>> Count([FromQuery] <#= entity.Name #>QueryModel request) {
-
-            return GetHttpResponseDTO.Ok(await <#= serviceVarName #>.CountAsync(request));
+		public async Task<GetHttpResponseDTO<int>> Count([FromQuery] <#= entity.Name #>QueryModel request) {
+		<#if(props.ContainsKey("UserId") && aggName != "CompaniesAgg"){#>
+			var loggedUserId = User.GetLoggedInUserId<int>();
+			request.UserIdEqual = loggedUserId;
+<#}#>
+            return await GetAsync<<#= entity.Name #>DTO, int>("count", request);
         }
 <#}#>
 		[HttpGet("search")]
-		public async Task<GetHttpResponseDTO<object>> Get([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {
-
-		    var obj = await <#= serviceVarName #>.GetAll(request, page, size);
-            return GetHttpResponseDTO.Ok(obj);
-        }
-<#if(canCount){#>
-		[HttpGet("summary")]
-		public async Task<GetHttpResponseDTO<object>> GetSummary([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {
-
-		    var obj = await <#= serviceVarName #>.GetAllSummary(request, page, size);
-            return GetHttpResponseDTO.Ok(obj);
-        }
+		public async Task<GetHttpResponseDTO<List<<#= entity.Name #>DTO>>> Get([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {
+<#if(props.ContainsKey("UserId") && aggName != "CompaniesAgg"){#>
+			var loggedUserId = User.GetLoggedInUserId<int>();
+			request.UserIdEqual = loggedUserId;
 <#}#>
+            return await SearchAsync<<#= entity.Name #>DTO>("search", request, page, size);
+        }
 		[HttpGet("select")]
-		public async Task<IActionResult> Select([FromQuery] <#= entity.Name #>QueryModel request, int? page = null, int? size = null) {
-
-		    var obj = await <#= serviceVarName #>.GetAll(request, page, size, request.Selector.GetPropertySelector<<#=entity.Name#>>());
-            return obj == null? NotFound() : Ok(GetHttpResponseDTO.Ok(obj));
+		public async Task<GetHttpResponseDTO<object>> Select([FromQuery] <#= entity.Name #>QueryModel request, int? page = null, int? size = null) {
+<#if(props.ContainsKey("UserId") && aggName != "CompaniesAgg"){#>
+			var loggedUserId = User.GetLoggedInUserId<int>();
+			request.UserIdEqual = loggedUserId;
+<#}#>
+			return await SelectAsync<<#= entity.Name #>DTO>("select", request, page, size);
         }
 <#}
 	if(canCreate){#>
-		
 		[HttpPost]
-		public async Task<GetHttpResponseDTO<object>> Post(LazyCrud.<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
-
-<#if(props.ContainsKey("EmpresaId") && aggName != "CompaniesAgg"){#>
-			
-<#}#>
-			request.Command = new Create<#=entity.Name#>Command(_logRequestContext, request);
-			var result = await <#= serviceVarName #>.Create(request);
-            return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+		public async Task<GetHttpResponseDTO<<#= entity.Name #>DTO>> Post(<#= entity.Name #>DTO request) {
+            return await PostAsync<<#= entity.Name #>DTO>(request);
 		}
-<#}	
-var DTOName = $"{entity.Name}QueryModel";
-#>
         [HttpDelete("delete")]
-		public async Task<GetHttpResponseDTO<object>> Delete([FromQuery] <#=entity.Name#>QueryModel request)
-        {
-            request.Command = new Delete<#=entity.Name#>Command(_logRequestContext, request);
-            var result = await <#= serviceVarName #>.Delete(request);
-            return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+		public async Task<GetHttpResponseDTO<<#= entity.Name #>DTO>> Delete([FromQuery] <#= entity.Name #>QueryModel request) {
+            return await DeleteAsync<<#= entity.Name #>DTO>(request);
         }
         [HttpDelete("range")]
-        public async Task<GetHttpResponseDTO<object>> DeleteRange(<#=entity.Name#>QueryModel request)
-        {
-            var result = await <#= serviceVarName #>.DeleteRange(request);
-            request.Command = new DeleteRange<#=entity.Name#>Command(_logRequestContext, request);
-            return result.Success? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+        public async Task<GetHttpResponseDTO> DeleteRange([FromQuery] <#= entity.Name #>QueryModel request) {
+            return GetHttpResponseDTO.Ok();
         }
 	}
 <# } #>
+<# } #>
 }
-<# } #>
-<# } #>
+<# } #><# } #>

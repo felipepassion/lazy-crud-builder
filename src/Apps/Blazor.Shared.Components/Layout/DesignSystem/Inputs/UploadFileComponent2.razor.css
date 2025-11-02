@@ -1,0 +1,43 @@
+
+/* Container for the file upload area */
+.input-upload-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+    /* Style for the file upload button */
+    .input-upload-item label.file-label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background-color: #007ACC;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .input-upload-item label.file-label:hover {
+            background-color: #005A9E;
+        }
+
+    /* Hiding the default file input */
+    .input-upload-item .file-input {
+        display: none;
+    }
+
+    /* Style for uploaded image preview */
+    .input-upload-item img.mealPhoto-preview {
+        margin-top: 15px;
+        width: 300px;
+        height: 300px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }

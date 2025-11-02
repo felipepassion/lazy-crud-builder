@@ -1,8 +1,9 @@
-﻿namespace LazyCrud.Core.Application.DTO.Attributes
+﻿namespace Niu.Nutri.Core.Application.DTO.Attributes
 {
     /// <summary>
-    /// Evita reescrever o FRONT-END, caso esteja em cima da classe
+    /// Prevents overwriting the front-end after the first generation when applied to a class.
     /// </summary>
+    [Category("Code Generation (T4)", "Prevents replacing front-end files after initial generation.")]
     public class DoNotReplaceAfterGenerated : Attribute
     {
 

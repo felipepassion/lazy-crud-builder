@@ -1,0 +1,12 @@
+/* Import shared design tokens */
+@import url('/_content/Shared.Blazor.Components/design-system/tokens.css');
+@import url('/_content/Shared.Blazor.Components/design-system/base.css');
+
+/* Project-specific overrides only below */
+
+/* Remove light/dark themes in favor of tokens (:root) */
+
+/* Example local tweaks */
+h1:focus { outline: none; }
+
+.darker-border-checkbox.form-check-input { border-color: #929292; }

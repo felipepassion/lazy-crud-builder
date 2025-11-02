@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Tests
+﻿namespace Niu.Nutri.Core.Tests
 {
 
     public class CPFGenerator

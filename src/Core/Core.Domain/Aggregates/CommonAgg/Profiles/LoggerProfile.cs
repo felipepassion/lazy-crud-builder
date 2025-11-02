@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
-using LazyCrud.CrossCutting.Infra.Log.Entries;
-using LazyCrud.CrossCutting.Infra.Log.SeedWork;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Events;
-using LazyCrud.Core.Domain.Aggregates.CommonAgg.Notifications;
+using Niu.Nutri.CrossCutting.Infra.Log.Entries;
+using Niu.Nutri.CrossCutting.Infra.Log.SeedWork;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Notifications;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Profiles
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Profiles
 {
     public partial class LoggerProfile : Profile
     {
@@ -24,7 +24,7 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Profiles
                 //.ForMember(x => x.Properties, opt => opt.MapFrom(notification => notification.ExtractProperties().ToArray()))
             .IncludeAllDerived();
 
-            CreateMap<ErrorEvent, LogEntry>();
+            CreateMap<ErrorEvent, LogEntry>().ForMember(x=>x.Content, opt => opt.Ignore());
         }
     }
 }

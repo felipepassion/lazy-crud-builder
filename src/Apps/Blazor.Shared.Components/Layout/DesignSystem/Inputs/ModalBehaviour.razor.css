@@ -1,0 +1,24 @@
+.modal {
+    z-index: 999;
+    max-width: 700px;
+    width: 100%;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+}
+
+.absolute {
+    position: absolute;
+    left: 50%;
+    top: 34px;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.centered {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+}

@@ -1,7 +1,7 @@
 ﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
 <#
-	var entities = GetEntities("Domain", withEndpoint: "HttpPost"); 
-	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4", withEndpoint: "HttpPost"); 
+	var entities = GetEntities("Domain", withAttribute: "EndpointsT4").Where(x=>x.IsAbstract == false); 
+	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4", withEndpoint: "HttpPost").Where(x=>x.IsAbstract == false); 
 	var project = GetCurrentProject();
 	var myName = project.Name.Split('.').First();
 	var AggName = myName + "Agg";

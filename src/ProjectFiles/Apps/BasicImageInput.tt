@@ -1,1 +1,14 @@
-﻿<UploadFile Image="@Model.<#=myName#>" />
+﻿<#if((!isNewContainer && count>0)){#>
+</div>
+	<div class="input-secondary">
+<#}#>
+		<div class="input-secondary-item image-upload-container">
+			<UploadFileComponent @bind-Image:after=OnAutoSaveTriggered @bind-Image="Model.<#=myName#>" />
+            <div class="este-campo-obrigatrio-1 valign-text-middle inter-normal-sonic-silver-10px">
+                <ValidationMessage For="@(() => Model.<#=myName#>)"></ValidationMessage>
+			</div>
+        </div>
+<#if(!(!isNewContainer && count>0)){#>
+	</div>
+	<div class="input-secondary">
+<#}#>

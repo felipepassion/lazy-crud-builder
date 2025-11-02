@@ -1,0 +1,95 @@
+﻿<#
+    var parents = new List<CodeProperty>();
+    var list = new List<KeyValuePair<string, CodeProperty>>();
+	foreach(var prop in myProps) {
+        if(prop.Key.Contains('/')) {
+            var myParent = props.FirstOrDefault(x=>x.Key==prop.Key.Split('/').First());
+            if(ContainsAttribute(myParent.Value, "ForeignDataSelector") || ContainsAttribute(myParent.Value, "ForeignDataSelectorDropDownWithAutoComplete"))
+            {
+                if(!list.Contains(myParent))
+                    list.Add(myParent);
+                continue;
+            }
+        }
+		if(IsComplexType(prop.Value))
+		{
+            parents.Add(prop.Value);
+			list.AddRange(props.Where(x=>x.Key.StartsWith(@$"{prop.Key}/")));
+            if(prop.Value.Type.AsString.StartsWith(@$"System.Collections.Generic"))
+            {
+                list.Add(prop);
+            }
+		}
+        else{
+            list.Add(prop);
+        }
+	}
+
+    //var props = GetRecursiveProperties(entity, includeParent: false, withStep:currentStep);
+    var title = list.FirstOrDefault(x=> GetAttributesDict(x.Value).ContainsKey("Title"));
+    var subtitle = list.FirstOrDefault(x=> GetAttributesDict(x.Value).ContainsKey("Subtitle"));
+    var grouppedExceptProps = list
+        .Except(new KeyValuePair<string, CodeProperty>[]{ title })
+        .OrderByDescending(x=>GetAttributesDict(x.Value).TryGetValue("RegisterOrder", out var val) ? val.ToString() : "100")
+        .OrderByDescending(x=>x.Value == subtitle.Value)
+        .GroupBy(x=>x.Key.Split('/')[0]);
+    var isTitle = false;
+    int count = hasParameterSwitcher ? 1 : 0;
+#>
+
+@using Niu.Nutri.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
+@inherits BaseCadastro<<#=entity.Name#>DTO>
+
+<div class="container-informations screen">
+    <div class="box-inputs">
+<#@ include file="BasicTextInputTitle.tt" #>
+<#
+foreach(var exceptProps in grouppedExceptProps) {
+var myParent = parents.FirstOrDefault(x=>exceptProps.Key.Equals(x.Name));
+foreach(var field in exceptProps) {
+    if(GetAttributesDict(field.Value).TryGetValue("H1", out var attrValues))
+    {
+        if(count%2!=0){#>
+    </div>     
+<#      } count=0; #>
+        <div class='titles-container'>
+            <h1 class='prop-parent-title inter-semi-bold-black-16px'><#=attrValues[0].Value.Replace("\"","")#></h1>
+<# if(attrValues.Count() > 1) {#> 
+            <h3 class='prop-parent-subtitle inter-medium-black-14px'><#=attrValues[1].Value.Replace("\"","")#></h3>
+<#}#>   </div>
+<#}
+    var isNewContainer = count%2 == 0;
+    isTitle = field.Key == subtitle.Key;
+if(isNewContainer){#> 
+    <div class="input-secondary"> 
+<#}#>
+<#@ include file="BasicFormInputChooser.tt" #>
+<#if((!isNewContainer && count>0)){#>
+    </div> 
+<#} 
+count++; 
+#>
+<#}#>
+<#}#>
+<#if(count%2!=0){#> </div> <#}#>
+    </div>
+</div>
+
+@code {
+<#if(hasParameterSwitcher) {#>
+    [Inject] NavigationManager NavigationManager { get; set; }
+    void OnSelect(SelectEventArgs<<#=parameterTypeSwitcher.Value.Type.AsFullName#>> eventCallback)
+    {
+        NavigationManager.NavigateTo(string.Join('/', eventCallback.ItemData.ToString(), "cadastro"));
+    }
+    protected override Task OnInitializedAsync()
+    {
+        var parameter = this.NavigationManager.Uri.Replace(this.NavigationManager.BaseUri, "").Split("/").FirstOrDefault();
+        if (Enum.TryParse<<#=parameterTypeSwitcher.Value.Type.AsFullName#>>(parameter, out var val))
+        {
+            this.Model.<#=parameterTypeSwitcher.Value.Name#> = val;
+        }
+        return base.OnInitializedAsync();
+    }
+<#}#>
+}

@@ -1,0 +1,68 @@
+﻿@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses
+@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Models
+
+@typeparam T where T : EntityDTO, new()
+
+<div class="container-pagination screen">
+    <img class="container-box-page-1" src="imgs/components/listining/container-box-page-1@2x.svg" alt="container-box-page-1" />
+    @if (Context == null)
+    {
+                                    <TollSvc.WebApp.Client.Pages.Shared.GenericComponents.Loading />
+    }
+    else
+    {
+        if (Context.Min + 1 >= Lenght || Context.Max < Lenght)
+        {
+            for (int i = Context.Min >= Lenght ? Lenght-1 : Context.Min; i < Context.Max; i++)
+            {
+                var currentPage = i;
+                <div @onclick="()=>OnClick(currentPage)" class="container-box-page-1-1 @(currentPage == Context.Page? "active" : "")">
+                    <div class="container-text-date"> <div class="number-1"> @(currentPage+1)</div> </div>
+                </div>
+            }
+        }
+        else
+        {
+            for (int i = Context.Min > Lenght ? Lenght : Context.Min; i < Context.Min + countBeforeThreeDotsLeft; i++)
+            {
+                var currentPage = i;
+
+                <div @onclick="()=>OnClick(currentPage)" class="container-box-page-1-1 @(currentPage == Context.Page? "active" : "")">
+                    <div class="container-text-date"> <div class="number-1"> @(currentPage+1)</div> </div>
+                </div>
+            }
+
+            <img class="container-box-page-1" src="/imgs/components/listining/container-box-page-1-1@2x.svg" alt="container-box-page-1" />
+
+            @for (int i = Context.Max - countBeforeThreeDotsRight + 1; i < Context.Max; i++)
+            {
+                var currentPage = i;
+                <div @onclick="()=>OnClick(currentPage)" class="container-box-page-1-1 @(currentPage == Context.Page? "active" : "")">
+                    <div class="container-text-date"> <div class="number-1"> @(currentPage+1)</div> </div>
+                </div>
+            }
+        }
+    }
+    <img class="container-box-page-1" src="/imgs/components/listining/container-box-page-1-2@2x.svg" alt="container-box-page-1" />
+</div>
+<p><b>Total: @Context?.TotalOfItems</b></p>
+
+@code {
+    int Lenght = 5;
+    int countBeforeThreeDotsLeft = 4;
+    int countBeforeThreeDotsRight = 3;
+    
+    [CascadingParameter] IListiningContext Context { get; set; }
+    
+    public void RefreshMe()
+    {
+        this.StateHasChanged();
+    }
+
+    void OnClick(int page)
+    { 
+        Context.Page = page;
+        Context.Navigate<T>(page: page);
+    }
+
+}

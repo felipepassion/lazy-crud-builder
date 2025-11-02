@@ -1,4 +1,4 @@
-﻿namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
+﻿namespace Niu.Nutri.Core.Application.DTO.Seedwork.ValueObjects
 {
     public class PeriodoAIncluirDTO
     {

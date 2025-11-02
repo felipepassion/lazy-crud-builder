@@ -20,12 +20,12 @@ namespace CrossCutting.Application.Mail
             message.Subject = emailSubject;
             message.Body = emailMessageHtml;
             message.IsBodyHtml = true;
-            message.From = new MailAddress("contato@niutechnology.com.br");
-
+            message.From = new MailAddress("niutechdesenvolvimento@gmail.com");
+                
             using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
             {
                 smtpClient.UseDefaultCredentials = false;
-                NetworkCredential MyCredentials = new NetworkCredential("contato@niutechnology.com.br", "a4C5qAMaUyKh6mP*");
+                NetworkCredential MyCredentials = new NetworkCredential("niutechdesenvolvimento@gmail.com", "wcwfuodibnwhwnwn");
 
                 smtpClient.EnableSsl = true;
                 smtpClient.Credentials = MyCredentials;

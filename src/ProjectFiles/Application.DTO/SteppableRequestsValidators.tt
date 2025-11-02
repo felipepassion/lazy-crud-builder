@@ -1,5 +1,5 @@
-﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
@@ -23,7 +23,8 @@ var otherNamespace = entity.Namespace.FullName.Replace("Domain","Application.DTO
 var stepsCount=1;
 bool ignoreStep = false;
 try{
-stepsCount = int.Parse(GetAttributes(entity, includeSteppableAttributes: true).Max(x=>x.FirstOrDefault(p=>char.IsDigit(p))).ToString());
+stepsCount = int.Parse(GetAttributes(entity, includeSteppableAttributes: true)
+    .FirstOrDefault(x=>x.Contains("Step"))?.FirstOrDefault(p=>char.IsDigit(p)).ToString() ?? "1");
 }catch{ignoreStep=true;}
 
 for (int i = 1; i <= stepsCount; i++) {

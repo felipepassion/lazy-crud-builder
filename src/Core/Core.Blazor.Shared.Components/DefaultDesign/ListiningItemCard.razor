@@ -1,0 +1,39 @@
+﻿@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Models;
+@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+@typeparam T where T : EntityDTO, new()
+
+<a href="/@Item.GetMyTypeName()/cadastro/@Item.ExternalId" class="container-columms-list">
+    @if (_props != null)
+    {
+        foreach (var p in Context.Properties)
+        {
+            <div class="columm-nome-fantasia">
+                <div class="container-user-nome-fantasia">
+                    <div class="tag-user-nome-fantasia">
+                        <div class="container-title-user">
+                            <div class="Niu.Living-systems inter-medium-purple-heart-12px">
+                                @_props.FirstOrDefault(x=>x.info.Name.Contains(p.info.Name))?.Value
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</a>
+
+@code {
+    [Parameter] public T Item { get; set; }
+    List<PropertyDetails> _props;
+    [CascadingParameter] IListiningContext Context { get; set; }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _props = Item.ExtractPropertyInfos();
+            this.StateHasChanged();
+        }
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

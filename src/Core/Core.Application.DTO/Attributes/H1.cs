@@ -1,5 +1,9 @@
-﻿namespace LazyCrud.Core.Application.DTO.Attributes
+﻿namespace Niu.Nutri.Core.Application.DTO.Attributes
 {
+    /// <summary>
+    /// Primary heading (H1) shown in pages/components.
+    /// </summary>
+    [Category("UI/Titles", "Primary heading (H1) for pages/components.")]
     public class H1 : Attribute
     {
         public string Title { get; set; }

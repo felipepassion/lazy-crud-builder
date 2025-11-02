@@ -1,11 +1,12 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Notifications;
-using LazyCrud.Core.Domain.CrossCutting;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using MediatR;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
+using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Notifications;
+using Niu.Nutri.Core.Domain.CrossCutting;
+using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
 using System.Text.Json.Serialization;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands
 {
     public abstract class BaseCommand : BaseNotification, IRequest<DomainResponse>, IBaseRequest
     {
@@ -15,11 +16,12 @@ namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands
         }
 
         [JsonIgnore]
-        public ValidationResult ValidationResult { get; set; }
+        public ValidationResult? ValidationResult { get; set; }
+        public IEntity? Entity { get; set; }
 
         public virtual bool IsValid()
         {
-            return !this.ValidationResult.Errors.Any();
+            return this.ValidationResult?.Errors.Any() != true;
         }
     }
 }

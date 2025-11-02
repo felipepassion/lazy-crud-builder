@@ -1,0 +1,42 @@
+﻿@typeparam T where T : Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Models.EntityDTO, new()
+
+<div class="dropdown ordernar-dropdown" @onclick="()=>_isClicked=!_isClicked">
+    <img class="mingcutefilter-fill-1"
+         src="https://anima-uploads.s3.amazonaws.com/projects/63486f9b8ee4feae84ab3e5a/releases/634de48ae6df4c88bb664dc3/img/mingcute-filter-fill-1@2x.svg"
+         alt="mingcute:filter-fill" />
+    <div class="container-title">
+        <div class="ordenar valign-text-middle inter-semi-bold-oslo-gray-10px">Ordenar</div>
+    </div>
+    <img class="eparrow-right-bold-1"
+         src="https://anima-uploads.s3.amazonaws.com/projects/63486f9b8ee4feae84ab3e5a/releases/63488a4f68de92a026f42907/img/ep-arrow-right-bold@2x.svg"
+         alt="ep:arrow-right-bold" />
+</div>
+
+@if (_isClicked)
+{
+    <div class="container-list-card">
+        <div class="option" @onclick="()=>onClick(false)">
+            <img class="uilarrow-growth" src="/imgs/components/orderby/uil-arrow-growth@2x.svg" />
+            <div class="container-title">
+                <div class="crescente inter-normal-black-12px">Crescente</div>
+            </div>
+        </div>
+        <img class="line-separated" src="/imgs/components/orderby/line-separated@2x.svg" alt="line-separated" />
+        <div class="option" @onclick="()=>onClick(true)">
+            <img class="uilarrow-growth" src="/imgs/components/orderby/uil-arrow-growth-1@2x.svg" />
+            <div class="container-title">
+                <div class="crescente inter-normal-black-12px">Decrescente</div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    bool _isClicked { get; set; }
+    [CascadingParameter] IListiningContext Context { get; set; }
+
+    void onClick(bool descending){
+        Context.Navigate<T>(orderByDescending: descending);
+        _isClicked = false;
+    }
+}

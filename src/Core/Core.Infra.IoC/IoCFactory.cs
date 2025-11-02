@@ -1,11 +1,13 @@
 using CrossCutting.Application.Mail;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using LazyCrud.Core.Application.DTO.Seedwork;
-using LazyCrud.CrossCutting.Infra.Log.Contexts;
-using LazyCrud.CrossCutting.Infra.Log.Providers;
+using Niu.Nutri.Core.Application.DTO.Seedwork;
+using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
+using Niu.Nutri.CrossCutting.Infra.Log.Providers;
 
-namespace LazyCrud.Core.Infra.IoC
+namespace Niu.Nutri.Core.Infra.IoC
 {
     public partial class IoCFactory : IBaseIoC
     {
@@ -27,13 +29,15 @@ namespace LazyCrud.Core.Infra.IoC
         public void Configure(IConfiguration configuration, IServiceCollection services)
         {
             ConfigureFactories();
-			ConfigureLog(services);
+            ConfigureLog(services);
             ConfigureMediatR(services);
             ConfigureAppServices(services);
             ConfigureRepositories(services);
             ConfigureDatabase(services, configuration);
             ConfigureMappings();
+            services.AddHttpContextAccessor();          
         }
+
 
         void ConfigureMappings()
         {
@@ -53,6 +57,7 @@ namespace LazyCrud.Core.Infra.IoC
 
         void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         void ConfigureRepositories(IServiceCollection services)
@@ -62,7 +67,7 @@ namespace LazyCrud.Core.Infra.IoC
 
         void ConfigureAppServices(IServiceCollection services)
         {
-            services.AddScoped<IEmailSender,  EmailSender>();
+            services.AddSingleton<IEmailSender, EmailSender>();
             ConfigureAdditionalAppServices(services);
         }
 

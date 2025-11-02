@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.Commands
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands
 {
     public class CommandResponse
     {

@@ -1,17 +1,16 @@
-﻿using LazyCrud.Core.Application.DTO.Attributes;
-using LazyCrud.Core.Application.DTO.Extensions;
-using LazyCrud.Core.Domain.CrossCutting;
-using MediatR;
+﻿using Niu.Nutri.Core.Application.DTO.Attributes;
+using Niu.Nutri.Core.Application.DTO.Extensions;
 using System.Collections;
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
-namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
+namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public interface IEntityDTO
     {
-        public IRequest<DomainResponse>? Command { get; set; }
-        public string? Title { get; }
+        public string? TitleProperty { get; }
         public string? SubTitle { get; }
         public string? SubTitlePropertyName { get; }
         public string? TititleWithSubtitle { get; }
@@ -29,6 +28,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
         public bool IsManuallySubmiting { get; set; }
 
         public string GetRoute();
+        public string GetCountRoute();
         public string GetPageIndexRoute();
         public string GetRoute(object id);
         public string GetDeleteRoute();
@@ -42,23 +42,30 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
     {
         public bool IsCreated => Id.HasValue;
 
-        public IRequest<DomainResponse>? Command { get; set; }
         public int? Id { get; set; }
-        public string? ExternalId { get; set; }
-        public string[] FieldsToValidate { get; set; } = new string[0];
-        public DateTime? CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public string? TititleWithSubtitle => $"{Title}{(string.IsNullOrWhiteSpace(SubTitle) ? "" : $" - {SubTitle}")}";
 
+        [NullableProperty]
+        public string? ExternalId { get; set; } = Guid.NewGuid().ToString();
+
+
+        public string[] FieldsToValidate { get; set; } = new string[0];
+
+        public DateTime? CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+        public string? TititleWithSubtitle => $"{TitleProperty}{(string.IsNullOrWhiteSpace(SubTitle) ? "" : $" - {SubTitle}")}";
+
+        [JsonIgnore]
         public bool IsSubmiting { get; set; }
+        [JsonIgnore]
         public bool IsManuallySubmiting { get; set; }
 
         public EntityDTO()
         {
-            CreatedAt = CreatedAt ?? DateTime.UtcNow;
+            CreatedAt ??= DateTime.UtcNow;
         }
 
-        public void Created(EntityDTO newObj)
+        public void Created(EntityDTO? newObj)
         {
             if (newObj == null) return;
             Id = newObj.Id;
@@ -97,7 +104,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
         {
             return $"{GetRoute()}/summary";
         }
-        public virtual string CountRoute()
+        public virtual string GetCountRoute()
         {
             return $"{GetRoute()}/count";
         }
@@ -126,6 +133,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             return dd?.DisplayName ?? property.Name;
         }
 
+
         public string GetFieldPlaceholder(PropertyInfo property)
         {
             if (property == null) return null;
@@ -135,7 +143,8 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             return dd?.DisplayName ?? property.Name;
         }
 
-        public string? Title
+        [NullableProperty]
+        public string? TitleProperty
         {
             get
             {
@@ -148,6 +157,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
+        [NullableProperty]
         public string? SubTitle
         {
             get
@@ -161,6 +171,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
+        [NullableProperty]
         public string? DisplayNameTitle
         {
             get
@@ -170,6 +181,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
+        [NullableProperty]
         public string? DisplayNameSubTitle
         {
             get
@@ -179,6 +191,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
+        [NullableProperty]
         public string? TitlePropertyName
         {
             get
@@ -188,6 +201,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
+        [NullableProperty]
         public string? H1
         {
             get
@@ -196,6 +210,7 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
+        [NullableProperty]
         public string? H2
         {
             get
@@ -204,11 +219,12 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
+        [NullableProperty]
         public string? H1AndTitle
         {
             get
             {
-                return H1 + (string.IsNullOrWhiteSpace(Title) ? "" : $"{(string.IsNullOrWhiteSpace(H1) ? "" : " - ")}{Title}");
+                return H1 + (string.IsNullOrWhiteSpace(TitleProperty) ? "" : $"{(string.IsNullOrWhiteSpace(H1) ? "" : " - ")}{TitleProperty}");
             }
         }
         public string? H2AndSubTitle
@@ -219,22 +235,25 @@ namespace LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models
             }
         }
 
+        [NullableProperty]
         public string? CustomTitleOrH2
         {
             get
             {
-                return string.IsNullOrWhiteSpace(Title) ? H2 : Title;
+                return string.IsNullOrWhiteSpace(TitleProperty) ? H2 : TitleProperty;
             }
         }
 
+        [NullableProperty]
         public string? CustomTitleOrH1
         {
             get
             {
-                return string.IsNullOrWhiteSpace(Title) ? H1 : Title;
+                return string.IsNullOrWhiteSpace(TitleProperty) ? H1 : TitleProperty;
             }
         }
 
+        [NullableProperty]
         public string? SubTitlePropertyName
         {
             get

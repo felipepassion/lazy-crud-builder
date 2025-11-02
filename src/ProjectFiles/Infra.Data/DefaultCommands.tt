@@ -1,6 +1,6 @@
 ﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
 <#
-	var allEntities = GetEntities();
+	var allEntities = GetEntities().Where(x=>x.IsAbstract == false);
 	var entities = GetEntities("Domain", withAttribute: "EndpointsT4");
 	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4");
 	//var entities = GetEntities();

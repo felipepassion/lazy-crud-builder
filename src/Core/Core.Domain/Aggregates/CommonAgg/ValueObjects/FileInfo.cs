@@ -1,6 +1,6 @@
-﻿using LazyCrud.Core.Domain.Aggregates.CommonAgg.Entities;
+﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
 
-namespace LazyCrud.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     public class ReferenceFileInfo : Entity
     {

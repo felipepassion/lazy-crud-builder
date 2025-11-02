@@ -1,4 +1,4 @@
-﻿using LazyCrud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+﻿using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 

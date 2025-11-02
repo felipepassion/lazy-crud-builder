@@ -1,0 +1,19 @@
+.loader {
+    width: 27px;
+    height: 27px;
+    border: 3px solid var(--primary-900);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 

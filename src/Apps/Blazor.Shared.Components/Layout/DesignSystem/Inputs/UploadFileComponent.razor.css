@@ -1,0 +1,123 @@
+/* Container for the file upload area */
+.input-upload-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+    /* Style for the file upload button */
+    .input-upload-item label.file-label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background-color: #007ACC;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .input-upload-item label.file-label:hover {
+            background-color: #005A9E;
+        }
+
+    /* Hiding the default file input */
+    .input-upload-item .file-input {
+        display: none;
+    }
+
+/* Style for uploaded image preview */
+img.mealPhoto-preview {
+    margin-top: 15px;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    object-fit: cover; /* Mantém a proporção da imagem */
+}
+
+/* Estilo para os botões de câmera e galeria */
+.input-upload-item .btn-camera,
+.input-upload-item .btn-gallery {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão de câmera */
+.input-upload-item .btn-camera {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+}
+
+    .input-upload-item .btn-camera:hover {
+        background-color: #3e8e41;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+/* Botão de galeria */
+.input-upload-item .btn-gallery {
+    background-color: #2196F3; /* Azul */
+    color: white;
+}
+
+    .input-upload-item .btn-gallery:hover {
+        background-color: #0b7dda;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    /* Estilo para os ícones dentro dos botões */
+    .input-upload-item .btn-camera img,
+    .input-upload-item .btn-gallery img {
+        width: 18px;
+        height: 18px;
+        margin-left: 8px;
+        filter: brightness(0) invert(1); /* Torna os ícones brancos */
+    }
+
+    /* Estilo para botões desabilitados */
+    .input-upload-item .btn-camera.disabled,
+    .input-upload-item .btn-gallery.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+/* Layout para os botões em tela pequena */
+@media (max-width: 480px) {
+    .input-upload-item {
+        flex-direction: column;
+    }
+
+        .input-upload-item .btn-camera,
+        .input-upload-item .btn-gallery {
+            width: 100%;
+            margin: 5px 0;
+        }
+}
+
+/* Container para os botões */
+.input-upload-item .buttons-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    justify-content: center;
+}

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 
-namespace LazyCrud.CrossCutting.Infra.Log.SeedWork
+namespace Niu.Nutri.CrossCutting.Infra.Log.SeedWork
 {
     public class LoggerFactory
     {
@@ -13,17 +13,17 @@ namespace LazyCrud.CrossCutting.Infra.Log.SeedWork
             var section = configuration.GetSection("Logging");
 
             var loggerConfiguration = new LoggerConfiguration()
-                 .Enrich.WithProperty("Domain", section["Domain"])
-                 .Enrich.WithProperty("Application", section["Application"])
-                 .Enrich.WithProperty("ProductVersion", section["ProductVersion"])
+                 .Enrich.WithProperty("Domain", configuration["Domain"])
+                 .Enrich.WithProperty("Application", configuration["Application"])
+                 .Enrich.WithProperty("ProductVersion", configuration["ProductVersion"])
                  .Enrich.WithProperty("MachineName", Environment.MachineName)
                  .Enrich.WithProperty("InstanceKey", Guid.NewGuid().ToString())
                  .Enrich.WithProperty("ExecutionKey", ExecutionKey)
                  .Enrich.FromLogContext();
 
-            if (!string.IsNullOrEmpty(section["Seq:Url"]))
+            if (!string.IsNullOrEmpty(section["SeqUrl"]))
                 loggerConfiguration
-                    .WriteTo.Seq(serverUrl: section["Seq:Url"]!)
+                    .WriteTo.Seq(serverUrl: section["SeqUrl"]!)
                     .MinimumLevel.Is(GetMinimumLevelLog(section["Seq:MinimumLevel"]!));
 
             loggerConfiguration.Destructure.JsonNetTypes();

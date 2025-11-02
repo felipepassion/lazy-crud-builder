@@ -1,2 +1,0 @@
-<#@ include file="..\..\ProjectFiles\Infra.IoC\DefaultCommands.tt" #>
-
