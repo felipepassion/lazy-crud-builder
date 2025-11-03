@@ -1,11 +1,11 @@
-﻿using Niu.Nutri.Core.Application.Aggregates.Common.Models;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
+﻿using Lazy.Crud.Core.Application.Aggregates.Common.Models;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
 using Microsoft.AspNetCore.Mvc;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Niu.Nutri.Core.Application.DTO.Extensions;
+using Lazy.Crud.Core.Application.DTO.Extensions;
 
-namespace Niu.Nutri.Core.Application.Aggregates.Common
+namespace Lazy.Crud.Core.Application.Aggregates.Common
 {
     public class BaseMiniController : ControllerBase
     {

@@ -1,10 +1,10 @@
-﻿using Niu.Nutri.Core.Application.DTO.Attributes;
+﻿using Lazy.Crud.Core.Application.DTO.Attributes;
 using System;
 
 /// <summary>
 /// Specifies the execution order for migrations generated from aggregates or seed files.
 /// </summary>
-namespace Niu.Nutri.Core.Domain.Attributes.T4
+namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Specifies the execution order for migrations generated from aggregates or seed files.

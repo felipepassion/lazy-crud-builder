@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands
 {
     public class BaseCommandResponse
     {

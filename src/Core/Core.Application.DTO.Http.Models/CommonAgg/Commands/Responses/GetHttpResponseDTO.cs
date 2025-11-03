@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Domain.CrossCutting;
+﻿using Lazy.Crud.Core.Domain.CrossCutting;
 using System.Net;
 
-namespace Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses
+namespace Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses
 {
     public partial class GetHttpResponseDTO : GetHttpResponseDTO<object>
     {

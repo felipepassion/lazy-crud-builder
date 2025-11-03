@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Niu.Nutri.Core.Domain.Seedwork.Specification {
+namespace Lazy.Crud.Core.Domain.Seedwork.Specification {
 
     /// <summary>
     /// Extension methods for adding AND and OR with parameters rebinder

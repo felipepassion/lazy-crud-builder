@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using Niu.Nutri.Core.Domain.Extensions;
-using Niu.Nutri.CrossCutting.Infra.Log.Providers;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events.Handles;
-using Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.ModelEvents;
+using Lazy.Crud.Core.Domain.Extensions;
+using Lazy.Crud.CrossCutting.Infra.Log.Providers;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events.Handles;
+using Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.ModelEvents;
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.EventHandlers
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.EventHandlers
 {
     public partial class DefaultEntityEventHandler : BaseEventHandler,
         INotificationHandler<DefaultEntityCreatedEvent>,

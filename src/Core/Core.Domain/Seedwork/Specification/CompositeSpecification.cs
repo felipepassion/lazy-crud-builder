@@ -1,5 +1,5 @@
 ﻿
-namespace Niu.Nutri.Core.Domain.Seedwork.Specification {
+namespace Lazy.Crud.Core.Domain.Seedwork.Specification {
 
     /// <summary>
     /// Base class for composite specifications

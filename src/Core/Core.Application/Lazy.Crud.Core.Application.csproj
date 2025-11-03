@@ -4,7 +4,6 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<RootNamespace>Niu.Nutri.Core.Application</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,9 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	 <ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\CrossCutting.Infra.Log.csproj" />
-	 <ProjectReference Include="..\Core.Application.Validators\Core.Application.Validators.csproj" />
-	 <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
+	 <ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\Lazy.Crud.CrossCutting.Infra.Log.csproj" />
+	 <ProjectReference Include="..\Core.Application.Validators\Lazy.Crud.Core.Application.Validators.csproj" />
+	 <ProjectReference Include="..\Core.Domain\Lazy.Crud.Core.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,8 +1,8 @@
-﻿using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
+﻿using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
 using Newtonsoft.Json;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands
 {
     public abstract class BaseRequestableCommand<T, R> : BaseCommand
         where T : class

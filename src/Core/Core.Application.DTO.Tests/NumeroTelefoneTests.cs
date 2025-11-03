@@ -1,4 +1,4 @@
-using Niu.Nutri.Core.Application.DTO.Validators;
+using Lazy.Crud.Core.Application.DTO.Validators;
 
 namespace Core.Application.DTO.Tests
 {

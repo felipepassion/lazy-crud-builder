@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Niu.Nutri.Core.Api.Factory;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Api.Factory;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 using System.Net.Http.Json;
 
-namespace Niu.Nutri.WebApp.Controllers
+namespace Lazy.Crud.WebApp.Controllers
 {
     public class BaseController : ControllerBase
     {

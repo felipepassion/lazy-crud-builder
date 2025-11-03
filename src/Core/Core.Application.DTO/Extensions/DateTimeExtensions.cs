@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Extensions
+﻿namespace Lazy.Crud.Core.Application.DTO.Extensions
 {
     public static class DateTimeExtensions
     {

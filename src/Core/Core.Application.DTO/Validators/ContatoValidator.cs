@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Niu.Nutri.Core.Application.DTO.Validators
+namespace Lazy.Crud.Core.Application.DTO.Validators
 {
     public static class PhoneNumberValidator
     {

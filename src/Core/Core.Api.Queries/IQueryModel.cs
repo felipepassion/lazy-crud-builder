@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Api.Queries
+﻿namespace Lazy.Crud.Core.Api.Queries
 {
     public interface IQueryModel
     {

@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Domain.Extensions;
-using Niu.Nutri.CrossCutting.Infra.Log.Providers;
+﻿using Lazy.Crud.Core.Domain.Extensions;
+using Lazy.Crud.CrossCutting.Infra.Log.Providers;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events.Handles
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events.Handles
 {
     public class BaseEventHandler
     {

@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
+﻿namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
 {
     public class UserInfoDTO
     {

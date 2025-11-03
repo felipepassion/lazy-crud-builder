@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Niu.Nutri.Core.Application.Validators
+namespace Lazy.Crud.Core.Application.Validators
 {
     public static class CnpjValidator
     {

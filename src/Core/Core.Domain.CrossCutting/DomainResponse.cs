@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Domain.CrossCutting
+﻿namespace Lazy.Crud.Core.Domain.CrossCutting
 {
     public class DomainResponse
     {

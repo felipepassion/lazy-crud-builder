@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Attributes
+﻿namespace Lazy.Crud.Core.Application.DTO.Attributes
 {
     /// <summary>
     /// Renders a radio button option in the UI.

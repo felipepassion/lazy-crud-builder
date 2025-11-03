@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
 
-namespace Niu.Nutri.Core.Application.Extensions
+namespace Lazy.Crud.Core.Application.Extensions
 {
     public static class HttpResponseDTOExtensions
     {

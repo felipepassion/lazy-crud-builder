@@ -1,11 +1,11 @@
-﻿using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
 using AutoMapper;
-using Niu.Nutri.Core.Application.DTO.Attributes;
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profiles
+using Lazy.Crud.Core.Application.DTO.Attributes;
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profiles
 {
 	using Application.DTO.Aggregates.DefaultTemplateAgg.Requests;
 	using Entities;

@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Niu.Nutri.Core.Application.Validators;
+using Lazy.Crud.Core.Application.Validators;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
+namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
 {
     public class ForgotPasswordParametersValidator : AbstractValidator<ForgotPasswordParametersDTO>, IValidator<ForgotPasswordParametersDTO>
     {

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
-using Niu.Nutri.Core.Application.DTO.Seedwork.ValueObjects;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+using Lazy.Crud.Core.Application.DTO.Seedwork.ValueObjects;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Profiles
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Profiles
 {
     public partial class CoreAggProfile : Profile
     {

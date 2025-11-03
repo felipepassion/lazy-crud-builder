@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Validators;
-using Niu.Nutri.Core.Application.DTO.Validators;
-using Niu.Nutri.Core.Application.Validators;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+using Lazy.Crud.Core.Application.DTO.Validators;
+using Lazy.Crud.Core.Application.Validators;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
+namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
 {
     public partial class RegisterValidator : BaseValidator<RegisterParametersDTO>
     {

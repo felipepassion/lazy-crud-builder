@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models
+﻿namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public interface IActivableEntityDTO : IEntityDTO { public bool? Active { get; set; } }
 

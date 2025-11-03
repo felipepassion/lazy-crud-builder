@@ -1,9 +1,9 @@
-﻿using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands;
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.CommandModels
+﻿using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands;
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.CommandModels
 {
     using Queries.Models; 
-    using Niu.Nutri.DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Requests; 
+    using DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Requests; 
     public partial class CreateDefaultEntityCommand : BaseRequestableCommand<DefaultEntityQueryModel, DefaultEntityDTO>
     {
         public bool UpdateIfExists { get; set; }

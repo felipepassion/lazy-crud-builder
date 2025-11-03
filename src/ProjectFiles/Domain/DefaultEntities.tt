@@ -3,7 +3,7 @@
 	var entities = GetEntities("Domain", withAttribute: "EndpointsT4");
 	var entitiesT4 = GetEntities("Domain", withAttribute: "EndpointsT4", withEndpoint: "HttpPost"); 
 	var project = GetCurrentProject();
-	var myName = project.Name.Split('.').First();
+	var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
 	var AggName = myName + "Agg";
 	var path = Path.GetDirectoryName(project.FullName);
 	var parentName = "Commands";

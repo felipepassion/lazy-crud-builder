@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Attributes
+﻿namespace Lazy.Crud.Core.Application.DTO.Attributes
 {
     /// <summary>
     /// Controls how a property is rendered in list views (order and optional template).

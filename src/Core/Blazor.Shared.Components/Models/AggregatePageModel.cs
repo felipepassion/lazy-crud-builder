@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Reflection;
 
-namespace Niu.Nutri.Shared.Blazor.Components.Models
+namespace Lazy.Crud.Shared.Blazor.Components.Models
 {
     public class AggregatePageModel
     {

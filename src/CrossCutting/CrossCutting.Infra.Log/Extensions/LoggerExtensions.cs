@@ -1,10 +1,10 @@
-﻿using Niu.Nutri.CrossCutting.Infra.Log.Entries;
+﻿using Lazy.Crud.CrossCutting.Infra.Log.Entries;
 using Serilog;
 using Serilog.Context;
 using Serilog.Core.Enrichers;
 using System.Diagnostics;
 
-namespace Niu.Nutri.CrossCutting.Infra.Log.Extensions
+namespace Lazy.Crud.CrossCutting.Infra.Log.Extensions
 {
     public static class LoggerExtensions
     {

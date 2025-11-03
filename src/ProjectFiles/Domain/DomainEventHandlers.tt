@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using Niu.Nutri.Core.Domain.Extensions;
-using Niu.Nutri.CrossCutting.Infra.Log.Providers;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events.Handles;
+using Lazy.Crud.Core.Domain.Extensions;
+using Lazy.Crud.CrossCutting.Infra.Log.Providers;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events.Handles;
 <# if (entitiesT4.Count() > 0){#>
-using <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.ModelEvents;
+using <#= project.Name #>.Aggregates.<#= AggName #>.ModelEvents;
 <# } #>
 
-namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.EventHandlers
+namespace <#= project.Name #>.Aggregates.<#= AggName #>.EventHandlers
 {
 <#foreach(var entity in entitiesT4){#>
     public partial class <#= entity.Name #>EventHandler : BaseEventHandler,

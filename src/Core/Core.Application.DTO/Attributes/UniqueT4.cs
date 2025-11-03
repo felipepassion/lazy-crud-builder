@@ -1,7 +1,7 @@
 ﻿using System;
-using Niu.Nutri.Core.Application.DTO.Attributes;
+using Lazy.Crud.Core.Application.DTO.Attributes;
 
-namespace Niu.Nutri.Core.Domain.Attributes.T4
+namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Marks a property or set of properties as unique and optionally provides a message.

@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Niu.Nutri.Core.Application.DTO.Attributes;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Application.DTO.Attributes;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 using System.Reflection;
 
-namespace Niu.Nutri.Core.Infra.Data.Extensions
+namespace Lazy.Crud.Core.Infra.Data.Extensions
 {
     public static class EfExtensions
     {

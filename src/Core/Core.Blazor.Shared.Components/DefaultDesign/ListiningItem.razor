@@ -1,8 +1,8 @@
-﻿@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
-@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
-@using Niu.Living.Users.Application.DTO.Aggregates.UsersAgg.Requests;
-@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Models;
-@using Niu.Living.Core.Application.DTO.Attributes;
+﻿@using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
+@using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+@using Lazy.Crud.Users.Application.DTO.Aggregates.UsersAgg.Requests;
+@using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+@using Lazy.Crud.Core.Application.DTO.Attributes;
 @using Syncfusion.Blazor.DropDowns;
 @using System.Collections.Generic;
 @using Syncfusion.Blazor.Buttons
@@ -19,7 +19,7 @@
 <div class="columms-list">
     @if (Model == null)
     {
-        <TollSvc.WebApp.Client.Pages.Shared.GenericComponents.Loading />
+        <Loading />
     }
     else
     {

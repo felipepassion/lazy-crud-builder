@@ -1,8 +1,8 @@
-﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
-using Niu.Nutri.Core.Domain.Attributes.T4;
+﻿using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Core.Domain.Attributes.T4;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Niu.Nutri.<#=myName#>.Domain.Aggregates.UsersAgg.Entities
+namespace Lazy.Crud.<#=myName#>.Domain.Aggregates.UsersAgg.Entities
 {
     public partial class User : Entity
     {

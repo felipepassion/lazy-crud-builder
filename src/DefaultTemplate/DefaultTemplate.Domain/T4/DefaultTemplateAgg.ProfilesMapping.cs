@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profiles
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profiles
 {
     public class DefaultTemplateAggCoreProfile : Core.Domain.Aggregates.CommonAgg.Profiles.CoreAggProfile { }
 }
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profiles
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profiles
 {
 	using Application.DTO.Aggregates.DefaultTemplateAgg.Requests;
 	using Entities;
@@ -24,7 +24,7 @@ namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profile
 	}
 }
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.UsersAgg.Profiles
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.UsersAgg.Profiles
 {
 	using Application.DTO.Aggregates.UsersAgg.Requests;
 	using Entities;

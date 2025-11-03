@@ -1,6 +1,6 @@
 using System;
 
-namespace Niu.Nutri.Core.Application.DTO.Attributes
+namespace Lazy.Crud.Core.Application.DTO.Attributes
 {
     /// <summary>
     /// Organizational category for project classes/attributes.

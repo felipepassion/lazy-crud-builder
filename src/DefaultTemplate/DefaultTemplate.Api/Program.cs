@@ -1,7 +1,7 @@
 
-using Niu.Nutri.Core.Api.Middlewares;
+using Lazy.Crud.Core.Api.Middlewares;
 
-namespace Niu.Nutri.DefaultTemplate.Api
+namespace Lazy.Crud.DefaultTemplate.Api
 {
     public class Program
     {

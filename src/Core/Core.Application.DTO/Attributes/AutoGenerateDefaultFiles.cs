@@ -1,6 +1,6 @@
-﻿using Niu.Nutri.Core.Application.DTO.Attributes;
+﻿using Lazy.Crud.Core.Application.DTO.Attributes;
 
-namespace Niu.Nutri.Core.Application.DTO.Attributes
+namespace Lazy.Crud.Core.Application.DTO.Attributes
 {
     /// <summary>
     /// Automatically generates default files for the feature/entity.

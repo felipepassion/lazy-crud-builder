@@ -1,9 +1,9 @@
-﻿using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+﻿using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 using System.Linq.Expressions;
-using Niu.Nutri.Core.Domain.Seedwork.Specification;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Domain.Seedwork.Specification;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Filters{
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Filters{
 	using Entities;
 	using Specifications;
 	using Queries.Models;

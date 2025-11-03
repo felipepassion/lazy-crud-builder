@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Niu.Nutri.Core.Application.DTO.Extensions;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Extensions;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
 using Microsoft.Extensions.Logging;
 
-namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Validators
+namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Validators
 {
     public class BaseValidator<T> : AbstractValidator<T>, IValidator<T>
         where T : EntityDTO

@@ -3,7 +3,7 @@
 var projects = FindDomainProjects().ToArray();
 var aggSettingsList = new List<CodeClass>();
 foreach(var project in projects) {
-        var myName = project.Name.Split('.').First();
+        var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
 		if(myName == "DefaultTemplate") continue;
         aggSettingsList.AddRange(GetAggregateEntities(project.Name, withAttribute:"EndpointsT4", withoutAttribute: "DisableControllers")
 			.Where(x=>x.IsAbstract == false));
@@ -15,9 +15,9 @@ if (aggSettingsList.Any()) {
 var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);#>
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Niu.Nutri.WebApp.Controllers;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
-using Niu.Nutri.Core.Application.Extensions;
+using Lazy.Crud.WebApp.Controllers;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.Core.Application.Extensions;
 <#foreach(var namespaces in groupEntities) {
 	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 	var shortAggName = aggName.Replace("Agg","");

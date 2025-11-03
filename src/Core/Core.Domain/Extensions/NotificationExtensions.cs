@@ -1,11 +1,11 @@
-﻿using Niu.Nutri.Core.Application.DTO.Extensions;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Notifications;
-using Niu.Nutri.CrossCutting.Infra.Log.Entries;
-using Niu.Nutri.CrossCutting.Infra.Log.Extensions;
-using Niu.Nutri.CrossCutting.Infra.Log.Providers;
+﻿using Lazy.Crud.Core.Application.DTO.Extensions;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Notifications;
+using Lazy.Crud.CrossCutting.Infra.Log.Entries;
+using Lazy.Crud.CrossCutting.Infra.Log.Extensions;
+using Lazy.Crud.CrossCutting.Infra.Log.Providers;
 
-namespace Niu.Nutri.Core.Domain.Extensions
+namespace Lazy.Crud.Core.Domain.Extensions
 {
     public static class NotificationExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Niu.Nutri.Core.Application.Extensions
+namespace Lazy.Crud.Core.Application.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {

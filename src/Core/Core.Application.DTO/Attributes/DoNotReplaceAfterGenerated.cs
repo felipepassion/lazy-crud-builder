@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Attributes
+﻿namespace Lazy.Crud.Core.Application.DTO.Attributes
 {
     /// <summary>
     /// Prevents overwriting the front-end after the first generation when applied to a class.

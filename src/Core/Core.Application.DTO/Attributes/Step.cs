@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Application.DTO.Attributes;
+﻿using Lazy.Crud.Core.Application.DTO.Attributes;
 using System;
 
-namespace Niu.Nutri.Core.Domain.Attributes.T4
+namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Marks a property or entity step with a specific position used by multi-step forms or processes.

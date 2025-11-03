@@ -1,7 +1,7 @@
 ﻿<# if (entities.Any()) { #>
 using Microsoft.Extensions.Configuration;
 using <#= GetDefaultNamespace() #>.Core.Infra.Data.Repositories;
-using <#= GetDefaultNamespace() #>.<#= project.Name #>.Context;
+using <#= project.Name #>.Context;
 
 <# foreach (var nmspc in groupEntities) 
 { #>
@@ -17,7 +17,7 @@ var contextName = AggName + "Context";
    foreach(var namespaces in entities.GroupBy(p => p.Namespace.FullName)) { #>
 namespace <#= namespaces.Key.Replace("Entities", "Repositories").Replace("Domain", "Infra.Data") #>
 {
-	using <#= namespaces.Key.Replace("Entities", "Repositories") #>;
+	using Domain.Aggregates.<#= namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")) #>.Repositories;
 <# 	
 var isFromSameAgg = AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 foreach (var entity in namespaces) 

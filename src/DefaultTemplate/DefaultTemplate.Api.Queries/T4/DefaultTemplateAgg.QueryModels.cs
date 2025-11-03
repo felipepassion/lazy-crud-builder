@@ -1,5 +1,5 @@
 ﻿
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Queries.Models
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Queries.Models
 {
     using Core.Api.Queries;
 	using Enumerations;

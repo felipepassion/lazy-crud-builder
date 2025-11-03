@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses
+﻿namespace Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses
 {
     public class GetDTO : GetDTO<object>
     {

@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core.Application.DTO\Core.Application.DTO.csproj" />
+    <ProjectReference Include="..\Core.Application.DTO\Lazy.Crud.Core.Application.DTO.csproj" />
   </ItemGroup>
 
 </Project>

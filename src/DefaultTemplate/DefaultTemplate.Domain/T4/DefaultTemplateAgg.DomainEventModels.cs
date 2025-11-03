@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
+﻿using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.ModelEvents
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.ModelEvents
 {
     using ModelEvents;
     using Entities;

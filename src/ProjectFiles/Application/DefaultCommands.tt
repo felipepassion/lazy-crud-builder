@@ -4,7 +4,7 @@
 
 	var project = GetCurrentProject();
 	var path = Path.GetDirectoryName(project.FullName);
-	var myName = project.Name.Split('.').First();
+	var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
 	var AggName = myName + "Agg";
 	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
 

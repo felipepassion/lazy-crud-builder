@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
 
-namespace Niu.Nutri.CrossCutting.Infra.Log.SeedWork
+namespace Lazy.Crud.CrossCutting.Infra.Log.SeedWork
 {
     public class LoggerFactory
     {

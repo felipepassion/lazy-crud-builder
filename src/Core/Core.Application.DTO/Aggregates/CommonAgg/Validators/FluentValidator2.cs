@@ -2,10 +2,10 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
 using System.ComponentModel;
 
-namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Validators
+namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Validators
 {
     public class FormFluentValidator : ComponentBase, IDisposable
     {

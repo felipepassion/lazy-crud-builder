@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
+﻿using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
 using Newtonsoft.Json;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands
 {
     public abstract class BaseSearchableCommand<T> : BaseCommand
         where T : class

@@ -1,10 +1,10 @@
-﻿using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands;
+﻿using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands;
 <#foreach(var namespaces in groupEntitiesT4) {#>
 namespace <#= namespaces.Key.Replace(".Entities",".CommandModels") #>
 {
     using Queries.Models; 
-    using <#= namespaces.Key.Replace("Domain","Application.DTO").Replace("Entities", "Requests") #>; 
+    using <#= namespaces.Key.Replace("Domain","Application.DTO").Replace("Entities", "Requests").Replace(GetDefaultNamespace()+'.',"") #>; 
 <#foreach(var entity in namespaces) {
     var mySearchParent = $"{entity.Name}SearchableCommand";
     var myQueryModel = $"{entity.Name}QueryModel";

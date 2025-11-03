@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Attributes
+﻿namespace Lazy.Crud.Core.Application.DTO.Attributes
 {
     /// <summary>
     /// UI selector that renders a dropdown with auto-complete backed by foreign data.

@@ -4,7 +4,6 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Niu.Nutri.DefaultTemplate.Application</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Core.Application\Core.Application.csproj" />
-    <ProjectReference Include="..\DefaultTemplate.Infra.Data\DefaultTemplate.Infra.Data.csproj" />
+    <ProjectReference Include="..\..\Core\Core.Application\Lazy.Crud.Core.Application.csproj" />
+    <ProjectReference Include="..\DefaultTemplate.Infra.Data\Lazy.Crud.DefaultTemplate.Infra.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

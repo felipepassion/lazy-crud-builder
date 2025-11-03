@@ -1,8 +1,8 @@
-﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
+﻿using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
 using MediatR;
 
-namespace Niu.Nutri.Core.Application.Aggregates.Common
+namespace Lazy.Crud.Core.Application.Aggregates.Common
 {
     public interface IBaseAppService : IDisposable 
     {

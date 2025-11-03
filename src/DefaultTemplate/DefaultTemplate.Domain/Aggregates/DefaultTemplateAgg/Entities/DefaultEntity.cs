@@ -1,8 +1,8 @@
-﻿using Niu.Nutri.Core.Application.DTO.Attributes;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
-using Niu.Nutri.Core.Domain.Attributes.T4;
+﻿using Lazy.Crud.Core.Application.DTO.Attributes;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Core.Domain.Attributes.T4;
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities
 {
     [EndpointsT4(EndpointTypes.HttpAll)]
     public partial class DefaultEntity : Entity

@@ -5,13 +5,13 @@ using <#= nmspc.Key.Replace("Domain","Infra.Data").Replace("Entities", "Mappings
 <# } #>
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Niu.Nutri.Core.Infra.Data.Contexts;
+using Lazy.Crud.Core.Infra.Data.Contexts;
 
 <#  
 var className = GetDefaultNamespace().Replace(".","");
 var contextName = className + "Context";
 #>
-namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Context
+namespace <#= project.Name #>.Context
 {
 	public partial class <#= AggName #>Context : BaseContext
 	{

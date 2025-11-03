@@ -4,9 +4,6 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<AssemblyName>Niu.Nutri.Core.Domain</AssemblyName>
-		<RootNamespace>Niu.Nutri.Core.Domain</RootNamespace>
-
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,11 +24,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Application.Mail\ClassLibrary1\CrossCutting.Application.Mail.csproj" />
-		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\CrossCutting.Infra.Log.csproj" />
-		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\CrossCuting.Infra.Utils.csproj" />
-		<ProjectReference Include="..\Core.Api.Queries\Core.Api.Queries.csproj" />
-		<ProjectReference Include="..\Core.Application.DTO\Core.Application.DTO.csproj" />
+		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Application.Mail\ClassLibrary1\Lazy.Crud.CrossCutting.Application.Mail.csproj" />
+		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\Lazy.Crud.CrossCutting.Infra.Log.csproj" />
+		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\Lazy.Crud.CrossCuting.Infra.Utils.csproj" />
+		<ProjectReference Include="..\Core.Api.Queries\Lazy.Crud.Core.Api.Queries.csproj" />
+		<ProjectReference Include="..\Core.Application.DTO\Lazy.Crud.Core.Application.DTO.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

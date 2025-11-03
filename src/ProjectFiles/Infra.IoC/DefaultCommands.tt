@@ -3,7 +3,7 @@
 	var entities = GetEntities("Domain", withAttribute: "EndpointsT4").Where(x=>x.IsAbstract == false); 
 	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4", withEndpoint: "HttpPost").Where(x=>x.IsAbstract == false); 
 	var project = GetCurrentProject();
-	var myName = project.Name.Split('.').First();
+	var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
 	var AggName = myName + "Agg";
 	var parentName = "Commands";
 	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);

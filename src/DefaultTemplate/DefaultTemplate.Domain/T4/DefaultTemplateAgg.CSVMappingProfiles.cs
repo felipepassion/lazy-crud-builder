@@ -1,6 +1,6 @@
 ﻿
 using CsvHelper.Configuration;
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profiles
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Profiles
 {
 	using Application.DTO.Aggregates.DefaultTemplateAgg.Requests;
 	using Entities;

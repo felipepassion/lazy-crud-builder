@@ -4,7 +4,6 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Niu.Nutri.Core.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\CrossCutting.Infra.Log.csproj" />
-    <ProjectReference Include="..\Core.Application\Core.Application.csproj" />
+    <ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\Lazy.Crud.CrossCutting.Infra.Log.csproj" />
+    <ProjectReference Include="..\Core.Application\Lazy.Crud.Core.Application.csproj" />
   </ItemGroup>
 
 </Project>

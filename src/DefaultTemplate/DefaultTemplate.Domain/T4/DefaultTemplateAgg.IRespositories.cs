@@ -1,8 +1,8 @@
-﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Repositories;
-using Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities;
-using Niu.Nutri.DefaultTemplate.Domain.Aggregates.UsersAgg.Entities;
+﻿using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Repositories;
+using Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities;
+using Lazy.Crud.DefaultTemplate.Domain.Aggregates.UsersAgg.Entities;
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Repositories 
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Repositories 
 {
 	public partial interface IDefaultEntityRepository : IRepository<DefaultEntity> { }
 	public partial interface IDefaultEntityMongoRepository : IMongoRepository<DefaultEntity> { }
@@ -11,7 +11,7 @@ namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Reposit
 	public partial interface IDefaultTemplateAggSettingsMongoRepository : IMongoRepository<DefaultTemplateAggSettings> { }
 
 }
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.UsersAgg.Repositories 
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.UsersAgg.Repositories 
 {
 	public partial interface IUserRepository : IRepository<User> { }
 	public partial interface IUserMongoRepository : IMongoRepository<User> { }

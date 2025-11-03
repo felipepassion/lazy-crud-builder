@@ -1,12 +1,12 @@
 
 using Microsoft.AspNetCore.DataProtection;
 
-namespace Niu.Nutri.DefaultTemplate.Api {
+namespace Lazy.Crud.DefaultTemplate.Api {
     using Infra.Data.Context;
     public static partial class IoCFactory {
        
 		public static void InjectDependencies(this IServiceCollection services, IConfiguration configuration) {
-                    Niu.Nutri.Core.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
+                    Lazy.Crud.Core.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
             services.ConfigureAuthentication();
 		}
 
@@ -27,8 +27,8 @@ namespace Niu.Nutri.DefaultTemplate.Api {
         {
             using (var scope = app.Services.CreateScope())
             {
-                var logProvider = scope.ServiceProvider.GetRequiredService<Niu.Nutri.CrossCutting.Infra.Log.Providers.ILogProvider>();
-                logProvider.Write(new Niu.Nutri.CrossCutting.Infra.Log.Entries.LogEntry("------> APP | DefaultTemplate.Api | STARTED <------", action: "OnAppInitialized"));
+                var logProvider = scope.ServiceProvider.GetRequiredService<Lazy.Crud.CrossCutting.Infra.Log.Providers.ILogProvider>();
+                logProvider.Write(new Lazy.Crud.CrossCutting.Infra.Log.Entries.LogEntry("------> APP | Lazy.Crud.DefaultTemplate.Api | STARTED <------", action: "OnAppInitialized"));
             }
         }
     }

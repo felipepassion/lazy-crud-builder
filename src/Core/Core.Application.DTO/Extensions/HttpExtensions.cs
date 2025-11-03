@@ -1,14 +1,14 @@
 ﻿using Newtonsoft.Json;
-using Niu.Nutri.Core.Api.Queries;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Api.Queries;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Net.Http.Json;
 
-namespace Niu.Nutri.Core.Application.DTO.Extensions
+namespace Lazy.Crud.Core.Application.DTO.Extensions
 {
     public static class HttpExtensions
     {

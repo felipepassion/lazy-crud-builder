@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
 
-namespace Niu.Nutri.Shared.Blazor.Forms.Modal
+namespace Lazy.Crud.Shared.Blazor.Forms.Modal
 {
     public interface IBaseModal
     {

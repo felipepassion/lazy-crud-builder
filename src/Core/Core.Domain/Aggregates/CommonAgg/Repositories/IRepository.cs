@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Domain.Seedwork;
+﻿using Lazy.Crud.Core.Domain.Seedwork;
 using System.Linq.Expressions;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Repositories
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Repositories
 {
     public interface IRepository<T> : IDisposable
         where T : class, new()

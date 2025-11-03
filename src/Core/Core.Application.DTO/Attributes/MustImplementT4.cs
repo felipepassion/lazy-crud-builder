@@ -1,7 +1,7 @@
 ﻿using System;
-using Niu.Nutri.Core.Application.DTO.Attributes;
+using Lazy.Crud.Core.Application.DTO.Attributes;
 
-namespace Niu.Nutri.Core.Domain.Attributes.T4
+namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Indicates that a class must implement a specific interface or contract expected by T4 templates.

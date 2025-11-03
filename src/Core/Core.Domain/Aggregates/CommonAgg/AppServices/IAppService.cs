@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.AppServices
+﻿namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.AppServices
 {
     public interface IAppService<T>
         where T : class

@@ -1,6 +1,6 @@
-﻿using Niu.Nutri.Core.Domain.Seedwork.Specification;
+﻿using Lazy.Crud.Core.Domain.Seedwork.Specification;
 using Microsoft.EntityFrameworkCore;
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Specifications {
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Specifications {
 	using Entities;
    public partial class DefaultEntitySpecifications {
 				public static Specification<DefaultEntity> ExternalIdContains(string value) {

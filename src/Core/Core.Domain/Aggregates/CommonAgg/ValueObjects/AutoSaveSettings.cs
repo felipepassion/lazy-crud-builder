@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     [Keyless]
     public class AutoSaveSettings

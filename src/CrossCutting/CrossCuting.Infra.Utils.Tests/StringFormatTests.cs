@@ -1,4 +1,4 @@
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 
 namespace CrossCuting.Infra.Utils.Tests
 {

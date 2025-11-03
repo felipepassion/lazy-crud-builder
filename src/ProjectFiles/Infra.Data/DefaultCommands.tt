@@ -5,7 +5,7 @@
 	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4");
 	//var entities = GetEntities();
 	var project = GetCurrentProject();
-	var myName = project.Name.Split('.').First();
+	var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
 	var AggName = myName + "Agg";
 	var parentName = "Commands";
 	var groupAllEntities = allEntities.GroupBy(p => p.Namespace.FullName);

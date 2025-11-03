@@ -1,12 +1,12 @@
 ﻿
 using MediatR;
 using System.Linq.Expressions;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
-using Niu.Nutri.Core.Application.DTO.Extensions;
-using Niu.Nutri.Core.Application.Aggregates.Common;
-using Niu.Nutri.Core.Domain.CrossCutting;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Application.DTO.Extensions;
+using Lazy.Crud.Core.Application.Aggregates.Common;
+using Lazy.Crud.Core.Domain.CrossCutting;
 
-namespace Niu.Nutri.DefaultTemplate.Application.Aggregates.DefaultTemplateAgg.AppServices {
+namespace Lazy.Crud.DefaultTemplate.Application.Aggregates.DefaultTemplateAgg.AppServices {
 	using Application.DTO.Aggregates.DefaultTemplateAgg.Requests;
 	using Domain.Aggregates.DefaultTemplateAgg.Queries.Models;
 	using Domain.Aggregates.DefaultTemplateAgg.Repositories;
@@ -15,7 +15,7 @@ namespace Niu.Nutri.DefaultTemplate.Application.Aggregates.DefaultTemplateAgg.Ap
 	using Domain.Aggregates.DefaultTemplateAgg.CommandModels;
 	public partial class DefaultEntityAppService : BaseAppService, IDefaultEntityAppService {	
 		public IDefaultEntityRepository _defaultEntityRepository;
-		public DefaultEntityAppService(IMediator mediator, Niu.Nutri.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IDefaultEntityRepository defaultEntityRepository) : base(ctx, mediator) { _defaultEntityRepository = defaultEntityRepository; }	
+		public DefaultEntityAppService(IMediator mediator, CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IDefaultEntityRepository defaultEntityRepository) : base(ctx, mediator) { _defaultEntityRepository = defaultEntityRepository; }	
 		public async Task<DefaultEntityDTO> Get(DefaultEntityQueryModel request) {
             return (await _defaultEntityRepository.FindAsync(filter: DefaultEntityFilters.GetFilters(request, isOrSpecification: request.IsOrSpecification), selector: x => x.ProjectedAs<DefaultEntityDTO>()));
         }
@@ -64,7 +64,7 @@ namespace Niu.Nutri.DefaultTemplate.Application.Aggregates.DefaultTemplateAgg.Ap
 	}
 	public partial class DefaultTemplateAggSettingsAppService : BaseAppService, IDefaultTemplateAggSettingsAppService {	
 		public IDefaultTemplateAggSettingsRepository _defaultTemplateAggSettingsRepository;
-		public DefaultTemplateAggSettingsAppService(IMediator mediator, Niu.Nutri.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IDefaultTemplateAggSettingsRepository defaultTemplateAggSettingsRepository) : base(ctx, mediator) { _defaultTemplateAggSettingsRepository = defaultTemplateAggSettingsRepository; }	
+		public DefaultTemplateAggSettingsAppService(IMediator mediator, CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, IDefaultTemplateAggSettingsRepository defaultTemplateAggSettingsRepository) : base(ctx, mediator) { _defaultTemplateAggSettingsRepository = defaultTemplateAggSettingsRepository; }	
 		public async Task<DefaultTemplateAggSettingsDTO> Get(DefaultTemplateAggSettingsQueryModel request) {
             return (await _defaultTemplateAggSettingsRepository.FindAsync(filter: DefaultTemplateAggSettingsFilters.GetFilters(request, isOrSpecification: request.IsOrSpecification), selector: x => x.ProjectedAs<DefaultTemplateAggSettingsDTO>()));
         }

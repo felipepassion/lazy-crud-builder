@@ -1,6 +1,6 @@
-﻿using Niu.Nutri.Core.Application.DTO.Attributes;
+﻿using Lazy.Crud.Core.Application.DTO.Attributes;
 
-namespace Niu.Nutri.Core.Application.DTO.Attributes
+namespace Lazy.Crud.Core.Application.DTO.Attributes
 {
     /// <summary>
     /// Instructs the generator/mapping to attach the entity to the context on update.

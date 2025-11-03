@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Api.DTO
+﻿namespace Lazy.Crud.Core.Api.DTO
 {
     public class ApiRoutesDTO
     {

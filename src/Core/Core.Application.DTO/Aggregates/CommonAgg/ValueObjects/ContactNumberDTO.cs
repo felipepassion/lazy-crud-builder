@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
+namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects
 {
     public class ContactNumberDTO
     {

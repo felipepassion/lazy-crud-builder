@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Niu.Nutri.Core.Domain.Attributes.T4;
+using Lazy.Crud.Core.Domain.Attributes.T4;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     [Keyless]
     public class ImageFileInfo

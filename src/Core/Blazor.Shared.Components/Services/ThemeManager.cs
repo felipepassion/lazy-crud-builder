@@ -2,7 +2,7 @@
 
 #pragma warning disable IDE0290 // Use primary constructor
 
-namespace Niu.Nutri.Shared.Blazor.Components.Services
+namespace Lazy.Crud.Shared.Blazor.Components.Services
 {
     public class ThemeManager : IThemeManager
     {

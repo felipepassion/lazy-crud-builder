@@ -4,11 +4,10 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Niu.Nutri.Core.Application.DTO.Http.Models</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core.Domain.CrossCutting\Core.Domain.CrossCutting.csproj" />
+    <ProjectReference Include="..\Core.Domain.CrossCutting\Lazy.Crud.Core.Domain.CrossCutting.csproj" />
   </ItemGroup>
 
   <ItemGroup>

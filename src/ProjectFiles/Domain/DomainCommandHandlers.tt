@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Niu.Nutri.Core.Domain.CrossCutting;
-using Niu.Nutri.Core.Application.DTO.Extensions;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
+using Lazy.Crud.Core.Domain.CrossCutting;
+using Lazy.Crud.Core.Application.DTO.Extensions;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
 
 <#foreach(var namespaces in groupEntitiesT4) {#>
 namespace <#= namespaces.Key.Replace(".Entities",".CommandHandlers") #>
@@ -161,7 +161,7 @@ if (entitiesT4.Any()) {
         
         string attr = GetAttributes(entity, includeSteppableAttributes: true).FirstOrDefault(x=>x.Contains("Step"));
 		if (string.IsNullOrWhiteSpace(attr)) attr="1";#>        
-namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.CommandHandlers {
+namespace <#= project.Name #>.Aggregates.<#= AggName #>.CommandHandlers {
     using Entities;
 <# var className = $"{entity.Name}CommandHandler";#>
     public partial class <#=className#> : Base<#= AggName#>CommandHandler<<#=entity.Name#>>

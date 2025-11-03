@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using Niu.Nutri.Core.Domain.Attributes.Auth;
+using Lazy.Crud.Core.Domain.Attributes.Auth;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
+namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
 {
     public class LoginValidator : AbstractValidator<LoginParametersDTO>, IValidator<LoginParametersDTO>
     {

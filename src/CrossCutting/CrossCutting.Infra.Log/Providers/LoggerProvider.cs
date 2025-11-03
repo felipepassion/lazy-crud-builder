@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;
-using Niu.Nutri.CrossCutting.Infra.Log.Entries;
-using Niu.Nutri.CrossCutting.Infra.Log.Extensions;
-using Niu.Nutri.CrossCutting.Infra.Log.SeedWork;
+using Lazy.Crud.CrossCutting.Infra.Log.Entries;
+using Lazy.Crud.CrossCutting.Infra.Log.Extensions;
+using Lazy.Crud.CrossCutting.Infra.Log.SeedWork;
 using ILogger = Serilog.ILogger;
 using Serilog.Events;
 
-namespace Niu.Nutri.CrossCutting.Infra.Log.Providers
+namespace Lazy.Crud.CrossCutting.Infra.Log.Providers
 {
     public partial class LoggerProvider : ILogProvider, Microsoft.Extensions.Logging.ILogger
     {

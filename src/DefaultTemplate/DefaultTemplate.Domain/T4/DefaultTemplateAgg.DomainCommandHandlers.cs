@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Niu.Nutri.Core.Domain.CrossCutting;
-using Niu.Nutri.Core.Application.DTO.Extensions;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
+using Lazy.Crud.Core.Domain.CrossCutting;
+using Lazy.Crud.Core.Application.DTO.Extensions;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.CommandHandlers
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.CommandHandlers
 {
     using Filters;
     using ModelEvents;

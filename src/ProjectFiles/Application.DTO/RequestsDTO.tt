@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
+﻿using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using Niu.Nutri.Core.Application.DTO.Attributes;
+using Lazy.Crud.Core.Application.DTO.Attributes;
 
 <# if (entities.Any()) {#>
 <# foreach(var namespaces in groupEntities) { 
@@ -52,9 +52,9 @@ if (entitiesT4.Any()) {
     { 
         var myNamespace = namespaces.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO");
         foreach(var entity in namespaces) {#>
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
 
-namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.Requests;
+namespace <#= project.Name #>.Aggregates.<#= AggName #>.Requests;
 
 public partial class <#= entity.Name #>DTO : <#= MyParent(entity) #>DTO
 {

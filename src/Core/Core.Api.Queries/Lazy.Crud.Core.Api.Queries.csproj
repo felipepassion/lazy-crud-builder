@@ -4,11 +4,10 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<RootNamespace>Niu.Nutri.CrossCuting.Infra.Utils</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" />
+		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\Lazy.Crud.CrossCuting.Infra.Utils.csproj" />
 	</ItemGroup>
 
 </Project>

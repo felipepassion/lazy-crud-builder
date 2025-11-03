@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Web;
 
-namespace Niu.Nutri.Core.Api.Queries.Extensions
+namespace Lazy.Crud.Core.Api.Queries.Extensions
 {
     public static class QueryStringExtenions
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
 using System.Reflection;
 
-namespace Niu.Nutri.Core.Blazor.Shared.Components.DefaultDesign
+namespace Lazy.Crud.Core.Blazor.Shared.Components.DefaultDesign
 {
     [Authorize]
     public class BaseListiningPage : LayoutComponentBase

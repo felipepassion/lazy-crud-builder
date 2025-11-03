@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Niu.Nutri.CrossCuting.Infra.Utils.Extensions
+namespace Lazy.Crud.CrossCuting.Infra.Utils.Extensions
 {
     public static class QueryParamConverter
     {

@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.JSInterop;
 
-namespace Niu.Nutri.Shared.Blazor.Components.Services
+namespace Lazy.Crud.Shared.Blazor.Components.Services
 {
     public interface IThemeManager
     {

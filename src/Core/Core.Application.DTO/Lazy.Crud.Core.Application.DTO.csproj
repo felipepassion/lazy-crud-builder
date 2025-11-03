@@ -4,7 +4,6 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Niu.Nutri.Core.Application.DTO</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,11 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\CrossCuting.Infra.Utils.csproj" />
-    <ProjectReference Include="..\Core.Api.Queries\Core.Api.Queries.csproj" />
-    <ProjectReference Include="..\Core.Application.DTO.Http.Models\Core.Application.DTO.Http.Models.csproj" />
-    <ProjectReference Include="..\Core.Application.Validators\Core.Application.Validators.csproj" />
-    <ProjectReference Include="..\Core.Enumeration\Core.Enumeration.csproj" />
+    <ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\Lazy.Crud.CrossCuting.Infra.Utils.csproj" />
+    <ProjectReference Include="..\Core.Api.Queries\Lazy.Crud.Core.Api.Queries.csproj" />
+    <ProjectReference Include="..\Core.Application.DTO.Http.Models\Lazy.Crud.Core.Application.DTO.Http.Models.csproj" />
+    <ProjectReference Include="..\Core.Application.Validators\Lazy.Crud.Core.Application.Validators.csproj" />
+    <ProjectReference Include="..\Core.Enumeration\Lazy.Crud.Core.Enumeration.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Application.DTO.Attributes;
+﻿using Lazy.Crud.Core.Application.DTO.Attributes;
 using System.Reflection;
 
-namespace Niu.Nutri.Core.Application.DTO.Extensions
+namespace Lazy.Crud.Core.Application.DTO.Extensions
 {
     public static class AttributesExtensions
     {

@@ -4,7 +4,6 @@
  <TargetFramework>net9.0</TargetFramework>
  <ImplicitUsings>enable</ImplicitUsings>
  <Nullable>enable</Nullable>
-	 <RootNamespace>Niu.Nutri.DefaultTemplate.Infra.CrossCuting.IoC</RootNamespace>
  </PropertyGroup>
 
 </Project>

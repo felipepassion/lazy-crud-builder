@@ -4,25 +4,17 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Niu.Nutri.DefaultTemplate.Infra.IoC</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Serilog" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Core.Infra.IoC\Core.Infra.IoC.csproj" />
-    <ProjectReference Include="..\DefaultTemplate.Application\DefaultTemplate.Application.csproj" />
-    <ProjectReference Include="..\DefaultTemplate.Infra.Data\DefaultTemplate.Infra.Data.csproj" />
+    <ProjectReference Include="..\..\Core\Core.Infra.Core.Data\Lazy.Crud.Core.Infra.Data.csproj" />
+    <ProjectReference Include="..\DefaultTemplate.Domain\Lazy.Crud.DefaultTemplate.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

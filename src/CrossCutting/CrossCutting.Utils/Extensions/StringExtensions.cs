@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
-namespace Niu.Nutri.CrossCuting.Infra.Utils.Extensions
+namespace Lazy.Crud.CrossCuting.Infra.Utils.Extensions
 {
     public static class StringExtensions
     {

@@ -6,7 +6,7 @@
     //var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
     
     foreach(var project in projects) {
-        var myName = project.Name.Split('.').First();
+        var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
         var proj = FindProject(project.Name);
         aggSettingsList.Add(proj.Name.Split('.')[0]);
     }

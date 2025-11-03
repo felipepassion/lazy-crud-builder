@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Niu.Nutri.Core.Application.Aggregates.Common.Models;
-using Niu.Nutri.Core.Application.DTO.Extensions;
+using Lazy.Crud.Core.Application.Aggregates.Common.Models;
+using Lazy.Crud.Core.Application.DTO.Extensions;
 
-namespace Niu.Nutri.Core.Api.Middlewares;
+namespace Lazy.Crud.Core.Api.Middlewares;
 
 public class LoggedUserContextMiddleware(ILoggedUserContext context) : IMiddleware
 {

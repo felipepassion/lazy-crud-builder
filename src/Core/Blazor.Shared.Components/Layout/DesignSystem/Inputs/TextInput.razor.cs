@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.FileSystemGlobbing.Internal;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 using System.Text.RegularExpressions;
 
-namespace Niu.Nutri.Shared.Blazor.Components.Layout.DesignSystem.Inputs
+namespace Lazy.Crud.Shared.Blazor.Components.Layout.DesignSystem.Inputs
 {
     public enum Masks
     {

@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Niu.Nutri.Core.Application.DTO.Seedwork;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
-using Niu.Nutri.CrossCutting.Infra.Log.Providers;
+using Lazy.Crud.Core.Application.DTO.Seedwork;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+using Lazy.Crud.CrossCutting.Infra.Log.Providers;
 
-namespace Niu.Nutri.Core.Infra.IoC
+namespace Lazy.Crud.Core.Infra.IoC
 {
     public partial class IoCFactory : IBaseIoC
     {

@@ -1,9 +1,9 @@
-﻿using Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities;
-using Niu.Nutri.DefaultTemplate.Domain.Aggregates.UsersAgg.Entities;
+﻿using Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities;
+using Lazy.Crud.DefaultTemplate.Domain.Aggregates.UsersAgg.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Niu.Nutri.DefaultTemplate.Infra.Data.Aggregates.DefaultTemplateAgg.Mappings 
+namespace Lazy.Crud.DefaultTemplate.Infra.Data.Aggregates.DefaultTemplateAgg.Mappings 
 {
     public partial class DefaultEntityMapping : IEntityTypeConfiguration<DefaultEntity>
     {
@@ -26,7 +26,7 @@ namespace Niu.Nutri.DefaultTemplate.Infra.Data.Aggregates.DefaultTemplateAgg.Map
 		partial void ConfigureAdditionalMapping(EntityTypeBuilder<DefaultTemplateAggSettings> builder);
     }
 }
-namespace Niu.Nutri.DefaultTemplate.Infra.Data.Aggregates.UsersAgg.Mappings 
+namespace Lazy.Crud.DefaultTemplate.Infra.Data.Aggregates.UsersAgg.Mappings 
 {
     public partial class UserMapping : IEntityTypeConfiguration<User>
     {

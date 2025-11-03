@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
-using Niu.Nutri.Core.Domain.CrossCutting;
-using Niu.Nutri.Core.Application.Aggregates.Common;
+using Lazy.Crud.Core.Domain.CrossCutting;
+using Lazy.Crud.Core.Application.Aggregates.Common;
 
-namespace Niu.Nutri.DefaultTemplate.Application.Aggregates.DefaultTemplateAgg.AppServices {
+namespace Lazy.Crud.DefaultTemplate.Application.Aggregates.DefaultTemplateAgg.AppServices {
 	using Application.DTO.Aggregates.DefaultTemplateAgg.Requests;
     using Domain.Aggregates.DefaultTemplateAgg.Queries.Models;
 	public partial interface IDefaultEntityAppService : IBaseAppService {	

@@ -1,4 +1,4 @@
-﻿@using Niu.Nutri.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
+﻿@using Lazy.Crud.<#= aggName #>.Application.DTO.Aggregates.<#= aggName #>Agg.Requests;
 
 @inherits BaseListiningPage
 

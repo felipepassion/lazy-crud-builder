@@ -1,6 +1,6 @@
-﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
+﻿using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.ValueObjects
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.ValueObjects
 {
     public class BaseAggregateSettings : Entity
     {

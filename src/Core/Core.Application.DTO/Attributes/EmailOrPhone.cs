@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Niu.Nutri.Core.Application.DTO.Attributes;
+using Lazy.Crud.Core.Application.DTO.Attributes;
 
-namespace Niu.Nutri.Core.Domain.Attributes.Auth
+namespace Lazy.Crud.Core.Domain.Attributes.Auth
 {
     /// <summary>
     /// Validation attribute that accepts either a valid email address or a phone number.

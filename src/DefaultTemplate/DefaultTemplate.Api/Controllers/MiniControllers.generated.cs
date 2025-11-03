@@ -1,11 +1,11 @@
 
 using Microsoft.AspNetCore.Mvc;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
-using Niu.Nutri.Core.Application.Aggregates.Common;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
-using Niu.Nutri.Core.Application.Extensions;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
-namespace Niu.Nutri.DefaultTemplate.Api.Controllers {
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+using Lazy.Crud.Core.Application.Aggregates.Common;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Application.Extensions;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+namespace Lazy.Crud.DefaultTemplate.Api.Controllers {
 	using Domain.Aggregates.DefaultTemplateAgg.Queries.Models;
 	using Application.Aggregates.DefaultTemplateAgg.AppServices;
 	using Domain.Aggregates.DefaultTemplateAgg.Entities;
@@ -48,7 +48,7 @@ namespace Niu.Nutri.DefaultTemplate.Api.Controllers {
         }
 		
 		[HttpPost]
-		public async Task<GetHttpResponseDTO<object>> Post(Niu.Nutri.DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Requests.DefaultEntityDTO request) {
+		public async Task<GetHttpResponseDTO<object>> Post(DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Requests.DefaultEntityDTO request) {
 			var result = await _defaultEntityAppService.Create(request);
             return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
 		}
@@ -102,7 +102,7 @@ namespace Niu.Nutri.DefaultTemplate.Api.Controllers {
         }
 		
 		[HttpPost]
-		public async Task<GetHttpResponseDTO<object>> Post(Niu.Nutri.DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Requests.DefaultTemplateAggSettingsDTO request) {
+		public async Task<GetHttpResponseDTO<object>> Post(DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Requests.DefaultTemplateAggSettingsDTO request) {
 			var result = await _defaultTemplateAggSettingsAppService.Create(request);
             return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
 		}

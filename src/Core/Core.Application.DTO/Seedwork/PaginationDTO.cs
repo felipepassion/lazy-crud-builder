@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Runtime.Serialization;
 
-namespace Niu.Nutri.Core.Application.DTO.Seedwork
+namespace Lazy.Crud.Core.Application.DTO.Seedwork
 {
     [DataContract]
     public class PaginationDTO<T> : IEnumerable, IEnumerable<T>

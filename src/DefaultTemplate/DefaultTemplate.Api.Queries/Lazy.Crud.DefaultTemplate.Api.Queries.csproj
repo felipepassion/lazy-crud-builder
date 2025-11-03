@@ -4,12 +4,11 @@
  <TargetFramework>net9.0</TargetFramework>
  <ImplicitUsings>enable</ImplicitUsings>
  <Nullable>enable</Nullable>
-	 <RootNamespace>Niu.Nutri.DefaultTemplate.Api.Queries</RootNamespace>
  </PropertyGroup>
 
  <ItemGroup>
- <ProjectReference Include="..\..\Core\Core.Api.Queries\Core.Api.Queries.csproj" />
- <ProjectReference Include="..\DefaultTemplate.Enumerations\DefaultTemplate.Enumerations.csproj" />
+ <ProjectReference Include="..\..\Core\Core.Api.Queries\Lazy.Crud.Core.Api.Queries.csproj" />
+ <ProjectReference Include="..\DefaultTemplate.Enumerations\Lazy.Crud.DefaultTemplate.Enumerations.csproj" />
  </ItemGroup>
 
  <ItemGroup>

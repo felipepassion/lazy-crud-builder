@@ -1,9 +1,4 @@
 <Project>
- <ItemGroup>
- <!-- Add our transitive targets into consuming projects -->
- <None Include="$(MSBuildThisFileDirectory)build\nuget\T4.targets" Pack="true" PackagePath="buildTransitive\$(MSBuildProjectName).targets" />
- <None Include="$(MSBuildThisFileDirectory)build\nuget\T4.Build.targets" Pack="true" PackagePath="buildTransitive\$(MSBuildProjectName).build.targets" />
- </ItemGroup>
  
  <!-- Ensure IsPackable is set for class libraries (after project evaluation) -->
  <PropertyGroup>

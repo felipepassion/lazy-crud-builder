@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
 
-namespace Niu.Nutri.Core.Infra.Data.Extensions
+namespace Lazy.Crud.Core.Infra.Data.Extensions
 {
     public static class MediatorExtension
     {

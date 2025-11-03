@@ -1,9 +1,9 @@
-﻿using Niu.Nutri.Core.Api.Queries.Extensions;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+﻿using Lazy.Crud.Core.Api.Queries.Extensions;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 
-namespace Niu.Nutri.Core.Api.Queries
+namespace Lazy.Crud.Core.Api.Queries
 {
     public class BaseQueryModel : IQueryModel
     {

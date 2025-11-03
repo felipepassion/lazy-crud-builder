@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
-using Niu.Nutri.CrossCutting.Infra.Log.Entries;
-using Niu.Nutri.CrossCutting.Infra.Log.SeedWork;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Notifications;
+using Lazy.Crud.CrossCutting.Infra.Log.Entries;
+using Lazy.Crud.CrossCutting.Infra.Log.SeedWork;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Notifications;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Profiles
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Profiles
 {
     public partial class LoggerProfile : Profile
     {

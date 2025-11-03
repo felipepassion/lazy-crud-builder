@@ -1,9 +1,9 @@
 ﻿@page "/<#=entity.Name#>/cadastro"
 @page "/<#=entity.Name#>/cadastro/{id}"
 
-@using Niu.Nutri.Shared.Blazor.Components.Layout
-@using Niu.Nutri.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Requests
-@using Niu.Nutri.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators
+@using Lazy.Crud.Shared.Blazor.Components.Layout
+@using Lazy.Crud.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Requests
+@using Lazy.Crud.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators
 
 @layout MainLayout
 @inherits BaseStepsFormComponent<<#= entity.Name #>DTO, <#=aggName#>AggSettingsDTO, Base<#= aggName #>AggValidator<<#= entity.Name #>DTO>>

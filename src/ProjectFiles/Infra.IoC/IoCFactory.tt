@@ -10,17 +10,17 @@ using <#= namespc.Key #>;
 using <#= namespc.Key.Replace(".Interfaces","") #>;
 <# } #>
 using Microsoft.Extensions.DependencyInjection;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Niu.Nutri.Core.Application.DTO.Seedwork;
-using Niu.Nutri.Core.Infra.IoC;
+using Lazy.Crud.Core.Application.DTO.Seedwork;
+using Lazy.Crud.Core.Infra.IoC;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.DataProtection;
 
-namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
+namespace <#= GetCurrentProject().Name #> {
 	using Core.Infra.IoC.Extensions;
     using Core.Api.Middlewares;
 	using Infra.Data.Context;

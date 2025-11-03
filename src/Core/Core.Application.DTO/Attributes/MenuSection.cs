@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Application.DTO.Attributes;
+﻿namespace Lazy.Crud.Core.Application.DTO.Attributes;
 
 /// <summary>
 /// Defines the main menu section where the feature is placed.

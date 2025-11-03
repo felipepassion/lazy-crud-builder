@@ -4,7 +4,7 @@
 var projects = FindDomainProjects().ToArray();
 var aggSettingsList = new List<CodeClass>();
 foreach(var project in projects) {
-        var myName = project.Name.Split('.').First();
+        var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
         aggSettingsList.AddRange(GetAggregateEntities(project.Name, withAttribute:"EndpointsT4"));
         //var attrs = GetAttributesDict(type);
     }
@@ -14,7 +14,7 @@ if (aggSettingsList.Any()) {
 var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);
 #>
 using Microsoft.AspNetCore.Mvc;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
 <#foreach(var namespaces in groupEntities) {
 	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 	var shortAggName = aggName.Replace("Agg","");
@@ -24,7 +24,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 	using Domain.Aggregates.<#= aggName #>.Queries.Models;
 	using Application.Aggregates.<#= aggName #>.AppServices;
 	using Domain.Aggregates.<#= aggName #>.Entities;
-	using Niu.Nutri.<#= aggName.Replace("Agg","") #>.Domain.Aggregates.<#= aggName #>.CommandModels;
+	using Lazy.Crud.<#= aggName.Replace("Agg","") #>.Domain.Aggregates.<#= aggName #>.CommandModels;
 <#
  foreach(var entity in namespaces) {
 	var responseName = $"{entity.Name}DTO";
@@ -42,7 +42,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 <#
 	var repoTypeName = $"I{entity.Name}AppService";
 	var serviceVarName = $"_{ToCamelCase(entity.Name)}AppService";
-	if(props.ContainsKey("EmpresaId")){#> Niu.Nutri.<#=aggName.Replace("Agg","")#>.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService _userService; <#}
+	if(props.ContainsKey("EmpresaId")){#> Lazy.Crud.<#=aggName.Replace("Agg","")#>.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService _userService; <#}
 #>
 <#
 	if(canGet){#>
@@ -50,7 +50,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 		public <#= className #>(
 			IServiceProvider scope,
 			<#if(props.ContainsKey("UserId") || props.ContainsKey("EmpresaId")){#>
-			Niu.Nutri.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService userService, <#}#>
+			Lazy.Crud.Users.Application.Aggregates.UsersAgg.AppServices.IUserAppService userService, <#}#>
             ILogRequestContext logRequestContext,
 			<#= repoTypeName #> <#= serviceVarName.Substring(1) #>)
 				: base(logRequestContext, scope)
@@ -99,7 +99,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Controllers {
 	if(canCreate){#>
 		
 		[HttpPost]
-		public async Task<GetHttpResponseDTO<object>> Post(Niu.Nutri.<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
+		public async Task<GetHttpResponseDTO<object>> Post(Lazy.Crud.<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
 			var loggedUserId = User.GetLoggedInUserId<int>();
 
 <#if(props.ContainsKey("EmpresaId") && aggName != "CompaniesAgg"){#>

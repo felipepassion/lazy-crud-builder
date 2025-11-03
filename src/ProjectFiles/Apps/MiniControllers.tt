@@ -4,7 +4,7 @@
 var project = FindProject("Domain");
 var aggSettingsList = new List<CodeClass>();
 var path = Path.GetDirectoryName(project.FullName);
-var myName = project.Name.Split('.').First();
+var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
 var AggName = myName + "Agg";
 aggSettingsList.AddRange(GetAggregateEntities(project, withAttribute:"EndpointsT4", withoutAttribute:"DisableControllers").Where(x=>x.IsAbstract == false));
 
@@ -13,11 +13,11 @@ if (aggSettingsList.Any()) {
 var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);
 #>
 using Microsoft.AspNetCore.Mvc;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
-using Niu.Nutri.Core.Application.Aggregates.Common;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
-using Niu.Nutri.Core.Application.Extensions;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+using Lazy.Crud.Core.Application.Aggregates.Common;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Application.Extensions;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
 <#foreach(var namespaces in groupEntities) {
 	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 	var shortAggName = aggName.Replace("Agg","");
@@ -96,7 +96,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Api.Controllers {
 	if(canCreate){#>
 		
 		[HttpPost]
-		public async Task<GetHttpResponseDTO<object>> Post(Niu.Nutri.<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
+		public async Task<GetHttpResponseDTO<object>> Post(<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
 			var result = await <#= serviceVarName #>.Create(request);
             return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
 		}

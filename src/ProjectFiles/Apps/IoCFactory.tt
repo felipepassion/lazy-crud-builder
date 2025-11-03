@@ -8,7 +8,7 @@
 
 
     foreach(var project in projects) {
-        var myName = project.Name.Split('.').First();
+        var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
         if(myName == "DefaultTemplate") continue;
         var proj = FindProject(project.Name);
         var myEntity = GetEntity(project.Name, $"{myName}AggSettings");
@@ -18,14 +18,14 @@
     }
 #>
 
-using Niu.Nutri.Core.Infra.Data.Contexts;
-using Niu.Nutri.Core.Infra.IoC;
-using Niu.Nutri.Users.Identity;
+using Lazy.Crud.Core.Infra.Data.Contexts;
+using Lazy.Crud.Core.Infra.IoC;
+using Lazy.Crud.Users.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
     
-namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name #> {
+namespace <#= GetCurrentProject().Name #> {
     public static partial class IoCFactory {
         static List<Type> migrationsList = [
                 typeof(<#= GetDefaultNamespace() #>.Users.Identity.ApplicationDbContext),
@@ -51,7 +51,7 @@ var aggName = namespc.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replac
 #>
             <#= GetDefaultNamespace() #>.<#= aggName #>.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
 <# } #>			
-            Niu.Nutri.Core.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
+            Lazy.Crud.Core.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
 		}
 
         public static void Migrate(this WebApplication app)
@@ -71,8 +71,8 @@ var aggName = namespc.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replac
         {
             using (var scope = app.Services.CreateScope())
             {
-                var logProvider = scope.ServiceProvider.GetRequiredService<Niu.Nutri.CrossCutting.Infra.Log.Providers.ILogProvider>();
-                logProvider.Write(new Niu.Nutri.CrossCutting.Infra.Log.Entries.LogEntry("------> APP | <#= GetCurrentProject().Name #> | STARTED <------", action: "OnAppInitialized"));
+                var logProvider = scope.ServiceProvider.GetRequiredService<Lazy.Crud.CrossCutting.Infra.Log.Providers.ILogProvider>();
+                logProvider.Write(new Lazy.Crud.CrossCutting.Infra.Log.Entries.LogEntry("------> APP | <#= GetCurrentProject().Name #> | STARTED <------", action: "OnAppInitialized"));
             }
         }
     }

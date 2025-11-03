@@ -1,9 +1,9 @@
-﻿using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
-namespace Niu.Nutri.DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Validators {
+namespace Lazy.Crud.DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Validators {
     public class BaseDefaultTemplateAggValidator<T> : BaseValidator<T>
         where T : EntityDTO
     {
@@ -11,7 +11,7 @@ namespace Niu.Nutri.DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAg
             public BaseDefaultTemplateAggValidator(HttpClient db) : base(db){ }
     }
 }
-namespace Niu.Nutri.DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Validators 
+namespace Lazy.Crud.DefaultTemplate.Application.DTO.Aggregates.DefaultTemplateAgg.Validators 
 {
 	using Requests;
     public partial class DefaultEntityStep1Validator : BaseDefaultTemplateAggValidator<DefaultEntityDTO>

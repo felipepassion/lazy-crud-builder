@@ -1,15 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
-using Niu.Nutri.Core.Domain.Extensions;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
-using Niu.Nutri.CrossCutting.Infra.Log.Providers;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events;
+using Lazy.Crud.Core.Domain.Extensions;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+using Lazy.Crud.CrossCutting.Infra.Log.Providers;
 using System.Net;
 
-namespace Niu.Nutri.Core.Api.Middlewares
+namespace Lazy.Crud.Core.Api.Middlewares
 {
     public class ErrorHandlingMiddleware(ILogRequestContext context, ILogProvider logProvider) : IMiddleware
     {

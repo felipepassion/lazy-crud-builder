@@ -1,12 +1,12 @@
-﻿using Niu.Nutri.Core.Application.DTO.Attributes;
-using Niu.Nutri.Core.Application.DTO.Extensions;
+﻿using Lazy.Crud.Core.Application.DTO.Attributes;
+using Lazy.Crud.Core.Application.DTO.Extensions;
 using System.Collections;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models
+namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models
 {
     public interface IEntityDTO
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Niu.Nutri.Core.Domain.Extensions
+namespace Lazy.Crud.Core.Domain.Extensions
 {
     public static class HttpContextExtensions
     {

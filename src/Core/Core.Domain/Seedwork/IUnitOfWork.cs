@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities;
-using Niu.Nutri.Core.Domain.CrossCutting;
+﻿using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Core.Domain.CrossCutting;
 
-namespace Niu.Nutri.Core.Domain.Seedwork
+namespace Lazy.Crud.Core.Domain.Seedwork
 {
     public interface IUnitOfWork
     {

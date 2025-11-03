@@ -1,19 +1,19 @@
 ﻿
-using Niu.Nutri.DefaultTemplate.Application.Aggregates.DefaultTemplateAgg.AppServices;
-using Niu.Nutri.DefaultTemplate.Infra.Data.Aggregates.DefaultTemplateAgg.Repositories;
-using Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Repositories;
+using Lazy.Crud.DefaultTemplate.Application.Aggregates.DefaultTemplateAgg.AppServices;
+using Lazy.Crud.DefaultTemplate.Infra.Data.Aggregates.DefaultTemplateAgg.Repositories;
+using Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Commands;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Niu.Nutri.Core.Application.DTO.Seedwork;
-using Niu.Nutri.Core.Infra.IoC;
+using Lazy.Crud.Core.Application.DTO.Seedwork;
+using Lazy.Crud.Core.Infra.IoC;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.DataProtection;
 
-namespace Niu.Nutri.DefaultTemplate.Infra.IoC {
+namespace Lazy.Crud.DefaultTemplate.Infra.IoC {
 	using Core.Infra.IoC.Extensions;
     using Core.Api.Middlewares;
 	using Infra.Data.Context;

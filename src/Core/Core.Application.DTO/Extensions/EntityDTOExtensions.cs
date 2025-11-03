@@ -1,9 +1,9 @@
-﻿using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
+﻿using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Niu.Nutri.Core.Application.DTO.Extensions;
+namespace Lazy.Crud.Core.Application.DTO.Extensions;
 
 public static class EntityDTOExtensions
 {

@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
-using Niu.Nutri.Users.Domain.Aggregates.UsersAgg.Repositories;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+using Lazy.Crud.Users.Domain.Aggregates.UsersAgg.Repositories;
 using Xunit;
 namespace Core.Tests
 {

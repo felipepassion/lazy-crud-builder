@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Niu.Nutri.Core.Domain.Seedwork.Specification {
+namespace Lazy.Crud.Core.Domain.Seedwork.Specification {
 
     /// <summary>
     /// Helper for rebinder parameters without use Invoke method in expressions 

@@ -1,12 +1,12 @@
 ﻿
 
 
-using Niu.Nutri.DefaultTemplate.Domain.Aggregates.UsersAgg.Entities;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.ValueObjects;
-using Niu.Nutri.Core.Domain.Attributes.T4;
+using Lazy.Crud.DefaultTemplate.Domain.Aggregates.UsersAgg.Entities;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.ValueObjects;
+using Lazy.Crud.Core.Domain.Attributes.T4;
 using System.ComponentModel.DataAnnotations;
 
-namespace Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities
+namespace Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities
 {
     [AggregateSettingsT4, EndpointsT4(EndpointTypes.HttpAll)]
     public class DefaultTemplateAggSettings : BaseAggregateSettings

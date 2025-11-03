@@ -2,12 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
-using Niu.Nutri.Core.Application.DTO.Attributes;
-using Niu.Nutri.Core.Application.DTO.Extensions;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
-using Niu.Nutri.Core.Domain.Attributes.T4;
+using Lazy.Crud.Core.Application.DTO.Attributes;
+using Lazy.Crud.Core.Application.DTO.Extensions;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events;
+using Lazy.Crud.Core.Domain.Attributes.T4;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Entities
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities
 {
     public abstract class SteppableEntity : ActivableEntity
     {

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Repositories
+namespace Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Repositories
 {
     public interface IMongoRepository<T> 
         where T : class

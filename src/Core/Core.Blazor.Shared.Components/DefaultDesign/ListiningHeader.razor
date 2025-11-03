@@ -1,10 +1,8 @@
-﻿@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Commands.Responses;
-@using Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Models;
-@using Niu.Living.Users.Application.DTO.Aggregates.UsersAgg.Requests;
+﻿@using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
 
 @inject NavigationManager Navigation
 
-@typeparam T where T : Niu.Living.Core.Application.DTO.Aggregates.CommonAgg.Models.EntityDTO, new()
+@typeparam T where T : Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models.EntityDTO, new()
 
 <div class="container-header-paginas-aplicacao">
     <div class="container-titulos-paginas-aplicacao">
@@ -31,7 +29,6 @@
     [Parameter] public bool HideNewRegisterButton { get; set; }
     [Parameter] public IListiningContext Context { get; set; }
     [Parameter] public string Title { get; set; }
-    [Inject] public UserCurrentAccessSelectedDTO CachedUserSession { get; set; }
     [Inject] HttpClient _http { get; set; }
 
     bool _initialized = false;
@@ -46,7 +43,7 @@
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!_initialized && this.CachedUserSession?.SelectedPage != null)
+        if (!_initialized)
         {
             _initialized = true;
         }

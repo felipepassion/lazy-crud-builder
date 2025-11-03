@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Niu.Nutri.Core.Api.DTO;
-using Niu.Nutri.WebApp.Controllers;
+using Lazy.Crud.Core.Api.DTO;
+using Lazy.Crud.WebApp.Controllers;
 
-namespace Niu.Nutri.Core.Api.Factory
+namespace Lazy.Crud.Core.Api.Factory
 {
     public class HttpFactoryBuilder
     {

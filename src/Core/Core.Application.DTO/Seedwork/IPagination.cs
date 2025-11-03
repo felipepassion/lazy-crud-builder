@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Niu.Nutri.Core.Application.DTO.Seedwork
+namespace Lazy.Crud.Core.Application.DTO.Seedwork
 {
 
     /// <summary>

@@ -1,9 +1,9 @@
-﻿using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
-namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.Validators {
+namespace <#= project.Name #>.Aggregates.<#= AggName #>.Validators {
     public class Base<#=AggName#>Validator<T> : BaseValidator<T>
         where T : EntityDTO
     {
@@ -56,7 +56,7 @@ if (entitiesT4.Any()) {
         
         string attr = GetAttributes(entity, includeSteppableAttributes: true).FirstOrDefault(x=>x.Contains("Step"));
 		if (string.IsNullOrWhiteSpace(attr)) attr="1";#>        
-namespace <#= GetDefaultNamespace() #>.<#= project.Name #>.Aggregates.<#= AggName #>.Validators {
+namespace <#= project.Name #>.Aggregates.<#= AggName #>.Validators {
     using Requests;
 <#var stepsCount = int.Parse(attr.FirstOrDefault(p=>char.IsDigit(p)).ToString());
             for (int i = 1; i <= stepsCount; i++) {

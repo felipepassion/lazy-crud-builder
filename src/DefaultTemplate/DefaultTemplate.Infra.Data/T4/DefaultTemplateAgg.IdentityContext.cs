@@ -1,13 +1,13 @@
 ﻿
-using Niu.Nutri.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities; 
-using Niu.Nutri.DefaultTemplate.Infra.Data.Aggregates.DefaultTemplateAgg.Mappings; 
-using Niu.Nutri.DefaultTemplate.Domain.Aggregates.UsersAgg.Entities; 
-using Niu.Nutri.DefaultTemplate.Infra.Data.Aggregates.UsersAgg.Mappings; 
+using Lazy.Crud.DefaultTemplate.Domain.Aggregates.DefaultTemplateAgg.Entities; 
+using Lazy.Crud.DefaultTemplate.Infra.Data.Aggregates.DefaultTemplateAgg.Mappings; 
+using Lazy.Crud.DefaultTemplate.Domain.Aggregates.UsersAgg.Entities; 
+using Lazy.Crud.DefaultTemplate.Infra.Data.Aggregates.UsersAgg.Mappings; 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Niu.Nutri.Core.Infra.Data.Contexts;
+using Lazy.Crud.Core.Infra.Data.Contexts;
 
-namespace Niu.Nutri.DefaultTemplate.Infra.Data.Context
+namespace Lazy.Crud.DefaultTemplate.Infra.Data.Context
 {
 	public partial class DefaultTemplateAggContext : BaseContext
 	{

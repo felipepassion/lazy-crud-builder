@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Serilog.Events;
 
-namespace Niu.Nutri.CrossCutting.Infra.Log.Entries
+namespace Lazy.Crud.CrossCutting.Infra.Log.Entries
 {
     public class LogEntry
     {

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Net;
 
-namespace Niu.Nutri.CrossCutting.Infra.Log.Entries
+namespace Lazy.Crud.CrossCutting.Infra.Log.Entries
 {
     public class LogHttpEntry : LogEntry
     {

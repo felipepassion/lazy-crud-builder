@@ -4,7 +4,6 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-	  <RootNamespace>Niu.Nutri.DefaultTemplate.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DefaultTemplate.Infra.IoC\DefaultTemplate.Infra.IoC.csproj" />
+    <ProjectReference Include="..\DefaultTemplate.Infra.IoC\Lazy.Crud.DefaultTemplate.Infra.IoC.csproj" />
   </ItemGroup>
 
   <ItemGroup>

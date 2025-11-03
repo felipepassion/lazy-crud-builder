@@ -1,5 +1,5 @@
-﻿using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Events;
-using Niu.Nutri.CrossCutting.Infra.Log.Contexts;
+﻿using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
 
 <#foreach(var namespaces in groupEntitiesT4) {#>
 namespace <#= namespaces.Key.Replace(".Entities",".ModelEvents") #>

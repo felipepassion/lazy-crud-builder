@@ -1,5 +1,5 @@
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 
 namespace CrossCuting.Infra.Utils.Tests
 {

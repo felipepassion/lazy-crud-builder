@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System.ComponentModel.DataAnnotations;
 
-namespace Niu.Nutri.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
+namespace Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models.Auth
 {
     public class CreatePasswordParametersValidator : AbstractValidator<CreatePasswordParametersDTO>, IValidator<CreatePasswordParametersDTO>
     {

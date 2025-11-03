@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Niu.Nutri.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+using Lazy.Crud.Core.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
 using System.Reflection;
 
-namespace Niu.Nutri.Core.Infra.IoC.Extensions
+namespace Lazy.Crud.Core.Infra.IoC.Extensions
 {
     public static class IServiceCollectionExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Niu.Nutri.Core.Application.DTO.Seedwork
+namespace Lazy.Crud.Core.Application.DTO.Seedwork
 {
     public static class MapperFactory
     {

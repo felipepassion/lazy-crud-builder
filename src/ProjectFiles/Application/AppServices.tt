@@ -2,10 +2,10 @@
 #>
 using MediatR;
 using System.Linq.Expressions;
-using Niu.Nutri.CrossCuting.Infra.Utils.Extensions;
+using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
 using <#= GetDefaultNamespace() #>.Core.Application.DTO.Extensions;
 using <#= GetDefaultNamespace() #>.Core.Application.Aggregates.Common;
-using Niu.Nutri.Core.Domain.CrossCutting;
+using Lazy.Crud.Core.Domain.CrossCutting;
 
 <#foreach(var namespaces in groupEntities) {
 #>
@@ -35,7 +35,7 @@ foreach(var entity in namespaces) {
 	var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
 #>
 		public <#= repoTypeName #> <#= repoVarName #>;
-		public <#= className #>(IMediator mediator, Niu.Nutri.CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, <#= repoTypeName #> <#= repoVarName.Substring(1) #>) : base(ctx, mediator) { <#= repoVarName #> = <#= repoVarName.Substring(1) #>; }	
+		public <#= className #>(IMediator mediator, CrossCutting.Infra.Log.Contexts.ILogRequestContext ctx, <#= repoTypeName #> <#= repoVarName.Substring(1) #>) : base(ctx, mediator) { <#= repoVarName #> = <#= repoVarName.Substring(1) #>; }	
 		public async Task<<#= responseName #>> Get(<#=entity.Name#>QueryModel request) {
             return (await <#= repoVarName #>.FindAsync(filter: <#=entity.Name#>Filters.GetFilters(request, isOrSpecification: request.IsOrSpecification), selector: x => x.ProjectedAs<<#= responseName #>>()));
         }

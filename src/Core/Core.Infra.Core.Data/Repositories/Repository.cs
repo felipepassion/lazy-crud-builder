@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Niu.Nutri.Core.Api.Queries.Extensions;
-using Niu.Nutri.Core.Domain.Aggregates.CommonAgg.Repositories;
-using Niu.Nutri.Core.Domain.Seedwork;
-using Niu.Nutri.Core.Infra.Data.Contexts;
-using Niu.Nutri.Core.Infra.Data.Extensions;
+using Lazy.Crud.Core.Api.Queries.Extensions;
+using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Repositories;
+using Lazy.Crud.Core.Domain.Seedwork;
+using Lazy.Crud.Core.Infra.Data.Contexts;
+using Lazy.Crud.Core.Infra.Data.Extensions;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Niu.Nutri.Core.Infra.Data.Repositories
+namespace Lazy.Crud.Core.Infra.Data.Repositories
 {
     public class Repository<T> : IRepository<T>
         where T : class, new()

@@ -1,4 +1,4 @@
-﻿namespace Niu.Nutri.Core.Enumeration;
+﻿namespace Lazy.Crud.Core.Enumeration;
 
 public static class TimeInputEnums
 {

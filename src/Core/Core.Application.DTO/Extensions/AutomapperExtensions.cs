@@ -1,7 +1,7 @@
-﻿using Niu.Nutri.Core.Application.DTO.Seedwork;
+﻿using Lazy.Crud.Core.Application.DTO.Seedwork;
 using System.Diagnostics;
 
-namespace Niu.Nutri.Core.Application.DTO.Extensions
+namespace Lazy.Crud.Core.Application.DTO.Extensions
 {
     public static class AutomapperExtensions
     {
