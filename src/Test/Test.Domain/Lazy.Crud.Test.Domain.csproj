@@ -4,13 +4,13 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Lazy.Crud.DefaultTemplate.Domain</RootNamespace>
+	  <RootNamespace>Lazy.Crud.Test.Domain</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Aggregates\DefaultTemplateAgg\ValueObjects\**" />
-    <EmbeddedResource Remove="Aggregates\DefaultTemplateAgg\ValueObjects\**" />
-    <None Remove="Aggregates\DefaultTemplateAgg\ValueObjects\**" />
+    <Compile Remove="Aggregates\TestAgg\ValueObjects\**" />
+    <EmbeddedResource Remove="Aggregates\TestAgg\ValueObjects\**" />
+    <None Remove="Aggregates\TestAgg\ValueObjects\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.Domain\Lazy.Crud.Core.Domain.csproj" />
-    <ProjectReference Include="..\DefaultTemplate.Application.DTO\Lazy.Crud.DefaultTemplate.Application.DTO.csproj" />
+    <ProjectReference Include="..\Test.Application.DTO\Lazy.Crud.Test.Application.DTO.csproj" />
   </ItemGroup>
 
   <ItemGroup>

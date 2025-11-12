@@ -8,7 +8,7 @@
     <!-- Aggregator package: include referenced project outputs inside this single nupkg -->
     <PackProjectReferences>false</PackProjectReferences>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CollectProjectOutputsForPack</TargetsForTfmSpecificBuildOutput>
-    <Title>LazyCrudBuilder</Title>
+    <Title>Lazy.Crud.Builder</Title>
     <Description>Lazy CRUD Builder beta test</Description>
     <Copyright>felipepassion</Copyright>
   </PropertyGroup>

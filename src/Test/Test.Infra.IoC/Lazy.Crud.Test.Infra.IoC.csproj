@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -7,14 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Serilog" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Core.Infra.Core.Data\Lazy.Crud.Core.Infra.Data.csproj" />
-    <ProjectReference Include="..\DefaultTemplate.Domain\Lazy.Crud.DefaultTemplate.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\Core.Infra.IoC\Lazy.Crud.Core.Infra.IoC.csproj" />
+    <ProjectReference Include="..\Test.Application\Lazy.Crud.Test.Application.csproj" />
+    <ProjectReference Include="..\Test.Infra.Data\Lazy.Crud.Test.Infra.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

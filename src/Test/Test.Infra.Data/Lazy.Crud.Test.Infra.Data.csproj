@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Core.Infra.Core.Data\Lazy.Crud.Core.Infra.Data.csproj" />
-    <ProjectReference Include="..\DefaultTemplate.Domain\Lazy.Crud.DefaultTemplate.Domain.csproj" />
+    <ProjectReference Include="..\Test.Domain\Lazy.Crud.Test.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
