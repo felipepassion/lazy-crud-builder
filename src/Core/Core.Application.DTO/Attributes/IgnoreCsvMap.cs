@@ -3,7 +3,7 @@
     /// <summary>
     /// Indicates that a property should be ignored in CSV mapping.
     /// </summary>
-    [Category("Serialization/CSV", "Ignore the property in CSV mapping.")]
+    /// <category>Serialization/CSV</category>
     public class IgnoreCsvMap : Attribute
     {
     }

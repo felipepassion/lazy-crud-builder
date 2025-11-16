@@ -904,7 +904,10 @@
  }
 
  public string MyParent(CodeClass entity){
- foreach(CodeClass item in entity.Bases){
+ foreach(var item2 in entity.Bases){
+  if(item2 is not CodeClass) continue;
+	 var item = item2 as CodeClass;
+
  return item.Name;
  }
  return null;
@@ -926,7 +929,9 @@
  }
 
  public KeyValuePair<string, CodeClass>? MyParentTType(CodeClass entity, bool includeRoot = false){
- foreach(CodeClass item in entity.Bases){
+ foreach(var item2 in entity.Bases){
+	 if(item2 is not CodeClass) continue;
+	 var item = item2 as CodeClass;
 	 var parent = MyParentClass(entity);
  if(!includeRoot && item.Name.Contains("Entity")) return null;
 
@@ -1328,9 +1333,6 @@
  File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString(), System.Text.Encoding.UTF8); 
  }
  this.GenerationEnvironment.Clear();
- if(outputFileName.EndsWith(".tt")){
- RunT4File(outputFilePath);
- }
  }
 
  public void CreateDirectory(string folderName) 
@@ -1344,7 +1346,7 @@
  }
 
  public void RunT4File(string outputFileName){
-
+ return;
  var engine = new Microsoft.VisualStudio.TextTemplating.Engine();
  //host.TemplateFileValue = outputFilePath;
  //Read the text template.

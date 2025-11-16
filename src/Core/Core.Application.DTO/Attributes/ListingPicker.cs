@@ -3,7 +3,7 @@
     /// <summary>
     /// Renders a listing selector component with an optional title.
     /// </summary>
-    [Category("UI/Selectors", "Renders a listing selector with optional title.")]
+    /// <category>UI/Selectors</category>
     public class ListingPicker : Attribute
     {
         public string Title { get; set; }

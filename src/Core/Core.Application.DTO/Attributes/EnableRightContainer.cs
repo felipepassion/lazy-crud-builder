@@ -3,7 +3,7 @@
     /// <summary>
     /// Enables a right-side container/panel in the UI layout.
     /// </summary>
-    [Category("UI/Layout", "Enables a right-side container in the UI.")]
+    /// <category>UI/Layout</category>
     public class EnableRightContainer : Attribute
     {
     }

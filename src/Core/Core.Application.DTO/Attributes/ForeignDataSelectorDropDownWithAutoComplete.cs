@@ -3,7 +3,7 @@
     /// <summary>
     /// UI selector that renders a dropdown with auto-complete backed by foreign data.
     /// </summary>
-    [Category("UI/Selectors", "Dropdown with auto-complete for foreign data selection.")]
+    /// <category>UI/Selectors</category>
     public class ForeignDataSelectorDropDownWithAutoComplete : Attribute
     {
     }

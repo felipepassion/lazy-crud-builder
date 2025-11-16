@@ -1,13 +1,11 @@
-﻿using Lazy.Crud.Core.Application.DTO.Attributes;
-using System;
+﻿using System;
 
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Marks a property or entity step with a specific position used by multi-step forms or processes.
     /// </summary>
-    [H1("Form Step")]
-    [Category("UI/Forms", "Defines the step order/position inside a multi-step form or process.")]
+    /// <category>UI/Forms</category>
     public class Step : Attribute
     {
         /// <summary>

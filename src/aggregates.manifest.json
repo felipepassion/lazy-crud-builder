@@ -1,0 +1,51 @@
+{
+  "Aggregates": [
+    {
+      "Name": "Test",
+      "CreatedUtc": "2025-11-14T22:29:54.8236615Z",
+      "Projects": [
+        {
+          "Suffix": "Domain",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Application",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Application.DTO",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Api",
+          "TargetFramework": "net9.0",
+          "IsWeb": true
+        },
+        {
+          "Suffix": "Enumerations",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Infra.Data",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Infra.IoC",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Api.Queries",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        }
+      ],
+      "Entities": []
+    }
+  ]
+}

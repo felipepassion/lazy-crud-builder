@@ -1,13 +1,11 @@
 ﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
 
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Marks a one-to-one relationship between entities for T4 generation and mapping.
     /// </summary>
-    [H1("One-to-One")]
-    [Category("Modeling", "One-to-one relationship flagged for T4 generation/mapping.")]
+    /// <category>Modeling</category>
     public class OneToOne : Attribute
     {
         /// <summary>

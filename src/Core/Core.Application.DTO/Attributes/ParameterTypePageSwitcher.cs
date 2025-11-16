@@ -3,7 +3,7 @@
     /// <summary>
     /// Controls page switching behavior based on parameter type.
     /// </summary>
-    [Category("UI/Navigation", "Controls page switching behavior based on a parameter type.")]
+    /// <category>UI/Navigation</category>
     public class ParameterTypePageSwitcher : Attribute
     {
     }

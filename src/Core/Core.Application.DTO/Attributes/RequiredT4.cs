@@ -1,13 +1,11 @@
 ﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
 
-/// <summary>
-/// Indicates that a property is required for validation and optionally provides an error message.
-/// </summary>
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
-    [H1("Required (T4)")]
-    [Category("Validation", "Marks a property as required for validation with optional custom error message.")]
+    /// <summary>
+    /// Indicates that a property is required for validation and optionally provides an error message.
+    /// </summary>
+    /// <category>Validation</category>
     public class RequiredT4 : Attribute
     {
         /// <summary>

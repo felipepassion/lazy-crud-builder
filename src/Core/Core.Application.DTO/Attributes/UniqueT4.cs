@@ -1,12 +1,11 @@
 ﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
 
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Marks a property or set of properties as unique and optionally provides a message.
     /// </summary>
-    [H1("Unique")]
+    /// <category>Validation</category>
     public class Unique : Attribute
     {
         /// <summary>

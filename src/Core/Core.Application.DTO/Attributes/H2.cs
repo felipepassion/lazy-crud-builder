@@ -3,7 +3,7 @@
     /// <summary>
     /// Secondary heading (H2) shown in pages/components.
     /// </summary>
-    [Category("UI/Titles", "Secondary heading (H2) for pages/components.")]
+    /// <category>UI/Titles</category>
     public class H2 : Attribute
     {
         public string Title { get; set; }

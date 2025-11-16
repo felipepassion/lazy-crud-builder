@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines the registration/display order for menus or navigation flows.
     /// </summary>
-    [Category("UI/Navigation", "Defines the registration/display order in menus or flows.")]
+    /// <category>UI/Navigation</category>
     public class RegisterOrder : Attribute
     {
         /// <summary>

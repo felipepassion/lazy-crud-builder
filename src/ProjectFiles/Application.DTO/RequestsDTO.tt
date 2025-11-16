@@ -17,6 +17,7 @@ var parentTypeStr = tType?.Key.Replace("Entities","Requests").Replace("Domain","
 
 var myClassAttrs = GetAttributes(entity).Where(x=>x.StartsWith("[H") || x.Contains("Hide"));
 foreach(var myAttr in myClassAttrs) {#> <#=myAttr#> <# } #>
+
 public partial class <#= entity.Name #>DTO : <#= MyParent(entity) #>DTO<#=string.IsNullOrWhiteSpace(parentTypeStr)?"":$"<{parentTypeStr}DTO>"#>
 	{
 <#if(tType.HasValue)

@@ -5,8 +5,7 @@ namespace Lazy.Crud.Core.Application.DTO.Attributes
     /// <summary>
     /// Defines a default value consumed by T4 templates for this property.
     /// </summary>
-    [H1("Default Value (T4)")]
-    [Category("Code Generation (T4)", "Define default value to be used by T4 templates on properties.")]
+    /// <category>Code Generation (T4)</category>
     public class DefaultValueT4 : Attribute
     {
         /// <summary>

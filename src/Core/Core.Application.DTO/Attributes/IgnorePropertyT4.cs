@@ -1,13 +1,11 @@
 ﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
 
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Marks a property to be ignored by T4 generation tools.
     /// </summary>
-    [H1("Ignore (T4)")]
-    [Category("Code Generation (T4)", "Ignore property in T4 templates in general.")]
+    /// <category>Code Generation (T4)</category>
     public class IgnorePropertyT4 : Attribute
     {
         /// <summary>

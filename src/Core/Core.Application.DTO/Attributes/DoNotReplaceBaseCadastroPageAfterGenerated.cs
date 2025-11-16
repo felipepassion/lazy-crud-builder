@@ -3,7 +3,7 @@
     /// <summary>
     /// Prevents overwriting the base registration page on the front-end after the initial generation.
     /// </summary>
-    [Category("Code Generation (T4)", "Prevents replacing the base registration page after generation.")]
+    /// <category>Code Generation (T4)</category>
     public class DoNotReplaceBaseCadastroPageAfterGenerated : Attribute
     {
 

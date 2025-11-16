@@ -12,7 +12,7 @@ namespace Lazy.Crud.Core.Domain.Attributes.Auth
     /// <summary>
     /// Validation attribute that accepts either a valid email address or a phone number.
     /// </summary>
-    [Category("Validation", "Validates input as either a valid email address or phone number.")]
+    /// <category>Validation</category>
     public class EmailOrPhone : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

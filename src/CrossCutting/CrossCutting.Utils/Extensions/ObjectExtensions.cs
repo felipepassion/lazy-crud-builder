@@ -169,9 +169,6 @@ public static class ObjectExtensions
         }
     }
 
-    public class CollapseTitle : Attribute
-    {
-    }
     public static SortedDictionary<string, object> ExtractValues(this object item, SortedDictionary<string, object> result = null)
     {
         result = result ?? new SortedDictionary<string, object>();
@@ -180,8 +177,7 @@ public static class ObjectExtensions
             var i = 0;
             foreach (var subObject in item as Array)
             {
-                var prop = subObject.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(CollapseTitle)))?
-                    .FirstOrDefault();
+                var prop = subObject.GetType().GetProperties().FirstOrDefault();
 
                 var propName = prop?.GetValue(subObject)?.ToString() ?? $"{item.GetType().Name.Replace("[]", $"[{i++}]")}";
 
@@ -192,8 +188,8 @@ public static class ObjectExtensions
         {
             foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(item))
             {
-                if (descriptor.Attributes.OfType<CollapseTitle>().Any())
-                    continue;
+                //if (descriptor.Attributes.OfType<CollapseTitle>().Any())
+                  //  continue;
 
                 string name = descriptor.DisplayName ?? descriptor.Name;
                 object value = descriptor.GetValue(item);

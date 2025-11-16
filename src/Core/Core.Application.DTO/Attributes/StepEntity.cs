@@ -1,13 +1,9 @@
-﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
-
-namespace Lazy.Crud.Core.Domain.Attributes.T4
+﻿namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
     /// <summary>
     /// Marks an entity as steppable and provides the number of steps or related quantity.
     /// </summary>
-    [H1("Steppable")]
-    [Category("UI/Forms", "Marks an entity as steppable and provides the number of steps.")]
+    /// <category>UI/Forms</category>
     public class Steppable : Attribute
     {
         /// <summary>

@@ -3,7 +3,7 @@
     /// <summary>
     /// Hides the title from the page header in the UI.
     /// </summary>
-    [Category("UI/Layout", "Hides the header title in the UI.")]
+    /// <category>UI/Layout</category>
     public class HideTitleOnHeader : Attribute
     {
     }

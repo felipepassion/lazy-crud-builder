@@ -3,7 +3,7 @@
     /// <summary>
     /// Renders a radio button option in the UI.
     /// </summary>
-    [Category("UI/Input", "Renders a radio button option in the UI.")]
+    /// <category>UI/Input</category>
     public class RadioButton : Attribute
     {
     }

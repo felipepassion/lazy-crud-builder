@@ -1,16 +1,12 @@
 ﻿using Lazy.Crud.Core.Application.DTO.Attributes;
 using System;
 
-/// <summary>
-/// Specifies the execution order for migrations generated from aggregates or seed files.
-/// </summary>
-namespace Lazy.Crud.Core.Domain.Attributes.T4
+namespace Lazy.Crud.Core.Application.DTO.Attributes
 {
     /// <summary>
     /// Specifies the execution order for migrations generated from aggregates or seed files.
     /// </summary>
-    [H1("Migration Order")]
-    [Category("Code Generation (T4)", "Defines execution order for generated migrations/seeds.")]
+    /// <category>Code Generation (T4)</category>
     public class MigrationOrder : Attribute
     {
         /// <summary>

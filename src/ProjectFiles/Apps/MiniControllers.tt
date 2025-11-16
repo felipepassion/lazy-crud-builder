@@ -119,3 +119,6 @@ var DTOName = $"{entity.Name}QueryModel";
 }
 <# } #>
 <# } #>
+<#
+    SaveOutputToSubFolder($"Controllers", "Controllers.generated.cs", true); 
+#>

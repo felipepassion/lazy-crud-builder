@@ -1,5 +1,5 @@
-﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
+﻿using Lazy.Crud.Core.Application.DTO.Attributes;
+using System;
 
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
@@ -17,8 +17,7 @@ namespace Lazy.Crud.Core.Domain.Attributes.T4
     /// configurable properties. If additional configuration is required later,
     /// add properties to this attribute class.
     /// </remarks>
-    [H1("Detach Navigation Property")]
-    [Category("Code Generation (T4)", "Detach/ignore navigation during T4 generation to avoid loops or heavy loads.")]
+    /// <category>Code Generation (T4)</category>
     public class DettachNavigationProperty : Attribute
     {
         /// <summary>

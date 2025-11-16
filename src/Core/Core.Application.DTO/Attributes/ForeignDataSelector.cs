@@ -3,7 +3,7 @@
     /// <summary>
     /// Marks that a property uses a foreign data selector component in the UI.
     /// </summary>
-    [Category("UI/Selectors", "Marks usage of a foreign data selector component.")]
+    /// <category>UI/Selectors</category>
     public class ForeignDataSelector : Attribute
     {
     }

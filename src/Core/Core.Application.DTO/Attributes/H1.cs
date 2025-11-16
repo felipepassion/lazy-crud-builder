@@ -3,7 +3,7 @@
     /// <summary>
     /// Primary heading (H1) shown in pages/components.
     /// </summary>
-    [Category("UI/Titles", "Primary heading (H1) for pages/components.")]
+    /// <category>UI/Titles</category>
     public class H1 : Attribute
     {
         public string Title { get; set; }

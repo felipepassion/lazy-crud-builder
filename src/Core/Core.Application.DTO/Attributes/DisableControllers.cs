@@ -1,5 +1,4 @@
 ﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
 
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
@@ -12,13 +11,9 @@ namespace Lazy.Crud.Core.Domain.Attributes.T4
     /// or endpoints for the marked type. This is a marker attribute and does not expose
     /// additional configuration properties.
     /// </remarks>
-    [H1("Disable Auto Controllers")]
-    [Category("Code Generation (T4)", "Disable automatic controller/endpoint generation for the type.")]
+    /// <category>Code Generation (T4)</category>
     public class DisableControllers : Attribute
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DisableControllers"/> attribute.
-        /// </summary>
         public DisableControllers()
         {
         }

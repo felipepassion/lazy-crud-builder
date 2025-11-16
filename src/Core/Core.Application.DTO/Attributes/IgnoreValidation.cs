@@ -3,7 +3,7 @@
     /// <summary>
     /// Instructs to skip automatic validations for the decorated property.
     /// </summary>
-    [Category("Validation", "Ignore automatic validations for the property.")]
+    /// <category>Validation</category>
     public class IgnoreValidation : Attribute
     {
     }

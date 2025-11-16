@@ -1,5 +1,4 @@
 ﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
 
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
@@ -11,8 +10,7 @@ namespace Lazy.Crud.Core.Domain.Attributes.T4
     /// service with common CRUD operations. This attribute currently acts as a marker; add
     /// properties to control generation behavior if needed in the future.
     /// </remarks>
-    [H1("Generate App Service")]
-    [Category("Code Generation (T4)", "Automatically generate a CRUD AppService for the aggregate.")]
+    /// <category>Code Generation (T4)</category>
     public class GenerateAppService : Attribute
     {
         /// <summary>

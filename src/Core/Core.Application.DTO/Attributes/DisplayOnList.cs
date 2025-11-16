@@ -3,7 +3,7 @@
     /// <summary>
     /// Controls how a property is rendered in list views (order and optional template).
     /// </summary>
-    [Category("UI/List", "Defines display order and template for list/grid views.")]
+    /// <category>UI/List</category>
     public class DisplayOnList : Attribute
     {
         /// <summary>

@@ -1,5 +1,4 @@
 ﻿using System;
-using Lazy.Crud.Core.Application.DTO.Attributes;
 
 namespace Lazy.Crud.Core.Domain.Attributes.T4
 {
@@ -14,8 +13,7 @@ namespace Lazy.Crud.Core.Domain.Attributes.T4
     /// If aggregate-level configuration is needed, extend this attribute with properties
     /// such as generation mode, included members, or serialization behavior.
     /// </remarks>
-    [H1("Aggregate Settings")]
-    [Category("Code Generation (T4)", "Aggregate-level settings consumed by T4/codegen pipelines.")]
+    /// <category>Code Generation (T4)</category>
     public class AggregateSettingsT4 : Attribute
     {
         /// <summary>
