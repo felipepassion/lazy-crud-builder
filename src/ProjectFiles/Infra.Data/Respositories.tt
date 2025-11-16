@@ -1,6 +1,6 @@
 ﻿<# if (entities.Any()) { #>
 using Microsoft.Extensions.Configuration;
-using <#= GetDefaultNamespace() #>.Core.Infra.Data.Repositories;
+using <#= GetDefaultNamespace() #>.Builder.Infra.Data.Repositories;
 using <#= project.Name #>.Context;
 
 <# foreach (var nmspc in groupEntities) 

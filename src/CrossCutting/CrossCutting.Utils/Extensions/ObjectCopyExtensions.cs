@@ -1,7 +1,7 @@
-﻿using CrossCuting.Infra.Utils.Extensions.ArrayExtensions;
+﻿using CrossCutting.Infra.Utils.Extensions.ArrayExtensions;
 using System.Reflection;
 
-namespace CrossCuting.Infra.Utils.Extensions
+namespace CrossCutting.Infra.Utils.Extensions
 {
     public static class ObjectCopyExtensions
     {

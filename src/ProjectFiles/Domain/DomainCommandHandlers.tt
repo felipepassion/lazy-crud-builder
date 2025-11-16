@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Lazy.Crud.Core.Domain.CrossCutting;
-using Lazy.Crud.Core.Application.DTO.Extensions;
-using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
-using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
-using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands.Handles;
+using Lazy.Crud.Builder.Domain.CrossCutting;
+using Lazy.Crud.Builder.Application.DTO.Extensions;
+using Lazy.Crud.CrossCutting.Infra.Utils.Extensions;
+using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Commands.Handles;
 
 <#foreach(var namespaces in groupEntitiesT4) {#>
 namespace <#= namespaces.Key.Replace(".Entities",".CommandHandlers") #>

@@ -1,5 +1,5 @@
 ﻿<# if (entities.Any()) { #>
-using <#= GetDefaultNamespace() #>.Core.Domain.Aggregates.CommonAgg.Repositories;
+using <#= GetDefaultNamespace() #>.Builder.Domain.Aggregates.CommonAgg.Repositories;
 <# foreach (var nmspc in groupEntities) 
 { #>
 using <#= nmspc.Key #>;

@@ -1,5 +1,5 @@
-﻿using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Entities;
-using Lazy.Crud.Core.Domain.Attributes.T4;
+﻿using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Entities;
+using Lazy.Crud.Builder.Domain.Attributes.T4;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lazy.Crud.<#=myName#>.Domain.Aggregates.UsersAgg.Entities

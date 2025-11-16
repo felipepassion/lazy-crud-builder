@@ -46,6 +46,53 @@
         }
       ],
       "Entities": []
+    },
+    {
+      "Name": "Testyyyyy",
+      "CreatedUtc": "2025-11-16T12:52:33.1879667Z",
+      "Projects": [
+        {
+          "Suffix": "Domain",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Application",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Application.DTO",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Api",
+          "TargetFramework": "net9.0",
+          "IsWeb": true
+        },
+        {
+          "Suffix": "Enumerations",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Infra.Data",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Infra.IoC",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Api.Queries",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        }
+      ],
+      "Entities": []
     }
   ]
 }

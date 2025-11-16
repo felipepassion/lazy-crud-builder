@@ -10,19 +10,19 @@ using <#= namespc.Key #>;
 using <#= namespc.Key.Replace(".Interfaces","") #>;
 <# } #>
 using Microsoft.Extensions.DependencyInjection;
-using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Commands;
+using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Commands;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Lazy.Crud.Core.Application.DTO.Seedwork;
-using Lazy.Crud.Core.Infra.IoC;
+using Lazy.Crud.Builder.Application.DTO.Seedwork;
+using Lazy.Crud.Builder.Infra.IoC;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.DataProtection;
 
 namespace <#= GetCurrentProject().Name #> {
-	using Core.Infra.IoC.Extensions;
-    using Core.Api.Middlewares;
+	using Builder.Infra.IoC.Extensions;
+    using Builder.Api.Middlewares;
 	using Infra.Data.Context;
 <# if(entitiesT4?.Any() == true) { #>
 	using Domain.Aggregates.<#= AggName #>.CommandHandlers;

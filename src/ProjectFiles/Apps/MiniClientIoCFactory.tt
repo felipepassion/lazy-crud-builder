@@ -16,7 +16,7 @@ namespace <#= GetCurrentProject().Name #> {
 #>
 			services.AddValidatorsFromAssemblyContaining
 				<<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators.Base<#=aggName#>AggValidator
-					<Core.Application.DTO.Aggregates.CommonAgg.Models.EntityDTO>>();
+					<Builder.Application.DTO.Aggregates.CommonAgg.Models.EntityDTO>>();
 <#  #>			
 		}
     }

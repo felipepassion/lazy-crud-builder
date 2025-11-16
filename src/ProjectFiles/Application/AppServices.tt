@@ -2,10 +2,10 @@
 #>
 using MediatR;
 using System.Linq.Expressions;
-using Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
-using <#= GetDefaultNamespace() #>.Core.Application.DTO.Extensions;
-using <#= GetDefaultNamespace() #>.Core.Application.Aggregates.Common;
-using Lazy.Crud.Core.Domain.CrossCutting;
+using Lazy.Crud.CrossCutting.Infra.Utils.Extensions;
+using <#= GetDefaultNamespace() #>.Builder.Application.DTO.Extensions;
+using <#= GetDefaultNamespace() #>.Builder.Application.Aggregates.Common;
+using Lazy.Crud.Builder.Domain.CrossCutting;
 
 <#foreach(var namespaces in groupEntities) {
 #>

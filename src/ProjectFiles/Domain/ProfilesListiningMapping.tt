@@ -1,10 +1,10 @@
-﻿using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Models;
-using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.Validators;
+﻿using Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models;
+using Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using FluentValidation;
 using AutoMapper;
-using Lazy.Crud.Core.Application.DTO.Attributes;
+using Lazy.Crud.Builder.Application.DTO.Attributes;
 <#
 if (entitiesT4.Any()) {#>
 <# foreach(var namespaces in groupEntitiesT4) {

@@ -1,4 +1,4 @@
-﻿namespace Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
+﻿namespace Lazy.Crud.CrossCutting.Infra.Utils.Extensions;
 
 public static class DateTimeExtensions
 {

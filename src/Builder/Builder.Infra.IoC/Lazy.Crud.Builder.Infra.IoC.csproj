@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackProjectReferences>false</PackProjectReferences>
+		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CollectProjectOutputsForPack</TargetsForTfmSpecificBuildOutput>
+		<Title>Lazy.Crud.Builder.Infra.IoC</Title>
+		<Description>IoC MicroServices layer for Lazy.Crud</Description>
+		<Copyright>felipepassion</Copyright>
+		<PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<Version>1.0.11</Version>
+		<IncludeReferencedProjects>true</IncludeReferencedProjects>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+		<PackageReference Include="Serilog" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Application.Mail\Lazy.Crud.CrossCutting.Application.Mail.csproj" />
+		<ProjectReference Include="..\Builder.Application\Lazy.Crud.Builder.Application.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="LICENSE.TXT">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<!-- Collect outputs from all project references (direct and transitive) and include them into lib/ -->
+	<Target Name="CollectProjectOutputsForPack" DependsOnTargets="ResolveReferences">
+		<ItemGroup>
+			<!-- Only outputs that originate from ProjectReference (avoids bundling external packages) -->
+			<_ProjectRefOutputs Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.ReferenceSourceTarget)' == 'ProjectReference'" />
+			<TfmSpecificPackageFile Include="@(_ProjectRefOutputs)" PackagePath="lib/$(TargetFramework)" />
+		</ItemGroup>
+	</Target>
+
+</Project>

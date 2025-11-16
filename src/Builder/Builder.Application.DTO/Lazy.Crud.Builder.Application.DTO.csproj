@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!-- Aggregator package: include referenced project outputs inside this single nupkg -->
+		<PackProjectReferences>false</PackProjectReferences>
+		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CollectProjectOutputsForPack</TargetsForTfmSpecificBuildOutput>
+		<Title>Lazy.Crud.Builder.Application.DTO</Title>
+		<Description>DTO layer (requests, validators, HTTP models) for Lazy.Crud</Description>
+		<PackageId>Lazy.Crud.Builder.Application.DTO</PackageId>
+		<Authors>felipepassion</Authors>
+		<RepositoryUrl>https://github.com/felipepassion/lazy-crud-builder</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>lazycrud;dto;contracts</PackageTags>
+		<PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Version>1.0.11</Version>
+		<IncludeReferencedProjects>true</IncludeReferencedProjects>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Aggregates\CommonAgg\Commands\**" />
+		<Compile Remove="Seedwork\Mapping\**" />
+		<EmbeddedResource Remove="Aggregates\CommonAgg\Commands\**" />
+		<EmbeddedResource Remove="Seedwork\Mapping\**" />
+		<None Remove="Aggregates\CommonAgg\Commands\**" />
+		<None Remove="Seedwork\Mapping\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="FluentValidation" />
+		<PackageReference Include="MediatR" />
+		<PackageReference Include="Microsoft.AspNetCore.Components" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Forms" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Extensions\Http\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\Lazy.Crud.CrossCutting.Infra.Utils.csproj" />
+		<ProjectReference Include="..\Builder.Api.Queries\Lazy.Crud.Builder.Api.Queries.csproj" />
+		<ProjectReference Include="..\Builder.Application.DTO.Http.Models\Lazy.Crud.Builder.Application.DTO.Http.Models.csproj" />
+		<ProjectReference Include="..\Builder.Application.Validators\Lazy.Crud.Builder.Application.Validators.csproj" />
+		<ProjectReference Include="..\Builder.Enumeration\Lazy.Crud.Builder.Enumeration.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="LICENSE.TXT">
+			<PackagePath>\</PackagePath>
+			<Pack>True</Pack>
+		</None>
+	</ItemGroup>
+
+	<!-- Collect outputs from all project references (direct and transitive) and include them into lib/ -->
+	<Target Name="CollectProjectOutputsForPack" DependsOnTargets="ResolveReferences">
+		<ItemGroup>
+			<!-- Only outputs that originate from ProjectReference (avoids bundling external packages) -->
+			<_ProjectRefOutputs Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.ReferenceSourceTarget)' == 'ProjectReference'" />
+			<TfmSpecificPackageFile Include="@(_ProjectRefOutputs)" PackagePath="lib/$(TargetFramework)" />
+		</ItemGroup>
+	</Target>
+</Project>

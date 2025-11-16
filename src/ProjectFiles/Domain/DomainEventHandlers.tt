@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Lazy.Crud.Core.Domain.Extensions;
+using Lazy.Crud.Builder.Domain.Extensions;
 using Lazy.Crud.CrossCutting.Infra.Log.Providers;
-using Lazy.Crud.Core.Domain.Aggregates.CommonAgg.Events.Handles;
+using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Events.Handles;
 <# if (entitiesT4.Count() > 0){#>
 using <#= project.Name #>.Aggregates.<#= AggName #>.ModelEvents;
 <# } #>

@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Title>Lazy.Crud.Builder.Application</Title>
+		<Description>Application services layer for Lazy.Crud</Description>
+		<PackageId>Lazy.Crud.Builder.Application</PackageId>
+		<Authors>felipepassion</Authors>
+		<RepositoryUrl>https://github.com/felipepassion/lazy-crud-builder</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>lazycrud;application;services</PackageTags>
+		<PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<IncludeReferencedProjects>true</IncludeReferencedProjects>
+		<IsPackable>true</IsPackable>
+		<Version>1.0.11</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+	 <PackageReference Include="CsvHelper" />
+	 <PackageReference Include="FluentValidation" />
+	 <PackageReference Include="MediatR" />
+	 <PackageReference Include="Microsoft.AspNetCore.Components" />
+	 <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" />
+	 <PackageReference Include="Microsoft.AspNetCore.Components.Forms" />
+	 <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+	 <PackageReference Include="Microsoft.EntityFrameworkCore" />
+	 <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+	 <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+	 <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+	 <PackageReference Include="Serilog" />
+	</ItemGroup>
+
+	<ItemGroup>
+	 <ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Log\Lazy.Crud.CrossCutting.Infra.Log.csproj" />
+	 <ProjectReference Include="..\Builder.Application.Validators\Lazy.Crud.Builder.Application.Validators.csproj" />
+	 <ProjectReference Include="..\Builder.Domain\Lazy.Crud.Builder.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\..\LICENSE.TXT" Pack="true" PackagePath="\" Condition="Exists('..\\..\\..\\LICENSE.TXT')" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="LICENSE.TXT">
+	    <PackagePath>\</PackagePath>
+	    <Pack>True</Pack>
+	  </None>
+	</ItemGroup>
+
+</Project>

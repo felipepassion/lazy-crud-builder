@@ -4,7 +4,7 @@ var myNamespace = namespaces.Key.Replace("Entities","Queries");
 #>
 namespace <#= myNamespace #>.Models
 {
-    using Core.Api.Queries;
+    using Builder.Api.Queries;
 	using Enumerations;
 <# foreach(var entity in namespaces) { 
 var otherNamespace = entity.Namespace.FullName; #>

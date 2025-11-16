@@ -2,7 +2,7 @@
 using AutoMapper;
 namespace <#= GetDefaultNamespace() #>.<#= myName #>.Domain.Aggregates.<#= AggName #>.Profiles
 {
-    public class <#= AggName #>CoreProfile : Core.Domain.Aggregates.CommonAgg.Profiles.CoreAggProfile { }
+    public class <#= AggName #>CoreProfile : Builder.Domain.Aggregates.CommonAgg.Profiles.CoreAggProfile { }
 }
 
 <#

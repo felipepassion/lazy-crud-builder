@@ -1,48 +1,61 @@
 <Project>
-  <PropertyGroup>
-    <!-- Enable central package management, https://learn.microsoft.com/en-us/nuget/consume-packages/Central-Package-Management -->
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-  </PropertyGroup>
-  <ItemGroup>
-    <!-- Centralized package versions for the whole solution -->
-    <PackageVersion Include="AutoMapper" Version="14.0.0" />
-    <PackageVersion Include="CsvHelper" Version="33.0.1" />
-    <PackageVersion Include="Destructurama.Attributed" Version="5.1.0" />
-    <PackageVersion Include="Destructurama.JsonNet" Version="4.0.2" />
-    <PackageVersion Include="EFCore.NamingConventions" Version="9.0.0" />
-    <PackageVersion Include="FluentValidation" Version="11.11.0" />
-    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageVersion Include="MediatR" Version="12.4.1" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.Forms" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageVersion Include="Npgsql" Version="9.0.3" />
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-    <PackageVersion Include="Serilog" Version="4.2.0" />
-    <PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.0" />
-    <PackageVersion Include="Serilog.Sinks.Seq" Version="9.0.0" />
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version="7.3.1" />
-    <PackageVersion Include="xunit" Version="2.9.3" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
-  </ItemGroup>
+	<PropertyGroup>
+		<!-- Enable central package management, https://learn.microsoft.com/en-us/nuget/consume-packages/Central-Package-Management -->
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- Centralized package versions for the whole solution -->
+		<PackageVersion Include="AutoMapper" Version="14.0.0" />
+		<PackageVersion Include="CsvHelper" Version="33.0.1" />
+		<PackageVersion Include="Destructurama.Attributed" Version="5.1.0" />
+		<PackageVersion Include="Destructurama.JsonNet" Version="4.0.2" />
+		<PackageVersion Include="EFCore.NamingConventions" Version="9.0.0" />
+		<PackageVersion Include="FluentValidation" Version="11.11.0" />
+		<PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
+		<PackageVersion Include="Lazy.Crud.Builder.Api.Queries" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.Builder.Application" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.Builder.Application.DTO" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.Builder.Application.DTO.Http.Models" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.Builder.Application.Validators" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.Builder.Domain" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.Builder.Enumeration" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.Builder.Infra.IoC" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.Builder.Infra.Data" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.CrossCutting.Infra.Utils" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.CrossCutting.Application.Mail" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.CrossCutting.Infra.Log" Version="1.0.11" />
+		<PackageVersion Include="Lazy.Crud.CrossCutting.Domain" Version="1.0.11" />
+		<PackageVersion Include="MediatR" Version="12.4.1" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components.Forms" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.0" />
+		<PackageVersion Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+		<PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
+		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+		<PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+		<PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageVersion Include="Npgsql" Version="9.0.3" />
+		<PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+		<PackageVersion Include="Serilog" Version="4.2.0" />
+		<PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.0" />
+		<PackageVersion Include="Serilog.Sinks.Seq" Version="9.0.0" />
+		<PackageVersion Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+		<PackageVersion Include="xunit" Version="2.9.3" />
+		<PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
+		<PackageVersion Include="coverlet.collector" Version="6.0.4" />
+	</ItemGroup>
 </Project>

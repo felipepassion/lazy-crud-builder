@@ -18,8 +18,8 @@
     }
 #>
 
-using Lazy.Crud.Core.Infra.Data.Contexts;
-using Lazy.Crud.Core.Infra.IoC;
+using Lazy.Crud.Builder.Infra.Data.Contexts;
+using Lazy.Crud.Builder.Infra.IoC;
 using Lazy.Crud.Users.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -51,7 +51,7 @@ var aggName = namespc.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replac
 #>
             <#= GetDefaultNamespace() #>.<#= aggName #>.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
 <# } #>			
-            Lazy.Crud.Core.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
+            Lazy.Crud.Builder.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
 		}
 
         public static void Migrate(this WebApplication app)

@@ -1,5 +1,5 @@
 ﻿<# if (entitiesT4.Any()) { #>
-using <#= GetDefaultNamespace() #>.Core.Domain.Seedwork.Specification;
+using <#= GetDefaultNamespace() #>.Builder.Domain.Seedwork.Specification;
 using Microsoft.EntityFrameworkCore;
 <# foreach(var namespaces in groupEntitiesT4) { #>
 namespace <#= namespaces.Key.Replace("Entities", "Specifications") #> {

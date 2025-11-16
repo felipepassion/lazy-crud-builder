@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Lazy.Crud.Core.Application.DTO.Aggregates.CommonAgg.ValueObjects;
+using Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.ValueObjects;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace Lazy.Crud.CrossCuting.Infra.Utils.Extensions;
+namespace Lazy.Crud.CrossCutting.Infra.Utils.Extensions;
 
 public static class ObjectExtensions
 {

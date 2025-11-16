@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>Lazy.Crud.Builder.Infra.Data</Title>
+    <Description>EF Core data layer for Lazy.Crud (DbContext, mappings, repositories)</Description>
+    <PackageId>Lazy.Crud.Builder.Infra.Data</PackageId>
+    <Authors>felipepassion</Authors>
+    <RepositoryUrl>https://github.com/felipepassion/lazy-crud-builder</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>lazycrud;efcore;data;repository</PackageTags>
+    <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	  <Version>1.0.11</Version>
+	  <!-- Added to create a "fat" package without declaring project reference dependencies -->
+	  <IncludeReferencedProjects>true</IncludeReferencedProjects>
+	  <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFCore.NamingConventions" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Serilog" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Builder.Domain\Lazy.Crud.Builder.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\LICENSE.TXT" Pack="true" PackagePath="\" Condition="Exists('..\\..\\..\\LICENSE.TXT')" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE.TXT">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>
