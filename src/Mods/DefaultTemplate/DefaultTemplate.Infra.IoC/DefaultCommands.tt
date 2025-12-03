@@ -1,0 +1,1 @@
+<#@ include file="$(PkgLazy_Crud_Builder_Infra_IoC)\contentFiles\any\any\LazyCrudTemplates\Infra.IoC\DefaultCommands.tt" #>

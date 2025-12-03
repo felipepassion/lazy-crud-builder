@@ -8,39 +8,33 @@ namespace <#= namespaces.Key.Replace("Entities", "AppServices").Replace("Domain"
 <#
 	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 #>
-	using Application.DTO.Aggregates.<#= aggName #>.Requests;
-    using Domain.Aggregates.<#= aggName #>.Queries.Models;
+using Application.DTO.Aggregates.<#= aggName #>.Requests;
+using Domain.Aggregates.<#= aggName #>.Queries.Models;
 <# foreach(var entity in namespaces) { 
 var attrs = GetAttributesDict(entity)["EndpointsT4"];
-var canSummary = attrs.Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+var canSummary = false && attrs.Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
 #>
-	public partial interface I<#= entity.Name #>AppService : IBaseAppService {	
-		public Task<<#= entity.Name #>DTO> Get(<#=entity.Name#>QueryModel request);
-		public Task<int> CountAsync(<#=entity.Name#>QueryModel request);
-		public Task<IEnumerable<<#= entity.Name #>DTO>> GetAll(<#=entity.Name#>QueryModel request, int? page = null, int? size = null);
-		public Task<T> Select<T>(<#=entity.Name#>QueryModel request, Expression<Func<Domain.Aggregates.<#= aggName #>.Entities.<#= entity.Name #>, T>> selector = null);
-		public Task<IEnumerable<T>> GetAll<T>(<#=entity.Name#>QueryModel request, int? page = null, int? size = null, Expression<Func<Domain.Aggregates.<#= aggName #>.Entities.<#= entity.Name #>, T>> selector = null);
-<#if(canSummary){#>
-		public Task<IEnumerable<<#=entity.Name#>ListiningDTO>> GetAllSummary(<#=entity.Name#>QueryModel request, int? page = null, int? size = null);
+public partial interface I<#= entity.Name #>AppService : IBaseAppService {
+	Task<<#= entity.Name #>DTO> Get(<#=entity.Name#>QueryModel request);
+	Task<int> CountAsync(<#=entity.Name#>QueryModel request);
+	Task<IEnumerable<<#= entity.Name #>DTO>> GetAll(<#=entity.Name#>QueryModel request, int? page = null, int? size = null);
+	Task<T> Select<T>(<#=entity.Name#>QueryModel request, Expression<Func<Domain.Aggregates.<#= aggName #>.Entities.<#= entity.Name #>, T>> selector = null);
+	Task<IEnumerable<T>> GetAll<T>(<#=entity.Name#>QueryModel request, int? page = null, int? size = null, Expression<Func<Domain.Aggregates.<#= aggName #>.Entities.<#= entity.Name #>, T>> selector = null);
+<#if(canSummary){#>	Task<IEnumerable<<#=entity.Name#>ListiningDTO>> GetAllSummary(<#=entity.Name#>QueryModel request, int? page = null, int? size = null);
 <#}#>
-
-<#if(AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")))
-{
-	var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
-#>
-<#if(canCreate){#>
-		public Task<DomainResponse> Create(<#= entity.Name #>DTO request, bool updateIfExists = true, <#=entity.Name#>QueryModel searchQuery = null);
-		public Task<DomainResponse> Delete(<#=entity.Name#>QueryModel request);
-		public Task<DomainResponse> DeleteRange(<#=entity.Name#>QueryModel request);
-		public Task Update(<#=entity.Name#>QueryModel searchQuery, <#= entity.Name #>DTO request, bool createIfNotExists = true);
-<#}#>
+<#if(AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")) && canCreate){#>
+	Task<DomainResponse> Create(<#= entity.Name #>DTO request, bool updateIfExists = true, <#=entity.Name#>QueryModel searchQuery = null);
+	Task<DomainResponse> Delete(<#=entity.Name#>QueryModel request);
+	Task<DomainResponse> DeleteRange(<#=entity.Name#>QueryModel request);
+	Task Update(<#=entity.Name#>QueryModel searchQuery, <#= entity.Name #>DTO request, bool createIfNotExists = true);
 <# } #>
-	}
+}
 <# } #>
 }
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"T4", 
+    folderName: $"", 
     outputFileName: @$"{AggName}.IAppServices.cs", 
     recreateFileIfExists: true); #>

@@ -1,0 +1,1 @@
+<#@ include file="$(PkgLazy_Crud_Builder_Api_Queries)\contentFiles\any\any\LazyCrudTemplates\Api.Queries\DefaultCommands.tt" #>

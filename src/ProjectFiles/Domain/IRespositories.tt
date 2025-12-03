@@ -1,5 +1,5 @@
 ﻿<# if (entities.Any()) { #>
-using <#= GetDefaultNamespace() #>.Builder.Domain.Aggregates.CommonAgg.Repositories;
+// Removed global usings now centralized
 <# foreach (var nmspc in groupEntities) 
 { #>
 using <#= nmspc.Key #>;
@@ -15,8 +15,8 @@ var contextName = className + "Context";
 namespace <#= namespaces.Key.Replace("Entities", "Repositories") #> 
 {
 <# foreach (var entity in namespaces) { #>
-	public partial interface I<#= entity.Name #>Repository : IRepository<<#= entity.Name #>> { }
-	public partial interface I<#= entity.Name #>MongoRepository : IMongoRepository<<#= entity.Name #>> { }
+public partial interface I<#= entity.Name #>Repository : IRepository<Entities.<#= entity.Name #>> { }
+public partial interface I<#= entity.Name #>MongoRepository : IMongoRepository<Entities.<#= entity.Name #>> { }
 
 <# } #>
 }
@@ -25,6 +25,6 @@ namespace <#= namespaces.Key.Replace("Entities", "Repositories") #>
 <#    else  {#>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"T4", 
+    folderName: $"", 
     outputFileName: @$"{AggName}.IRespositories.cs",
     recreateFileIfExists: true); #>

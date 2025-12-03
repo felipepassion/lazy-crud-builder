@@ -9,123 +9,77 @@ using <#= namespc.Key.Replace("Entities", "Repositories") #>;
 using <#= namespc.Key #>;
 using <#= namespc.Key.Replace(".Interfaces","") #>;
 <# } #>
-using Microsoft.Extensions.DependencyInjection;
-using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Commands;
-using System.Reflection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Lazy.Crud.Builder.Application.DTO.Seedwork;
-using Lazy.Crud.Builder.Infra.IoC;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.DataProtection;
-
-namespace <#= GetCurrentProject().Name #> {
-	using Builder.Infra.IoC.Extensions;
-    using Builder.Api.Middlewares;
-	using Infra.Data.Context;
+namespace <#= GetCurrentProject().Name #>;
+using Builder.Infra.IoC.Extensions;
+using Builder.Api.Middlewares;
+using Infra.Data.Context;
 <# if(entitiesT4?.Any() == true) { #>
-	using Domain.Aggregates.<#= AggName #>.CommandHandlers;
-<# } #>	
+using Domain.Aggregates.<#= AggName #>.CommandHandlers;
+<# } #>
 
-    public partial class IoCFactory : IBaseIoC {
-		string connectionString;
-		
-		partial void ConfigureFactories();
-		partial void ConfigureValidators();
-		partial void ConfigureAdditionalAppServices(IServiceCollection services);
-		partial void ConfigureAdditionalRepositories();
-		partial void PreConfigureDatabase(IServiceCollection services, IConfiguration configuration);
+public partial class IoCFactory : IBaseIoC {
+	string connectionString;
+	partial void ConfigureFactories();
+	partial void ConfigureValidators();
+	partial void ConfigureAdditionalAppServices(IServiceCollection services);
+	partial void ConfigureAdditionalRepositories();
+	partial void PreConfigureDatabase(IServiceCollection services, IConfiguration configuration);
 
-        #region Constructor
+    private static IoCFactory _current;
+	public static IoCFactory Current { get { return _current ?? (_current = new IoCFactory()); } }
 
-        private static IoCFactory _current;
-		public static IoCFactory Current { get { return _current ?? (_current = new IoCFactory()); } }
-
-        #endregion
-
-        #region Methods
-
-        public void Configure(IConfiguration configuration, IServiceCollection services) {
-			ConfigureFactories();
-			ConfigureMediatR(services);
-			ConfigureAppServices(services);
-			ConfigureRepositories(services);
-			ConfigureDatabase(services, configuration);
-			ConfigureMappings();
-			ConfigureMiddleware(services);
-			ConfigureControllers(services);
-        }
-
-		void ConfigureControllers(IServiceCollection services)
-		{
-			services.AddControllers().AddNewtonsoftJson(options =>
-			{
-				//options.SerializerSettings.Converters.Add(new StringEnumConverter());
-				// Use the default property (Pascal) casing
-				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-				var settings = options.SerializerSettings;
-				settings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
-				settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-				settings.MissingMemberHandling = MissingMemberHandling.Ignore;
-				settings.NullValueHandling = NullValueHandling.Ignore;
-				settings.PreserveReferencesHandling = PreserveReferencesHandling.None;
-				settings.DefaultValueHandling = DefaultValueHandling.Ignore;
-				settings.Formatting = Formatting.Indented;
-				settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-				options.AllowInputFormatterExceptionMessages = false;
-				//settings.Converters.Add(new TiimeOnlyJsonConverter());
-			}).AddBadRequestCustomValidator();;
-		}
-
-		void ConfigureMiddleware(IServiceCollection services)
-        {
-            services.AddScoped<ErrorHandlingMiddleware>();
-        }
-
-		void ConfigureMappings()
-		{
-			MapperFactory.Setup(this.GetType().Namespace.Replace("Infra.IoC","Domain"));
-		}
-
-		void ConfigureMediatR(IServiceCollection services)
-		{
-            services.AddMediatR((x) => { x.RegisterServicesFromAssembly(typeof(BaseCommand).GetTypeInfo().Assembly); });
-<# foreach(var entity in entitiesT4) { #>
-            services.AddMediatR((x) => { x.RegisterServicesFromAssembly(typeof(Base<#= AggName #>CommandHandler<>).GetTypeInfo().Assembly); });
-			<#break;#>
-<# } #>			
-		}
-
-		void ConfigureDatabase(IServiceCollection services, IConfiguration configuration)
-        {
-			PreConfigureDatabase(services, configuration);
-			if(string.IsNullOrWhiteSpace(connectionString)) 
-				connectionString = configuration.GetConnectionString("DefaultConnection")!;
-			services.AddDbContext<<#= AggName #>Context>(options =>
-			options.UseNpgsql(connectionString));
-		}
-
-		void ConfigureRepositories(IServiceCollection services) {
-
-<# foreach(var entity in entities) { #>
-            services.AddScoped<I<#= entity.Name #>Repository, <#= entity.Name #>Repository>();
-<# } #>			
-			ConfigureAdditionalRepositories();
-		}
-
-		void ConfigureAppServices(IServiceCollection services) {
-
-<# foreach(var entity in entitiesT4) { #>
-            services.AddScoped<I<#= entity.Name #>AppService, <#= entity.Name #>AppService>();
-<# } #>		
-			ConfigureAdditionalAppServices(services);
-		}
-
-        #endregion
+    public void Configure(IConfiguration configuration, IServiceCollection services) {
+		ConfigureFactories();
+		ConfigureMediatR(services);
+		ConfigureAppServices(services);
+		ConfigureRepositories(services);
+		ConfigureDatabase(services, configuration);
+		ConfigureMappings();
+		ConfigureMiddleware(services);
+		ConfigureControllers(services);
     }
+
+	void ConfigureControllers(IServiceCollection services){
+		services.AddControllers().AddNewtonsoftJson(options => {
+			options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+			var settings = options.SerializerSettings;
+			settings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
+			settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			settings.MissingMemberHandling = MissingMemberHandling.Ignore;
+			settings.NullValueHandling = NullValueHandling.Ignore;
+			settings.PreserveReferencesHandling = PreserveReferencesHandling.None;
+			settings.DefaultValueHandling = DefaultValueHandling.Ignore;
+			settings.Formatting = Formatting.Indented;
+			settings.PreserveReferencesHandling = Formatting.Indented == Formatting.Indented ? PreserveReferencesHandling.Objects : settings.PreserveReferencesHandling;
+			options.AllowInputFormatterExceptionMessages = false;
+		});
+	}
+
+	void ConfigureMiddleware(IServiceCollection services){ services.AddScoped<ErrorHandlingMiddleware>(); }
+	void ConfigureMappings(){ MapperFactory.Setup(this.GetType().Namespace.Replace("Infra.IoC","Domain")); }
+	void ConfigureMediatR(IServiceCollection services){
+        services.AddMediatR((x) => { x.RegisterServicesFromAssembly(typeof(BaseCommand).GetTypeInfo().Assembly); });
+<# foreach(var entity in entitiesT4) { #>
+        services.AddMediatR((x) => { x.RegisterServicesFromAssembly(typeof(Base<#= AggName #>CommandHandler<>).GetTypeInfo().Assembly); });
+		<#break;#>
+<# } #>
+	}
+	void ConfigureDatabase(IServiceCollection services, IConfiguration configuration){
+		PreConfigureDatabase(services, configuration);
+		if(string.IsNullOrWhiteSpace(connectionString)) connectionString = configuration.GetConnectionString("DefaultConnection")!;
+		services.AddDbContext<<#= AggName #>Context>(options => options.UseNpgsql(connectionString));
+	}
+	void ConfigureRepositories(IServiceCollection services){
+<# foreach(var entity in entities) { #>
+        services.AddScoped<I<#= entity.Name #>Repository, <#= entity.Name #>Repository>();
+<# } #>
+		ConfigureAdditionalRepositories();
+	}
+	void ConfigureAppServices(IServiceCollection services){
+<# foreach(var entity in entitiesT4) { #>
+        services.AddScoped<I<#= entity.Name #>AppService, <#= entity.Name #>AppService>();
+<# } #>
+		ConfigureAdditionalAppServices(services);
+	}
 }
-<# SaveOutputToSubFolder(
-    folderName: $"T4", 
-    outputFileName: @$"{AggName}.IoCFactory.cs",
-    recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: $"", outputFileName: @$"{AggName}.IoCFactory.cs", recreateFileIfExists: true); #>

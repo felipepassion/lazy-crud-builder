@@ -28,6 +28,6 @@ if(!canGet) continue;
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"T4", 
+    folderName: $"", 
     outputFileName: @$"{AggName}.ListiningDTO.cs", 
     recreateFileIfExists: true); #>

@@ -17,13 +17,13 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Version>1.0.11</Version>
+		<Version>1.0.21</Version>
 		<IsPackable>true</IsPackable>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\Lazy.Crud.CrossCutting.Infra.Utils.csproj" />
+		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Utils\Lazy.Crud.CrossCutting.Infra.Utils.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -35,6 +35,16 @@
 	    <PackagePath>\</PackagePath>
 	    <Pack>True</Pack>
 	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="LICENSE.TXT" Pack="true" PackagePath="/" />
+	</ItemGroup>
+
+	<!-- Templates for Application layer -->
+	<ItemGroup>
+		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
+		<None Include="..\..\ProjectFiles\Api.Queries\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Api.Queries/" Link="LazyCrudTemplates/Api.Queries/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 </Project>

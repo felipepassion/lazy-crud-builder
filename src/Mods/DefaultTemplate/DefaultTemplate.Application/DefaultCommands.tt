@@ -1,0 +1,1 @@
+<#@ include file="$(PkgLazy_Crud_Builder_Application)\contentFiles\any\any\LazyCrudTemplates\Application\DefaultCommands.tt" #>

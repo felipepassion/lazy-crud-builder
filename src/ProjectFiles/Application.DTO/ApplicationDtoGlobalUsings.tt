@@ -1,0 +1,14 @@
+global using System.ComponentModel;
+global using System.ComponentModel.DataAnnotations;
+global using System.Net.Http;
+global using FluentValidation;
+
+global using Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models;
+global using Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Validators;
+global using Lazy.Crud.Builder.Application.DTO.Attributes;
+<# var requestAggs = new HashSet<string>(entitiesT4.Select(e => e.Namespace.FullName.Split('.').First(n=>n.EndsWith("Agg")))); #>
+<# foreach(var agg in requestAggs) { #>
+global using Lazy.Crud.<#= agg.Replace("Agg","") #>.Application.DTO.Aggregates.<#= agg #>.Requests;
+global using Lazy.Crud.<#= agg.Replace("Agg","") #>.Application.DTO.Aggregates.<#= agg #>.Validators;
+<# } #>
+<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>

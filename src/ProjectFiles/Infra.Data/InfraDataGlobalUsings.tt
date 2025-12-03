@@ -1,0 +1,8 @@
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.Configuration;
+
+global using Lazy.Crud.Builder.Infra.Data.Contexts;
+global using <#= GetDefaultNamespace() #>.Builder.Infra.Data.Repositories;
+<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>

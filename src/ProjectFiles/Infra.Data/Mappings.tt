@@ -2,39 +2,34 @@
 	 foreach (var nmspc in groupAllEntities) { #>
 using <#= nmspc.Key #>;
 <# } #>
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 <# foreach(var namespaces in groupAllEntities) { #>
 namespace <#= namespaces.Key.Replace("Entities", "Mappings").Replace("Domain","Infra.Data") #> 
 {
-<#
+ <#
     var isFromSameAgg = AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 	foreach (var entity in namespaces) { 
         var oneToOneRelations = GetProperties(entity).Where(x=>GetAttributes(x.Value, false, true).Any(p=>p.Contains("OneToOne"))).ToArray();
-        //var relationProperties2 = GetAttributes(entity).Where(x=>x.Name.Contains("T4"));
 #>
-    public partial class <#= entity.Name #>Mapping : IEntityTypeConfiguration<<#= entity.Name #>>
+public partial class <#= entity.Name #>Mapping : IEntityTypeConfiguration<<#= entity.FullName #>>
+{
+    public void Configure(EntityTypeBuilder<<#= entity.FullName #>> builder)
     {
-        public void Configure(EntityTypeBuilder<<#= entity.Name #>> builder)
-        {
 <# if(!isFromSameAgg){ #>
-            builder.Metadata.SetIsTableExcludedFromMigrations(true);
+        builder.Metadata.SetIsTableExcludedFromMigrations(true);
 <#}#>
 <# foreach(var item in oneToOneRelations){ #>
-            builder.HasOne(x => x.<#= item.Key #>).WithOne().HasForeignKey<<#= item.Value.Type.AsFullName.Split('.').Last() #>>("Id");
+        builder.HasOne(x => x.<#= item.Key #>).WithOne().HasForeignKey<<#= item.Value.Type.AsFullName.Split('.').Last() #>>("Id");
 <#}#>
-            builder.HasKey(x => x.Id);
-            ConfigureAdditionalMapping(builder);
-        }
-
-		partial void ConfigureAdditionalMapping(EntityTypeBuilder<<#= entity.Name #>> builder);
+        builder.HasKey(x => x.Id);
+        ConfigureAdditionalMapping(builder);
     }
+	partial void ConfigureAdditionalMapping(EntityTypeBuilder<<#= entity.FullName #>> builder);
+}
 <# } #>
 }
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"T4", 
+    folderName: $"", 
     outputFileName: @$"{AggName}.Mappings.cs", 
     recreateFileIfExists: true); #>

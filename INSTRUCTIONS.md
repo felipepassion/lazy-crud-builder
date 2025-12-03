@@ -1,0 +1,70 @@
+# Instruções do Projeto Lazy CRUD Builder / Extension
+
+## Visão Geral
+Plataforma low-code para acelerar criação de camadas completas (Domain, Application, Infra, API e UI cliente) via geração automática de código usando templates T4 (.tt), integrada a uma extensão de IDE (Visual Studio) e distribuída através de pacotes NuGet reutilizáveis.
+
+Componentes centrais:
+1. Templates T4 (.tt) em `src/ProjectFiles` e `src/Testservice` que geram código de domínio, comandos, eventos, handlers, DTOs, controllers, páginas cliente e infraestrutura.
+2. Extensão (LazyCrudExtension) que oferece janelas e botões para orquestrar geração e operações rápidas ("low-code assistido").
+3. Pacotes NuGet (`Builder.*`, `CrossCutting.*`) que encapsulam padrões e utilidades para outras soluções.
+
+## Estrutura Principal
+- Builder: aplicação núcleo (Application, Domain, Infra.Data, IoC, WebApi, Queries, Validators, DTO).
+- CrossCutting: serviços horizontais (Log, Mail, Utils, Domain abstractions).
+- Testservice: sandbox/exemplo gerado para validar templates e fluxo.
+- Extension (repositório separado): VSIX para interação visual e automação.
+
+Targets: `.NET 9` para projetos modernos / serviços e `.NET Framework 4.7.2` para compatibilidade da extensão.
+
+## Categorias de Templates (.tt)
+Domain: `DefaultEntities`, `AggregateSettingsEntity`, `Commands`, `DomainEventHandlers`, `DomainCommandHandlers`, `Filters`, `DefaultFolders`.
+Application: `AppServices`, `IAppServices`, `DefaultCommands`, DTO específicos.
+Infra: `IdentityContext`, comandos/repositórios padrões.
+IoC: registros e fábricas (`ClientIoCFactory`).
+API / Queries: `Controllers`, `DashboardControllers`.
+UI (Apps): componentes básicos (`Basic*`), geradores de páginas (`ClientPagesGenerator`, `ClientRegisterPages`, `ClientListiningPages`), formulários e estilos (`BasicForm.tt`, `BasicForm.css.tt`).
+Testservice: réplicas dos templates para validação isolada.
+
+## Fluxo de Geração
+1. Definir ou ajustar entidades e modelos nos templates Domain.
+2. Acionar transformação: via "Transform All Templates" ou botões da extensão.
+3. Código é gerado automaticamente nas pastas dos projetos alvo.
+4. Ajustes específicos: usar `partial classes` ou arquivos fora do escopo gerado (evitar editar diretamente artefatos sobrescritos por .tt).
+5. Build e testes rápidos (API + UI).
+6. Publicação de pacotes NuGet conforme necessidade.
+
+## Convenções
+- Prefixo `Default*` para blocos base reutilizáveis.
+- Sufixos `*Handlers`, `*Models` para comandos e eventos.
+- Componentes UI com prefixo `Basic*` para indicar reutilização.
+- Separação clara Domain vs Application (DTO / Services) para manter isolamento.
+
+## Publicação NuGet
+1. Atualizar versão (SemVer) nos projetos alvo.
+2. Executar build limpo.
+3. Gerar `.nupkg` (dotnet pack / nuget pack).
+4. Fazer push para feed (NuGet oficial ou interno).
+5. Registrar alterações em changelog (especialmente mudanças em contratos públicos ou templates geradores).
+
+## Boas Práticas
+- Não remover um `.tt` sem mapear dependências (handlers, controllers, UI).
+- Complexidade de regra de negócio: manter fora do código gerado (usar serviços/partials).
+- Minimizar divergência manual ? facilita regeneração segura.
+- Documentar novas entidades e componentes UI.
+- Versionar mudanças estruturais dos templates.
+
+## Customização Segura
+- Usar `partial` para lógica adicional.
+- Interfaces em CrossCutting para extensões.
+- Inserir condicionais nos templates somente quando não houver alternativa externa.
+
+## Passo Inicial Rápido
+1. Clonar repositório principal e extensão (opcional).
+2. Revisar templates Domain para entidades iniciais.
+3. Transformar todos os templates.
+4. Rodar build.
+5. Testar endpoints gerados e páginas cliente.
+6. Publicar pacotes se for reutilizar em outra solução.
+
+## Resumo Final
+O projeto entrega uma experiência de desenvolvimento acelerado de CRUDs e camadas adjacentes, combinando geração T4, automação via extensão Visual Studio e distribuição de blocos reutilizáveis por NuGet; tudo focado em reduzir tempo de codificação repetitiva mantendo extensibilidade e boas práticas arquiteturais.

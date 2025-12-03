@@ -17,11 +17,17 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Version>1.0.11</Version>
+		<Version>1.0.21</Version>
 		<IsPackable>true</IsPackable>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
+		
 	</PropertyGroup>
 
+	<ItemGroup>
+		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
+		<None Include="..\..\ProjectFiles\Application.DTO\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Application.DTO/" Link="LazyCrudTemplates/Application.DTO/%(Filename)%(Extension)" />
+	</ItemGroup>
+	
 	<ItemGroup>
 		<None Include="..\..\..\LICENSE.TXT" Pack="true" PackagePath="\" Condition="Exists('..\\..\\..\\LICENSE.TXT')" />
 		<None Update="LICENSE.TXT">

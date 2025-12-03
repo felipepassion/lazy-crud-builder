@@ -1,0 +1,2 @@
+global using System.Collections.Generic;
+<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>

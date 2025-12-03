@@ -1,13 +1,17 @@
-﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
-<#
+﻿<#@ include file="..\project.tt" #>
+<# try {
 	var entities = GetMyAggregateEntities(withAttribute: "EndpointsT4").Where(x=>x.IsAbstract == false);
-
+    var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4");
 	var project = GetCurrentProject();
 	var path = Path.GetDirectoryName(project.FullName);
 	var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
 	var AggName = myName + "Agg";
 	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
-
 #>
+<#@ include file="..\..\ProjectFiles\Application\ApplicationGlobalUsings.tt" #>
 <#@ include file="..\..\ProjectFiles\Application\AppServices.tt" #>
 <#@ include file="..\..\ProjectFiles\Application\IAppServices.tt" #>
+<# } catch(System.Exception ex) { #>
+// T4 safe-guard: Application/DefaultCommands.tt suppressed an error.
+// Message: <#= ex.Message #>
+<# } #>

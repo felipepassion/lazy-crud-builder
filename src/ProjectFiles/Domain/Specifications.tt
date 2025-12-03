@@ -1,14 +1,13 @@
 ﻿<# if (entitiesT4.Any()) { #>
-using <#= GetDefaultNamespace() #>.Builder.Domain.Seedwork.Specification;
-using Microsoft.EntityFrameworkCore;
+// Removed global usings now in global file
 <# foreach(var namespaces in groupEntitiesT4) { #>
 namespace <#= namespaces.Key.Replace("Entities", "Specifications") #> {
-	using Entities;
+using Entities;
 <# foreach(var entity in namespaces) { 
 var test = GetProperties(entity);
 
 #>
-   public partial class <#= entity.Name #>Specifications {
+public partial class <#= entity.Name #>Specifications {
 <# foreach(var prop in GetProperties(entity)) {
 	KeyValuePair<string, CodeProperty> property = prop;
 	var propFullName = property.Value.Type.CodeType.FullName;
@@ -19,12 +18,12 @@ var test = GetProperties(entity);
 	var path = property.Key;#>
 	<#@ include file="..\..\ProjectFiles\Domain\SpecificationItem.tt" #>
 	<#}#>
-   }
+}
 <# } #>
 }
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"T4", 
+    folderName: $"", 
     outputFileName: @$"{AggName}.Specifications.cs",
     recreateFileIfExists: true); #>

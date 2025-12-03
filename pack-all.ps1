@@ -1,55 +1,52 @@
 <#!
 .SYNOPSIS
-  Packs all Lazy.Crud projects and gathers .nupkg/.snupkg into a versioned folder. Optionally publishes to NuGet.
+  Empacota todos os projetos Lazy.Crud e reúne apenas arquivos .nupkg (sem símbolos) em uma pasta versionada. Opcionalmente publica no NuGet.
 
 .DESCRIPTION
-  Detects version automatically (from Application.DTO csproj) if not provided.
-  Creates artifacts/nuget/<version>/ and copies packages there.
-  Can interactively publish all or selected packages to nuget.org.
+  Detecta versão automaticamente (do primeiro csproj listado) se não fornecida.
+  Cria artifacts/nuget/<versao>/ e copia somente os pacotes principais (.nupkg).
+  Publicação interativa opcional apenas de .nupkg (nenhum .snupkg é gerado).
 
 .PARAMETER Version
-  Optional explicit version. If omitted, the script reads the first project file's <Version> element.
+  Versão explícita opcional. Se omitida, lida do primeiro projeto (<Version> no csproj).
 
 .PARAMETER OutputRoot
-  Root folder for artifacts. Default: artifacts/nuget
+  Pasta raiz para artefatos. Padrão: artifacts/nuget
 
 .PARAMETER SkipRestore
-  Skips the initial dotnet restore if specified.
+  Pula o dotnet restore inicial se especificado.
 
 .PARAMETER Publish
-  When specified, asks whether to publish all packages or only selected ones after packing.
+  Quando especificado, pergunta se publica todos ou somente selecionados após o pack.
 
 .PARAMETER ApiKey
-  NuGet API key. If omitted will use the default provided key. (You may override for security.)
-
-.PARAMETER NoSymbols
-  Skips pushing .snupkg symbol packages.
+  Chave de API NuGet. Se omitida usa a chave padrão.
 
 .EXAMPLE
   pwsh scripts/pack-all.ps1 -Publish
-  Packs and then interactively publishes.
+  Empacota e depois publica interativamente (somente .nupkg).
 
 .EXAMPLE
-  pwsh scripts/pack-all.ps1 -Version 1.0.10 -Publish -ApiKey YOUR_KEY
-
+  pwsh scripts/pack-all.ps1 -Version 1.0.10 -Publish -ApiKey SUA_CHAVE
+  ./pack-all.ps1 -Publish -ApiKey
+  Empacota e publica apenas .nupkg.
 #>
 [CmdletBinding()] param(
   [string]$Version,
   [string]$OutputRoot = 'artifacts/nuget',
   [switch]$SkipRestore,
   [switch]$Publish,
-  [string]$ApiKey = 'KEY',
-  [switch]$NoSymbols
+  [string]$ApiKey = ''
 )
 
 $ErrorActionPreference = 'Stop'
 $projects = @(
   'src/Builder/Builder.Application.DTO/Lazy.Crud.Builder.Application.DTO.csproj',
+  'src/Builder/Builder.Api/Lazy.Crud.Builder.Api.csproj',
   'src/Builder/Builder.Api.Queries/Lazy.Crud.Builder.Api.Queries.csproj',
   'src/Builder/Builder.Application.DTO.Http.Models/Lazy.Crud.Builder.Application.DTO.Http.Models.csproj',
   'src/Builder/Builder.Application.Validators/Lazy.Crud.Builder.Application.Validators.csproj',
   'src/Builder/Builder.Enumeration/Lazy.Crud.Builder.Enumeration.csproj',
-  'src/CrossCutting/CrossCutting.Utils/Lazy.Crud.CrossCutting.Infra.Utils.csproj',
   'src/Builder/Builder.Application/Lazy.Crud.Builder.Application.csproj',
   'src/Builder/Builder.Domain/Lazy.Crud.Builder.Domain.csproj',
   'src/Builder/Builder.Infra.Data/Lazy.Crud.Builder.Infra.Data.csproj',
@@ -57,7 +54,7 @@ $projects = @(
   'src/CrossCutting/CrossCutting.Domain/Lazy.Crud.CrossCutting.Domain.csproj',
   'src/CrossCutting/CrossCutting.Infra.Log/Lazy.Crud.CrossCutting.Infra.Log.csproj',
   'src/CrossCutting/CrossCutting.Application.Mail/Lazy.Crud.CrossCutting.Application.Mail.csproj',
-  'src/CrossCutting/Lazy.Crud.CrossCutting.Domain/Lazy.Crud.CrossCutting.Domain.csproj'
+  'src/CrossCutting/CrossCutting.Infra.Utils/Lazy.Crud.CrossCutting.Infra.Utils.csproj'
 )
 
 function Get-VersionFromCsproj([string]$csprojPath) {
@@ -75,6 +72,16 @@ if (-not $Version) {
 }
 
 $dest = Join-Path $OutputRoot $Version
+# Limpeza do destino antes de empacotar para evitar lixo de execuções anteriores
+if (Test-Path $dest) {
+  Write-Host "[CLEAN] Removing previous output at: $dest" -ForegroundColor Cyan
+  try {
+    Remove-Item -Path $dest -Recurse -Force -ErrorAction Stop
+  } catch {
+    Write-Warning "Falha ao limpar '$dest': $($_.Exception.Message)"
+  }
+}
+# Recria a pasta de destino
 if (!(Test-Path $dest)) { New-Item -ItemType Directory -Path $dest | Out-Null }
 
 if (-not $SkipRestore) {
@@ -86,26 +93,18 @@ $failed = @()
 foreach ($p in $projects) {
   Write-Host "[PACK] $p" -ForegroundColor Yellow
   try {
-    dotnet pack -c Release $p --no-restore | Write-Host
+    # Sempre desativa símbolos e source.
+    dotnet pack -c Release $p --no-restore -o $dest /p:IncludeSymbols=false /p:IncludeSource=false | Write-Host
   } catch {
     Write-Warning "Failed pack: $p"
     $failed += $p
     continue
   }
-  $projDir = Split-Path $p -Parent
-  $binPath = Join-Path $projDir 'bin/Release'
-  if (Test-Path $binPath) {
-    Get-ChildItem -Path $binPath -Recurse -Include *.nupkg, *.snupkg | ForEach-Object {
-      Copy-Item $_.FullName -Destination $dest -Force
-    }
-  } else {
-    Write-Warning "bin path missing: $binPath"
-  }
 }
 
-Write-Host "[RESULT] Packages copied to: $dest" -ForegroundColor Green
+Write-Host "[RESULT] Packages placed in: $dest" -ForegroundColor Green
 Write-Host '[LIST]' -ForegroundColor Cyan
-$allPkgs = Get-ChildItem $dest -File -Include *.nupkg | Where-Object { $_.Name -notmatch '\.symbols\.' }
+$allPkgs = Get-ChildItem -Path $dest -Filter *.nupkg -File | Where-Object { $_.Name -notmatch '\.symbols\.' }
 $allPkgs | ForEach-Object { Write-Host " - $($_.Name)" }
 
 if ($failed.Count -gt 0) {
@@ -113,19 +112,29 @@ if ($failed.Count -gt 0) {
   if (-not $Publish) { exit 1 }
 }
 
-function Publish-Packages([System.IO.FileInfo[]]$packages, [System.IO.FileInfo[]]$symbolPackages) {
+function Invoke-PushPackage([string]$packagePath) {
+  $source = 'https://api.nuget.org/v3/index.json'
+  $printable = @('dotnet','nuget','push', '"' + $packagePath + '"', '--api-key', '***', '--source', $source) -join ' '
+  Write-Host "[PUSH CMD] $printable" -ForegroundColor DarkCyan
+
+  $args = @('nuget','push', $packagePath, '--api-key', $ApiKey, '--source', $source, '--skip-duplicate')
+  $null = & dotnet @args 2>&1 | ForEach-Object { Write-Host "  $_" }
+  $exit = $LASTEXITCODE
+  if ($exit -ne 0) {
+    Write-Warning "[FAIL] push failed ($exit) for $(Split-Path -Leaf $packagePath)"
+    return $false
+  }
+  Write-Host "[OK] push succeeded for $(Split-Path -Leaf $packagePath)" -ForegroundColor Green
+  return $true
+}
+
+function Publish-Packages([System.IO.FileInfo[]]$packages) {
   if (-not $ApiKey) { throw 'API key is required for publish.' }
   Write-Host '[PUBLISH] Using nuget.org feed' -ForegroundColor Cyan
+  Write-Host ("[PUBLISH] .nupkg to push: {0}" -f $packages.Count)
   foreach ($pkg in $packages) {
     Write-Host "[PUSH] $($pkg.Name)" -ForegroundColor Yellow
-    dotnet nuget push $pkg.FullName -k $ApiKey -s https://api.nuget.org/v3/index.json --skip-duplicate | Write-Host
-  }
-  if (-not $NoSymbols -and $symbolPackages.Count -gt 0) {
-    Write-Host '[PUBLISH] Symbols (.snupkg)' -ForegroundColor Cyan
-    foreach ($sp in $symbolPackages) {
-      Write-Host "[PUSH][SYM] $($sp.Name)" -ForegroundColor DarkYellow
-      dotnet nuget push $sp.FullName -k $ApiKey -s https://api.nuget.org/v3/index.json --skip-duplicate | Write-Host
-    }
+    [void](Invoke-PushPackage -packagePath $pkg.FullName)
   }
 }
 
@@ -136,6 +145,10 @@ if ($Publish) {
   $indexed = @()
   for ($i = 0; $i -lt $allPkgs.Count; $i++) {
     $indexed += [PSCustomObject]@{ Index = $i + 1; Name = $allPkgs[$i].Name; File = $allPkgs[$i] }
+  }
+  if ($indexed.Count -eq 0) {
+    Write-Warning 'Nenhum pacote .nupkg encontrado para publicar.'
+    exit 1
   }
   $indexed | ForEach-Object { Write-Host "[$($_.Index)] $($_.Name)" }
   Write-Host "Digite 'all' para publicar todos, ou números separados por vírgula (ex: 1,3,5)." -ForegroundColor Gray
@@ -151,8 +164,7 @@ if ($Publish) {
     }
     $toPublish = $valid
   }
-  $symbolPkgs = Get-ChildItem $dest -File -Include *.snupkg
-  Publish-Packages -packages $toPublish -symbolPackages $symbolPkgs
+  Publish-Packages -packages $toPublish
 }
 
 Write-Host '[DONE] Pack process complete.' -ForegroundColor Green

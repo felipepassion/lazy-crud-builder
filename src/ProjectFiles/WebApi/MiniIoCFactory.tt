@@ -31,8 +31,8 @@ namespace <#= GetCurrentProject().Name #> {
         int.Parse(GetAttributesDict(x)["MigrationOrder"].FirstOrDefault().Value))
     .GroupBy(p => p.Namespace.FullName)) {
 var aggName = namespc.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","");#>
-            <#= GetDefaultNamespace() #>.<#= aggName #>.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
 <# } #>
+            <#= GetCurrentProject().Name.Replace(".Api","") #>.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
             Lazy.Crud.Builder.Infra.IoC.IoCFactory.Current.Configure(configuration, services);
             services.ConfigureAuthentication();
 		}

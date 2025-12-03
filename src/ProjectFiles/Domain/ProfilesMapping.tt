@@ -1,35 +1,34 @@
 ﻿<# if (entities.Any()) { #>
-using AutoMapper;
 namespace <#= GetDefaultNamespace() #>.<#= myName #>.Domain.Aggregates.<#= AggName #>.Profiles
 {
-    public class <#= AggName #>CoreProfile : Builder.Domain.Aggregates.CommonAgg.Profiles.CoreAggProfile { }
+public class <#= AggName #>CoreProfile : Builder.Domain.Aggregates.CommonAgg.Profiles.CoreAggProfile { }
 }
 
 <#
 	foreach(var namespaces in groupEntities) {
-		            var aggregateName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+	            var aggregateName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
  #>
 namespace <#= namespaces.Key.Replace(".Entities",".Profiles") #>
 {
 <#
 	var AggName2 = namespaces.Key.Split('.').First(x=>x.EndsWith("Agg"));
 #>
-	using Application.DTO.Aggregates.<#= AggName2 #>.Requests;
-	using Entities;
-	public partial class <#= aggregateName #>Profile : Profile
+using Application.DTO.Aggregates.<#= AggName2 #>.Requests;
+using Entities;
+public partial class <#= aggregateName #>Profile : Profile
+{
+	public <#= aggregateName #>Profile()
 	{
-		public <#= aggregateName #>Profile()
-		{
 <# foreach (var entity in namespaces) 
 {#>
-			CreateMap<<#= entity.Name #>DTO, <#= entity.Name #>>()
-				.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
-			CreateMap<<#= entity.Name #>, <#= entity.Name #>DTO>();
+		CreateMap<<#= entity.Name #>DTO, <#= entity.Name #>>()
+			.ForMember(x=>x.ExternalId, opt => opt.MapFrom(x=>x.ExternalId ?? Guid.NewGuid().ToString()));
+		CreateMap<<#= entity.Name #>, <#= entity.Name #>DTO>();
 <# } #>
-			ConfigureAdditionalProfiles();
-		}
-		partial void ConfigureAdditionalProfiles();
+		ConfigureAdditionalProfiles();
 	}
+	partial void ConfigureAdditionalProfiles();
+}
 }
 
 <# } #>
@@ -38,6 +37,6 @@ namespace <#= namespaces.Key.Replace(".Entities",".Profiles") #>
 
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"T4", 
+    folderName: $"", 
     outputFileName: @$"{AggName}.ProfilesMapping.cs",
     recreateFileIfExists: true); #>

@@ -1,9 +1,4 @@
-﻿using Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using Lazy.Crud.Builder.Application.DTO.Attributes;
-
-<# if (entities.Any()) {#>
+﻿<# if (entities.Any()) {#>
 <# foreach(var namespaces in groupEntities) { 
 var myNamespace = namespaces.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO");
 #>
@@ -19,12 +14,12 @@ var myClassAttrs = GetAttributes(entity).Where(x=>x.StartsWith("[H") || x.Contai
 foreach(var myAttr in myClassAttrs) {#> <#=myAttr#> <# } #>
 
 public partial class <#= entity.Name #>DTO : <#= MyParent(entity) #>DTO<#=string.IsNullOrWhiteSpace(parentTypeStr)?"":$"<{parentTypeStr}DTO>"#>
-	{
+{
 <#if(tType.HasValue)
 {
 foreach(var prop in MyAbstractProperties(tType.Value.Value))
 {#>
-		<#= WriteProperty(prop, true) #>
+	<#= WriteProperty(prop, true) #>
 <#}
 }
 foreach(var property in GetProperties(entity, includeBase: false))
@@ -35,17 +30,17 @@ foreach(var property in GetProperties(entity, includeBase: false))
 	if(ContainsAttribute(property.Value, "IgnorePropertyT4OnRequest") || ContainsAttribute(property.Value, "IgnorePropertyT4")) continue;
 if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
 {#>
-		<#= WritePropertySummary(property.Value) #>
+	<#= WritePropertySummary(property.Value) #>
 <# } #>
-	    <#= WriteProperty(property, property.Value.Getter.MustImplement == true, AggName: AggName) #>
+    <#= WriteProperty(property, property.Value.Getter.MustImplement == true, AggName: AggName) #>
 <# } #>
-	}
+}
 <# } #>
 }
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"T4", 
+    folderName: $"", 
     outputFileName: @$"{AggName}.RequestsDTO.cs", 
     recreateFileIfExists: true);
 if (entitiesT4.Any()) {
@@ -53,8 +48,6 @@ if (entitiesT4.Any()) {
     { 
         var myNamespace = namespaces.Key.Replace("Entities","Requests").Replace("Domain","Application.DTO");
         foreach(var entity in namespaces) {#>
-using Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models;
-
 namespace <#= project.Name #>.Aggregates.<#= AggName #>.Requests;
 
 public partial class <#= entity.Name #>DTO : <#= MyParent(entity) #>DTO

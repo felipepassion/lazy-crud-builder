@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Title>Lazy.Crud.Builder.Templates</Title>
+    <PackageId>Lazy.Crud.Builder.Templates</PackageId>
+    <Version>1.0.1</Version>
+    <Description>LazyCrud T4 templates pack (legacy aggregator).</Description>
+    <RepositoryUrl>https://github.com/felipepassion/lazy-crud-builder</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    
+    <PackageTags>lazycrud;queries;builder;templates;t4</PackageTags>
+    <IncludeSymbols>false</IncludeSymbols>
+    <IncludeSource>false</IncludeSource>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <Authors>felipepassion</Authors>
+    <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+  </PropertyGroup>
+        
+  <!-- Legacy project now only carries license and targets file -->
+  <ItemGroup>
+    <None Include="LICENSE.TXT" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="build/LazyCrud.Templates.targets" Pack="true" PackagePath="build/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="**/*.cs" />
+    <None Remove="**/*.cs" />
+    <Content Remove="**/*.cs" />
+  </ItemGroup>
+</Project>

@@ -1,4 +1,6 @@
-﻿using CsvHelper.Configuration;
+﻿namespace Application.DTO.Aggregates.<#= aggName #>.Requests;
+using Entities;
+using CsvHelper.Configuration;
 <#
 if (entitiesT4.Any()) {#>
 <# foreach(var namespaces in groupEntitiesT4) {
@@ -6,8 +8,6 @@ var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 var myNamespace = namespaces.Key.Replace("Entities","Profiles"); #>
 namespace <#= myNamespace #>
 {
-	using Application.DTO.Aggregates.<#= aggName #>.Requests;
-	using Entities;
 <# foreach(var entity in namespaces) { 
 var otherNamespace = entity.Namespace.FullName.Replace("Domain","Application.DTO");
 var className = $"{entity.Name}ListiningDTO";
@@ -17,18 +17,18 @@ var canGet = attrs["EndpointsT4"].Any(x=>x.Value.Contains("HttpListining") || x.
 if(!canGet) continue;
 var AggName2 = namespaces.Key.Split('.').First(x=>x.EndsWith("Agg"));
 #>
-	public partial class <#= entity.Name #>CsvMap : ClassMap<<#= entity.Name #>>
+public partial class <#= entity.Name #>CsvMap : ClassMap<<#= entity.Name #>>
+{
+	public <#= entity.Name #>CsvMap()
 	{
-		public <#= entity.Name #>CsvMap()
-		{
-			<#= WriteCsvProfile(entity) #>
-		}
+		<#= WriteCsvProfile(entity) #>
 	}
+}
 <# } #>
 }
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"T4", 
+    folderName: $"", 
     outputFileName: @$"{AggName}.CSVMappingProfiles.cs",
     recreateFileIfExists: true); #>

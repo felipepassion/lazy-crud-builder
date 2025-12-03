@@ -17,10 +17,11 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	  <Version>1.0.11</Version>
+	  <Version>1.0.21</Version>
 	  <!-- Added to create a "fat" package without declaring project reference dependencies -->
 	  <IncludeReferencedProjects>true</IncludeReferencedProjects>
 	  <IsPackable>true</IsPackable>
+	  
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,6 +51,12 @@
       <PackagePath>\</PackagePath>
       <Pack>True</Pack>
     </None>
+  </ItemGroup>
+
+  <!-- Templates for Infra.Data layer -->
+  <ItemGroup>
+    <None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
+    <None Include="..\..\ProjectFiles\Infra.Data\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Infra.Data/" Link="LazyCrudTemplates/Infra.Data/%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

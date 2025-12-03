@@ -1,0 +1,1 @@
+<#@ include file="$(PkgLazy_Crud_Builder_Api)\contentFiles\any\any\LazyCrudTemplates\Api\MiniIoCFactory.tt" #>

@@ -1,0 +1,21 @@
+<Project>
+  <PropertyGroup>
+    <UseLazyCrudTemplates Condition="'$(UseLazyCrudTemplates)' == ''">true</UseLazyCrudTemplates>
+  </PropertyGroup>
+  <!-- With contentFiles packaging, NuGet already injects linked items. Optional copy disabled by default. -->
+  <PropertyGroup>
+    <CopyLazyCrudTemplates Condition="'$(CopyLazyCrudTemplates)' == ''">false</CopyLazyCrudTemplates>
+  </PropertyGroup>
+
+  <!-- Make NuGet contentFiles available for T4 <#@ include #> resolution -->
+  <PropertyGroup>
+    <!-- Append our contentFiles root so includes like 'T4/Domain/DomainCommands.tt' resolve -->
+    <TextTemplatingAdditionalIncludeFolders>
+      $(TextTemplatingAdditionalIncludeFolders);$(MSBuildThisFileDirectory)..\contentFiles\any\any
+    </TextTemplatingAdditionalIncludeFolders>
+  </PropertyGroup>
+
+  <Target Name="CopyLazyCrudTemplates" Condition="'$(CopyLazyCrudTemplates)' == 'true'">
+    <Message Text="Manual copy of LazyCrudTemplates enabled." Importance="low" />
+  </Target>
+</Project>

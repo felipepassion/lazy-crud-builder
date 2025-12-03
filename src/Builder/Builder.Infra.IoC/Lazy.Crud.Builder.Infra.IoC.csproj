@@ -11,7 +11,7 @@
 		<Copyright>felipepassion</Copyright>
 		<PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<Version>1.0.11</Version>
+		<Version>1.0.21</Version>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 	</PropertyGroup>
 
@@ -33,6 +33,13 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+
+	<!-- Templates for Infra.IoC layer -->
+	<ItemGroup>
+		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
+		<None Include="..\..\ProjectFiles\Apps\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Infra.IoC/" Link="LazyCrudTemplates/Infra.IoC/%(Filename)%(Extension)" />
+		<None Include="..\..\ProjectFiles\Infra.IoC\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Infra.IoC/" Link="LazyCrudTemplates/Infra.IoC/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<!-- Collect outputs from all project references (direct and transitive) and include them into lib/ -->

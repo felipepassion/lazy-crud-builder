@@ -18,11 +18,11 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Version>1.0.11</Version>
+		<IncludeSymbols>false</IncludeSymbols>
+		<Version>1.0.21</Version>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 		<IsPackable>true</IsPackable>
+		<TransformOnBuild>true</TransformOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,6 +32,12 @@
 		<EmbeddedResource Remove="Seedwork\Mapping\**" />
 		<None Remove="Aggregates\CommonAgg\Commands\**" />
 		<None Remove="Seedwork\Mapping\**" />
+	</ItemGroup>
+
+	<!-- Templates for Application.DTO layer -->
+	<ItemGroup>
+		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
+		<None Include="..\..\ProjectFiles\Application.DTO\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Application.DTO/" Link="LazyCrudTemplates/Application.DTO/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -52,7 +58,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Utils\Lazy.Crud.CrossCutting.Infra.Utils.csproj" />
+		<ProjectReference Include="..\..\CrossCutting\CrossCutting.Infra.Utils\Lazy.Crud.CrossCutting.Infra.Utils.csproj" />
 		<ProjectReference Include="..\Builder.Api.Queries\Lazy.Crud.Builder.Api.Queries.csproj" />
 		<ProjectReference Include="..\Builder.Application.DTO.Http.Models\Lazy.Crud.Builder.Application.DTO.Http.Models.csproj" />
 		<ProjectReference Include="..\Builder.Application.Validators\Lazy.Crud.Builder.Application.Validators.csproj" />

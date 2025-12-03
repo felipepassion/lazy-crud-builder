@@ -19,7 +19,8 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 		<IsPackable>true</IsPackable>
-		<Version>1.0.11</Version>
+		<Version>1.0.21</Version>
+		
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -52,6 +53,12 @@
 	    <PackagePath>\</PackagePath>
 	    <Pack>True</Pack>
 	  </None>
+	</ItemGroup>
+
+	<!-- Templates for Application layer -->
+	<ItemGroup>
+		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
+		<None Include="..\..\ProjectFiles\Application\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Application/" Link="LazyCrudTemplates/Application/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 </Project>

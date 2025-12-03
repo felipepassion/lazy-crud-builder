@@ -1,5 +1,5 @@
-﻿<#@ include file="..\..\ProjectFiles\project.tt" #>
-<#
+﻿<#@ include file="..\project.tt" #>
+<# try {
 	var entities = GetEntities("Domain", withAttribute: "EndpointsT4").Where(x=>x.IsAbstract == false); 
 	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4", withEndpoint: "HttpPost").Where(x=>x.IsAbstract == false); 
 	var project = GetCurrentProject();
@@ -8,4 +8,9 @@
 	var parentName = "Commands";
 	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
 #>
+<#@ include file="..\..\ProjectFiles\Infra.IoC\InfraIoCGlobalUsings.tt" #>
 <#@ include file="..\..\ProjectFiles\Infra.IoC\IoCFactory.tt" #>
+<# } catch(System.Exception ex) { #>
+// T4 safe-guard: Infra.IoC/DefaultCommands.tt suppressed an error.
+// Message: <#= ex.Message #>
+<# } #>

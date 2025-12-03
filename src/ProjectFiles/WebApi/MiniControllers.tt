@@ -26,6 +26,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Api.Controllers {
 	using Domain.Aggregates.<#= aggName #>.Queries.Models;
 	using Application.Aggregates.<#= aggName #>.AppServices;
 	using Domain.Aggregates.<#= aggName #>.Entities;
+	using Application.DTO.Aggregates.<#= aggName #>.Requests;
 <#
  foreach(var entity in namespaces) {
 	var responseName = $"{entity.Name}DTO";
@@ -96,7 +97,7 @@ namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Api.Controllers {
 	if(canCreate){#>
 		
 		[HttpPost]
-		public async Task<GetHttpResponseDTO<object>> Post(<#=aggName.Replace("Agg","")#>.Application.DTO.Aggregates.<#=aggName#>.Requests.<#= entity.Name #>DTO request) {
+		public async Task<GetHttpResponseDTO<object>> Post(<#= entity.Name #>DTO request) {
 			var result = await <#= serviceVarName #>.Create(request);
             return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
 		}
