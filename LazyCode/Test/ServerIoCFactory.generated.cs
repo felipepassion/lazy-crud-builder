@@ -1,6 +1,7 @@
 
 namespace Lazy.Crud.Test.Api;
 using Infra.Data.Context;
+using Microsoft.AspNetCore.DataProtection;
 
 public static partial class IoCFactory {
 	public static void InjectDependencies(this IServiceCollection services, IConfiguration configuration) {

@@ -37,11 +37,6 @@ namespace Lazy.Crud.Test.Api.Controllers {
 			var obj = await _testAppService.GetAll(request, page, size);
             return GetHttpResponseDTO.Ok(obj);
         }
-		[HttpGet("summary")]
-		public async Task<GetHttpResponseDTO<object>> GetSummary([FromQuery] TestQueryModel request, int page = 0, int size = 5) {
-		    var obj = await _testAppService.GetAllSummary(request, page, size);
-            return GetHttpResponseDTO.Ok(obj);
-        }
 		[HttpGet("select")]
 		public async Task<GetHttpResponseDTO<object>> Select([FromQuery] TestQueryModel request, int? page = null, int? size = null) {
 		    var obj = await _testAppService.Select(request, request.Selector.GetPropertySelector<Test>());

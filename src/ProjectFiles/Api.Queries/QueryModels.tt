@@ -93,3 +93,7 @@ if(!string.IsNullOrWhiteSpace(property.Value.DocComment)){#>
 <# } #>
 <# } #>
 <# catch(Exception ex){} #>
+<# SaveOutputToSubFolder(
+    folderName: GetGenerationOutputPath(), 
+    outputFileName: @$"{AggName}.QueryModels.cs", 
+    recreateFileIfExists: true); #>

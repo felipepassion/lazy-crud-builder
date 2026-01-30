@@ -11,7 +11,7 @@
 		<Copyright>felipepassion</Copyright>
 		<PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<Version>1.0.23</Version>
+		<Version>1.0.24</Version>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 	</PropertyGroup>
 
