@@ -23,7 +23,8 @@ var exists = false;
 			break;
 		}
    } 
-   if (exists) continue; #>
+if (exists) continue; #>
+    using Lazy.Crud.<#= namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","") #>.Infra.Data.Context;
 public partial class <#= entity.Name #>Repository : Repository<<#= entity.FullName #>>, I<#= entity.Name #>Repository { public <#= entity.Name #>Repository(<#= contextName #> ctx) : base(ctx) { } }
 
 <# } #>
@@ -32,4 +33,4 @@ public partial class <#= entity.Name #>Repository : Repository<<#= entity.FullNa
 <# } #>
 <#    else  {#>
 <# } #>
-<# SaveOutputToSubFolder(folderName: $"", outputFileName: @$"{AggName}.Respositories.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: @$"{AggName}.Respositories.cs", recreateFileIfExists: true); #>

@@ -19,7 +19,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 		<IsPackable>true</IsPackable>
-		<Version>1.0.21</Version>
+		<Version>1.0.23</Version>
 		
 	</PropertyGroup>
 

@@ -82,4 +82,4 @@ public partial class IoCFactory : IBaseIoC {
 		ConfigureAdditionalAppServices(services);
 	}
 }
-<# SaveOutputToSubFolder(folderName: $"", outputFileName: @$"{AggName}.IoCFactory.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: @$"{AggName}.IoCFactory.cs", recreateFileIfExists: true); #>

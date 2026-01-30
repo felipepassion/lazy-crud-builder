@@ -30,6 +30,6 @@ public partial class <#= entity.Name #>Mapping : IEntityTypeConfiguration<<#= en
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.Mappings.cs", 
     recreateFileIfExists: true); #>

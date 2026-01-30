@@ -28,6 +28,6 @@ foreach(var myAttr in myClassAttrs) {#> <#=myAttr#> <# } #>
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.ListiningDTO.cs", 
     recreateFileIfExists: true); #>

@@ -46,6 +46,6 @@ public partial class <#= myEntity.Name #>DeactivatedEvent : BaseEvent
 }
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.DomainEventModels.cs", 
     recreateFileIfExists: true); #>

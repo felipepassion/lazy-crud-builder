@@ -11,4 +11,4 @@ global using Lazy.Crud.Builder.Application.DTO.Attributes;
 global using Lazy.Crud.<#= agg.Replace("Agg","") #>.Application.DTO.Aggregates.<#= agg #>.Requests;
 global using Lazy.Crud.<#= agg.Replace("Agg","") #>.Application.DTO.Aggregates.<#= agg #>.Validators;
 <# } #>
-<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>

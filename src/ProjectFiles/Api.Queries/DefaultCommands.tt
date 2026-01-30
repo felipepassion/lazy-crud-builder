@@ -1,6 +1,6 @@
 ﻿<#@ include file="..\project.tt" #>
-<# try {
-	var entities = GetEntities("Domain");
+<#
+	var entities = GetEntities();
 	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4"); 
 	var project = GetCurrentProject();
 	var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
@@ -9,9 +9,4 @@
 	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
 	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
 #>
-<#@ include file="..\..\ProjectFiles\Api.Queries\ApiQueriesGlobalUsings.tt" #>
 <#@ include file="QueryModels.tt" #>
-<# } catch(System.Exception ex) { #>
-// T4 safe-guard: Api.Queries/DefaultCommands.tt suppressed an error.
-// Message: <#= ex.Message #>
-<# } #>

@@ -28,6 +28,6 @@ if(!canGet) continue;
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.ListiningDTO.cs", 
     recreateFileIfExists: true); #>

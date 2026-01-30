@@ -30,6 +30,6 @@ global using Lazy.Crud.Builder.Domain.CrossCutting;
 global using Lazy.Crud.<#= agg.Replace("Agg","") #>.Application.DTO.Aggregates.<#= agg #>.Requests;
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: "T4", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: $"{AggName}.cs", 
     recreateFileIfExists: true); #>

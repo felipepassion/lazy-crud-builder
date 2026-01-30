@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="*.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Test.Application/Lazy.Crud.Test.Application.csproj" />
+    <ProjectReference Include="../Test.Infra.Data/Lazy.Crud.Test.Infra.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference GeneratePathProperty="true" Include="Lazy.Crud.Builder.Infra.IoC" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference GeneratePathProperty="true" Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+    <PackageReference GeneratePathProperty="true" Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference GeneratePathProperty="true" Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference GeneratePathProperty="true" Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference GeneratePathProperty="true" Include="Serilog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="$(PkgLazy_Crud_Builder_Infra_IoC)\**\contentFiles\any\any\LazyCrudTemplates\**" />
+    <None Update="*.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="DefaultCommands.tt">
+      <LastGenOutput>DefaultCommands.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,11 +1,10 @@
-﻿namespace Queries.Models;
-using Builder.Api.Queries;
-using Enumerations;
-<# foreach(var namespaces in groupEntitiesT4) { 
+﻿<# try { foreach(var namespaces in groupEntitiesT4) {
 var myNamespace = namespaces.Key.Replace("Entities","Queries");
 #>
 namespace <#= myNamespace #>.Models
 {
+	using Builder.Api.Queries;
+	using Enumerations;
 <# foreach(var entity in namespaces) { 
 var otherNamespace = entity.Namespace.FullName; #>
 public partial class <#= entity.Name #>QueryModel : BaseQueryModel {
@@ -88,7 +87,9 @@ if(!string.IsNullOrWhiteSpace(property.Value.DocComment)){#>
 	public <#=propName#>[]? <#=name#>NotContains { get; set; } <#=propNameNew#>
 <#}  break; }
 } #>
+	}
 }
 <# } #>
 <# } #>
 <# } #>
+<# catch(Exception ex){} #>

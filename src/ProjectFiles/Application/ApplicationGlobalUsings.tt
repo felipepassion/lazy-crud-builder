@@ -5,8 +5,8 @@ global using System.Linq.Expressions;
 global using Lazy.Crud.CrossCutting.Infra.Utils.Extensions;
 global using Lazy.Crud.Builder.Domain.CrossCutting;
 global using <#= GetDefaultNamespace() #>.Builder.Application.DTO.Extensions;
-global using <#= GetDefaultNamespace() #>.Builder.Application.Aggregates.Common;
+global using <#= GetDefaultNamespace() #>.Builder.Application.Aggregates.Common;	
 <# foreach(var agg in requestAggs) { #>
-global using Application.DTO.Aggregates.<#= agg #>.Requests;
+global using Lazy.Crud.<#= agg.Replace("Agg","") #>.Application.DTO.Aggregates.<#= agg #>.Requests;
 <# } #>
-<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #><# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.Application.GlobalUsings.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>

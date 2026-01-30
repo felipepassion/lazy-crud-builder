@@ -29,6 +29,6 @@ public partial class <#= entity.Name #>CsvMap : ClassMap<<#= entity.Name #>>
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.CSVMappingProfiles.cs",
     recreateFileIfExists: true); #>

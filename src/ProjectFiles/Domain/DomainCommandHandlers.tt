@@ -141,7 +141,7 @@ public partial class <#= entity.Name #>CommandHandler : Base<#= AggName #>Comman
 }
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.DomainCommandHandlers.cs", 
     recreateFileIfExists: true); 
 

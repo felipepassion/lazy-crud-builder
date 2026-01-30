@@ -24,7 +24,6 @@ foreach(var prop in MyAbstractProperties(tType.Value.Value))
 }
 foreach(var property in GetProperties(entity, includeBase: false))
 {
-	if(isAggregateRoot && property.Key.Contains("AutoSaveSettings")) continue;
 	var name = property.Key.Replace("[]", string.Empty);
     if(name.Equals("Id")) continue;
 	if(ContainsAttribute(property.Value, "IgnorePropertyT4OnRequest") || ContainsAttribute(property.Value, "IgnorePropertyT4")) continue;
@@ -40,7 +39,7 @@ if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.RequestsDTO.cs", 
     recreateFileIfExists: true);
 if (entitiesT4.Any()) {
@@ -52,6 +51,7 @@ namespace <#= project.Name #>.Aggregates.<#= AggName #>.Requests;
 
 public partial class <#= entity.Name #>DTO : <#= MyParent(entity) #>DTO
 {
+    public string CustomProperty { get; set; }
 }
 <#SaveOutputToSubFolder(
                 folderName: $@"Aggregates\{AggName}\Requests", 

@@ -76,6 +76,6 @@ public partial class <#= className #> : BaseAppService, I<#= className #> {
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.AppServices.cs", 
     recreateFileIfExists: true); #>

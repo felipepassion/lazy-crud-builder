@@ -1,5 +1,8 @@
 ﻿namespace Lazy.Crud.<#=myName#>.Domain.Aggregates.<#=AggName#>.Entities;
 
+using Builder.Domain.Aggregates.CommonAgg.Entities;
+using Builder.Domain.Attributes.T4;
+
 [AggregateSettingsT4, EndpointsT4(EndpointTypes.HttpAll)]
 public class <#=myName#> : Entity
 {

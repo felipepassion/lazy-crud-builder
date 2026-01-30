@@ -24,6 +24,6 @@ public partial class <#= entity.Name #>Specifications {
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.Specifications.cs",
     recreateFileIfExists: true); #>

@@ -37,6 +37,6 @@ public partial class <#= aggregateName #>Profile : Profile
 
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.ProfilesMapping.cs",
     recreateFileIfExists: true); #>

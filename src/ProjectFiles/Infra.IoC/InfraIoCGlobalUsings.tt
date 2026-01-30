@@ -11,4 +11,4 @@ global using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Commands;
 global using Newtonsoft.Json;
 global using Newtonsoft.Json.Serialization;
 global using Microsoft.AspNetCore.DataProtection;
-<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>

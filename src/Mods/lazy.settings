@@ -5,11 +5,11 @@
   <!--Campos principais-->
   <Settings>
     <Setting Name="GenerationOutputPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">LacyCrud34654654</Value>
+      <Value Profile="(Default)">LazyCode</Value>
       <!--Se vazio, arquivos gerados vão para a raiz do projeto.-->
     </Setting>
     <Setting Name="ModsPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">src/Mods2321312</Value>
+      <Value Profile="(Default)">src/mods</Value>
       <!--Caminho para saída dos arquivos de Mods.-->
     </Setting>
     <!--Custom adicionais-->

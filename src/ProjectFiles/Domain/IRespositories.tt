@@ -25,6 +25,6 @@ public partial interface I<#= entity.Name #>MongoRepository : IMongoRepository<E
 <#    else  {#>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.IRespositories.cs",
     recreateFileIfExists: true); #>

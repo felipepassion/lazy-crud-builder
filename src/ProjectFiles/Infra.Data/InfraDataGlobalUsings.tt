@@ -5,4 +5,4 @@ global using Microsoft.Extensions.Configuration;
 
 global using Lazy.Crud.Builder.Infra.Data.Contexts;
 global using <#= GetDefaultNamespace() #>.Builder.Infra.Data.Repositories;
-<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>

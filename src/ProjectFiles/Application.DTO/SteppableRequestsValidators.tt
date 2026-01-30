@@ -40,7 +40,7 @@ public partial class <#=className#> : Base<#= AggName#>Validator<<#=entity.Name#
 <# } #>
 <# } #>
 <# SaveOutputToSubFolder(
-    folderName: $"", 
+    folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.SteppableRequestsValidators.cs", 
     recreateFileIfExists: true);
 if (entitiesT4.Any()) {
