@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- LazyCrud Tests - auto-generated project -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="*.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Products.Domain\Lazy.Crud.Products.Domain.csproj" />
+    <ProjectReference Include="..\..\Products.Application.DTO\Lazy.Crud.Products.Application.DTO.csproj" />
+  </ItemGroup>
+</Project>

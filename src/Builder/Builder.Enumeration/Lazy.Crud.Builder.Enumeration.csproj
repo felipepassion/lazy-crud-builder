@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
  <PropertyGroup>
- <TargetFramework>net9.0</TargetFramework>
+ <TargetFramework>net10.0</TargetFramework>
  <ImplicitUsings>enable</ImplicitUsings>
  <Nullable>enable</Nullable>
  <Title>Lazy.Crud.Builder.Enumeration</Title>
@@ -17,7 +17,7 @@
  <EmbedUntrackedSources>true</EmbedUntrackedSources>
  <IncludeSymbols>true</IncludeSymbols>
  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
- <Version>1.0.24</Version>
+ <Version>1.0.29</Version>
  <IsPackable>true</IsPackable>
  </PropertyGroup>
 
@@ -27,6 +27,13 @@
      <PackagePath>\</PackagePath>
      <Pack>True</Pack>
    </None>
+ </ItemGroup>
+
+ <!-- Test templates for Enumerations layer -->
+ <ItemGroup>
+   <None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
+   <None Include="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/" Link="LazyCrudTemplates/Tests/Tests.Common.ttinclude" />
+   <None Include="..\..\ProjectFiles\Tests\Enumerations\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/Enumerations/" Link="LazyCrudTemplates/Tests/Enumerations/%(Filename)%(Extension)" />
  </ItemGroup>
 
 </Project>

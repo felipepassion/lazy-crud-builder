@@ -3,6 +3,7 @@
 https://discord.gg/Fz7tWWVp
 
 1. [🌟 Introdução](#introdução)
+2. [🚀 Fluxo E2E Automatizado](#fluxo-e2e-automatizado) **← NOVO!**
 9. [💡 Tecnologias Usadas](#tecnologias-usadas)
    - [📑 Índice](#índice)
    - [💻 Tecnologias utilizadas](#tecnologias-utilizadas)
@@ -10,6 +11,57 @@ https://discord.gg/Fz7tWWVp
 ## Introdução
 
 ![image](https://github.com/felipepassion/lazy-crud-builder/assets/29386600/1c7cb118-e866-4e86-a696-b3c85c89b059)
+
+---
+
+## 🚀 Fluxo E2E Automatizado
+
+### Quickstart - Recriar Products do Zero
+
+```powershell
+# Execute este comando para recriar o aggregate Products completamente
+.\build\e2e-products.ps1
+```
+
+Este fluxo automatizado irá:
+1. ✅ Configurar `lazy.settings` para usar templates locais
+2. ✅ Deletar aggregate Products (se existir)
+3. ✅ Recriar todas as camadas (Domain, Application, Infra, API, Tests)
+4. ✅ Criar arquivos .csproj
+5. ✅ Adicionar projetos à solution
+6. ✅ Criar wrappers T4
+7. ✅ Executar templates T4
+8. ✅ Build e Test
+
+### 📖 Documentação E2E
+
+- **[QUICKSTART-E2E.md](QUICKSTART-E2E.md)** - Guia rápido de uso
+- **[build/README.md](build/README.md)** - Documentação detalhada
+- **[build/CLI-SPEC.md](build/CLI-SPEC.md)** - Especificação do CLI futuro
+- **[build/VALIDATION-CHECKLIST.md](build/VALIDATION-CHECKLIST.md)** - Checklist de validação
+
+### Scripts Disponíveis
+
+```powershell
+# E2E completo
+.\build\e2e-products.ps1
+
+# Criar apenas .csproj
+.\build\create-csproj-files.ps1 -AggregateName Products
+
+# Executar apenas T4 templates
+.\build\run-t4-templates.ps1 -AggregateName Products
+```
+
+### Requisitos
+
+- **PowerShell 7+** (pwsh)
+- **.NET 10 SDK**
+- **MSBuild** ou **dotnet-t4** (para T4 templates)
+
+> 💡 **Dica**: Este fluxo é idempotente - pode ser executado múltiplas vezes!
+
+---
 
 # Tecnologias Usadas
 

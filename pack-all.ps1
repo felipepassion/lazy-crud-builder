@@ -1,26 +1,26 @@
-<#!
+Ôªø<#!
 .SYNOPSIS
-  Empacota todos os projetos Lazy.Crud e re˙ne apenas arquivos .nupkg (sem sÌmbolos) em uma pasta versionada. Opcionalmente publica no NuGet.
+  Empacota todos os projetos Lazy.Crud e re√∫ne apenas arquivos .nupkg (sem s√≠mbolos) em uma pasta versionada. Opcionalmente publica no NuGet.
 
 .DESCRIPTION
-  Detecta vers„o automaticamente (do primeiro csproj listado) se n„o fornecida.
+  Detecta vers√£o automaticamente (do primeiro csproj listado) se n√£o fornecida.
   Cria artifacts/nuget/<versao>/ e copia somente os pacotes principais (.nupkg).
-  PublicaÁ„o interativa opcional apenas de .nupkg (nenhum .snupkg È gerado).
+  Publica√ß√£o interativa opcional apenas de .nupkg (nenhum .snupkg √© gerado).
 
 .PARAMETER Version
-  Vers„o explÌcita opcional. Se omitida, lida do primeiro projeto (<Version> no csproj).
+  Vers√£o expl√≠cita opcional. Se omitida, lida do primeiro projeto (<Version> no csproj).
 
 .PARAMETER OutputRoot
-  Pasta raiz para artefatos. Padr„o: artifacts/nuget
+  Pasta raiz para artefatos. Padr√£o: artifacts/nuget
 
 .PARAMETER SkipRestore
   Pula o dotnet restore inicial se especificado.
 
 .PARAMETER Publish
-  Quando especificado, pergunta se publica todos ou somente selecionados apÛs o pack.
+  Quando especificado, pergunta se publica todos ou somente selecionados ap√≥s o pack.
 
 .PARAMETER ApiKey
-  Chave de API NuGet. Se omitida usa a chave padr„o.
+  Chave de API NuGet. Se omitida usa a chave padr√£o.
 
 .EXAMPLE
   pwsh scripts/pack-all.ps1 -Publish
@@ -41,20 +41,7 @@
 
 $ErrorActionPreference = 'Stop'
 $projects = @(
-  'src/Builder/Builder.Application.DTO/Lazy.Crud.Builder.Application.DTO.csproj',
-  'src/Builder/Builder.Api/Lazy.Crud.Builder.Api.csproj',
-  'src/Builder/Builder.Api.Queries/Lazy.Crud.Builder.Api.Queries.csproj',
-  'src/Builder/Builder.Application.DTO.Http.Models/Lazy.Crud.Builder.Application.DTO.Http.Models.csproj',
-  'src/Builder/Builder.Application.Validators/Lazy.Crud.Builder.Application.Validators.csproj',
-  'src/Builder/Builder.Enumeration/Lazy.Crud.Builder.Enumeration.csproj',
-  'src/Builder/Builder.Application/Lazy.Crud.Builder.Application.csproj',
-  'src/Builder/Builder.Domain/Lazy.Crud.Builder.Domain.csproj',
-  'src/Builder/Builder.Infra.Data/Lazy.Crud.Builder.Infra.Data.csproj',
-  'src/Builder/Builder.Infra.IoC/Lazy.Crud.Builder.Infra.IoC.csproj',
-  'src/CrossCutting/CrossCutting.Domain/Lazy.Crud.CrossCutting.Domain.csproj',
-  'src/CrossCutting/CrossCutting.Infra.Log/Lazy.Crud.CrossCutting.Infra.Log.csproj',
-  'src/CrossCutting/CrossCutting.Application.Mail/Lazy.Crud.CrossCutting.Application.Mail.csproj',
-  'src/CrossCutting/CrossCutting.Infra.Utils/Lazy.Crud.CrossCutting.Infra.Utils.csproj'
+  'src/Builder/Builder.Infra.IoC/Lazy.Crud.Builder.Infra.IoC.csproj'
 )
 
 function Get-VersionFromCsproj([string]$csprojPath) {
@@ -72,7 +59,7 @@ if (-not $Version) {
 }
 
 $dest = Join-Path $OutputRoot $Version
-# Limpeza do destino antes de empacotar para evitar lixo de execuÁıes anteriores
+# Limpeza do destino antes de empacotar para evitar lixo de execu√ß√µes anteriores
 if (Test-Path $dest) {
   Write-Host "[CLEAN] Removing previous output at: $dest" -ForegroundColor Cyan
   try {
@@ -93,7 +80,7 @@ $failed = @()
 foreach ($p in $projects) {
   Write-Host "[PACK] $p" -ForegroundColor Yellow
   try {
-    # Sempre desativa sÌmbolos e source.
+    # Sempre desativa s√≠mbolos e source.
     dotnet pack -c Release $p --no-restore -o $dest /p:IncludeSymbols=false /p:IncludeSource=false | Write-Host
   } catch {
     Write-Warning "Failed pack: $p"
@@ -151,15 +138,15 @@ if ($Publish) {
     exit 1
   }
   $indexed | ForEach-Object { Write-Host "[$($_.Index)] $($_.Name)" }
-  Write-Host "Digite 'all' para publicar todos, ou n˙meros separados por vÌrgula (ex: 1,3,5)." -ForegroundColor Gray
-  $sel = Read-Host 'SeleÁ„o'
+  Write-Host "Digite 'all' para publicar todos, ou n√∫meros separados por v√≠rgula (ex: 1,3,5)." -ForegroundColor Gray
+  $sel = Read-Host 'Sele√ß√£o'
   if ($sel -match '^(all|a)$') {
     $toPublish = $allPkgs
   } else {
     $nums = $sel -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -match '^[0-9]+$' } | ForEach-Object { [int]$_ }
     $valid = $indexed | Where-Object { $nums -contains $_.Index } | ForEach-Object { $_.File }
     if (-not $valid -or $valid.Count -eq 0) {
-      Write-Warning 'Nenhum Ìndice v·lido selecionado. Abortando publish.'
+      Write-Warning 'Nenhum √≠ndice v√°lido selecionado. Abortando publish.'
       exit 1
     }
     $toPublish = $valid

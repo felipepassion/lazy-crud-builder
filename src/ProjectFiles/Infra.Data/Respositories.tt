@@ -1,6 +1,5 @@
 ﻿<# if (entities.Any()) { #>
 <# foreach (var nmspc in groupEntities) { #>
-using <#= nmspc.Key #>;
 <# } #>
 <#  
 var className = GetDefaultNamespace().Replace(".","");
@@ -11,7 +10,8 @@ var contextName = AggName + "Context";
    foreach(var namespaces in entities.GroupBy(p => p.Namespace.FullName)) { #>
 namespace <#= namespaces.Key.Replace("Entities", "Repositories").Replace("Domain", "Infra.Data") #>
 {
-using Domain.Aggregates.<#= namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")) #>.Repositories;
+	using Domain.Aggregates.<#= namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")) #>.Repositories;
+	using Context;
 <# 
 var isFromSameAgg = AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 foreach (var entity in namespaces) 
@@ -24,8 +24,7 @@ var exists = false;
 		}
    } 
 if (exists) continue; #>
-    using Lazy.Crud.<#= namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")).Replace("Agg","") #>.Infra.Data.Context;
-public partial class <#= entity.Name #>Repository : Repository<<#= entity.FullName #>>, I<#= entity.Name #>Repository { public <#= entity.Name #>Repository(<#= contextName #> ctx) : base(ctx) { } }
+	public partial class <#= entity.Name #>Repository : Repository<<#= entity.FullName #>>, I<#= entity.Name #>Repository { public <#= entity.Name #>Repository(<#= contextName #> ctx) : base(ctx) { } }
 
 <# } #>
 }

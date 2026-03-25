@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="*.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Products.Application.DTO/Lazy.Crud.Products.Application.DTO.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference GeneratePathProperty="true" Include="Lazy.Crud.Builder.Domain" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference GeneratePathProperty="true" Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference GeneratePathProperty="true" Include="Serilog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="$(PkgLazy_Crud_Builder_Domain)\**\contentFiles\any\any\LazyCrudTemplates\**" />
+    <None Update="*.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+</Project>

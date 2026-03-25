@@ -1,5 +1,7 @@
+using AutoMapper;
 using CrossCutting.Application.Mail;
 using Lazy.Crud.Builder.Application.DTO.Seedwork;
+using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Profiles;
 using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
 using Lazy.Crud.CrossCutting.Infra.Log.Providers;
 using Microsoft.Extensions.Configuration;
@@ -34,7 +36,7 @@ namespace Lazy.Crud.Builder.Infra.IoC
 
         void ConfigureMappings()
         {
-            MapperFactory.Setup(this.GetType().Namespace!.Replace("Infra.IoC", "Domain"));
+            MapperFactory.Setup(new CoreAggProfile(), new LoggerProfile());
         }
 
         void ConfigureLog(IServiceCollection services)

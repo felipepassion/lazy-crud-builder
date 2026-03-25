@@ -11,7 +11,7 @@
         var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
         if(myName == "DefaultTemplate") continue;
         var proj = FindProject(project.Name);
-        var myEntity = GetEntity(project.Name, $"{myName}AggSettings");
+        var myEntity = GetEntities(project.Name, withAttribute:"AggregateSettings").FirstOrDefault();
         //var attrs = GetAttributesDict(type);
         if(myEntity != null)
             aggSettingsList.Add(myEntity);
