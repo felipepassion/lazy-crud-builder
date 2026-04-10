@@ -12,11 +12,11 @@ namespace <#= GetDefaultNamespace() #>.<#= GetCurrentProject().Name.Replace(GetD
 
         static void ConfigureValidators(IServiceCollection services) {
 <# foreach (var namespc in projects) {
-	var aggName = namespc.Name.Split('.').FirstOrDefault();
+	var aggName = namespc.Name.Split('.')[2];
 	if(aggName == "DefaultTemplateAgg") continue;
 #>
 			services.AddValidatorsFromAssemblyContaining
-				<<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators.Base<#=aggName#>AggValidator
+				<Lazy.Crud.<#=aggName#>.Application.DTO.Aggregates.<#=aggName#>Agg.Validators.Base<#=aggName#>AggValidator
 					<Builder.Application.DTO.Aggregates.CommonAgg.Models.EntityDTO>>();
 <# } #>			
 		}

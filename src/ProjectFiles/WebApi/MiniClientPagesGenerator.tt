@@ -4,8 +4,7 @@
 	var entitiesT4 = new List<CodeClass>();
 	var projects = FindDomainProjects()/*.Where(x=>x.Name.Contains("Contracts"))*/.ToArray();
 	foreach(var item in projects){
-		entitiesT4.AddRange(GetAggregateEntities(item.Name, withAttribute: "EndpointsT4", withEndpoint: "HttpPost", withoutAttribute: "DoNotReplaceAfterGenerated")
-			.Where(x=> /*x.Name == "AgendaProfissional" &&*/  !ContainsAttribute(x,"AggregateSettingsT4"))); 
+		entitiesT4.AddRange(GetAggregateEntities(item.Name, withAttribute: "EndpointsT4", withEndpoint: "HttpPost", withoutAttribute: "DoNotReplaceAfterGenerated")); 
 	}
 
 foreach (var entity in entitiesT4) { 
