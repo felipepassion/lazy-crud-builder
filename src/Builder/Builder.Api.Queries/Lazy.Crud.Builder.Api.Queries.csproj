@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Title>Lazy.Crud.Builder.Api.Queries</Title>
@@ -17,7 +17,7 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Version>1.0.24</Version>
+		<Version>1.0.29</Version>
 		<IsPackable>true</IsPackable>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 	</PropertyGroup>
@@ -45,6 +45,12 @@
 	<ItemGroup>
 		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
 		<None Include="..\..\ProjectFiles\Api.Queries\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Api.Queries/" Link="LazyCrudTemplates/Api.Queries/%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<!-- Test templates for Api.Queries layer -->
+	<ItemGroup>
+		<None Include="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/" Link="LazyCrudTemplates/Tests/Tests.Common.ttinclude" />
+		<None Include="..\..\ProjectFiles\Tests\Api.Queries\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/Api.Queries/" Link="LazyCrudTemplates/Tests/Api.Queries/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 </Project>

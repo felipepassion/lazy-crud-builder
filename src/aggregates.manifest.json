@@ -2,6 +2,7 @@
   "Aggregates": [
     {
       "Name": "Test",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-17T04:20:03.624079Z",
       "Projects": [
         {
@@ -49,6 +50,7 @@
     },
     {
       "Name": "Product",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-18T12:14:02.2984117Z",
       "Projects": [
         {
@@ -96,6 +98,7 @@
     },
     {
       "Name": "Tesy",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-19T05:02:14.0494851Z",
       "Projects": [
         {
@@ -143,6 +146,7 @@
     },
     {
       "Name": "Tesyt",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-19T17:43:07.689808Z",
       "Projects": [
         {
@@ -190,6 +194,7 @@
     },
     {
       "Name": "Sffgg",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-21T06:16:35.8785305Z",
       "Projects": [
         {
@@ -237,6 +242,7 @@
     },
     {
       "Name": "Zssdff",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-21T06:18:52.2175413Z",
       "Projects": [
         {
@@ -284,6 +290,7 @@
     },
     {
       "Name": "Sfggh",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-21T06:21:30.31532Z",
       "Projects": [
         {
@@ -331,6 +338,7 @@
     },
     {
       "Name": "Ffhhjk",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-21T06:26:39.4226491Z",
       "Projects": [
         {
@@ -378,6 +386,7 @@
     },
     {
       "Name": "Ddghjj",
+      "EntityRootName": null,
       "CreatedUtc": "2025-11-21T06:29:13.5802304Z",
       "Projects": [
         {
@@ -418,6 +427,102 @@
         {
           "Suffix": "Infra.IoC",
           "TargetFramework": "net9.0",
+          "IsWeb": false
+        }
+      ],
+      "Entities": []
+    },
+    {
+      "Name": "Tests",
+      "EntityRootName": "Test",
+      "CreatedUtc": "2026-02-10T04:11:18.9502341Z",
+      "Projects": [
+        {
+          "Suffix": "Api",
+          "TargetFramework": "net9.0",
+          "IsWeb": true
+        },
+        {
+          "Suffix": "Api.Queries",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Application",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Application.DTO",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Domain",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Enumerations",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Infra.Data",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Infra.IoC",
+          "TargetFramework": "net9.0",
+          "IsWeb": false
+        }
+      ],
+      "Entities": []
+    },
+    {
+      "Name": "Products",
+      "EntityRootName": "Product",
+      "CreatedUtc": "2026-02-18T01:56:16.5166883Z",
+      "Projects": [
+        {
+          "Suffix": "Api",
+          "TargetFramework": "net10.0",
+          "IsWeb": true
+        },
+        {
+          "Suffix": "Api.Queries",
+          "TargetFramework": "net10.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Application",
+          "TargetFramework": "net10.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Application.DTO",
+          "TargetFramework": "net10.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Domain",
+          "TargetFramework": "net10.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Enumerations",
+          "TargetFramework": "net10.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Infra.Data",
+          "TargetFramework": "net10.0",
+          "IsWeb": false
+        },
+        {
+          "Suffix": "Infra.IoC",
+          "TargetFramework": "net10.0",
           "IsWeb": false
         }
       ],

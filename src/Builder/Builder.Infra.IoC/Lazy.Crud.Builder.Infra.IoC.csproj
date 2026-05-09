@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackProjectReferences>false</PackProjectReferences>
@@ -11,7 +11,7 @@
 		<Copyright>felipepassion</Copyright>
 		<PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<Version>1.0.24</Version>
+		<Version>1.0.29</Version>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 	</PropertyGroup>
 
@@ -40,6 +40,12 @@
 		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
 		<None Include="..\..\ProjectFiles\Apps\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Infra.IoC/" Link="LazyCrudTemplates/Infra.IoC/%(Filename)%(Extension)" />
 		<None Include="..\..\ProjectFiles\Infra.IoC\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Infra.IoC/" Link="LazyCrudTemplates/Infra.IoC/%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<!-- Test templates for Infra.IoC layer -->
+	<ItemGroup>
+		<None Include="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/" Link="LazyCrudTemplates/Tests/Tests.Common.ttinclude" />
+		<None Include="..\..\ProjectFiles\Tests\Infra.IoC\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/Infra.IoC/" Link="LazyCrudTemplates/Tests/Infra.IoC/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<!-- Collect outputs from all project references (direct and transitive) and include them into lib/ -->

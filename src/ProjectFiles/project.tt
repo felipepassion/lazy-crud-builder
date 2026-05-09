@@ -10,7 +10,137 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
-<#+ public string GetGrupoEmpresaName() { return "Lazy"; }
+<#+
+// ============================================================================
+// SELF-CLEANUP: Temporary T4 Template Definitions
+// ============================================================================
+// Templates listed below are considered "temporary" and will be auto-deleted
+// after generating their output. Only the .tt file is removed; .tt.cs and
+// other outputs are preserved.
+//
+// Name patterns (case-insensitive, matched against file name without path):
+//   DefaultEntities.tt, DefaultCommands.tt, ValueObjectsDefaultCommands.tt,
+//   MiniControllers.tt, MiniIoCFactory.tt, MiniMigrations.tt,
+//   Controllers.tt, ServerIoCFactory.tt, AppServices.tt, IAppServices.tt,
+//   Mappings.tt, Respositories.tt, IoCFactory.tt, IdentityContext.tt,
+//   Filters.tt, Specifications.tt, Commands.tt, CsvMapper.tt,
+//   QueryModels.tt, RequestsDTO.tt, ResponsesDTO.tt, UpdatesDTO.tt,
+//   ListiningsDTO.tt, SteppableRequestsDTO.tt, SteppableRequestsValidators.tt,
+//   DomainGlobalUsings.tt, InfraDataGlobalUsings.tt, InfraIoCGlobalUsings.tt,
+//   ApplicationGlobalUsings.tt, ApplicationDtoGlobalUsings.tt,
+//   ApiGlobalUsings.tt, ApiQueriesGlobalUsings.tt,
+//   ProfilesMapping.tt, ProfilesListiningMapping.tt, CSVMappingProfiles.tt,
+//   DomainCommandHandlers.tt, DomainCommandModels.tt, DomainCommands.tt,
+//   DomainEventHandlers.tt, DomainEventModels.tt, IRespositories.tt,
+//   AggregateSettingsEntity.tt, DefaultFolders.tt, UserEntity.tt,
+//   ResetThisAggregate.tt, SpecificationItem.tt, SpecificationSubItem.tt
+//
+// Allowed parent directory patterns (case-insensitive, any ancestor folder):
+//   LazyCode, LazyCode/Temp, LazyCode/T4, T4, Temp
+// ============================================================================
+
+private static readonly string[] _tempTemplateNames = new string[]
+{
+    "DefaultEntities.tt",
+    "DefaultCommands.tt",
+    "ValueObjectsDefaultCommands.tt",
+    "MiniControllers.tt",
+    "MiniIoCFactory.tt",
+    "MiniMigrations.tt",
+    "Controllers.tt",
+    "ServerIoCFactory.tt",
+    "AppServices.tt",
+    "IAppServices.tt",
+    "Mappings.tt",
+    "Respositories.tt",
+    "IoCFactory.tt",
+    "IdentityContext.tt",
+    "Filters.tt",
+    "Specifications.tt",
+    "Commands.tt",
+    "CsvMapper.tt",
+    "QueryModels.tt",
+    "RequestsDTO.tt",
+    "ResponsesDTO.tt",
+    "UpdatesDTO.tt",
+    "ListiningsDTO.tt",
+    "SteppableRequestsDTO.tt",
+    "SteppableRequestsValidators.tt",
+    "DomainGlobalUsings.tt",
+    "InfraDataGlobalUsings.tt",
+    "InfraIoCGlobalUsings.tt",
+    "ApplicationGlobalUsings.tt",
+    "ApplicationDtoGlobalUsings.tt",
+    "ApiGlobalUsings.tt",
+    "ApiQueriesGlobalUsings.tt",
+    "ProfilesMapping.tt",
+    "ProfilesListiningMapping.tt",
+    "CSVMappingProfiles.tt",
+    "DomainCommandHandlers.tt",
+    "DomainCommandModels.tt",
+    "DomainCommands.tt",
+    "DomainEventHandlers.tt",
+    "DomainEventModels.tt",
+    "IRespositories.tt",
+    "AggregateSettingsEntity.tt",
+    "DefaultFolders.tt",
+    "UserEntity.tt",
+    "ResetThisAggregate.tt",
+    "SpecificationItem.tt",
+    "SpecificationSubItem.tt"
+};
+
+private static readonly string[] _tempTemplateDirPatterns = new string[]
+{
+    "LazyCode",
+    "T4",
+    "Temp"
+};
+
+private bool IsTempTemplate(string templatePath)
+{
+    if (string.IsNullOrWhiteSpace(templatePath)) return false;
+    if (!File.Exists(templatePath)) return false;
+
+    var fileName = Path.GetFileName(templatePath);
+
+    // 1) Check if the file name matches one of the known temp templates
+    var nameMatch = _tempTemplateNames.Any(n =>
+        string.Equals(n, fileName, StringComparison.OrdinalIgnoreCase));
+
+    if (nameMatch) return true;
+
+    // 2) Check if any ancestor directory matches allowed patterns
+    var dirPath = Path.GetDirectoryName(templatePath) ?? string.Empty;
+    var normalizedDir = dirPath.Replace('\\', '/').ToLowerInvariant();
+    var dirSegments = normalizedDir.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+    var dirMatch = _tempTemplateDirPatterns.Any(pattern =>
+        dirSegments.Any(seg => string.Equals(seg, pattern, StringComparison.OrdinalIgnoreCase)));
+
+    return dirMatch;
+}
+
+private void SelfCleanupTemplate()
+{
+    try
+    {
+        var templatePath = Host?.TemplateFile;
+        if (string.IsNullOrWhiteSpace(templatePath)) return;
+        if (!IsTempTemplate(templatePath)) return;
+
+        // Safety: only delete .tt, NEVER .tt.cs or any other extension
+        if (!templatePath.EndsWith(".tt", StringComparison.OrdinalIgnoreCase)) return;
+        if (templatePath.EndsWith(".tt.cs", StringComparison.OrdinalIgnoreCase)) return;
+
+        if (File.Exists(templatePath))
+        {
+            File.Delete(templatePath);
+        }
+    }
+    catch { /* best-effort cleanup */ }
+}
+
+public string GetGrupoEmpresaName() { return "Lazy"; }
  public string GetProductName() { return "Crud"; }
 public string GetDefaultNamespace() { return $"{GetGrupoEmpresaName()}.{GetProductName()}"; }
 
@@ -54,7 +184,7 @@ public List<Project> FindDomainProjects()
 
     foreach (var project in projects)
     {
-        if (project.Name.EndsWith(".Domain") && !project.Name.StartsWith("Core") && project.Name.Split('.').Count() == 2)
+        if (project.Name.EndsWith(".Domain") && !project.Name.StartsWith("Lazy.Crud.Builder"))
             result.Add(project); ;
     }
 
@@ -1124,8 +1254,11 @@ public string WriteProperty(KeyValuePair<string, CodeProperty> property, bool is
     var aggName = property.Value.FullName.Split('.').FirstOrDefault(x => x.EndsWith("Agg"));
     var name = property.Key.Replace("[]", string.Empty);
     var path = property.Key;
-    var isList = property.Value.Type.AsString.Contains("List<");
-    var t = property.Value.Type.AsString.Replace("System.Collections.Generic.List<", "").Replace(">", "");
+    var typeAsString = property.Value.Type.AsString;
+    string[] collectionPrefixes = new[] { "System.Collections.Generic.ICollection<", "System.Collections.Generic.IList<", "System.Collections.Generic.IEnumerable<", "System.Collections.Generic.HashSet<", "System.Collections.Generic.List<" };
+    var matchedCollectionPrefix = collectionPrefixes.FirstOrDefault(cp => typeAsString.Contains(cp));
+    var isList = matchedCollectionPrefix != null;
+    var t = isList ? typeAsString.Replace(matchedCollectionPrefix, "").Replace(">", "") : typeAsString;
     var attrs = GetAttributesDict(property.Value);
     var isRequired = attrs.ContainsKey("Required") || (t != "string" && attrs.ContainsKey("RequiredT4"));
     isOverride = attrs.ContainsKey("MustImplementT4");
@@ -1181,11 +1314,11 @@ public string WriteProperty(KeyValuePair<string, CodeProperty> property, bool is
             else
             {
                 var prefix = property.Value.Type.AsString.Replace("Entities", "Requests").Replace("Domain", "Application.DTO");
-                if (isList)
-                    prefix = prefix.Replace("System.Collections.Generic.List<", "").Replace(">", "");
+                if (isList && matchedCollectionPrefix != null)
+                    prefix = prefix.Replace(matchedCollectionPrefix, "").Replace(">", "");
                 var spplited = prefix.Split('.');
                 var propType = spplited[spplited.Length - 1].Replace("[]", "").Replace("?", "") + "DTO";
-                var isArray = isList || spplited[spplited.Length - 1].Contains("[]") || spplited[spplited.Length - 1].Contains("List<");
+                var isArray = isList || spplited[spplited.Length - 1].Contains("[]") || spplited[spplited.Length - 1].Contains("List<") || spplited[spplited.Length - 1].Contains("ICollection<");
 
                 var typeAggName = t.Split('.').FirstOrDefault(x => x.EndsWith("Agg"))?.Replace("Agg", "");
                 var typeLocationAgg = t.Replace(GetDefaultNamespace() + ".", "").Split('.')[0];
@@ -1213,7 +1346,7 @@ public string WriteProperty(KeyValuePair<string, CodeProperty> property, bool is
                 if (!attrs.ContainsKey("NullableProperty"))
                     if (isArray || typeLocationAgg == "Core" || ((attrs.ContainsKey("OneToOne") || ContainsAttribute(property.Value, "jsonb"))))
                     {
-                        propNameNew = "= new();";
+                        propNameNew = isArray? "= [];" : "= new();";
                         propNameType = propNameType.Replace("?", "");
                     }
                 if (isArray)
@@ -1226,7 +1359,10 @@ public string WriteProperty(KeyValuePair<string, CodeProperty> property, bool is
 public bool IsComplexType(CodeProperty property)
 {
     if (property == null) return false;
-    var t = property.Type.AsString.Replace("System.Collections.Generic.List<", "").Replace(">", "");
+    var rawType = property.Type.AsString;
+    string[] collPrefixes = new[] { "System.Collections.Generic.ICollection<", "System.Collections.Generic.IList<", "System.Collections.Generic.IEnumerable<", "System.Collections.Generic.HashSet<", "System.Collections.Generic.List<" };
+    var matchedPrefix = collPrefixes.FirstOrDefault(cp => rawType.Contains(cp));
+    var t = matchedPrefix != null ? rawType.Replace(matchedPrefix, "").Replace(">", "") : rawType;
     var type = FindType(property.Type.CodeType.FullName.Replace("?", string.Empty));
     switch (t.Split('.').Last())
     {
@@ -1491,6 +1627,7 @@ private void SaveOutput(string outputFileName, bool recreateFileIfExists = true)
         }
     }
     this.GenerationEnvironment.Clear();
+    SelfCleanupTemplate();
 }
 
 private void SaveOutputToSubFolder(string folderName, string outputFileName, bool recreateFileIfExists = true)
@@ -1506,6 +1643,7 @@ private void SaveOutputToSubFolder(string folderName, string outputFileName, boo
             File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString(), System.Text.Encoding.UTF8);
         }
         this.GenerationEnvironment.Clear();
+        SelfCleanupTemplate();
     } catch(Exception ex) 
     {
     }

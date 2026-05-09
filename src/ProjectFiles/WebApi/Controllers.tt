@@ -1,13 +1,20 @@
 ﻿<#@ import namespace="System.Threading.Tasks" #>
 <#@ include file="..\project.tt" #><#
-var projects = FindDomainProjects().ToArray();
-var aggSettingsList = new List<CodeClass>();
-foreach(var project in projects) {
+	var AggName = GetMyAggName();
+    var aggSettingsList = new List<CodeClass>();
+    var projects = FindDomainProjects().ToArray();
+    //var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
+    
+
+
+    foreach(var project in projects) {
         var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
-		if(myName == "DefaultTemplate") continue;
-        aggSettingsList.AddRange(GetAggregateEntities(project.Name, withAttribute:"EndpointsT4", withoutAttribute: "DisableControllers")
-			.Where(x=>x.IsAbstract == false));
+        if(myName == "DefaultTemplate") continue;
+        var proj = FindProject(project.Name);
+        var myEntity = GetEntities(project.Name, withAttribute:"AggregateSettings").FirstOrDefault();
         //var attrs = GetAttributesDict(type);
+        if(myEntity != null)
+            aggSettingsList.Add(myEntity);
     }
 
 if (aggSettingsList.Any()) {

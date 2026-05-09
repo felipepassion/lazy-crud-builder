@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Title>Lazy.Crud.Builder.Application</Title>
@@ -19,7 +19,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 		<IsPackable>true</IsPackable>
-		<Version>1.0.24</Version>
+		<Version>1.0.29</Version>
 		
 	</PropertyGroup>
 
@@ -59,6 +59,12 @@
 	<ItemGroup>
 		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
 		<None Include="..\..\ProjectFiles\Application\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Application/" Link="LazyCrudTemplates/Application/%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<!-- Test templates for Application layer -->
+	<ItemGroup>
+		<None Include="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/" Link="LazyCrudTemplates/Tests/Tests.Common.ttinclude" />
+		<None Include="..\..\ProjectFiles\Tests\Application\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/Application/" Link="LazyCrudTemplates/Tests/Application/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 </Project>
