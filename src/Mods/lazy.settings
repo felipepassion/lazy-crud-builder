@@ -12,6 +12,59 @@
       <Value Profile="(Default)">src/mods</Value>
       <!--Caminho para saída dos arquivos de Mods.-->
     </Setting>
+
+    <!--Configurações de Templates-->
+    <Setting Name="TemplatesSource" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Local</Value>
+      <!--Opções: Local | NuGet-->
+    </Setting>
+    <Setting Name="UseNugetTemplates" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+      <!--Se true, usa templates do NuGet; se false, usa templates locais-->
+    </Setting>
+    <Setting Name="TemplatesLocalProjectFilesPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">src/ProjectFiles</Value>
+      <!--Caminho relativo para templates locais quando UseNugetTemplates=false-->
+    </Setting>
+    <Setting Name="TemplatesLocalSolutionPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)"></Value>
+      <!--Caminho da solution (vazio = auto-detect)-->
+    </Setting>
+
+    <!--Configurações de Camadas (Layers)-->
+    <Setting Name="DomainLayerPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{Aggregate}.Domain</Value>
+    </Setting>
+    <Setting Name="ApplicationLayerPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{Aggregate}.Application</Value>
+    </Setting>
+    <Setting Name="ApplicationDTOLayerPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{Aggregate}.Application.DTO</Value>
+    </Setting>
+    <Setting Name="InfraDataLayerPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{Aggregate}.Infra.Data</Value>
+    </Setting>
+    <Setting Name="InfraIoCLayerPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{Aggregate}.Infra.IoC</Value>
+    </Setting>
+    <Setting Name="ApiLayerPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{Aggregate}.Api</Value>
+    </Setting>
+    <Setting Name="ApiQueriesLayerPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{Aggregate}.Api.Queries</Value>
+    </Setting>
+    <Setting Name="EnumerationsLayerPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{Aggregate}.Enumerations</Value>
+    </Setting>
+
+    <!--Configurações de Testes-->
+    <Setting Name="GenerateTests" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TestsPathPattern" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Tests\Lazy.Crud.{Aggregate}.Tests.{Layer}</Value>
+    </Setting>
+
     <!--Custom adicionais-->
   </Settings>
 </SettingsFile>

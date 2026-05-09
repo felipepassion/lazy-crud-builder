@@ -1,0 +1,1 @@
+<#@ include file="..\..\ProjectFiles\Tests\InfraData\InfraData.Tests.tt" #>

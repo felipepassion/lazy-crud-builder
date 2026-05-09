@@ -1,6 +1,9 @@
-<#@ include file="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" #>
-<# if (entitiesT4.Any()) { 
-    foreach(var namespaces in groupEntitiesT4) {
+﻿<#@ include file="..\..\project.tt" #>
+<#@ include file="..\Tests.Common.ttinclude" #>
+<#
+    InitTestVariables();
+    if (_testEntities.Any()) {
+    foreach(var namespaces in _testGroupEntities) {
         var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
         foreach(var entity in namespaces) {
             var testClassName = NormalizeTestClassName(entity.Name);
@@ -11,44 +14,22 @@
 using Xunit;
 using <#= entity.Namespace.FullName #>;
 
-namespace <#= NamespaceForTests("Domain", aggName) #>;
+namespace <#= GetTestNamespace("Domain") #>;
 
-/// <summary>
-/// Auto-generated tests for entity <#= entity.Name #>.
-/// </summary>
 public class <#= testClassName #>
 {
     [Fact]
     public void <#= entity.Name #>_Should_Be_Instantiable()
     {
-        // Arrange & Act
         var entity = new <#= entity.Name #>();
-
-        // Assert
         Assert.NotNull(entity);
-    }
-
-    [Fact]
-    public void <#= entity.Name #>_Should_Have_Default_Id()
-    {
-        // Arrange & Act
-        var entity = new <#= entity.Name #>();
-
-        // Assert — Entity base class sets Id
-        Assert.True(entity.Id == default || entity.Id != default,
-            "Entity Id should be initialized by the base class.");
     }
 
     [Fact]
     public void <#= entity.Name #>_ToString_Should_Not_Be_Empty()
     {
-        // Arrange
         var entity = new <#= entity.Name #>();
-
-        // Act
         var result = entity.ToString();
-
-        // Assert
         Assert.False(string.IsNullOrWhiteSpace(result),
             "<#= entity.Name #>.ToString() should not return empty.");
     }
@@ -62,28 +43,17 @@ public class <#= testClassName #>
     [Fact]
     public void <#= entity.Name #>_<#= propName #>_Should_Accept_Value()
     {
-        // Arrange
         var entity = new <#= entity.Name #>();
-        var expected = "test-value";
-
-        // Act
-        entity.<#= propName #> = expected;
-
-        // Assert
-        Assert.Equal(expected, entity.<#= propName #>);
+        entity.<#= propName #> = "test-value";
+        Assert.Equal("test-value", entity.<#= propName #>);
     }
-<# } else if (isNullable) { #>
+<# } else if (!isString && isNullable) { #>
 
     [Fact]
     public void <#= entity.Name #>_<#= propName #>_Should_Be_Nullable()
     {
-        // Arrange
         var entity = new <#= entity.Name #>();
-
-        // Act
         entity.<#= propName #> = default;
-
-        // Assert
         Assert.Null(entity.<#= propName #>);
     }
 <# } else { #>
@@ -91,20 +61,15 @@ public class <#= testClassName #>
     [Fact]
     public void <#= entity.Name #>_<#= propName #>_Should_Have_Default_Value()
     {
-        // Arrange
         var entity = new <#= entity.Name #>();
-
-        // Act
         var value = entity.<#= propName #>;
-
-        // Assert
         Assert.Equal(default(<#= propType #>), value);
     }
 <# } } #>
 }
 <#      SaveOutputToSubFolder(
-            folderName: GetTestOutputPath(), 
-            outputFileName: $"{aggName}.{testClassName}.g.cs", 
+            folderName: GetTestOutputPath(),
+            outputFileName: $"{aggName}.{testClassName}.g.cs",
             recreateFileIfExists: true);
         } // foreach entity
     } // foreach namespace
