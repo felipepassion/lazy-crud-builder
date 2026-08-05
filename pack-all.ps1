@@ -36,12 +36,28 @@
   [string]$OutputRoot = 'artifacts/nuget',
   [switch]$SkipRestore,
   [switch]$Publish,
-  [string]$ApiKey = ''
+  [string]$ApiKey = '<REDACTED-NUGET-KEY-ROTATED>'
 )
 
 $ErrorActionPreference = 'Stop'
 $projects = @(
+  'src/Builder/Builder.Infra.IoC/Lazy.Crud.Builder.Infra.IoC.csproj',
+  'src/Builder/Builder.Application.DTO/Lazy.Crud.Builder.Application.DTO.csproj',
+  'src/Builder/Builder.Api/Lazy.Crud.Builder.Api.csproj',
+  'src/Builder/Builder.Api.Queries/Lazy.Crud.Builder.Api.Queries.csproj',
+  'src/Builder/Builder.Application.DTO.Http.Models/Lazy.Crud.Builder.Application.DTO.Http.Models.csproj',
+  'src/Builder/Builder.Application.Validators/Lazy.Crud.Builder.Application.Validators.csproj',
+  'src/Builder/Builder.Enumeration/Lazy.Crud.Builder.Enumeration.csproj',
+  'src/Builder/Builder.Application/Lazy.Crud.Builder.Application.csproj',
+  'src/Builder/Builder.Domain/Lazy.Crud.Builder.Domain.csproj',
+  'src/Builder/Builder.Infra.Data/Lazy.Crud.Builder.Infra.Data.csproj',
+  'src/Builder/Builder.Infra.IoC/Lazy.Crud.Builder.Infra.IoC.csproj',
+  'src/CrossCutting/CrossCutting.Domain/Lazy.Crud.CrossCutting.Domain.csproj',
+  'src/CrossCutting/CrossCutting.Infra.Log\Lazy.Crud.CrossCutting.Infra.Log.csproj',
+  'src/CrossCutting/CrossCutting.Application.Mail/Lazy.Crud.CrossCutting.Application.Mail.csproj',
+  'src/CrossCutting/CrossCutting.Infra.Utils/Lazy.Crud.CrossCutting.Infra.Utils.csproj'
   'src/Builder/Builder.Infra.IoC/Lazy.Crud.Builder.Infra.IoC.csproj'
+  'src/Builder/Builder.WebApi/Lazy.Crud.Builder.WebApi.csproj'
 )
 
 function Get-VersionFromCsproj([string]$csprojPath) {

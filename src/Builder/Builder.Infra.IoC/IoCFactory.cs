@@ -1,7 +1,7 @@
 using AutoMapper;
-using CrossCutting.Application.Mail;
 using Lazy.Crud.Builder.Application.DTO.Seedwork;
 using Lazy.Crud.Builder.Domain.Aggregates.CommonAgg.Profiles;
+using Lazy.Crud.CrossCutting.Application.Mail;
 using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
 using Lazy.Crud.CrossCutting.Infra.Log.Providers;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +26,7 @@ namespace Lazy.Crud.Builder.Infra.IoC
         {
             ConfigureFactories();
             ConfigureLog(services);
-            ConfigureAppServices(services);
+            ConfigureAppServices(services, configuration);
             ConfigureRepositories(services);
             ConfigureDatabase(services, configuration);
             ConfigureMappings();
@@ -55,9 +55,9 @@ namespace Lazy.Crud.Builder.Infra.IoC
             ConfigureAdditionalRepositories();
         }
 
-        void ConfigureAppServices(IServiceCollection services)
+        void ConfigureAppServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender>(_ => new EmailSender(configuration));
             ConfigureAdditionalAppServices(services);
         }
 

@@ -1,10 +1,27 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
 
-namespace CrossCutting.Application.Mail
+namespace Lazy.Crud.CrossCutting.Application.Mail
 {
     public class EmailSender : IEmailSender
     {
+        private readonly string _fromAddress;
+        private readonly string _username;
+        private readonly string _password;
+        private readonly string _smtpHost;
+        private readonly int _smtpPort;
+
+        public EmailSender(IConfiguration configuration)
+        {
+            var section = configuration.GetSection("EmailSettings");
+            _fromAddress = section["FromAddress"] ?? string.Empty;
+            _username = section["Username"] ?? string.Empty;
+            _password = section["Password"] ?? string.Empty;
+            _smtpHost = section["SmtpHost"] ?? "smtp.gmail.com";
+            _smtpPort = int.TryParse(section["SmtpPort"], out var port) ? port : 587;
+        }
+
         public void Dispose()
         {
         }
@@ -20,15 +37,13 @@ namespace CrossCutting.Application.Mail
             message.Subject = emailSubject;
             message.Body = emailMessageHtml;
             message.IsBodyHtml = true;
-            message.From = new MailAddress("");
+            message.From = new MailAddress(_fromAddress);
                 
-            using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
+            using (var smtpClient = new SmtpClient(_smtpHost, _smtpPort))
             {
                 smtpClient.UseDefaultCredentials = false;
-                NetworkCredential MyCredentials = new NetworkCredential("", "");
-
                 smtpClient.EnableSsl = true;
-                smtpClient.Credentials = MyCredentials;
+                smtpClient.Credentials = new NetworkCredential(_username, _password);
                 try
                 {
                     await smtpClient.SendMailAsync(message);

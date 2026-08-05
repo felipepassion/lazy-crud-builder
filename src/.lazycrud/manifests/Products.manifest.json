@@ -1,6 +1,19 @@
 {
   "AggregateName": "Products",
-  "GeneratedAtUtc": "2026-03-01T05:54:49.1170484Z",
+  "GeneratedAtUtc": "2026-05-09T11:54:04.3539176Z",
   "GeneratorVersion": "1.0",
-  "GeneratedFiles": []
+  "GeneratedFiles": [
+    {
+      "FullPath": "C:\\Users\\felip\\source\\repos\\felipepassion\\lazy-crud-builder\\src\\Products\\Products.Domain\\DefaultEntities.generated.cs",
+      "TemplateName": "Unknown",
+      "Layer": "Domain",
+      "ContentHash": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "FullPath": "C:\\Users\\felip\\source\\repos\\felipepassion\\lazy-crud-builder\\LazyCode\\Products\\DefaultEntities.generated.cs",
+      "TemplateName": "OutputRedirection",
+      "Layer": "Redirected",
+      "ContentHash": ""
+    }
+  ]
 }

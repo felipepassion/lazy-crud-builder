@@ -41,6 +41,10 @@ namespace Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models.Auth
                     .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber) && x.PhoneNumber.ExtractNumbers().Length == 11);
 
             RuleFor(user => user.UserName)
+                .NotEmpty()
+                .WithMessage("UserName deve ser informado.");
+
+            RuleFor(user => user.Email)
                 .Must(EmailValidator.ValidEmail)
                 .When(user => !string.IsNullOrWhiteSpace(user.UserName))
                 .WithMessage("E-Mail inválido")
@@ -55,9 +59,13 @@ namespace Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models.Auth
     public class RegisterParametersDTO : EntityDTO
     {
         [Required]
+        [DisplayName("UserName")]
+        public string UserName { get; set; }
+
+        [Required]
         [EmailAddress]
         [DisplayName("E-Mail")]
-        public string UserName { get; set; }
+        public string Email { get; internal set; }
 
         [Required]
         [DisplayName("Nome")]
@@ -73,7 +81,7 @@ namespace Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models.Auth
         [DataType(DataType.Password)]
         [DisplayName("Senha")]
         public string Password { get; set; }
-
+        .\
         [Required]
         public bool isChecked { get; set; } = false;
 

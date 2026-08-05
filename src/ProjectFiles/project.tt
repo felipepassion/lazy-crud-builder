@@ -184,7 +184,7 @@ public List<Project> FindDomainProjects()
 
     foreach (var project in projects)
     {
-        if (project.Name.EndsWith(".Domain") && !project.Name.StartsWith("Lazy.Crud.Builder"))
+        if (project.Name.EndsWith(".Domain") && !project.Name.StartsWith("Lazy.Crud.Builder") && !project.Name.Contains(".Tests."))
             result.Add(project); ;
     }
 

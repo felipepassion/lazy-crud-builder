@@ -19,7 +19,7 @@
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>false</IncludeSymbols>
-		<Version>1.0.29</Version>
+		<Version>1.0.33</Version>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 		<IsPackable>true</IsPackable>
 		<TransformOnBuild>true</TransformOnBuild>
