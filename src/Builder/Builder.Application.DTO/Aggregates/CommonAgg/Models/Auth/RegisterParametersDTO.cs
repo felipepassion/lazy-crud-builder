@@ -81,7 +81,7 @@ namespace Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models.Auth
         [DataType(DataType.Password)]
         [DisplayName("Senha")]
         public string Password { get; set; }
-        .\
+        
         [Required]
         public bool isChecked { get; set; } = false;
 

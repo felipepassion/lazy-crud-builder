@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Lazy.Crud.Builder.Application.DTO.Seedwork
 {
@@ -29,17 +30,9 @@ namespace Lazy.Crud.Builder.Application.DTO.Seedwork
                 cfg.AllowNullDestinationValues = true;
                 foreach (var profile in _profiles)
                 {
-                    try
-                    {
-                        cfg.AddProfile(profile);
-                    }
-                    catch (Exception ex)
-                    {
-
-                        throw;
-                    }
+                    cfg.AddProfile(profile);
                 }
-            });
+            }, NullLoggerFactory.Instance);
 
             _mapper = new Mapper(config);
         }
@@ -52,17 +45,9 @@ namespace Lazy.Crud.Builder.Application.DTO.Seedwork
                 cfg.AllowNullDestinationValues = true;
                 foreach (var profile in _profiles)
                 {
-                    try
-                    {
-                        cfg.AddProfile(profile);
-                    }
-                    catch (Exception ex)
-                    {
-
-                        throw;
-                    }
+                    cfg.AddProfile(profile);
                 }
-            });
+            }, NullLoggerFactory.Instance);
 
             _mapper = new Mapper(config);
         }
