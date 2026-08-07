@@ -1,14 +1,12 @@
 ﻿<# if (allEntities.Any()) {
 	 foreach (var nmspc in groupAllEntities) { #>
-using <#= nmspc.Key #>;
 <# } #>
 <# foreach(var namespaces in groupAllEntities) { #>
-namespace <#= namespaces.Key.Replace("Entities", "Mappings").Replace("Domain","Infra.Data") #> 
+namespace <#= namespaces.Key.Replace("Entities", "Mappings").Replace("Domain","Infra.Data") #>
 {
- <#
-    var isFromSameAgg = AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+<#  var isFromSameAgg = AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 	foreach (var entity in namespaces) { 
-        var oneToOneRelations = GetProperties(entity).Where(x=>GetAttributes(x.Value, false, true).Any(p=>p.Contains("OneToOne"))).ToArray();
+        var oneToOneRelations = GetProperties(entity, includeIgnored: true).Where(x=>ContainsAttribute(x.Value, "OneToOne")).ToArray();
 #>
 public partial class <#= entity.Name #>Mapping : IEntityTypeConfiguration<<#= entity.FullName #>>
 {
@@ -18,7 +16,7 @@ public partial class <#= entity.Name #>Mapping : IEntityTypeConfiguration<<#= en
         builder.Metadata.SetIsTableExcludedFromMigrations(true);
 <#}#>
 <# foreach(var item in oneToOneRelations){ #>
-        builder.HasOne(x => x.<#= item.Key #>).WithOne().HasForeignKey<<#= item.Value.Type.AsFullName.Split('.').Last() #>>("Id");
+        builder.HasOne(x => x.<#= item.Key #>).WithOne().HasForeignKey<<#= item.Value.Type.AsFullName #>>("Id");
 <#}#>
         builder.HasKey(x => x.Id);
         ConfigureAdditionalMapping(builder);

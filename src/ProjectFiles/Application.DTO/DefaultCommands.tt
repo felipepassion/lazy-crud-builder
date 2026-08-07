@@ -10,6 +10,7 @@
 	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
 #>
 <#@ include file="..\..\ProjectFiles\Application.DTO\RequestsDTO.tt" #>
+<#@ include file="..\..\ProjectFiles\Application.DTO\ListiningsDTO.tt" #>
 <#@ include file="..\..\ProjectFiles\Application.DTO\SteppableRequestsValidators.tt" #>
 <#@ include file="..\..\ProjectFiles\Application.DTO\ApplicationDtoGlobalUsings.tt" #>
 <# } catch(System.Exception ex) { #>

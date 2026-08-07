@@ -3,14 +3,14 @@
 using Builder.Domain.Aggregates.CommonAgg.Entities;
 using Builder.Domain.Attributes.T4;
 
-[AggregateSettingsT4, EndpointsT4(EndpointTypes.HttpAll)]
-public class <#=myName#> : Entity
-{
-    public string? TestProperty { get; set; }
-
-    //[IgnorePropertyT4OnRequest]
-    //public User User { get; set; }
-}
+//[AggregateSettingsT4, EndpointsT4(EndpointTypes.HttpAll)]
+//public class <#=myName#> : Entity
+//{
+//    public string? TestProperty { get; set; }
+//
+//    //[IgnorePropertyT4OnRequest]
+//    //public User User { get; set; }
+//}
 <# SaveOutputToSubFolder(
     folderName: $"Aggregates/{AggName}/Entities/",
     outputFileName: @$"{myName}.cs",

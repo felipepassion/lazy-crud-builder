@@ -184,7 +184,7 @@ public List<Project> FindDomainProjects()
 
     foreach (var project in projects)
     {
-        if (project.Name.EndsWith(".Domain") && !project.Name.StartsWith("Lazy.Crud.Builder") && !project.Name.Contains(".Tests."))
+        if (project.Name.EndsWith(".Domain") && !project.Name.StartsWith("Lazy.Crud.Builder"))
             result.Add(project); ;
     }
 
@@ -942,7 +942,7 @@ public bool ContainsAttribute(CodeClass clss, string name)
     }
     return false;
 }
-public CodeEnumPropertyInfo GetProperties(CodeEnum clss, bool includeBase = true, string withAttribute = null, bool includeParent = true)
+public CodeEnumPropertyInfo GetProperties(CodeEnum clss, bool includeBase = true, string withAttribute = null, bool includeParent = true, bool includeIgnored = false)
 {
     CodeEnumPropertyInfo result = null;
     var list = new List<string>();
@@ -953,26 +953,30 @@ public CodeEnumPropertyInfo GetProperties(CodeEnum clss, bool includeBase = true
     result = new CodeEnumPropertyInfo(clss.Name, list);
     return result;
 }
-public Dictionary<string, CodeProperty> GetProperties(CodeClass clss, bool includeBase = true, string withAttribute = null, bool includeParent = true)
+public Dictionary<string, CodeProperty> GetProperties(CodeClass clss, bool includeBase = true, string withAttribute = null, bool includeParent = true, bool includeIgnored = false)
 {
 
     var properties = new Dictionary<string, CodeProperty>();
 
-    GetProperties(clss, properties, includeBase, withAttribute, includeParent);
+    GetProperties(clss, properties, includeBase, withAttribute, includeParent, includeIgnored: includeIgnored);
 
     return properties;
 }
-public Dictionary<string, CodeProperty> GetComplexProperties(CodeClass clss, bool includeBase = true, string withAttribute = null, bool includeParent = true)
+public Dictionary<string, CodeProperty> GetComplexProperties(CodeClass clss, bool includeBase = true, string withAttribute = null, bool includeParent = true, bool includeIgnored = false)
 {
 
     var properties = new Dictionary<string, CodeProperty>();
 
-    GetComplexProperties(clss, properties, includeBase, withAttribute, includeParent);
+    GetComplexProperties(clss, properties, includeBase, withAttribute, includeParent, includeIgnored: includeIgnored);
 
     return properties;
 }
 
-public void GetProperties(CodeClass clss, Dictionary<string, CodeProperty> properties, bool includeBase = true, string withAttribute = null, bool includeParent = true)
+public void GetProperties(CodeClass clss, Dictionary<string, CodeProperty> properties, 
+    bool includeBase = true, 
+    string withAttribute = null, 
+    bool includeParent = true,
+    bool includeIgnored = false)
 {
     if (clss?.Members == null || (includeParent == false && clss.Name.Contains("Entity")))
         return;
@@ -983,7 +987,7 @@ public void GetProperties(CodeClass clss, Dictionary<string, CodeProperty> prope
 
         var property = member as CodeProperty;
         if (property.Access.Equals(vsCMAccess.vsCMAccessPublic) == false) continue;
-        if (ContainsAttribute(property, "IgnorePropertyT4") || property.Name.ToLower().Contains("domainevent")) continue;
+        if ((!includeIgnored && ContainsAttribute(property, "IgnorePropertyT4") || property.Name.ToLower().Contains("domainevent"))) continue;
         if (!string.IsNullOrWhiteSpace(withAttribute))
         {
             if (!ContainsAttribute(property, withAttribute))
@@ -997,7 +1001,7 @@ public void GetProperties(CodeClass clss, Dictionary<string, CodeProperty> prope
         foreach (var b in clss.Bases)
         {
             //var bClss = b as CodeClass;
-            GetProperties(b as CodeClass, properties, includeBase, withAttribute, includeParent);
+            GetProperties(b as CodeClass, properties, includeBase, withAttribute, includeParent, includeIgnored);
         }
     }
 }
@@ -1013,7 +1017,7 @@ public class CodeEnumPropertyInfo
     public IEnumerable<string> Values { get; set; }
 }
 
-public void GetComplexProperties(CodeClass clss, Dictionary<string, CodeProperty> properties, bool includeBase = true, string withAttribute = null, bool includeParent = false)
+public void GetComplexProperties(CodeClass clss, Dictionary<string, CodeProperty> properties, bool includeBase = true, string withAttribute = null, bool includeParent = false, bool includeIgnored = false)
 {
 
     if (includeParent == false && clss.Name.Contains("Entity"))
@@ -1034,13 +1038,13 @@ public void GetComplexProperties(CodeClass clss, Dictionary<string, CodeProperty
         if (property.Access.Equals(vsCMAccess.vsCMAccessPublic) == false) continue;
 
         var member = GetEntity(property.Type.AsFullName);
-        GetProperties(member, properties, includeBase);
+        GetProperties(member, properties, includeBase, includeIgnored: includeIgnored);
     }
     if (includeBase == true && clss.Bases.Count > 0)
     {
         foreach (var b in clss.Bases)
         {
-            GetComplexProperties(b as CodeClass, properties, includeBase, withAttribute);
+            GetComplexProperties(b as CodeClass, properties, includeBase, withAttribute, includeIgnored);
         }
     }
 }
@@ -1065,7 +1069,8 @@ Dictionary<string, CodeProperty> result,
 bool includeBase = false,
 bool includeParent = true,
 int? withStep = null,
-string withoutAttribute = null)
+string withoutAttribute = null,
+bool includeIgnored = false)
 {
 
     if (elements == null) return;
@@ -1114,7 +1119,7 @@ string withoutAttribute = null)
                 var entity = GetEntity(property.Type.AsFullName);
                 if (entity == null || (!includeParent && entity.Name == "Entity")) continue;
 
-                var props = GetProperties(entity, includeBase: true, includeParent: includeParent);
+                var props = GetProperties(entity, includeBase: true, includeParent: includeParent, includeIgnored: includeIgnored);
                 foreach (var item in props)
                 {
                     result.Add(("/" + name + property.Name + "/" + item.Key + "/").Trim('/'), item.Value);

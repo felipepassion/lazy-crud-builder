@@ -11,7 +11,7 @@ var contextName = AggName + "Context";
 namespace <#= namespaces.Key.Replace("Entities", "Repositories").Replace("Domain", "Infra.Data") #>
 {
 	using Domain.Aggregates.<#= namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg")) #>.Repositories;
-	using Context;
+    using Lazy.Crud.<#= AggName.Replace("Agg","") #>.Infra.Data.Context;
 <# 
 var isFromSameAgg = AggName == namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
 foreach (var entity in namespaces) 
