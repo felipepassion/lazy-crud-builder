@@ -1,3 +1,5 @@
+> **Superseded.** This document predates the Lazy CRUD 1.1.0 platform relaunch and is kept under docs/legacy/ for history only. In the 1.1.0 documentation set it is replaced by [Testing](../testing.md) and [Generated code policy](../generated-code-policy.md). The commands, paths and scripts it describes are no longer maintained.
+
 # Test Template Output Examples
 
 These are examples of what the test templates will generate when consumed by LzyCrud.

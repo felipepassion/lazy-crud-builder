@@ -1,3 +1,5 @@
+> **Superseded.** This document predates the Lazy CRUD 1.1.0 platform relaunch and is kept under docs/legacy/ for history only. In the 1.1.0 documentation set it is replaced by [Toolchain](../toolchain.md) (pipeline invariants) and [Architecture](../architecture.md). The commands, paths and scripts it describes are no longer maintained.
+
 # E2E Flow Diagram
 
 ## Visual Flow

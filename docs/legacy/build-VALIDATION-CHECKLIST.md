@@ -1,3 +1,5 @@
+> **Superseded.** This document predates the Lazy CRUD 1.1.0 platform relaunch and is kept under docs/legacy/ for history only. In the 1.1.0 documentation set it is replaced by [E2E harness](../harness.md) and [Release guidance](../release.md). The commands, paths and scripts it describes are no longer maintained.
+
 # E2E Validation Checklist
 
 Use este checklist para validar que o fluxo E2E está funcionando corretamente.

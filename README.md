@@ -1,99 +1,133 @@
-# 📚 Documentação do Fluxo de Ambientes e Implantação - Sumário
+# Lazy CRUD Builder
 
-https://discord.gg/Fz7tWWVp
+Lazy CRUD is a domain-to-architecture compiler for .NET. You write the domain model: plain entity classes decorated with attributes. The platform compiles that model into a complete, layered aggregate: domain command and event handlers, application services, DTOs and validators, EF Core mappings and repositories, dependency injection, query models, controllers, migrations and a test project per layer. The generated code targets `net10.0` and runs on the `Lazy.Crud.Builder.*` and `Lazy.Crud.CrossCutting.*` runtime packages, version 1.1.0.
 
-1. [🌟 Introdução](#introdução)
-2. [🚀 Fluxo E2E Automatizado](#fluxo-e2e-automatizado) **← NOVO!**
-9. [💡 Tecnologias Usadas](#tecnologias-usadas)
-   - [📑 Índice](#índice)
-   - [💻 Tecnologias utilizadas](#tecnologias-utilizadas)
+| Role | What it is in Lazy CRUD |
+| --- | --- |
+| Input | Entity classes and attributes (the declarative model) in the Domain project of an aggregate |
+| Compiler | The T4 templates shipped in the layer packages and in `Lazy.Crud.Builder.Templates` |
+| Runtime | The `Lazy.Crud.Builder.*` and `Lazy.Crud.CrossCutting.*` NuGet packages |
+| Artifact | The generated code: regenerable at any time, and never the place to make a change |
 
-## Introdução
+Generated code is treated as an artifact with a contract. Every generated file starts with a marker header that states who owns it, every aggregate keeps a manifest with the hash of every file the generator wrote, and the generator refuses to overwrite a file that was edited outside of it unless you explicitly resolve the conflict. See [Generated code policy](docs/generated-code-policy.md).
 
-![image](https://github.com/felipepassion/lazy-crud-builder/assets/29386600/1c7cb118-e866-4e86-a696-b3c85c89b059)
+## Prerequisites
 
----
+Read this before you generate anything. Generation requires the following in every mode, including the unattended command-line runner and CI:
 
-## 🚀 Fluxo E2E Automatizado
+- Windows.
+- An installed **Visual Studio 2022 (17.x) or Visual Studio 2026 (18.x)** on any channel (release, preview or Insiders) with the **Text Template Transformation** component, id `Microsoft.VisualStudio.Component.TextTemplating`. The templates resolve your entity model through the Visual Studio code model (DTE), so every transformation runs the T4 tooling of the resolved installation inside an embedded, unattended Visual Studio automation session.
+- The **.NET SDK 10.0**.
 
-### Quickstart - Recriar Products do Zero
+"Headless" means unattended: no prompt, no window a person has to focus, no clicks. It does not mean Visual Studio is absent. A plain `dotnet build` never substitutes for transformation. When the toolchain cannot be resolved, the runner fails before transforming anything with diagnostic `LC4001` and exit code 3 (`PrerequisiteUnavailable`). Discovery rules, the selection rule and the override variable are in [Toolchain](docs/toolchain.md).
 
-```powershell
-# Execute este comando para recriar o aggregate Products completamente
-.\build\e2e-products.ps1
-```
-
-Este fluxo automatizado irá:
-1. ✅ Configurar `lazy.settings` para usar templates locais
-2. ✅ Deletar aggregate Products (se existir)
-3. ✅ Recriar todas as camadas (Domain, Application, Infra, API, Tests)
-4. ✅ Criar arquivos .csproj
-5. ✅ Adicionar projetos à solution
-6. ✅ Criar wrappers T4
-7. ✅ Executar templates T4
-8. ✅ Build e Test
-
-### 📖 Documentação E2E
-
-- **[QUICKSTART-E2E.md](QUICKSTART-E2E.md)** - Guia rápido de uso
-- **[build/README.md](build/README.md)** - Documentação detalhada
-- **[build/CLI-SPEC.md](build/CLI-SPEC.md)** - Especificação do CLI futuro
-- **[build/VALIDATION-CHECKLIST.md](build/VALIDATION-CHECKLIST.md)** - Checklist de validação
-
-### Scripts Disponíveis
+Check a machine before starting (the runner ships inside `Lazy.Crud.Builder.Templates` under `tools/net10.0/`):
 
 ```powershell
-# E2E completo
-.\build\e2e-products.ps1
-
-# Criar apenas .csproj
-.\build\create-csproj-files.ps1 -AggregateName Products
-
-# Executar apenas T4 templates
-.\build\run-t4-templates.ps1 -AggregateName Products
+dotnet "$env:USERPROFILE\.nuget\packages\lazy.crud.builder.templates\1.1.0\tools\net10.0\Lazy.Crud.Builder.Platform.Tool.dll" toolchain
 ```
 
-### Requisitos
+## Quickstart
 
-- **PowerShell 7+** (pwsh)
-- **.NET 10 SDK**
-- **MSBuild** ou **dotnet-t4** (para T4 templates)
+The [Quickstart](docs/quickstart.md) takes an empty solution to a generated, compiling aggregate using only the published packages. In short:
 
-> 💡 **Dica**: Este fluxo é idempotente - pode ser executado múltiplas vezes!
+1. Create the layer projects of an aggregate and reference the layer packages with `GeneratePathProperty="true"`.
+2. Write an entity class with attributes under `Aggregates/<Aggregate>Agg/Entities/` in the Domain project.
+3. Add `src/Mods/lazy.settings` and the wrapper templates (`DefaultEntities.tt`, `DefaultCommands.tt`).
+4. Run the generation runner, then build and test:
 
----
+```powershell
+dotnet "$env:USERPROFILE\.nuget\packages\lazy.crud.builder.templates\1.1.0\tools\net10.0\Lazy.Crud.Builder.Platform.Tool.dll" generate --solution . --aggregate Products --report artifacts\generate.json
+dotnet build
+dotnet test
+```
 
-# Tecnologias Usadas
+After a restore the runner path is also available to MSBuild as `$(LazyCrudToolDll)`, and `dotnet build -p:LazyCrudTransformOnBuild=true` invokes it for you. The E2E harness executes this exact path as scenario P7.
 
-Este arquivo README fornece uma visão geral das tecnologias utilizadas no projeto e destaca suas características e benefícios.
+## What gets generated
 
-## Índice
+One aggregate produces eight layer projects, transformed Domain first, plus one generated test project per layer:
 
-1. [Tecnologias utilizadas](#tecnologias-utilizadas)
-    - [.NET Core 8.0 + Blazor WebAssembly](#net-core-70--blazor-webassembly)
-    - [Arquitetura DDD com Bounded Contexts](#arquitetura-ddd-com-bounded-contexts)
-    - [CQRS - leitura MongoDB, Escrita PostgreSQL](#cqrs---leitura-mongodb-escrita-postgresql)
-    - [RabbitMQ](#rabbitmq)
-    - [Serilog.Seq](#serilogseq)
+| Layer id | Project | Runtime package |
+| --- | --- | --- |
+| `Domain` | `{Aggregate}.Domain` | `Lazy.Crud.Builder.Domain` |
+| `Application` | `{Aggregate}.Application` | `Lazy.Crud.Builder.Application` |
+| `Application.DTO` | `{Aggregate}.Application.DTO` | `Lazy.Crud.Builder.Application.DTO` |
+| `Infra.Data` | `{Aggregate}.Infra.Data` | `Lazy.Crud.Builder.Infra.Data` |
+| `Infra.IoC` | `{Aggregate}.Infra.IoC` | `Lazy.Crud.Builder.Infra.IoC` |
+| `Api.Queries` | `{Aggregate}.Api.Queries` | `Lazy.Crud.Builder.Api.Queries` |
+| `Enumerations` | `{Aggregate}.Enumerations` | `Lazy.Crud.Builder.Enumeration` |
+| `Api` | `{Aggregate}.Api` | `Lazy.Crud.Builder.Api` |
 
-## Tecnologias utilizadas
+[Architecture](docs/architecture.md) explains the model, compiler, runtime and artifact roles, what every layer emits, the pipeline order and its invariants.
 
-### .NET Core 8.0 + Blazor WebAssembly
+## Packages
 
-O projeto utiliza o .NET Core 8.0 e o Blazor WebAssembly. A combinação dessas tecnologias permite a criação de aplicações web que podem ser executadas offline e facilmente exportadas para dispositivos móveis e desktops com o .NET MAUI. Através do WebAssembly, é possível executar o projeto diretamente no navegador como uma aplicação de página única (SPA).
+All packages share one version, 1.1.0, defined once as `LazyCrudVersion` in `Directory.Build.props`, and target `net10.0`. Every package embeds the platform descriptor at `lazycrud/lazycrud.platform.json`.
 
-### Arquitetura DDD com Bounded Contexts
+| Package | Role |
+| --- | --- |
+| `Lazy.Crud.Builder.Domain`, `Lazy.Crud.Builder.Application`, `Lazy.Crud.Builder.Application.DTO`, `Lazy.Crud.Builder.Infra.Data`, `Lazy.Crud.Builder.Infra.IoC`, `Lazy.Crud.Builder.Api`, `Lazy.Crud.Builder.Api.Queries`, `Lazy.Crud.Builder.Enumeration` | Layer runtime packages. Each carries its layer's templates under `contentFiles/any/any/LazyCrudTemplates/<Layer>/` and depends on the templates package. |
+| `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators`, `Lazy.Crud.Builder.WebApi` | Non-layer runtime packages. |
+| `Lazy.Crud.CrossCutting.Domain`, `Lazy.Crud.CrossCutting.Infra.Log`, `Lazy.Crud.CrossCutting.Infra.Utils`, `Lazy.Crud.CrossCutting.Application.Mail` | Cross-cutting runtime packages. |
+| `Lazy.Crud.Builder.Platform` | The contracts library: ownership, marker v2, the frozen content hash, manifest v2, diagnostics and the shared generation writer. |
+| `Lazy.Crud.Builder.Templates` | The canonical templates package: `project.tt`, `Tests/Tests.Common.ttinclude`, the runner under `tools/net10.0/`, the MSBuild props and targets, the contract fixtures and schemas under `contracts/`, and the descriptor. |
+| `Lazy.Crud.Templates` | Deprecated dependency-only alias of `Lazy.Crud.Builder.Templates`. It carries no content and is scheduled for removal two minor releases after 1.1.0. |
 
-A arquitetura DDD (Domain-Driven Design) com Bounded Contexts é aplicada para garantir uma estruturação clara e modular do código. Isso facilita a manutenção e o desenvolvimento contínuo do projeto.
+## Documentation
 
-### CQRS - leitura MongoDB, Escrita PostgreSQL
+Start here:
 
-Para a implementação do padrão CQRS (Command Query Responsibility Segregation), o projeto utiliza MongoDB para leitura e PostgreSQL para escrita. Essa abordagem proporciona um desempenho aprimorado e facilita a escalabilidade.
+- [Quickstart](docs/quickstart.md): empty project to generated, compiling aggregate.
+- [Architecture](docs/architecture.md): model, compiler, runtime, artifact; layers; pipeline invariants.
+- [Aggregates, entities and attributes](docs/model.md): the declarative model reference.
+- [Generated code policy](docs/generated-code-policy.md): ownership, markers, what is safe to edit.
+- [Safe customization](docs/customization.md): change generated behavior without losing it on regeneration.
+- [Migrations](docs/migrations.md): moving between platform versions, including 1.0.x to 1.1.0.
+- [Testing](docs/testing.md): generated test projects, unit tests, the golden test and the harness.
+- [Compatibility matrix](docs/compatibility.md): versions, consumers, mixed pins and host prerequisites.
+- [Troubleshooting](docs/troubleshooting.md): diagnostics by code and how to read `.lazycrud/diagnostics`.
+- [Release guidance](docs/release.md) and the [Changelog](CHANGELOG.md).
+- [Using Lazy CRUD with AI coding agents](docs/ai-agents.md).
 
-### RabbitMQ
+Platform and operations:
 
-O RabbitMQ é utilizado para gerenciar filas e troca de informações entre micros serviços. Isso garante uma comunicação eficiente e resiliente entre os componentes do sistema.
+- [Toolchain](docs/toolchain.md): the Visual Studio prerequisite, discovery, selection and the unattended session.
+- [E2E harness](docs/harness.md): running the battery and reading its artifacts.
+- [Clean room](docs/clean-room.md): validating the public distribution as an external user receives it.
 
-### Serilog.Seq
+Frozen contract reference (the fixtures win when prose and fixture disagree):
 
-O Serilog.Seq é o gerenciador de logs escolhido para o projeto. Ele permite monitorar e analisar eventos de log em tempo real, facilitando a identificação e solução de problemas.
+- [Platform descriptor](docs/reference/descriptor.md)
+- [Manifest v2](docs/reference/manifest-v2.md)
+- [Marker v2](docs/reference/marker-v2.md)
+- [Ownership](docs/reference/ownership.md)
+- [Content hash](docs/reference/hash.md)
+- [Diagnostics](docs/reference/diagnostics.md)
+
+Documents that predate the 1.1.0 relaunch are kept under [docs/legacy](docs/legacy/) for history only.
+
+## Contracts and fixtures
+
+The shared contracts consumed by the Visual Studio extension, the CLI and AI agents are frozen under `contractVersion` 1 and published as implementation-generated fixtures:
+
+- In the repository: `contracts/fixtures/v1/` (descriptor, `manifest-v2.json`, `manifest-v1-input.json` and `manifest-v1-migrated.json`, `markers/*.txt`, `hash-vectors.json`, `fixture-index.json`) and the JSON Schemas under `contracts/schemas/v1/`.
+- Inside the `Lazy.Crud.Builder.Templates` package under `contracts/`.
+- From GitHub as raw files, for example `https://raw.githubusercontent.com/felipepassion/lazy-crud-builder/main/contracts/fixtures/v1/fixture-index.json`, and as the CI artifact `lazycrud-contract-fixtures`.
+
+## Repository layout
+
+| Path | Content |
+| --- | --- |
+| `src/Builder`, `src/CrossCutting` | The runtime packages |
+| `src/ProjectFiles` | The T4 templates (the compiler): one folder per layer, `project.tt` and `Tests/` |
+| `src/Platform` | `Lazy.Crud.Builder.Platform` (contracts library), the `Lazy.Crud.Builder.Platform.Tool` runner and the unit tests |
+| `src/Templates` | The `Lazy.Crud.Builder.Templates` package project and the deprecated `Lazy.Crud.Templates` alias |
+| `contracts/` | Fixtures and JSON Schemas per `contractVersion` |
+| `tests/fixtures/reference-aggregate`, `tests/golden` | The reference aggregate and its golden output |
+| `scripts/` | `e2e.ps1` (the harness) and `credential-scan.ps1` |
+| `pack-all.ps1`, `publish-all.ps1` | Pack every package into `artifacts/nuget/<version>/` and publish with `NUGET_API_KEY` |
+
+## License
+
+See [LICENSE](LICENSE).
