@@ -99,19 +99,31 @@ public sealed class DteSession : IDisposable
         _sta.Invoke(() => { _dte!.Solution.Open(solutionPath); }, t);
         var sw = Stopwatch.StartNew();
         int stableCount = -1; int stableTicks = 0;
+        var slowPolls = 0;
         while (sw.Elapsed < t)
         {
-            var count = _sta.Invoke(() =>
+            // A poll that does not answer in time is "not settled yet", not a failure: while Visual Studio loads
+            // projects on a busy machine, one enumeration of Solution.Projects can take longer than the per-call
+            // budget. Letting that TimeoutException out ended a whole scenario in a minute even though the real
+            // deadline below had minutes left. The deadline is what decides; a slow poll is reported and retried.
+            int count;
+            try
             {
-                try
+                count = _sta.Invoke(() =>
                 {
                     if (!_dte!.Solution.IsOpen) return -1;
                     int n = 0;
                     foreach (Project p in _dte.Solution.Projects) { if (ProjectLoaded(p)) n++; }
                     return n;
-                }
-                catch (COMException) { return -1; }
-            }, TimeSpan.FromSeconds(60));
+                }, TimeSpan.FromSeconds(60));
+            }
+            catch (COMException) { count = -1; }
+            catch (TimeoutException)
+            {
+                slowPolls++;
+                _log($"dte: the project system did not answer within 60s while loading ({slowPolls} slow poll(s), {(t - sw.Elapsed).TotalSeconds:F0}s of the load budget left)");
+                count = -1;
+            }
             if (count >= 0 && (expectedProjectCount < 0 || count >= expectedProjectCount))
             {
                 if (count == stableCount) stableTicks++; else { stableCount = count; stableTicks = 0; }
