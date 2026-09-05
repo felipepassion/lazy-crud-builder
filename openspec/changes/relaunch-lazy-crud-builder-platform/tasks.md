@@ -307,3 +307,47 @@ These require access the implementing agent does not have. They are listed witho
 - [x] 19.11 Verify the documented quickstart works for an external consumer following it verbatim.
 - [x] 19.12 Report the status of the external prerequisites in section 0 without blocking on them.
 - [x] 19.13 Only after 19.1 through 19.12 pass, mark this OpenSpec change implemented and ready to archive.
+
+## Closeout - 2026-09-05
+
+The change was fully checked but had never been committed or re-verified end to end. This pass ran the
+gates and the battery on the real toolchain, fixed what they found, and committed the work.
+
+**Verified**
+
+- Platform unit tests 107 of 107; `validate tree` 24 of 24; `validate fixtures` 8 of 8; acceptance map OK;
+  credential scan clean; Release build 0 warnings 0 errors.
+- E2E battery `RESULT: OK (passed=21 failed=0)` against Visual Studio Professional 2026
+  (18.10.12113.136, prerelease) through its own TextTransform tooling. Evidence:
+  `artifacts/e2e/20260905-041226`.
+- Transformation is proven from the run report, not from a build: 18 templates transformed, Domain gate
+  passed, 43 files in the manifest (schema 2, contract 1), templates resolved from the restored
+  `Lazy.Crud.Builder.Templates` package.
+
+**Defects the battery found, and what was done**
+
+- `DteSession.Flatten` dereferenced a solution folder while the project system was reloading; the
+  NullReferenceException ended the clean-room scenario after its transformation had already succeeded.
+  Walking a solution folder is defensive at every read now.
+- `generate` wrote no report when the pipeline failed unexpectedly, so a diagnosable failure reached the
+  harness as "the report file does not exist". The report is always written.
+- `validate` wrote its report without creating the parent directory, so a passing CI gate died on
+  `artifacts/validation/` in a fresh clone (exit 8 after 24 of 24 checks passed).
+- Waiting for a solution to load treated a slow project-system poll as a failed open, ending a scenario a
+  minute in with four minutes of budget left. A slow poll is now reported and retried.
+- The harness read the working tree with git attached to the console; after driving devenv that killed a
+  completed run with "No process is on the other end of the pipe".
+- The sandbox grouped every layer in a solution folder of its own -- ten folders for sixteen projects, each
+  repeating its project name. Layers now sit under `src/<Aggregate>` and tests under
+  `src/<Aggregate>/Tests`, which is what `LazyCrud.Core` has always created for real consumers.
+
+**Open, with evidence**
+
+- Intermittent degraded Application.DTO output. In one battery run (`artifacts/e2e/20260905-022527`, F5)
+  three DTO templates emitted a marker-only body; regenerating the same sandbox reproduced the full body
+  byte for byte, and two later batteries passed. The unverified protection caught it and refused the write,
+  naming file, templateId, both hashes and the first differing line -- no content was lost. The exposure is
+  the *verified* path: with a baseline present, that same collapsed body would have been written over good
+  generated code without question. Closing it needs a rule that refuses to overwrite a non-empty generated
+  body with an empty one, which appends a diagnostic code and therefore a contract revision. Not done here.
+- Rotating the two exposed NuGet publish keys remains the account holder's, as recorded in section 0.
