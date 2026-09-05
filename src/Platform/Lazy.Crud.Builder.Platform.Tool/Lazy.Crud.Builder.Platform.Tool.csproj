@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Lazy.Crud.Builder.Platform.Tool</RootNamespace>
+    <AssemblyName>Lazy.Crud.Builder.Platform.Tool</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <RollForward>LatestMajor</RollForward>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lazy.Crud.Builder.Platform\Lazy.Crud.Builder.Platform.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Interop" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" />
+  </ItemGroup>
+
+  <!-- Build ordering only: the descriptor's attribute catalog reflects over the freshly built Application.DTO assembly. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Builder\Builder.Application.DTO\Lazy.Crud.Builder.Application.DTO.csproj" ReferenceOutputAssembly="false" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Lazy.Crud.Builder.Platform.Tests" />
+  </ItemGroup>
+</Project>

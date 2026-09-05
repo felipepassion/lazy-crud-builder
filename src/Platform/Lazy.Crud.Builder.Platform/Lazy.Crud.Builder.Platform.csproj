@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>Lazy.Crud.Builder.Platform</RootNamespace>
+    <AssemblyName>Lazy.Crud.Builder.Platform</AssemblyName>
+    <Title>Lazy.Crud.Builder.Platform</Title>
+    <PackageId>Lazy.Crud.Builder.Platform</PackageId>
+    <Description>Lazy CRUD platform contracts: ownership, marker v2, frozen content hash, manifest v2, diagnostics and the shared generation writer used by the T4 templates.</Description>
+    <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <PackageTags>lazycrud;platform;contracts;t4</PackageTags>
+    <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.TXT" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>
