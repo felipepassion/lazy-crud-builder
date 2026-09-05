@@ -1,37 +1,65 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Lazy.Crud.Builder.Templates: the canonical templates package (contract F1, decision D8).
+    It carries the templates shared across layers (project.tt, Tests/Tests.Common.ttinclude), the
+    shared writer assembly and the unattended generation runner under tools/, the MSBuild props
+    that make shared includes resolvable ($(LazyCrudTemplatesRoot)) and the contract fixtures.
+    Layer-specific templates ship in their layer's runtime package, which depends on this package.
+  -->
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Title>Lazy.Crud.Builder.Templates</Title>
     <PackageId>Lazy.Crud.Builder.Templates</PackageId>
-    <Version>1.0.1</Version>
-    <Description>LazyCrud T4 templates pack (legacy aggregator).</Description>
-    <RepositoryUrl>https://github.com/felipepassion/lazy-crud-builder</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    
-    <PackageTags>lazycrud;queries;builder;templates;t4</PackageTags>
+    <Description>Lazy CRUD canonical templates package: shared T4 templates (project.tt, Tests.Common.ttinclude), the shared generation writer, the unattended Visual Studio T4 runner and the platform contract fixtures. Layer templates ship in the Lazy.Crud.Builder.* layer packages, which depend on this package.</Description>
+    <PackageTags>lazycrud;builder;templates;t4</PackageTags>
     <IncludeSymbols>false</IncludeSymbols>
     <IncludeSource>false</IncludeSource>
-    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultItems>false</EnableDefaultItems>
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <Authors>felipepassion</Authors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);NU5128;NU5100;NU5110;NU5111</NoWarn>
     <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <IsPackable>true</IsPackable>
+    <ContentTargetFolders>contentFiles</ContentTargetFolders>
   </PropertyGroup>
-        
-  <!-- Legacy project now only carries license and targets file -->
+
   <ItemGroup>
     <None Include="LICENSE.TXT" Pack="true" PackagePath="/" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
+  <!-- Shared templates (the only package that carries them; layer packages never do). -->
   <ItemGroup>
-    <None Include="build/LazyCrud.Templates.targets" Pack="true" PackagePath="build/" />
+    <None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
+    <None Include="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/" Link="LazyCrudTemplates/Tests/Tests.Common.ttinclude" />
   </ItemGroup>
 
+  <!-- MSBuild integration: file names match the PackageId so NuGet auto-imports them (build and buildTransitive). -->
   <ItemGroup>
-    <Compile Remove="**/*.cs" />
-    <None Remove="**/*.cs" />
-    <Content Remove="**/*.cs" />
+    <None Include="build\Lazy.Crud.Builder.Templates.props" Pack="true" PackagePath="build/;buildTransitive/" />
+    <None Include="build\Lazy.Crud.Builder.Templates.targets" Pack="true" PackagePath="build/;buildTransitive/" />
   </ItemGroup>
+
+  <!-- Contract fixtures and schemas (retrievable without a source checkout). -->
+  <ItemGroup>
+    <None Include="..\..\..\contracts\**\*" Pack="true" PackagePath="contracts/" Condition="Exists('..\..\..\contracts')" />
+  </ItemGroup>
+
+  <!--
+    The tools payload is collected from the Platform tool's build output. A project reference would
+    create a cycle (layer packages -> this package -> tool -> Application.DTO -> this package), so
+    pack-all.ps1 builds the whole solution first and this target fails when the output is missing.
+  -->
+  <Target Name="LazyCrudCollectTools" BeforeTargets="_GetPackageFiles;GenerateNuspec">
+    <PropertyGroup>
+      <_LazyCrudToolBin>$(MSBuildThisFileDirectory)..\..\Platform\Lazy.Crud.Builder.Platform.Tool\bin\$(Configuration)\net10.0\</_LazyCrudToolBin>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(_LazyCrudToolBin)Lazy.Crud.Builder.Platform.Tool.dll')" Text="The Platform tool output was not found at '$(_LazyCrudToolBin)'. Build the solution before packing Lazy.Crud.Builder.Templates." />
+    <ItemGroup>
+      <_LazyCrudToolFiles Include="$(_LazyCrudToolBin)**\*.dll;$(_LazyCrudToolBin)**\*.json;$(_LazyCrudToolBin)**\*.exe" Exclude="$(_LazyCrudToolBin)**\*.pdb" />
+      <None Include="@(_LazyCrudToolFiles)" Pack="true" PackagePath="tools/net10.0/%(RecursiveDir)" />
+    </ItemGroup>
+  </Target>
 </Project>

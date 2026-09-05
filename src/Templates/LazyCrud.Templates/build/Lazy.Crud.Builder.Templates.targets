@@ -1,0 +1,40 @@
+<Project>
+  <!--
+    Build-driven T4 transformation for Lazy CRUD aggregates.
+
+    A plain build never transforms Lazy CRUD templates: the generator association written into
+    aggregate projects (TextTemplatingFileGenerator) is a Visual Studio custom tool, and the
+    templates resolve the entity model through the Visual Studio code model. This target makes
+    transformation reachable from a build-driven invocation by running the unattended runner,
+    which resolves the installed Visual Studio through the Visual Studio Installer query tool and
+    performs the transformation inside an embedded Visual Studio session, exactly as the IDE does.
+
+    Opt in per build:   dotnet build -p:LazyCrudTransformOnBuild=true
+    Optional:           -p:LazyCrudAggregate=Products (default: derived from the project name)
+                        -p:LazyCrudResolution=force|skip-modified (default: protect)
+
+    When Visual Studio with the T4 tooling is not installed the runner fails before transforming
+    anything with exit code 3 (PrerequisiteUnavailable) and an actionable diagnostic; the build
+    fails too. It never substitutes the compile step for a transformation.
+  -->
+  <PropertyGroup>
+    <LazyCrudTransformOnBuild Condition="'$(LazyCrudTransformOnBuild)' == ''">false</LazyCrudTransformOnBuild>
+    <LazyCrudResolution Condition="'$(LazyCrudResolution)' == ''">protect</LazyCrudResolution>
+  </PropertyGroup>
+
+  <Target Name="LazyCrudTransform" BeforeTargets="CoreCompile" Condition="'$(LazyCrudTransformOnBuild)' == 'true' and '$(DesignTimeBuild)' != 'true'">
+    <PropertyGroup>
+      <_LazyCrudAggregate Condition="'$(LazyCrudAggregate)' != ''">$(LazyCrudAggregate)</_LazyCrudAggregate>
+      <_LazyCrudAggregate Condition="'$(_LazyCrudAggregate)' == ''">$([System.String]::Copy('$(MSBuildProjectName)').Replace('Lazy.Crud.', '').Split('.')[0])</_LazyCrudAggregate>
+      <_LazyCrudSolutionDir Condition="'$(SolutionDir)' != '' and '$(SolutionDir)' != '*Undefined*'">$(SolutionDir)</_LazyCrudSolutionDir>
+      <_LazyCrudSolutionDir Condition="'$(_LazyCrudSolutionDir)' == ''">$(MSBuildProjectDirectory)</_LazyCrudSolutionDir>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(LazyCrudToolDll)')" Text="LazyCrud: the generation runner '$(LazyCrudToolDll)' was not found. Restore the Lazy.Crud.Builder.Templates package." />
+    <Message Importance="high" Text="LazyCrud: transforming aggregate '$(_LazyCrudAggregate)' through the Visual Studio T4 toolchain (project '$(MSBuildProjectName)')." />
+    <Exec Command="dotnet &quot;$(LazyCrudToolDll)&quot; generate --solution &quot;$(_LazyCrudSolutionDir)&quot; --aggregate $(_LazyCrudAggregate) --project &quot;$(MSBuildProjectFullPath)&quot; --resolution $(LazyCrudResolution)" />
+  </Target>
+
+  <Target Name="LazyCrudTransformHint" BeforeTargets="CoreCompile" Condition="'$(LazyCrudTransformOnBuild)' != 'true' and '$(DesignTimeBuild)' != 'true' and '@(None->WithMetadataValue('Generator','TextTemplatingFileGenerator'))' != ''">
+    <Message Importance="low" Text="LazyCrud: this project contains T4 templates; a plain build does not transform them. Use 'dotnet build -p:LazyCrudTransformOnBuild=true' or run the Lazy CRUD generation runner." />
+  </Target>
+</Project>

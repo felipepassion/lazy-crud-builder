@@ -17,7 +17,6 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.0.33</Version>
     <IncludeReferencedProjects>true</IncludeReferencedProjects>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
@@ -59,8 +58,7 @@
 
   <!-- Templates for Apps/UI layer -->
   <ItemGroup>
-    <None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
-    <None Include="..\..\ProjectFiles\Apps\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Apps/" Link="LazyCrudTemplates/Apps/%(Filename)%(Extension)" />
+    <None Include="..\..\ProjectFiles\WebApi\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/WebApi/" Link="LazyCrudTemplates/WebApi/%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

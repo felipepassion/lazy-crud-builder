@@ -17,7 +17,6 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Version>1.0.33</Version>
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 

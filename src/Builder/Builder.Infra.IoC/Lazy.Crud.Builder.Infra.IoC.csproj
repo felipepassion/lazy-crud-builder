@@ -11,7 +11,6 @@
 		<Copyright>felipepassion</Copyright>
 		<PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<Version>1.0.33</Version>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 	</PropertyGroup>
 
@@ -37,14 +36,11 @@
 
 	<!-- Templates for Infra.IoC layer -->
 	<ItemGroup>
-		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
-		<None Include="..\..\ProjectFiles\Apps\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Infra.IoC/" Link="LazyCrudTemplates/Infra.IoC/%(Filename)%(Extension)" />
 		<None Include="..\..\ProjectFiles\Infra.IoC\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Infra.IoC/" Link="LazyCrudTemplates/Infra.IoC/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<!-- Test templates for Infra.IoC layer -->
 	<ItemGroup>
-		<None Include="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/" Link="LazyCrudTemplates/Tests/Tests.Common.ttinclude" />
 		<None Include="..\..\ProjectFiles\Tests\Infra.IoC\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/Infra.IoC/" Link="LazyCrudTemplates/Tests/Infra.IoC/%(Filename)%(Extension)" />
 	</ItemGroup>
 

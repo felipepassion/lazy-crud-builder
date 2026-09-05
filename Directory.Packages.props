@@ -12,20 +12,20 @@
     <PackageVersion Include="EFCore.NamingConventions" Version="10.0.1" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
     <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.1" />
-    <PackageVersion Include="Lazy.Crud.Builder.Api" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Api.Queries" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Application" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Application.DTO" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Application.DTO.Http.Models" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Application.Validators" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Domain" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Enumeration" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Infra.IoC" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.Builder.Infra.Data" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.CrossCutting.Infra.Utils" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.CrossCutting.Application.Mail" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.CrossCutting.Infra.Log" Version="1.0.33" GeneratePathProperty="true" />
-    <PackageVersion Include="Lazy.Crud.CrossCutting.Domain" Version="1.0.33" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Api" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Api.Queries" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Application" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Application.DTO" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Application.DTO.Http.Models" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Application.Validators" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Domain" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Enumeration" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Infra.IoC" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.Builder.Infra.Data" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.CrossCutting.Infra.Utils" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.CrossCutting.Application.Mail" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.CrossCutting.Infra.Log" Version="1.0.35" GeneratePathProperty="true" />
+    <PackageVersion Include="Lazy.Crud.CrossCutting.Domain" Version="1.0.35" GeneratePathProperty="true" />
     <PackageVersion Include="MediatR" Version="14.2.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Components" Version="10.0.10" />
     <PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="10.0.10" />
@@ -47,6 +47,8 @@
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.10" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.10" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="Microsoft.VisualStudio.Interop" Version="17.12.40391" />
+    <PackageVersion Include="System.Reflection.MetadataLoadContext" Version="10.0.11" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.301" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="Npgsql" Version="10.0.3" />

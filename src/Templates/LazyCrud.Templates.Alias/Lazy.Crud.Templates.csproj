@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Lazy.Crud.Templates: DEPRECATED dependency-only alias of Lazy.Crud.Builder.Templates (decision D7).
+    Clients that still request the historical id resolve this package, which carries no content and
+    depends on the canonical templates package. Template location is resolved through the platform
+    descriptor registry, never by reading files out of this package. Removal milestone: two minor
+    releases after 1.1.0 (see docs/release.md).
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Title>Lazy.Crud.Templates (deprecated alias)</Title>
+    <PackageId>Lazy.Crud.Templates</PackageId>
+    <Description>DEPRECATED alias. Use Lazy.Crud.Builder.Templates. This package carries no content: it only depends on Lazy.Crud.Builder.Templates so that existing configurations naming Lazy.Crud.Templates keep resolving. It will be removed two minor releases after 1.1.0.</Description>
+    <PackageTags>lazycrud;templates;deprecated;alias</PackageTags>
+    <IncludeSymbols>false</IncludeSymbols>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <PackageLicenseFile>LICENSE.TXT</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LazyCrud.Templates\LICENSE.TXT" Pack="true" PackagePath="/" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LazyCrud.Templates\Lazy.Crud.Builder.Templates.csproj" PrivateAssets="none" />
+  </ItemGroup>
+</Project>

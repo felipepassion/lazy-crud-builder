@@ -1,0 +1,22 @@
+<Project>
+  <!--
+    Imported automatically by NuGet into every project that references Lazy.Crud.Builder.Templates
+    directly or through a Lazy.Crud.Builder.* layer package. It publishes the MSBuild properties the
+    Lazy CRUD T4 templates use to resolve shared includes and the shared writer assembly:
+
+      $(LazyCrudTemplatesRoot)     root of the shared templates inside this package
+      $(LazyCrudPlatformAssembly)  the Lazy.Crud.Builder.Platform.dll referenced by project.tt
+      $(LazyCrudToolDll)           the unattended generation runner (dotnet <dll> ...)
+
+    Templates reference these as MSBuild macros, e.g. <#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>.
+    Setting a property before this import (Directory.Build.props) overrides the package values,
+    which is how local template development mode is selected explicitly.
+  -->
+  <PropertyGroup>
+    <LazyCrudTemplatesPackageRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..'))</LazyCrudTemplatesPackageRoot>
+    <LazyCrudTemplatesRoot Condition="'$(LazyCrudTemplatesRoot)' == ''">$(LazyCrudTemplatesPackageRoot)contentFiles\any\any\LazyCrudTemplates\</LazyCrudTemplatesRoot>
+    <LazyCrudPlatformAssembly Condition="'$(LazyCrudPlatformAssembly)' == ''">$(LazyCrudTemplatesPackageRoot)tools\net10.0\Lazy.Crud.Builder.Platform.dll</LazyCrudPlatformAssembly>
+    <LazyCrudToolDll Condition="'$(LazyCrudToolDll)' == ''">$(LazyCrudTemplatesPackageRoot)tools\net10.0\Lazy.Crud.Builder.Platform.Tool.dll</LazyCrudToolDll>
+    <LazyCrudDescriptorFile Condition="'$(LazyCrudDescriptorFile)' == ''">$(LazyCrudTemplatesPackageRoot)lazycrud\lazycrud.platform.json</LazyCrudDescriptorFile>
+  </PropertyGroup>
+</Project>

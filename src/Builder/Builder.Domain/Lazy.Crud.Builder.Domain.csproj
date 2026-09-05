@@ -17,7 +17,6 @@
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Version>1.0.33</Version>
 		<IsPackable>true</IsPackable>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 		
@@ -71,7 +70,6 @@
 
 	<!-- Templates for Domain layer -->
 	<ItemGroup>
-		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
 		<None Include="..\..\ProjectFiles\Domain\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Domain/" Link="LazyCrudTemplates/Domain/%(Filename)%(Extension)" />
 	</ItemGroup>
 	<ItemGroup>
@@ -80,7 +78,6 @@
 
 	<!-- Test templates for Domain layer -->
 	<ItemGroup>
-		<None Include="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/" Link="LazyCrudTemplates/Tests/Tests.Common.ttinclude" />
 		<None Include="..\..\ProjectFiles\Tests\Domain\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/Domain/" Link="LazyCrudTemplates/Tests/Domain/%(Filename)%(Extension)" />
 	</ItemGroup>
 

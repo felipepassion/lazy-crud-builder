@@ -19,7 +19,6 @@
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>false</IncludeSymbols>
-		<Version>1.0.33</Version>
 		<IncludeReferencedProjects>true</IncludeReferencedProjects>
 		<IsPackable>true</IsPackable>
 		<TransformOnBuild>true</TransformOnBuild>
@@ -36,13 +35,11 @@
 
 	<!-- Templates for Application.DTO layer -->
 	<ItemGroup>
-		<None Include="..\..\ProjectFiles\project.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/" Link="LazyCrudTemplates/project.tt" />
 		<None Include="..\..\ProjectFiles\Application.DTO\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Application.DTO/" Link="LazyCrudTemplates/Application.DTO/%(Filename)%(Extension)" />
 	</ItemGroup>
 
 	<!-- Test templates for Application.DTO layer -->
 	<ItemGroup>
-		<None Include="..\..\ProjectFiles\Tests\Tests.Common.ttinclude" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/" Link="LazyCrudTemplates/Tests/Tests.Common.ttinclude" />
 		<None Include="..\..\ProjectFiles\Tests\Application.DTO\*.tt" Pack="true" PackagePath="contentFiles/any/any/LazyCrudTemplates/Tests/Application.DTO/" Link="LazyCrudTemplates/Tests/Application.DTO/%(Filename)%(Extension)" />
 	</ItemGroup>
 
