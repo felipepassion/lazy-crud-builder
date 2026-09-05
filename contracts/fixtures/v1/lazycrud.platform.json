@@ -1,0 +1,2253 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": 1,
+  "platformVersion": "1.1.0",
+  "layers": [
+    {
+      "id": "Domain",
+      "projectSuffix": ".Domain",
+      "projectPattern": "{Aggregate}.Domain",
+      "packageId": "Lazy.Crud.Builder.Domain",
+      "templatePackageId": "Lazy.Crud.Builder.Domain",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Domain/",
+      "outputPathPattern": "src/{Aggregate}/{Aggregate}.Domain/{OutputPath}"
+    },
+    {
+      "id": "Application",
+      "projectSuffix": ".Application",
+      "projectPattern": "{Aggregate}.Application",
+      "packageId": "Lazy.Crud.Builder.Application",
+      "templatePackageId": "Lazy.Crud.Builder.Application",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Application/",
+      "outputPathPattern": "src/{Aggregate}/{Aggregate}.Application/{OutputPath}"
+    },
+    {
+      "id": "Application.DTO",
+      "projectSuffix": ".Application.DTO",
+      "projectPattern": "{Aggregate}.Application.DTO",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "templatePackageId": "Lazy.Crud.Builder.Application.DTO",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/",
+      "outputPathPattern": "src/{Aggregate}/{Aggregate}.Application.DTO/{OutputPath}"
+    },
+    {
+      "id": "Infra.Data",
+      "projectSuffix": ".Infra.Data",
+      "projectPattern": "{Aggregate}.Infra.Data",
+      "packageId": "Lazy.Crud.Builder.Infra.Data",
+      "templatePackageId": "Lazy.Crud.Builder.Infra.Data",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/",
+      "outputPathPattern": "src/{Aggregate}/{Aggregate}.Infra.Data/{OutputPath}"
+    },
+    {
+      "id": "Infra.IoC",
+      "projectSuffix": ".Infra.IoC",
+      "projectPattern": "{Aggregate}.Infra.IoC",
+      "packageId": "Lazy.Crud.Builder.Infra.IoC",
+      "templatePackageId": "Lazy.Crud.Builder.Infra.IoC",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Infra.IoC/",
+      "outputPathPattern": "src/{Aggregate}/{Aggregate}.Infra.IoC/{OutputPath}"
+    },
+    {
+      "id": "Api.Queries",
+      "projectSuffix": ".Api.Queries",
+      "projectPattern": "{Aggregate}.Api.Queries",
+      "packageId": "Lazy.Crud.Builder.Api.Queries",
+      "templatePackageId": "Lazy.Crud.Builder.Api.Queries",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Api.Queries/",
+      "outputPathPattern": "src/{Aggregate}/{Aggregate}.Api.Queries/{OutputPath}"
+    },
+    {
+      "id": "Enumerations",
+      "projectSuffix": ".Enumerations",
+      "projectPattern": "{Aggregate}.Enumerations",
+      "packageId": "Lazy.Crud.Builder.Enumeration",
+      "templatePackageId": null,
+      "templateContentPath": null,
+      "outputPathPattern": "src/{Aggregate}/{Aggregate}.Enumerations/{OutputPath}"
+    },
+    {
+      "id": "Api",
+      "projectSuffix": ".Api",
+      "projectPattern": "{Aggregate}.Api",
+      "packageId": "Lazy.Crud.Builder.Api",
+      "templatePackageId": "Lazy.Crud.Builder.Api",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Api/",
+      "outputPathPattern": "src/{Aggregate}/{Aggregate}.Api/{OutputPath}"
+    }
+  ],
+  "testLayers": [
+    {
+      "id": "Tests.Domain",
+      "targetLayer": "Domain",
+      "projectPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.Domain",
+      "templatePackageId": "Lazy.Crud.Builder.Domain",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Tests/Domain/",
+      "outputPathPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.Domain/{TestOutputPath}"
+    },
+    {
+      "id": "Tests.Application",
+      "targetLayer": "Application",
+      "projectPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.Application",
+      "templatePackageId": "Lazy.Crud.Builder.Application",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Tests/Application/",
+      "outputPathPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.Application/{TestOutputPath}"
+    },
+    {
+      "id": "Tests.DTO",
+      "targetLayer": "Application.DTO",
+      "projectPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.DTO",
+      "templatePackageId": "Lazy.Crud.Builder.Application.DTO",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Tests/Application.DTO/",
+      "outputPathPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.DTO/{TestOutputPath}"
+    },
+    {
+      "id": "Tests.InfraData",
+      "targetLayer": "Infra.Data",
+      "projectPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.InfraData",
+      "templatePackageId": "Lazy.Crud.Builder.Infra.Data",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Tests/Infra.Data/",
+      "outputPathPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.InfraData/{TestOutputPath}"
+    },
+    {
+      "id": "Tests.InfraIoC",
+      "targetLayer": "Infra.IoC",
+      "projectPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.InfraIoC",
+      "templatePackageId": "Lazy.Crud.Builder.Infra.IoC",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Tests/Infra.IoC/",
+      "outputPathPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.InfraIoC/{TestOutputPath}"
+    },
+    {
+      "id": "Tests.Api",
+      "targetLayer": "Api",
+      "projectPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.Api",
+      "templatePackageId": "Lazy.Crud.Builder.Api",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Tests/Api/",
+      "outputPathPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.Api/{TestOutputPath}"
+    },
+    {
+      "id": "Tests.ApiQueries",
+      "targetLayer": "Api.Queries",
+      "projectPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.ApiQueries",
+      "templatePackageId": "Lazy.Crud.Builder.Api.Queries",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Tests/Api.Queries/",
+      "outputPathPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.ApiQueries/{TestOutputPath}"
+    },
+    {
+      "id": "Tests.Enumerations",
+      "targetLayer": "Enumerations",
+      "projectPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.Enumerations",
+      "templatePackageId": "Lazy.Crud.Builder.Enumeration",
+      "templateContentPath": "contentFiles/any/any/LazyCrudTemplates/Tests/Enumerations/",
+      "outputPathPattern": "src/{Aggregate}/Tests/Lazy.Crud.{Aggregate}.Tests.Enumerations/{TestOutputPath}"
+    }
+  ],
+  "templates": {
+    "packageId": "Lazy.Crud.Builder.Templates",
+    "aliasPackageIds": [
+      "Lazy.Crud.Templates"
+    ],
+    "version": "1.1.0",
+    "contentRoot": "contentFiles/any/any/LazyCrudTemplates/",
+    "sharedFiles": [
+      "project.tt",
+      "Tests/Tests.Common.ttinclude"
+    ],
+    "outputPatternTokens": [
+      "{Aggregate}",
+      "{Agg}",
+      "{Entity}",
+      "{Step}",
+      "{OutputPath}",
+      "{TestOutputPath}"
+    ],
+    "registry": [
+      {
+        "id": "shared.project",
+        "layer": "Shared",
+        "sourceFile": "project.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Templates",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/project.tt",
+        "kind": "include"
+      },
+      {
+        "id": "shared.tests-common",
+        "layer": "Shared",
+        "sourceFile": "Tests/Tests.Common.ttinclude",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Templates",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Tests.Common.ttinclude",
+        "kind": "include"
+      },
+      {
+        "id": "domain.default-entities",
+        "layer": "Domain",
+        "sourceFile": "Domain/DefaultEntities.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DefaultEntities.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "domain.default-commands",
+        "layer": "Domain",
+        "sourceFile": "Domain/DefaultCommands.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DefaultCommands.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "domain.domain-commands",
+        "layer": "Domain",
+        "sourceFile": "Domain/DomainCommands.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommands.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "domain.reset-this-aggregate",
+        "layer": "Domain",
+        "sourceFile": "Domain/ResetThisAggregate.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/ResetThisAggregate.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "domain.aggregate-settings-entity",
+        "layer": "Domain",
+        "sourceFile": "Domain/AggregateSettingsEntity.tt",
+        "outputPattern": "Aggregates/{Agg}/Entities/{Aggregate}.cs",
+        "ownership": "GeneratedOnce",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/AggregateSettingsEntity.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.default-folders",
+        "layer": "Domain",
+        "sourceFile": "Domain/DefaultFolders.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DefaultFolders.tt",
+        "kind": "include"
+      },
+      {
+        "id": "domain.user-entity",
+        "layer": "Domain",
+        "sourceFile": "Domain/UserEntity.tt",
+        "outputPattern": "Aggregates/UsersAgg/Entities/User.cs",
+        "ownership": "GeneratedOnce",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/UserEntity.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.legacy-commands.entities",
+        "layer": "Domain",
+        "sourceFile": "Domain/Commands.tt",
+        "outputPattern": "../../../{Aggregate}/{Aggregate}.Domain/DefaultEntities.tt",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Commands.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.legacy-commands.commands",
+        "layer": "Domain",
+        "sourceFile": "Domain/Commands.tt",
+        "outputPattern": "../../../{Aggregate}/{Aggregate}.{Layer}/DefaultCommands.tt",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Commands.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.global-usings",
+        "layer": "Domain",
+        "sourceFile": "Domain/DomainGlobalUsings.tt",
+        "outputPattern": "{OutputPath}/{Agg}.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainGlobalUsings.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.command-handlers",
+        "layer": "Domain",
+        "sourceFile": "Domain/DomainCommandHandlers.tt",
+        "outputPattern": "{OutputPath}/{Agg}.DomainCommandHandlers.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommandHandlers.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.command-handlers.seed",
+        "layer": "Domain",
+        "sourceFile": "Domain/DomainCommandHandlers.tt",
+        "outputPattern": "Aggregates/{Agg}/CommandHandlers/{Entity}CommandHandler.cs",
+        "ownership": "GeneratedOnce",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommandHandlers.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.command-models",
+        "layer": "Domain",
+        "sourceFile": "Domain/DomainCommandModels.tt",
+        "outputPattern": "{OutputPath}/{Agg}.DomainCommandModels.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommandModels.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.event-handlers",
+        "layer": "Domain",
+        "sourceFile": "Domain/DomainEventHandlers.tt",
+        "outputPattern": "{OutputPath}/{Agg}.DomainEventHandlers.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainEventHandlers.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.event-models",
+        "layer": "Domain",
+        "sourceFile": "Domain/DomainEventModels.tt",
+        "outputPattern": "{OutputPath}/{Agg}.DomainEventModels.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainEventModels.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.filters",
+        "layer": "Domain",
+        "sourceFile": "Domain/Filters.tt",
+        "outputPattern": "{OutputPath}/{Agg}.Filters.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Filters.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.irepositories",
+        "layer": "Domain",
+        "sourceFile": "Domain/IRespositories.tt",
+        "outputPattern": "{OutputPath}/{Agg}.IRespositories.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/IRespositories.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.profiles-listining-mapping",
+        "layer": "Domain",
+        "sourceFile": "Domain/ProfilesListiningMapping.tt",
+        "outputPattern": "{OutputPath}/{Agg}.ProfilesListiningMapping.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/ProfilesListiningMapping.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.profiles-mapping",
+        "layer": "Domain",
+        "sourceFile": "Domain/ProfilesMapping.tt",
+        "outputPattern": "{OutputPath}/{Agg}.ProfilesMapping.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/ProfilesMapping.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.specifications",
+        "layer": "Domain",
+        "sourceFile": "Domain/Specifications.tt",
+        "outputPattern": "{OutputPath}/{Agg}.Specifications.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Specifications.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "domain.specification-item",
+        "layer": "Domain",
+        "sourceFile": "Domain/SpecificationItem.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/SpecificationItem.tt",
+        "kind": "include"
+      },
+      {
+        "id": "domain.specification-sub-item",
+        "layer": "Domain",
+        "sourceFile": "Domain/SpecificationSubItem.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/SpecificationSubItem.tt",
+        "kind": "include"
+      },
+      {
+        "id": "domain.csv-mapping-profiles",
+        "layer": "Domain",
+        "sourceFile": "Domain/CSVMappingProfiles.tt",
+        "outputPattern": "{OutputPath}/{Agg}.CSVMappingProfiles.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/CSVMappingProfiles.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application.default-commands",
+        "layer": "Application",
+        "sourceFile": "Application/DefaultCommands.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application/DefaultCommands.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "application.global-usings",
+        "layer": "Application",
+        "sourceFile": "Application/ApplicationGlobalUsings.tt",
+        "outputPattern": "{OutputPath}/{Agg}.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application/ApplicationGlobalUsings.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application.app-services",
+        "layer": "Application",
+        "sourceFile": "Application/AppServices.tt",
+        "outputPattern": "{OutputPath}/{Agg}.AppServices.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application/AppServices.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application.iapp-services",
+        "layer": "Application",
+        "sourceFile": "Application/IAppServices.tt",
+        "outputPattern": "{OutputPath}/{Agg}.IAppServices.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application/IAppServices.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.default-commands",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/DefaultCommands.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/DefaultCommands.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "application-dto.global-usings",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/ApplicationDtoGlobalUsings.tt",
+        "outputPattern": "{OutputPath}/{Agg}.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/ApplicationDtoGlobalUsings.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.csv-mapper",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/CsvMapper.tt",
+        "outputPattern": "{OutputPath}/{Agg}.ListiningDTO.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/CsvMapper.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.listinings",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/ListiningsDTO.tt",
+        "outputPattern": "{OutputPath}/{Agg}.ListiningDTO.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/ListiningsDTO.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.requests",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/RequestsDTO.tt",
+        "outputPattern": "{OutputPath}/{Agg}.RequestsDTO.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/RequestsDTO.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.requests.seed",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/RequestsDTO.tt",
+        "outputPattern": "Aggregates/{Agg}/Requests/{Entity}DTO.cs",
+        "ownership": "GeneratedOnce",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/RequestsDTO.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.responses",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/ResponsesDTO.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/ResponsesDTO.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "application-dto.steppable-requests",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/SteppableRequestsDTO.tt",
+        "outputPattern": "{OutputPath}/{Agg}.SteppableRequestsDTO.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/SteppableRequestsDTO.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.steppable-requests-validators",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/SteppableRequestsValidators.tt",
+        "outputPattern": "{OutputPath}/{Agg}.SteppableRequestsValidators.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/SteppableRequestsValidators.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.steppable-requests-validators.seed",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/SteppableRequestsValidators.tt",
+        "outputPattern": "Aggregates/{Agg}/Validators/{Entity}Validator.cs",
+        "ownership": "GeneratedOnce",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/SteppableRequestsValidators.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "application-dto.updates",
+        "layer": "Application.DTO",
+        "sourceFile": "Application.DTO/UpdatesDTO.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/UpdatesDTO.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "infra-data.default-commands",
+        "layer": "Infra.Data",
+        "sourceFile": "Infra.Data/DefaultCommands.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.Data",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/DefaultCommands.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "infra-data.identity-context",
+        "layer": "Infra.Data",
+        "sourceFile": "Infra.Data/IdentityContext.tt",
+        "outputPattern": "{OutputPath}/{Agg}.IdentityContext.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.Data",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/IdentityContext.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "infra-data.global-usings",
+        "layer": "Infra.Data",
+        "sourceFile": "Infra.Data/InfraDataGlobalUsings.tt",
+        "outputPattern": "{OutputPath}/{Agg}.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.Data",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/InfraDataGlobalUsings.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "infra-data.mappings",
+        "layer": "Infra.Data",
+        "sourceFile": "Infra.Data/Mappings.tt",
+        "outputPattern": "{OutputPath}/{Agg}.Mappings.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.Data",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/Mappings.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "infra-data.repositories",
+        "layer": "Infra.Data",
+        "sourceFile": "Infra.Data/Respositories.tt",
+        "outputPattern": "{OutputPath}/{Agg}.Respositories.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.Data",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/Respositories.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "infra-ioc.default-commands",
+        "layer": "Infra.IoC",
+        "sourceFile": "Infra.IoC/DefaultCommands.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.IoC",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.IoC/DefaultCommands.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "infra-ioc.global-usings",
+        "layer": "Infra.IoC",
+        "sourceFile": "Infra.IoC/InfraIoCGlobalUsings.tt",
+        "outputPattern": "{OutputPath}/{Agg}.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.IoC",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.IoC/InfraIoCGlobalUsings.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "infra-ioc.ioc-factory",
+        "layer": "Infra.IoC",
+        "sourceFile": "Infra.IoC/IoCFactory.tt",
+        "outputPattern": "{OutputPath}/{Agg}.IoCFactory.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.IoC",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.IoC/IoCFactory.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "api-queries.default-commands",
+        "layer": "Api.Queries",
+        "sourceFile": "Api.Queries/DefaultCommands.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api.Queries",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api.Queries/DefaultCommands.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "api-queries.global-usings",
+        "layer": "Api.Queries",
+        "sourceFile": "Api.Queries/ApiQueriesGlobalUsings.tt",
+        "outputPattern": "T4/{Agg}.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api.Queries",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api.Queries/ApiQueriesGlobalUsings.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "api-queries.query-models",
+        "layer": "Api.Queries",
+        "sourceFile": "Api.Queries/QueryModels.tt",
+        "outputPattern": "{OutputPath}/{Agg}.QueryModels.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api.Queries",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api.Queries/QueryModels.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "api.global-usings",
+        "layer": "Api",
+        "sourceFile": "Api/ApiGlobalUsings.tt",
+        "outputPattern": "{OutputPath}/{Agg}.Api.GlobalUsings.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api/ApiGlobalUsings.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "api.mini-controllers",
+        "layer": "Api",
+        "sourceFile": "Api/MiniControllers.tt",
+        "outputPattern": "{OutputPath}/{Agg}.Controllers.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api/MiniControllers.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "api.mini-ioc-factory",
+        "layer": "Api",
+        "sourceFile": "Api/MiniIoCFactory.tt",
+        "outputPattern": "{OutputPath}/{Agg}.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api/MiniIoCFactory.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "api.mini-migrations",
+        "layer": "Api",
+        "sourceFile": "Api/MiniMigrations.tt",
+        "outputPattern": "Migrations.generated.bat",
+        "ownership": "GeneratedOnce",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api/MiniMigrations.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.domain",
+        "layer": "Tests.Domain",
+        "sourceFile": "Tests/Domain/Tests.Domain.tt",
+        "outputPattern": "{TestOutputPath}/{Agg}.{Entity}EntityTests.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Domain",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Domain/Tests.Domain.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.application",
+        "layer": "Tests.Application",
+        "sourceFile": "Tests/Application/Tests.Application.tt",
+        "outputPattern": "{TestOutputPath}/{Agg}.{Entity}AppServiceTests.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Application/Tests.Application.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.application-dto",
+        "layer": "Tests.DTO",
+        "sourceFile": "Tests/Application.DTO/Tests.DTO.tt",
+        "outputPattern": "{TestOutputPath}/{Agg}.{Entity}DtoSerializationTests.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Application.DTO",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Application.DTO/Tests.DTO.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.infra-data",
+        "layer": "Tests.InfraData",
+        "sourceFile": "Tests/Infra.Data/Tests.InfraData.tt",
+        "outputPattern": "{TestOutputPath}/{Agg}.{Entity}MappingTests.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.Data",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Infra.Data/Tests.InfraData.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.infra-ioc",
+        "layer": "Tests.InfraIoC",
+        "sourceFile": "Tests/Infra.IoC/Tests.InfraIoC.tt",
+        "outputPattern": "{TestOutputPath}/{Agg}.{Entity}IoCTests.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Infra.IoC",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Infra.IoC/Tests.InfraIoC.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.api",
+        "layer": "Tests.Api",
+        "sourceFile": "Tests/Api/Tests.Api.tt",
+        "outputPattern": "{TestOutputPath}/{Agg}.{Entity}ControllerTests.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Api/Tests.Api.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.api-queries",
+        "layer": "Tests.ApiQueries",
+        "sourceFile": "Tests/Api.Queries/Tests.ApiQueries.tt",
+        "outputPattern": "{TestOutputPath}/{Agg}.{Entity}QueryModelTests.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Api.Queries",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Api.Queries/Tests.ApiQueries.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.enumerations",
+        "layer": "Tests.Enumerations",
+        "sourceFile": "Tests/Enumerations/Tests.Enumerations.tt",
+        "outputPattern": "{TestOutputPath}/{Agg}.{Agg}EnumerationsTests.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Enumeration",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Enumerations/Tests.Enumerations.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "tests.enumerations.none",
+        "layer": "Tests.Enumerations",
+        "sourceFile": "Tests/Enumerations/Tests.Enumerations.tt",
+        "outputPattern": "{TestOutputPath}/NoEnumerations.g.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.Enumeration",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Enumerations/Tests.Enumerations.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.basic-address-component",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicAddressComponent.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/{Entity}{Step}.razor.css",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicAddressComponent.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.basic-configuracao-component",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicConfiguracaoComponent.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicConfiguracaoComponent.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-contacts-component",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicContactsComponent.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicContactsComponent.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-date-time-input",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicDateTimeInput.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicDateTimeInput.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-enum-input",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicEnumInput.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicEnumInput.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-foreign-data-drop-down-with-auto-complete",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicForeignDataDropDownWithAutoComplete.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicForeignDataDropDownWithAutoComplete.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-foreign-data-selector",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicForeignDataSelector.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicForeignDataSelector.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-form-css",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicForm.css.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicForm.css.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-form",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicForm.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicForm.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-form-input-chooser",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicFormInputChooser.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicFormInputChooser.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-form-input-general-chooser",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicFormInputGeneralChooser.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicFormInputGeneralChooser.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-form-list-chooser",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicFormListChooser.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicFormListChooser.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-image-input",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicImageInput.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicImageInput.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-listbox-component",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicListboxComponent.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicListboxComponent.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-mini-listing-picker-component",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicMiniListingPickerComponent.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicMiniListingPickerComponent.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-switch-toggler-input",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicSwitchTogglerInput.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicSwitchTogglerInput.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-tab-bar-content-component",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicTabBarContentComponent.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicTabBarContentComponent.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-text-input",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicTextInput.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicTextInput.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.basic-text-input-title",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/BasicTextInputTitle.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicTextInputTitle.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.client-ioc-factory",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/ClientIoCFactory.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientIoCFactory.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.client-listining-pages.index",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/ClientListiningPages.tt",
+        "outputPattern": "{Agg}/{Entity}/Index.razor",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientListiningPages.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.client-listining-pages.index-css",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/ClientListiningPages.tt",
+        "outputPattern": "{Agg}/{Entity}/Index.razor.css",
+        "ownership": "GeneratedOnce",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientListiningPages.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.client-pages-generator",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/ClientPagesGenerator.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientPagesGenerator.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.client-register-pages.page",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/ClientRegisterPages.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/Cadastro.razor",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientRegisterPages.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.client-register-pages.css",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/ClientRegisterPages.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/Cadastro.razor.css",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientRegisterPages.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.controllers",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/Controllers.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/Controllers.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.dashboard-controllers",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/DashboardControllers.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/DashboardControllers.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.form-templates-switcher.css",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/FormTemplatesSwitcher.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/{Entity}{Step}.razor.css",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/FormTemplatesSwitcher.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.form-templates-switcher.page",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/FormTemplatesSwitcher.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/{Entity}{Step}.razor",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/FormTemplatesSwitcher.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.ioc-factory",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/IoCFactory.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/IoCFactory.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.microservice-controller",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MicroserviceController.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MicroserviceController.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.migrations",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/Migrations.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/Migrations.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.mini-basic-form-css",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniBasicForm.css.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniBasicForm.css.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.mini-basic-form",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniBasicForm.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniBasicForm.tt",
+        "kind": "include"
+      },
+      {
+        "id": "webapi.mini-client-ioc-factory",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniClientIoCFactory.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniClientIoCFactory.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.mini-client-pages-generator",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniClientPagesGenerator.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniClientPagesGenerator.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.mini-client-register-pages.page",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniClientRegisterPages.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/Cadastro.razor",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniClientRegisterPages.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.mini-client-register-pages.css",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniClientRegisterPages.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/Cadastro.razor.css",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniClientRegisterPages.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.mini-controllers",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniControllers.tt",
+        "outputPattern": "Controllers/Controllers.generated.cs",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniControllers.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.mini-form-templates-switcher.css",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniFormTemplatesSwitcher.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/{Entity}{Step}.razor.css",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniFormTemplatesSwitcher.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.mini-form-templates-switcher.page",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniFormTemplatesSwitcher.tt",
+        "outputPattern": "{Agg}/{Entity}/Cadastro/{Entity}{Step}.razor",
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniFormTemplatesSwitcher.tt",
+        "kind": "writer"
+      },
+      {
+        "id": "webapi.mini-ioc-factory",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniIoCFactory.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniIoCFactory.tt",
+        "kind": "entry"
+      },
+      {
+        "id": "webapi.mini-migrations",
+        "layer": "WebApi",
+        "sourceFile": "WebApi/MiniMigrations.tt",
+        "outputPattern": null,
+        "ownership": "GeneratorOwned",
+        "templateVersion": "1.1.0",
+        "packageId": "Lazy.Crud.Builder.WebApi",
+        "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniMigrations.tt",
+        "kind": "entry"
+      }
+    ]
+  },
+  "attributeCategories": [
+    "Code Generation (T4)",
+    "Modeling",
+    "Serialization/CSV",
+    "UI/Display",
+    "UI/Forms",
+    "UI/Input",
+    "UI/Layout",
+    "UI/List",
+    "UI/Menu",
+    "UI/Navigation",
+    "UI/Selectors",
+    "UI/Titles",
+    "Validation"
+  ],
+  "attributes": [
+    {
+      "name": "AttatchOnUpdate",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.AttatchOnUpdate",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.AttatchOnUpdate"
+    },
+    {
+      "name": "AutoGenerateDefaultDataFiles",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.AutoGenerateDefaultDataFiles",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.AutoGenerateDefaultDataFiles"
+    },
+    {
+      "name": "AutoGenerateDefaultFiles",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.AutoGenerateDefaultFiles",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.AutoGenerateDefaultFiles"
+    },
+    {
+      "name": "DefaultValueT4",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.DefaultValueT4",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.DefaultValueT4"
+    },
+    {
+      "name": "DisplayOnList",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.DisplayOnList",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/List",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        },
+        {
+          "parameters": [
+            {
+              "name": "order",
+              "type": "int",
+              "required": true
+            },
+            {
+              "name": "template",
+              "type": "Lazy.Crud.Builder.Application.DTO.Attributes.DisplayOnListTemplates",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.DisplayOnList"
+    },
+    {
+      "name": "DoNotReplaceAfterGenerated",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.DoNotReplaceAfterGenerated",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.DoNotReplaceAfterGenerated"
+    },
+    {
+      "name": "DoNotReplaceBaseCadastroPageAfterGenerated",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.DoNotReplaceBaseCadastroPageAfterGenerated",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.DoNotReplaceBaseCadastroPageAfterGenerated"
+    },
+    {
+      "name": "EnableRightContainer",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.EnableRightContainer",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Layout",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.EnableRightContainer"
+    },
+    {
+      "name": "ForeignDataSelector",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.ForeignDataSelector",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Selectors",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.ForeignDataSelector"
+    },
+    {
+      "name": "ForeignDataSelectorDropDownWithAutoComplete",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.ForeignDataSelectorDropDownWithAutoComplete",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Selectors",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.ForeignDataSelectorDropDownWithAutoComplete"
+    },
+    {
+      "name": "H1",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.H1",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Titles",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "title",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "parameters": [
+            {
+              "name": "title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "subTitle",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.H1"
+    },
+    {
+      "name": "H2",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.H2",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Titles",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "title",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "parameters": [
+            {
+              "name": "title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "subTitle",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.H2"
+    },
+    {
+      "name": "HideTitleOnHeader",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.HideTitleOnHeader",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Layout",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.HideTitleOnHeader"
+    },
+    {
+      "name": "IgnoreCsvMap",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.IgnoreCsvMap",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Serialization/CSV",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.IgnoreCsvMap"
+    },
+    {
+      "name": "IgnoreValidation",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.IgnoreValidation",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Validation",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.IgnoreValidation"
+    },
+    {
+      "name": "ListingPicker",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.ListingPicker",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Selectors",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        },
+        {
+          "parameters": [
+            {
+              "name": "title",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.ListingPicker"
+    },
+    {
+      "name": "MenuSection",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.MenuSection",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Menu",
+      "applicability": [
+        "Class"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.MenuSection"
+    },
+    {
+      "name": "MigrationOrder",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.MigrationOrder",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "order",
+              "type": "int",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.MigrationOrder"
+    },
+    {
+      "name": "NullableProperty",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.NullableProperty",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Modeling",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.NullableProperty"
+    },
+    {
+      "name": "ParameterType",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.ParameterType",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Modeling",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.ParameterType"
+    },
+    {
+      "name": "ParameterTypePageSwitcher",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.ParameterTypePageSwitcher",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Navigation",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.ParameterTypePageSwitcher"
+    },
+    {
+      "name": "RadioButton",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.RadioButton",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Input",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.RadioButton"
+    },
+    {
+      "name": "RegisterOrder",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.RegisterOrder",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Navigation",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "position",
+              "type": "int",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.RegisterOrder"
+    },
+    {
+      "name": "SubMenuSection",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.SubMenuSection",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Menu",
+      "applicability": [
+        "Class"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "parentName",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.SubMenuSection"
+    },
+    {
+      "name": "Subtitle",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.Subtitle",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Titles",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.Subtitle"
+    },
+    {
+      "name": "Title",
+      "fullName": "Lazy.Crud.Builder.Application.DTO.Attributes.Title",
+      "namespace": "Lazy.Crud.Builder.Application.DTO.Attributes",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Display",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Application.DTO.Attributes.Title"
+    },
+    {
+      "name": "EmailOrPhone",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.Auth.EmailOrPhone",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.Auth",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Validation",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.Auth.EmailOrPhone"
+    },
+    {
+      "name": "AggregateSettingsT4",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.AggregateSettingsT4",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.AggregateSettingsT4"
+    },
+    {
+      "name": "DettachNavigationProperty",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.DettachNavigationProperty",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.DettachNavigationProperty"
+    },
+    {
+      "name": "DisableControllers",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.DisableControllers",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.DisableControllers"
+    },
+    {
+      "name": "EndpointsT4",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.EndpointsT4",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "attr",
+              "type": "Lazy.Crud.Builder.Domain.Attributes.T4.EndpointTypes[]",
+              "required": false
+            }
+          ]
+        },
+        {
+          "parameters": [
+            {
+              "name": "order",
+              "type": "int",
+              "required": true
+            },
+            {
+              "name": "attr",
+              "type": "Lazy.Crud.Builder.Domain.Attributes.T4.EndpointTypes[]",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.EndpointsT4"
+    },
+    {
+      "name": "GenerateAppService",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.GenerateAppService",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.GenerateAppService"
+    },
+    {
+      "name": "IgnorePropertyOnFrontT4",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.IgnorePropertyOnFrontT4",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.IgnorePropertyOnFrontT4"
+    },
+    {
+      "name": "IgnorePropertyOnListingT4",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.IgnorePropertyOnListingT4",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.IgnorePropertyOnListingT4"
+    },
+    {
+      "name": "IgnorePropertyT4",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.IgnorePropertyT4",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.IgnorePropertyT4"
+    },
+    {
+      "name": "IgnorePropertyT4OnRequest",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.IgnorePropertyT4OnRequest",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.IgnorePropertyT4OnRequest"
+    },
+    {
+      "name": "MustImplementT4",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.MustImplementT4",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.MustImplementT4"
+    },
+    {
+      "name": "NotRequiredOnFrontT4",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.NotRequiredOnFrontT4",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Code Generation (T4)",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.NotRequiredOnFrontT4"
+    },
+    {
+      "name": "OneToOne",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.OneToOne",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Modeling",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.OneToOne"
+    },
+    {
+      "name": "RequiredT4",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.RequiredT4",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Validation",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "errorMessage",
+              "type": "string",
+              "required": true
+            }
+          ]
+        },
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.RequiredT4"
+    },
+    {
+      "name": "Step",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.Step",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Forms",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "position",
+              "type": "int",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.Step"
+    },
+    {
+      "name": "Steppable",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.Steppable",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "UI/Forms",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": [
+            {
+              "name": "quantity",
+              "type": "int",
+              "required": true
+            }
+          ]
+        },
+        {
+          "parameters": []
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.Steppable"
+    },
+    {
+      "name": "Unique",
+      "fullName": "Lazy.Crud.Builder.Domain.Attributes.T4.Unique",
+      "namespace": "Lazy.Crud.Builder.Domain.Attributes.T4",
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "category": "Validation",
+      "applicability": [
+        "All"
+      ],
+      "overloads": [
+        {
+          "parameters": []
+        },
+        {
+          "parameters": [
+            {
+              "name": "message",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ],
+      "documentationId": "T:Lazy.Crud.Builder.Domain.Attributes.T4.Unique"
+    }
+  ],
+  "capabilities": [
+    "platform-descriptor",
+    "generated-code-ownership",
+    "generated-code-markers",
+    "generation-manifest-v2",
+    "drift-protection",
+    "generation-diagnostics",
+    "attribute-metadata-contract",
+    "contract-fixtures",
+    "unattended-t4-generation",
+    "templates-alias-resolution"
+  ],
+  "nonLayerPackages": [
+    "Lazy.Crud.Builder.Application.DTO.Http.Models",
+    "Lazy.Crud.Builder.Application.Validators",
+    "Lazy.Crud.Builder.WebApi",
+    "Lazy.Crud.CrossCutting.Domain",
+    "Lazy.Crud.CrossCutting.Infra.Log",
+    "Lazy.Crud.CrossCutting.Infra.Utils",
+    "Lazy.Crud.CrossCutting.Application.Mail",
+    "Lazy.Crud.Builder.Platform",
+    "Lazy.Crud.Builder.Templates",
+    "Lazy.Crud.Templates"
+  ],
+  "compatibility": {
+    "supportedContractVersionMin": 1,
+    "supportedContractVersionMax": 1,
+    "minimumUpgradableContractVersion": 1,
+    "minimumManifestSchemaVersion": 1,
+    "manifestSchemaVersion": 2,
+    "mixedVersionRanges": [
+      "Lazy.Crud.Builder.Application.DTO.Http.Models: 1.0.29 to 1.1.0 alongside runtime packages at 1.1.0",
+      "Lazy.Crud.Builder.Application.Validators: 1.0.29 to 1.1.0 alongside runtime packages at 1.1.0",
+      "Lazy.Crud.CrossCutting.Domain: 1.0.29 to 1.1.0 alongside runtime packages at 1.1.0",
+      "Lazy.Crud.Builder.Templates must equal the version of every Lazy.Crud.Builder.* layer package that ships templates"
+    ],
+    "hostRequirements": {
+      "platform": "windows",
+      "visualStudioVersions": [
+        "17.x (Visual Studio 2022)",
+        "18.x (Visual Studio 2026)"
+      ],
+      "visualStudioChannels": [
+        "release",
+        "preview",
+        "insiders"
+      ],
+      "t4Component": "Microsoft.VisualStudio.Component.TextTemplating",
+      "t4ComponentDisplayName": "Text Template Transformation",
+      "dotnetSdk": "10.0",
+      "headlessDefinition": "Headless means unattended: no prompt, no window to focus, no person driving the IDE. It does not mean Visual Studio is absent. Generation always runs through the T4 tooling of the resolved Visual Studio installation (embedded devenv.exe automation session); a plain build never substitutes for transformation."
+    }
+  }
+}

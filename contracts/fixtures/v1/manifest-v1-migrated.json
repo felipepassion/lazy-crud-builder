@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "aggregateName": "Products",
+  "generatedAtUtc": "2026-05-09T09:44:52.3962907Z",
+  "generatorVersion": "1.1.0",
+  "contractVersion": 1,
+  "solutionRootMarker": "Sandbox.sln",
+  "files": [
+    {
+      "relativePath": "src/Products/Products.Domain/LazyCode/ProductsAgg.DomainCommandHandlers.cs",
+      "layer": "Domain",
+      "templateId": "domain.command-handlers",
+      "templateVersion": null,
+      "ownership": "GeneratorOwned",
+      "contentHash": null,
+      "hashAlgorithm": null,
+      "hashScope": null,
+      "legacyHash": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "relativePath": "src/Products/Products.Domain/DefaultEntities.generated.cs",
+      "layer": "Domain",
+      "templateId": null,
+      "templateVersion": null,
+      "ownership": "Unknown",
+      "contentHash": null,
+      "hashAlgorithm": null,
+      "hashScope": null
+    },
+    {
+      "relativePath": null,
+      "unresolved": true,
+      "fileName": "DefaultEntities.generated.cs",
+      "originalPathSha256": "ab1d346fb002533e53a2328a37042a6d32649edd210d73c4c47a0568551f6a53",
+      "layer": "Redirected",
+      "templateId": "legacy:OutputRedirection",
+      "templateVersion": null,
+      "ownership": "Unknown",
+      "contentHash": null,
+      "hashAlgorithm": null,
+      "hashScope": null
+    }
+  ]
+}

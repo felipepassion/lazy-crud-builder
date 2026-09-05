@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/felipepassion/lazy-crud-builder/contracts/schemas/v1/manifest-v2.schema.json",
+  "title": "Lazy CRUD generation manifest v2 ({solutionRoot}/.lazycrud/manifests/{Aggregate}.manifest.json), contractVersion 1",
+  "description": "Frozen shared contract. Paths are solution-relative with forward slashes; no absolute path, drive letter or backslash ever appears. contentHash is SHA-256 over the LF-normalized body excluding the leading marker block (hashScope body-lf-marker-excluded) or over the whole LF-normalized body for unmarked file types (hashScope body-lf).",
+  "type": "object",
+  "required": ["schemaVersion", "aggregateName", "generatedAtUtc", "generatorVersion", "contractVersion", "files"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 2 },
+    "aggregateName": { "type": "string", "minLength": 1 },
+    "generatedAtUtc": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T" },
+    "generatorVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+" },
+    "contractVersion": { "type": "integer", "minimum": 1 },
+    "solutionRootMarker": { "type": ["string", "null"] },
+    "files": { "type": "array", "items": { "$ref": "#/$defs/entry" } }
+  },
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!\\\\)[^\\\\]*$"
+    },
+    "entry": {
+      "type": "object",
+      "required": ["layer", "templateId", "templateVersion", "ownership", "contentHash", "hashAlgorithm", "hashScope"],
+      "properties": {
+        "relativePath": { "anyOf": [ { "$ref": "#/$defs/relativePath" }, { "type": "null" } ] },
+        "unresolved": { "type": "boolean" },
+        "fileName": { "type": "string" },
+        "originalPathSha256": { "type": "string", "pattern": "^([a-f0-9]{64})?$" },
+        "layer": { "type": "string" },
+        "templateId": { "type": ["string", "null"] },
+        "templateVersion": { "type": ["string", "null"] },
+        "ownership": { "type": "string", "enum": ["GeneratorOwned", "GeneratedOnce", "Manual", "Unknown"] },
+        "contentHash": { "anyOf": [ { "type": "string", "pattern": "^[a-f0-9]{64}$" }, { "type": "null" } ] },
+        "hashAlgorithm": { "anyOf": [ { "type": "string", "const": "SHA-256" }, { "type": "null" } ] },
+        "hashScope": { "anyOf": [ { "type": "string", "enum": ["body-lf-marker-excluded", "body-lf"] }, { "type": "null" } ] },
+        "legacyHash": { "type": "string" }
+      },
+      "anyOf": [
+        { "required": ["relativePath"], "properties": { "relativePath": { "$ref": "#/$defs/relativePath" } } },
+        { "required": ["unresolved", "fileName", "originalPathSha256"], "properties": { "unresolved": { "const": true }, "relativePath": { "type": "null" } } }
+      ]
+    }
+  }
+}

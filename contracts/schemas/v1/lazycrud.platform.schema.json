@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/felipepassion/lazy-crud-builder/contracts/schemas/v1/lazycrud.platform.schema.json",
+  "title": "Lazy CRUD platform descriptor (lazycrud.platform.json), contractVersion 1",
+  "description": "The canonical machine-readable platform contract published by the Builder and embedded in every package at lazycrud/lazycrud.platform.json. Consumers may rely only on the fields promised here; unknown additive fields must be ignored.",
+  "type": "object",
+  "required": ["schemaVersion", "contractVersion", "platformVersion", "layers", "templates", "attributes", "capabilities", "compatibility"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "contractVersion": { "type": "integer", "minimum": 1 },
+    "platformVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$" },
+    "layers": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/layer" } },
+    "testLayers": { "type": "array", "items": { "$ref": "#/$defs/testLayer" } },
+    "templates": { "$ref": "#/$defs/templates" },
+    "attributeCategories": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "attributes": { "type": "array", "items": { "$ref": "#/$defs/attribute" } },
+    "capabilities": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "nonLayerPackages": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "compatibility": { "$ref": "#/$defs/compatibility" }
+  },
+  "$defs": {
+    "ownership": { "type": "string", "enum": ["GeneratorOwned", "GeneratedOnce", "Manual"] },
+    "layer": {
+      "type": "object",
+      "required": ["id", "projectSuffix", "projectPattern", "packageId", "templatePackageId", "templateContentPath", "outputPathPattern"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "projectSuffix": { "type": "string", "pattern": "^\\." },
+        "projectPattern": { "type": "string", "pattern": "\\{Aggregate\\}" },
+        "packageId": { "type": "string", "pattern": "^Lazy\\.Crud\\." },
+        "templatePackageId": { "type": ["string", "null"] },
+        "templateContentPath": { "type": ["string", "null"] },
+        "outputPathPattern": { "type": "string", "minLength": 1 }
+      }
+    },
+    "testLayer": {
+      "type": "object",
+      "required": ["id", "targetLayer", "projectPattern", "templatePackageId", "templateContentPath", "outputPathPattern"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^Tests\\." },
+        "targetLayer": { "type": "string", "minLength": 1 },
+        "projectPattern": { "type": "string", "minLength": 1 },
+        "templatePackageId": { "type": "string", "minLength": 1 },
+        "templateContentPath": { "type": "string", "minLength": 1 },
+        "outputPathPattern": { "type": "string", "minLength": 1 }
+      }
+    },
+    "registryEntry": {
+      "type": "object",
+      "required": ["id", "layer", "sourceFile", "outputPattern", "ownership", "templateVersion", "packageId", "inPackagePath"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)+$" },
+        "layer": { "type": "string", "minLength": 1 },
+        "sourceFile": { "type": "string", "pattern": "\\.(tt|ttinclude)$" },
+        "outputPattern": { "type": ["string", "null"] },
+        "ownership": { "$ref": "#/$defs/ownership" },
+        "templateVersion": { "type": "string", "minLength": 1 },
+        "packageId": { "type": "string", "pattern": "^Lazy\\.Crud\\." },
+        "inPackagePath": { "type": "string", "pattern": "^contentFiles/any/any/LazyCrudTemplates/" },
+        "kind": { "type": "string", "enum": ["writer", "entry", "include"] }
+      }
+    },
+    "templates": {
+      "type": "object",
+      "required": ["packageId", "aliasPackageIds", "version", "contentRoot", "registry"],
+      "properties": {
+        "packageId": { "type": "string", "const": "Lazy.Crud.Builder.Templates" },
+        "aliasPackageIds": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "version": { "type": "string", "minLength": 1 },
+        "contentRoot": { "type": "string", "const": "contentFiles/any/any/LazyCrudTemplates/" },
+        "sharedFiles": { "type": "array", "items": { "type": "string" } },
+        "outputPatternTokens": { "type": "array", "items": { "type": "string" } },
+        "registry": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/registryEntry" } }
+      }
+    },
+    "attributeParameter": {
+      "type": "object",
+      "required": ["name", "type", "required"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean" }
+      }
+    },
+    "attribute": {
+      "type": "object",
+      "required": ["name", "fullName", "namespace", "packageId", "category", "applicability", "overloads", "documentationId"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "fullName": { "type": "string", "minLength": 1 },
+        "namespace": { "type": "string", "minLength": 1 },
+        "packageId": { "type": "string", "pattern": "^Lazy\\.Crud\\." },
+        "category": { "type": "string", "minLength": 1 },
+        "applicability": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "overloads": { "type": "array", "items": { "type": "object", "required": ["parameters"], "properties": { "parameters": { "type": "array", "items": { "$ref": "#/$defs/attributeParameter" } } } } },
+        "documentationId": { "type": "string", "pattern": "^T:" }
+      }
+    },
+    "hostRequirements": {
+      "type": "object",
+      "required": ["platform", "visualStudioVersions", "visualStudioChannels", "t4Component"],
+      "properties": {
+        "platform": { "type": "string" },
+        "visualStudioVersions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "visualStudioChannels": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "t4Component": { "type": "string", "minLength": 1 },
+        "t4ComponentDisplayName": { "type": "string" },
+        "dotnetSdk": { "type": "string" },
+        "headlessDefinition": { "type": "string" }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "required": ["supportedContractVersionMin", "supportedContractVersionMax", "minimumUpgradableContractVersion", "minimumManifestSchemaVersion"],
+      "properties": {
+        "supportedContractVersionMin": { "type": "integer", "minimum": 1 },
+        "supportedContractVersionMax": { "type": "integer", "minimum": 1 },
+        "minimumUpgradableContractVersion": { "type": "integer", "minimum": 1 },
+        "minimumManifestSchemaVersion": { "type": "integer", "minimum": 1 },
+        "manifestSchemaVersion": { "type": "integer", "minimum": 1 },
+        "mixedVersionRanges": { "type": "array", "items": { "type": "string" } },
+        "hostRequirements": { "$ref": "#/$defs/hostRequirements" }
+      }
+    }
+  }
+}
