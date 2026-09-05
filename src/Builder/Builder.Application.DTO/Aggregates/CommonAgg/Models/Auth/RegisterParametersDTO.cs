@@ -65,7 +65,7 @@ namespace Lazy.Crud.Builder.Application.DTO.Aggregates.CommonAgg.Models.Auth
         [Required]
         [EmailAddress]
         [DisplayName("E-Mail")]
-        public string Email { get; internal set; }
+        public string Email { get; set; }
 
         [Required]
         [DisplayName("Nome")]
