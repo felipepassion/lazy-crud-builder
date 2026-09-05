@@ -1,0 +1,125 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: "1"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  LazyCrudSkipDescriptorGeneration: "false"
+
+jobs:
+  # Everything that does not need the Visual Studio T4 toolchain: build, unit and pipeline tests,
+  # descriptor and fixture generation, validation checks, credential scan and packing.
+  build-validate-pack:
+    name: Build, validate, pack
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Credential scan (fails on any key literal; self-tests on a planted key)
+        shell: pwsh
+        run: pwsh scripts/credential-scan.ps1 -SelfTest
+
+      - name: Restore
+        run: dotnet restore LazyCrudBuilder.sln
+
+      - name: Build (generates artifacts/platform/lazycrud.platform.json and contracts/fixtures)
+        run: dotnet build LazyCrudBuilder.sln -c Release --no-restore
+
+      - name: Unit, contract and pipeline regression tests
+        run: dotnet test src/Platform/Lazy.Crud.Builder.Platform.Tests/Lazy.Crud.Builder.Platform.Tests.csproj -c Release --no-build --logger "trx;LogFileName=platform-tests.trx" --results-directory artifacts/test-results
+
+      - name: Validate tree (registry, ownership coverage, silent catches, versions, attributes, docs, fixtures)
+        run: dotnet src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net10.0/Lazy.Crud.Builder.Platform.Tool.dll validate tree --repo . --report artifacts/validation/tree.json
+
+      - name: Acceptance map resolves (every spec requirement has evidence that still exists)
+        run: pwsh scripts/acceptance-map-check.ps1
+
+      - name: Validate fixtures against schemas and the current build
+        run: dotnet src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net10.0/Lazy.Crud.Builder.Platform.Tool.dll validate fixtures --repo . --attributes-assembly src/Builder/Builder.Application.DTO/bin/Release/net10.0/Lazy.Crud.Builder.Application.DTO.dll --report artifacts/validation/fixtures.json
+
+      - name: Fixtures are committed and current (no drift between contracts/ and the build)
+        shell: pwsh
+        run: |
+          $status = git status --porcelain -- contracts
+          if ($status) { Write-Host $status; Write-Error "contracts/ differs from what the build produces; regenerate and commit the fixtures"; exit 1 }
+
+      - name: Pack every declared package and validate the package set
+        shell: pwsh
+        run: pwsh pack-all.ps1 -SkipRestore
+
+      - name: Upload packages, descriptor, fixtures and validation reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lazycrud-packages
+          path: |
+            artifacts/nuget/**/*.nupkg
+            artifacts/platform/lazycrud.platform.json
+            artifacts/validation/*.json
+            artifacts/test-results/*.trx
+
+      - name: Upload contract fixtures (stable retrievable artifact for consuming repositories)
+        uses: actions/upload-artifact@v4
+        with:
+          name: lazycrud-contract-fixtures
+          path: contracts/
+
+  # The end-to-end battery needs the platform prerequisite: an installed Visual Studio with the
+  # Text Template Transformation component. It runs on a self-hosted Windows runner that satisfies
+  # it (label: lazycrud-vs). On hosted runners the job is skipped rather than faked: a green run
+  # must mean real transformation happened.
+  e2e:
+    name: E2E harness (Visual Studio T4 toolchain)
+    needs: build-validate-pack
+    if: ${{ vars.LAZYCRUD_E2E_RUNNER != '' }}
+    runs-on: ${{ vars.LAZYCRUD_E2E_RUNNER }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Toolchain prerequisite (fails with exit 3 when unavailable)
+        run: dotnet run --project src/Platform/Lazy.Crud.Builder.Platform.Tool -- toolchain
+      - name: Run the full battery (positive, compatibility, intentional failure, toolchain, clean room)
+        shell: pwsh
+        run: pwsh scripts/e2e.ps1
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lazycrud-e2e
+          path: artifacts/e2e/
+
+  # Publication gate: manual, and only after validation, packing and the E2E battery are green.
+  # Credentials come from the NUGET_API_KEY secret; nothing is stored in the repository.
+  publish:
+    name: Publish (manual gate)
+    needs: [build-validate-pack, e2e]
+    if: ${{ github.event_name == 'workflow_dispatch' && vars.LAZYCRUD_PUBLISH == 'true' }}
+    runs-on: windows-latest
+    environment: nuget
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - uses: actions/download-artifact@v4
+        with:
+          name: lazycrud-packages
+          path: artifacts
+      - name: Publish packages
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: pwsh publish-all.ps1
