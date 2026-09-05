@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <#
 	
     foreach(var project in projects) {
@@ -24,7 +24,9 @@
 		SaveOutputToSubFolder(
 			folderName: $"../../../{aggName}/{aggName}.Domain",
 			outputFileName: @$"DefaultEntities.tt", 
-			recreateFileIfExists: true);
+			recreateFileIfExists: true,
+			ownership: Ownership.GeneratorOwned,
+			templateId: "domain.legacy-commands.entities");
 #>	
 
 <#foreach(var item2 in projects2) { 
@@ -36,7 +38,9 @@ var projPath = @$"..\..\ProjectFiles\{item2}\DefaultCommands.tt";
 		SaveOutputToSubFolder(
 			folderName: $"../../../{aggName}/{aggName}.{item2}", 
 			outputFileName: @$"DefaultCommands.tt", 
-			recreateFileIfExists: true);
+			recreateFileIfExists: true,
+			ownership: Ownership.GeneratorOwned,
+			templateId: "domain.legacy-commands.commands");
 } 
 } #>
 

@@ -96,4 +96,6 @@ if(!string.IsNullOrWhiteSpace(property.Value.DocComment)){#>
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.QueryModels.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "api-queries.query-models"); #>

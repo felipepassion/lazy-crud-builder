@@ -1,5 +1,5 @@
 ﻿<#@ import namespace="System.Threading.Tasks" #>
-<#@ include file="..\project.tt" #>
+<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <# var entities = GetEntities(); 
    if (entities.Any()) {#>
 <# foreach(var namespaces in entities.GroupBy(p => p.Namespace.FullName)) { #>

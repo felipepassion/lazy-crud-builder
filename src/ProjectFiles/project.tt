@@ -10,6 +10,12 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ assembly name="netstandard" #>
+<#@ assembly name="$(LazyCrudPlatformAssembly)" #>
+<#@ import namespace="Lazy.Crud.Builder.Platform" #>
+<#@ import namespace="Lazy.Crud.Builder.Platform.Diagnostics" #>
+<#@ import namespace="Lazy.Crud.Builder.Platform.Settings" #>
+<#@ import namespace="Lazy.Crud.Builder.Platform.Writer" #>
 <#+
 // ============================================================================
 // SELF-CLEANUP: Temporary T4 Template Definitions
@@ -137,7 +143,11 @@ private void SelfCleanupTemplate()
             File.Delete(templatePath);
         }
     }
-    catch { /* best-effort cleanup */ }
+    catch (Exception ex)
+    {
+        LazyCrudNote("The temporary wrapper template could not be deleted after generation (" + ex.Message +
+                     "); remove it by hand if it reappears in the project.");
+    }
 }
 
 public string GetGrupoEmpresaName() { return "Lazy"; }
@@ -321,6 +331,8 @@ string withoutAttribute = null)
 
 
     var project = FindProject(projectName, ignorePrefix: ignorePrefix);
+
+    LazyCrudVerifyEntityModel(project);
 
     GetEntities(project?.CodeModel?.CodeElements, result, includeOthes: includeOthes, withAttribute: withAttribute, withoutAttribute: withoutAttribute);
 
@@ -532,7 +544,10 @@ private IEnumerable<Project> GetAllSolutionProjects(DTE dte)
                 result.Add(proj);
             }
         }
-        catch { /* ignore malformed project entries */ }
+        catch (Exception ex)
+        {
+            LazyCrudNote("LC3005: a project of the solution could not be inspected and was skipped: " + ex.Message);
+        }
     }
     return result;
 }
@@ -758,7 +773,7 @@ public CodeElement FindType(string type)
         }
         catch (Exception ex)
         {
-            // throw new Exception("Error in FindType method: " + item + " - " + ex.Message);
+            LazyCrudNote("LC3005: a type of the Domain code model could not be read while resolving '" + type + "': " + ex.Message);
         }
     }
 
@@ -1103,8 +1118,9 @@ bool includeIgnored = false)
         {
             if (parents.Contains(property.Type.CodeType.FullName)) continue;
         }
-        catch
+        catch (Exception ex)
         {
+            LazyCrudNote("LC3005: the type of property '" + property.Name + "' could not be resolved and the property was skipped: " + ex.Message);
             continue;
         }
 
@@ -1468,7 +1484,10 @@ public string WriteValidator(CodeClass entity, Dictionary<string, CodeProperty> 
         var attrRequiredMessage = "";
         if (attrs.ContainsKey("RequiredT4") && attrs["RequiredT4"].FirstOrDefault().Value is not null) attrRequiredMessage = $".WithMessage({attrs["RequiredT4"].First().Value ?? ""})";
 
-        var attrUniqueMessage = $"'" + displayName + " já existente.'";
+        // A C# string literal, not a char literal. displayName still carries the quotes of
+        // the DisplayName argument, so they are removed before the message is quoted.
+        var uniqueLabel = displayName.Replace("'", "").Replace("\"", "");
+        var attrUniqueMessage = "\"" + uniqueLabel + " already exists.\"";
         if (attrs.ContainsKey("Unique") && attrs["Unique"].FirstOrDefault().Value is not null) attrUniqueMessage = $"{attrs["Unique"].First().Value ?? ""}";
 
         var newStr = result;
@@ -1615,43 +1634,254 @@ public string WriteCsvProfile(CodeClass entity, Dictionary<string, CodeProperty>
     return result;
 }
 
-private void SaveOutput(string outputFileName, bool recreateFileIfExists = true)
+// ============================================================================
+// GENERATED-CODE WRITER
+// ----------------------------------------------------------------------------
+// Every template writes through the shared platform writer (Lazy.Crud.Builder.Platform):
+// ownership resolution, the generated-code marker, the generation manifest, content
+// hashing, drift and unverified-file protection and typed diagnostics all live there,
+// so the templates, the CLI and the Visual Studio extension behave identically.
+// Nothing below swallows a failure: every problem reaches the Error List and
+// .lazycrud/diagnostics/<Aggregate>.diagnostics.json.
+// ============================================================================
+
+/// <summary>
+/// Writes the accumulated output next to the template.
+/// <paramref name="ownership"/> and <paramref name="templateId"/> are the registry values for this
+/// call site; when they are omitted the writer falls back to the template registry and finally to
+/// the legacy <paramref name="recreateFileIfExists"/> flag.
+/// </summary>
+private void SaveOutput(string outputFileName, bool recreateFileIfExists = true, Ownership? ownership = null, string templateId = null)
 {
-    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-    string outputFilePath = Path.Combine(templateDirectory, outputFileName);
-    string outputFilePath2 = Path.Combine(templateDirectory, "Commands");
-    if (recreateFileIfExists || !File.Exists(outputFilePath))
-    {
-        if (outputFileName.EndsWith(".tt"))
-        {
-            File.Copy("Commands.tt", outputFileName, true);
-        }
-        else
-        {
-            File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString(), System.Text.Encoding.UTF8);
-        }
-    }
+    var templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    LazyCrudWrite(templateDirectory, outputFileName, recreateFileIfExists, ownership, templateId);
+}
+
+/// <summary>Writes the accumulated output into a subfolder of the template's own directory.</summary>
+private void SaveOutputToSubFolder(string folderName, string outputFileName, bool recreateFileIfExists = true, Ownership? ownership = null, string templateId = null)
+{
+    var templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    var outputDirectory = string.IsNullOrWhiteSpace(folderName) ? templateDirectory : Path.Combine(templateDirectory, folderName);
+    LazyCrudWrite(outputDirectory, outputFileName, recreateFileIfExists, ownership, templateId);
+}
+
+private void LazyCrudWrite(string outputDirectory, string outputFileName, bool recreateFileIfExists, Ownership? ownership, string templateId)
+{
+    var body = this.GenerationEnvironment.ToString();
     this.GenerationEnvironment.Clear();
+
+    // An empty body means the model resolved to nothing: the Visual Studio code model was still
+    // re-parsing, or a project failed to load. Writing it would replace working generated code with
+    // an empty file, so the transformation fails instead and the run retries or reports it.
+    if (string.IsNullOrWhiteSpace(body))
+    {
+        this.Error("LC3005: the template '" + (templateId ?? outputFileName) +
+                   "' produced no content, which means the code model resolved to nothing (a project that " +
+                   "failed to load, or a model still being re-parsed). Nothing was written to '" + outputFileName +
+                   "'. Rerun the generation; if it persists, open the solution in Visual Studio and check the projects load.");
+        SelfCleanupTemplate();
+        return;
+    }
+
+    var request = new WriteRequest
+    {
+        SolutionRoot = LazyCrudSolutionRoot(),
+        AggregateName = LazyCrudAggregateName(),
+        Layer = LazyCrudLayer(),
+        TemplateId = templateId,
+        Ownership = ownership,
+        RecreateFileIfExists = recreateFileIfExists,
+        OutputDirectory = outputDirectory,
+        OutputFileName = outputFileName,
+        Content = body,
+        SourceTemplate = Path.GetFileName(Host.TemplateFile),
+    };
+
+    var result = GenerationWriter.Write(request, new LazyCrudHostSink(this));
+    if (result.Outcome == WriteOutcome.Failed || result.Outcome == WriteOutcome.Protected)
+    {
+        this.Error("LazyCrud: '" + (templateId ?? outputFileName) + "' was not written (" + result.Outcome +
+                   "). The diagnostics above and .lazycrud/diagnostics say why and how to resolve it.");
+    }
+
     SelfCleanupTemplate();
 }
 
-private void SaveOutputToSubFolder(string folderName, string outputFileName, bool recreateFileIfExists = true)
+/// <summary>
+/// Writer path for a template whose output file is written by the T4 host itself (a template that declares an
+/// output-extension directive). Ownership, drift protection, the marker and the manifest entry
+/// are resolved exactly as for a template-written file; the text the host must write is then left in
+/// the generation environment. The wrapper is not self-deleted, because the host still needs it.
+/// </summary>
+private void SaveHostOutput(string outputExtension, Ownership? ownership = null, string templateId = null)
 {
-    try{
-        string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-        string newDirectoryName = Path.Combine(templateDirectory, folderName);
-        CreateDirectory(newDirectoryName);
-        string outputFilePath = Path.Combine(newDirectoryName, outputFileName);
-        string outputFilePath2 = Path.Combine(templateDirectory, "Commands.tt");
-        if (recreateFileIfExists || !File.Exists(outputFilePath))
-        {
-            File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString(), System.Text.Encoding.UTF8);
-        }
-        this.GenerationEnvironment.Clear();
-        SelfCleanupTemplate();
-    } catch(Exception ex) 
+    var body = this.GenerationEnvironment.ToString();
+    if (string.IsNullOrWhiteSpace(body))
     {
+        this.Error("LC3005: the template '" + (templateId ?? Path.GetFileName(Host.TemplateFile)) +
+                   "' produced no content, which means the code model resolved to nothing. The host output is left unchanged.");
+        return;
     }
+    var templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    var outputFileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + outputExtension;
+
+    var request = new WriteRequest
+    {
+        SolutionRoot = LazyCrudSolutionRoot(),
+        AggregateName = LazyCrudAggregateName(),
+        Layer = LazyCrudLayer(),
+        TemplateId = templateId,
+        Ownership = ownership,
+        RecreateFileIfExists = true,
+        OutputDirectory = templateDirectory,
+        OutputFileName = outputFileName,
+        Content = body,
+        SourceTemplate = Path.GetFileName(Host.TemplateFile),
+    };
+
+    var result = GenerationWriter.PrepareHostOutput(request, new LazyCrudHostSink(this));
+    if (result.Outcome == WriteOutcome.Failed || result.Outcome == WriteOutcome.Protected)
+    {
+        this.Error("LazyCrud: '" + (templateId ?? outputFileName) + "' was not written (" + result.Outcome +
+                   "). The diagnostics above and .lazycrud/diagnostics say why and how to resolve it.");
+    }
+
+    this.GenerationEnvironment.Clear();
+    this.GenerationEnvironment.Append(result.EmittedText ?? body);
+}
+
+/// <summary>Reports platform diagnostics through the T4 host so they reach the Error List.</summary>
+private sealed class LazyCrudHostSink : IDiagnosticSink
+{
+    private readonly Microsoft.VisualStudio.TextTemplating.TextTransformation _transformation;
+
+    public LazyCrudHostSink(Microsoft.VisualStudio.TextTemplating.TextTransformation transformation)
+    {
+        _transformation = transformation;
+    }
+
+    public void Report(Diagnostic diagnostic)
+    {
+        if (diagnostic == null) return;
+        var text = diagnostic.Code + ": " + diagnostic.Message +
+                   (string.IsNullOrEmpty(diagnostic.Path) ? string.Empty : " [" + diagnostic.Path + "]");
+        if (diagnostic.Severity == DiagnosticSeverity.Error) _transformation.Error(text);
+        else if (diagnostic.Severity == DiagnosticSeverity.Warning) _transformation.Warning(text);
+        // Informational diagnostics stay in the diagnostics file; the Error List is for actionable items.
+    }
+}
+
+/// <summary>Root folder of the consumer solution: the folder that holds the .sln.</summary>
+private string LazyCrudSolutionRoot()
+{
+    try
+    {
+        IServiceProvider serviceProvider = (IServiceProvider)this.Host;
+        EnvDTE.DTE dte = (EnvDTE.DTE)serviceProvider.GetCOMService(typeof(EnvDTE.DTE));
+        var solutionFile = dte == null || dte.Solution == null ? null : dte.Solution.FullName;
+        if (!string.IsNullOrEmpty(solutionFile)) return Path.GetDirectoryName(solutionFile);
+    }
+    catch (Exception ex)
+    {
+        LazyCrudNote("LC3005: the solution could not be read from the IDE (" + ex.Message +
+                     "); the solution root is resolved from the template path instead.");
+    }
+    return SolutionRoot.FindFromPath(Path.GetDirectoryName(Host.TemplateFile));
+}
+
+/// <summary>The aggregate name without the "Agg" suffix, as recorded in manifests and markers.</summary>
+private string LazyCrudAggregateName()
+{
+    var name = GetMyAggName();
+    return !string.IsNullOrEmpty(name) && name.EndsWith("Agg", StringComparison.Ordinal)
+        ? name.Substring(0, name.Length - 3)
+        : name;
+}
+
+/// <summary>The layer id of the current project, for example "Domain", "Application.DTO" or "Tests.Api".</summary>
+private string LazyCrudLayer()
+{
+    var projectName = GetCurrentProject().Name;
+    var prefix = GetDefaultNamespace() + "." + LazyCrudAggregateName() + ".";
+    return projectName.StartsWith(prefix, StringComparison.Ordinal) ? projectName.Substring(prefix.Length) : projectName;
+}
+
+private Dictionary<string, bool> _lazyCrudVerifiedProjects;
+
+/// <summary>
+/// Entity source files under a project's Aggregates/**/Entities folders. Every one of them declares
+/// at least one entity type, so their number is the floor the code model has to report.
+/// </summary>
+private int LazyCrudEntityFileCount(Project project)
+{
+    try
+    {
+        var full = project == null ? null : project.FullName;
+        if (string.IsNullOrEmpty(full)) return 0;
+        var aggregates = Path.Combine(Path.GetDirectoryName(full), "Aggregates");
+        if (!Directory.Exists(aggregates)) return 0;
+        var count = 0;
+        foreach (var dir in Directory.GetDirectories(aggregates, "Entities", SearchOption.AllDirectories))
+            count += Directory.GetFiles(dir, "*.cs").Length;
+        return count;
+    }
+    catch (Exception ex)
+    {
+        LazyCrudNote("The entity files of the project could not be counted (" + ex.Message +
+                     "); the code model completeness check is skipped for this run.");
+        return 0;
+    }
+}
+
+/// <summary>
+/// Fails the transformation when the code model reports fewer entity types than there are entity
+/// files on disk. Visual Studio re-parses a project after files are written into it, and a template
+/// that reads the model during that re-parse would generate from a partial set: registrations,
+/// mappings or endpoints for the missing entities would silently disappear from the output. The
+/// generation runner retries the template, by which time the model has caught up.
+/// </summary>
+private void LazyCrudVerifyEntityModel(Project project)
+{
+    if (project == null) return;
+    if (_lazyCrudVerifiedProjects == null) _lazyCrudVerifiedProjects = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+    var key = project.Name ?? string.Empty;
+    if (_lazyCrudVerifiedProjects.ContainsKey(key)) return;
+    _lazyCrudVerifiedProjects[key] = true;
+
+    var files = LazyCrudEntityFileCount(project);
+    if (files <= 0) return;
+
+    var all = new List<CodeClass>();
+    try
+    {
+        GetEntities(project.CodeModel == null ? null : project.CodeModel.CodeElements, all, includeOthes: true);
+    }
+    catch (Exception ex)
+    {
+        this.Error("LC3005: the code model of '" + key + "' could not be read (" + ex.Message +
+                   "). Nothing was generated from it; rerun the generation.");
+        return;
+    }
+
+    if (all.Count < files)
+    {
+        this.Error("LC3005: the code model of '" + key + "' reports " + all.Count + " entity type(s) but " +
+                   files + " entity file(s) exist on disk. Visual Studio was still re-parsing the project, and " +
+                   "generating now would leave the missing entities out of the output. Nothing was written; " +
+                   "rerun the generation.");
+    }
+}
+
+private HashSet<string> _lazyCrudNotes;
+
+/// <summary>
+/// Reports a non-fatal generation note once per transformation. Loops over the code model can hit
+/// the same unresolvable element many times; the note is still reported, never swallowed.
+/// </summary>
+private void LazyCrudNote(string message)
+{
+    if (_lazyCrudNotes == null) _lazyCrudNotes = new HashSet<string>(StringComparer.Ordinal);
+    if (_lazyCrudNotes.Add(message)) this.Warning(message);
 }
 
 public void CreateDirectory(string folderName)
@@ -1703,33 +1933,27 @@ public string GetDisplayName(KeyValuePair<string, CodeProperty> clss)
     return clss.Key.Replace("/", ".").Split('.').Last();
 }
 
-// Reads GenerationOutputPath from src/Mods/lazy.settings
+/// <summary>
+/// The GenerationOutputPath setting that applies to this template (default "LazyCode", empty when it
+/// does not apply). The lookup is deliberately the historical one: the setting is read from
+/// &lt;templateDir&gt;/../../Mods/lazy.settings, so it applies to a template that sits two levels below the
+/// folder holding Mods (src/&lt;Aggregate&gt;/&lt;Aggregate&gt;.&lt;Layer&gt;/X.tt) and not to templates nested deeper
+/// (the test projects and Api/Controllers), whose output has always been written next to them.
+/// Changing this would relocate generated files in every solution built with an earlier version.
+/// </summary>
 private string GetGenerationOutputPath()
 {
     try
     {
-        string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-        // project.tt lives under src/ProjectFiles, settings under src/Mods/lazy.settings
-        var settingsPath = Path.Combine(templateDirectory, "..", "..", "Mods", "lazy.settings");
-        settingsPath = Path.GetFullPath(settingsPath);
+        var templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+        var settingsPath = Path.GetFullPath(Path.Combine(templateDirectory, "..", "..", "Mods", LazySettings.FileName));
         if (!File.Exists(settingsPath)) return string.Empty;
-        var xml = File.ReadAllText(settingsPath);
-        // very lightweight extraction without XML libs
-        // look for <Setting Name="GenerationOutputPath" ...><Value ...>...</Value>
-        var marker = "Name=\"GenerationOutputPath\"";
-        var idx = xml.IndexOf(marker, StringComparison.InvariantCultureIgnoreCase);
-        if (idx < 0) return string.Empty;
-        var startVal = xml.IndexOf("<Value", idx, StringComparison.InvariantCultureIgnoreCase);
-        if (startVal < 0) return string.Empty;
-        startVal = xml.IndexOf('>', startVal);
-        if (startVal < 0) return string.Empty;
-        var endVal = xml.IndexOf("</Value>", startVal, StringComparison.InvariantCultureIgnoreCase);
-        if (endVal < 0) return string.Empty;
-        var val = xml.Substring(startVal + 1, endVal - (startVal + 1)).Trim();
-        return val ?? string.Empty;
+        return LazySettings.Load(settingsPath).GenerationOutputPath ?? string.Empty;
     }
-    catch
+    catch (Exception ex)
     {
+        LazyCrudNote("LC3004: lazy.settings could not be read (" + ex.Message +
+                     "); generated files are written next to the template.");
         return string.Empty;
     }
 }

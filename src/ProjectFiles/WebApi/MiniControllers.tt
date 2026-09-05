@@ -1,5 +1,5 @@
 <#@ import namespace="System.Threading.Tasks" #>
-<#@ include file="..\project.tt" #>
+<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <#
 var project = FindProject("Domain");
 var aggSettingsList = new List<CodeClass>();
@@ -121,5 +121,5 @@ var DTOName = $"{entity.Name}QueryModel";
 <# } #>
 <# } #>
 <#
-    SaveOutputToSubFolder($"Controllers", "Controllers.generated.cs", true); 
+    SaveOutputToSubFolder($"Controllers", "Controllers.generated.cs", true, ownership: Ownership.GeneratorOwned, templateId: "webapi.mini-controllers"); 
 #>

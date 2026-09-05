@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <#
 	var projects = FindDomainProjects().Where(x=>x.Name != "DefaultTemplate").ToArray();
 #>

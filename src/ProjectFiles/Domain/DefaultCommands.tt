@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <# try {
 	var entities = GetEntities("Domain").Where(x=>x.IsAbstract == false);
 	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4").Where(x=>x.IsAbstract == false); 
@@ -9,15 +9,15 @@
 	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
 	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
 #>
-<#@ include file="..\..\ProjectFiles\Domain\DomainGlobalUsings.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\DomainCommandHandlers.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\DomainCommandModels.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\DomainEventHandlers.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\DomainEventModels.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\Filters.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\IRespositories.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\ProfilesMapping.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\Specifications.tt" #>
+<#@ include file="..\Domain\DomainGlobalUsings.tt" #>
+<#@ include file="..\Domain\DomainCommandHandlers.tt" #>
+<#@ include file="..\Domain\DomainCommandModels.tt" #>
+<#@ include file="..\Domain\DomainEventHandlers.tt" #>
+<#@ include file="..\Domain\DomainEventModels.tt" #>
+<#@ include file="..\Domain\Filters.tt" #>
+<#@ include file="..\Domain\IRespositories.tt" #>
+<#@ include file="..\Domain\ProfilesMapping.tt" #>
+<#@ include file="..\Domain\Specifications.tt" #>
 <# } catch(System.Exception ex) { #>
 // T4 safe-guard: Domain/DefaultCommands.tt suppressed an error.
 // Message: <#= ex.Message #>

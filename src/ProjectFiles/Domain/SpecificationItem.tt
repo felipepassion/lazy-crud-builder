@@ -5,8 +5,8 @@
 		propFullName = subProp.Value.Type.CodeType.FullName;
 		name = property.Key + "_" + subProp.Key;
 		path = property.Key + "." + subProp.Key; #>
-	<#@ include file="..\..\ProjectFiles\Domain\SpecificationSubItem.tt" #>	
+	<#@ include file="..\Domain\SpecificationSubItem.tt" #>	
 <#}#>
 <#} else  {#>
-	<#@ include file="..\..\ProjectFiles\Domain\SpecificationSubItem.tt" #>	
+	<#@ include file="..\Domain\SpecificationSubItem.tt" #>	
 <#}#>

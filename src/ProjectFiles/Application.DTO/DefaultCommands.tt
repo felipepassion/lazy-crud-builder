@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <# try {
 	var entities = GetEntities();
 	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4");
@@ -9,10 +9,10 @@
 	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
 	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
 #>
-<#@ include file="..\..\ProjectFiles\Application.DTO\RequestsDTO.tt" #>
-<#@ include file="..\..\ProjectFiles\Application.DTO\ListiningsDTO.tt" #>
-<#@ include file="..\..\ProjectFiles\Application.DTO\SteppableRequestsValidators.tt" #>
-<#@ include file="..\..\ProjectFiles\Application.DTO\ApplicationDtoGlobalUsings.tt" #>
+<#@ include file="..\Application.DTO\RequestsDTO.tt" #>
+<#@ include file="..\Application.DTO\ListiningsDTO.tt" #>
+<#@ include file="..\Application.DTO\SteppableRequestsValidators.tt" #>
+<#@ include file="..\Application.DTO\ApplicationDtoGlobalUsings.tt" #>
 <# } catch(System.Exception ex) { #>
 <#= ex.Message #>
 <# } #>

@@ -48,4 +48,6 @@ public partial class <#= myEntity.Name #>DeactivatedEvent : BaseEvent
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.DomainEventModels.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.event-models"); #>

@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <#
 	var AggName = GetMyAggName();
 	var entitiesT4 = new List<CodeClass>();

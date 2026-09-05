@@ -30,4 +30,6 @@ public partial class <#= entity.Name #>Mapping : IEntityTypeConfiguration<<#= en
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.Mappings.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "infra-data.mappings"); #>

@@ -30,4 +30,6 @@ foreach(var myAttr in myClassAttrs) {#> <#=myAttr#> <# } #>
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.ListiningDTO.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "application-dto.listinings"); #>

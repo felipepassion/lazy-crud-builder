@@ -10,7 +10,7 @@ if(myProps.Any(x=>x.Value.Type.AsString.Split('.').Last().EndsWith("Address"))){
 	<#@ include file="BasicAddressComponent.tt" #>
 <# } else { #>
 	<#@ include file="BasicForm.css.tt" #>
-<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"{entity.Name}{currentStep}.razor.css", true); #>
+<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"{entity.Name}{currentStep}.razor.css", true, ownership: Ownership.GeneratorOwned, templateId: "webapi.form-templates-switcher.css"); #>
 	<#@ include file="BasicForm.tt" #>
 <#}#>
-<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"{entity.Name}{currentStep}.razor", true); #>
+<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"{entity.Name}{currentStep}.razor", true, ownership: Ownership.GeneratorOwned, templateId: "webapi.form-templates-switcher.page"); #>

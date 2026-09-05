@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <#
 	var entities = GetEntities("Domain", withAttribute: "EndpointsT4");
 	var entitiesT4 = GetEntities("Domain", withAttribute: "EndpointsT4", withEndpoint: "HttpPost"); 
@@ -9,5 +9,5 @@
 	var parentName = "Commands";
 	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
 #>
-<#@ include file="..\..\ProjectFiles\Domain\AggregateSettingsEntity.tt" #>
-<#@ include file="..\..\ProjectFiles\Domain\DefaultFolders.tt" #>
+<#@ include file="..\Domain\AggregateSettingsEntity.tt" #>
+<#@ include file="..\Domain\DefaultFolders.tt" #>

@@ -1,2 +1,2 @@
 global using System.Collections.Generic;
-<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: "T4", outputFileName: $"{AggName}.cs", recreateFileIfExists: true, ownership: Ownership.GeneratorOwned, templateId: "api-queries.global-usings"); #>

@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <#
 	var entities = GetEntities();
 	var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4"); 

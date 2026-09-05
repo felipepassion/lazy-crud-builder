@@ -1,6 +1,6 @@
 ﻿<#@ output extension=".generated.bat" #>
 <#@ import namespace="System.Threading.Tasks" #>
-<#@ include file="..\project.tt" #>
+<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <#
 	var now = DateTime.Now;
 var project = FindProject("Domain");

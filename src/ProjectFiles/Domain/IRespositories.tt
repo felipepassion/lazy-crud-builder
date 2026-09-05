@@ -27,4 +27,6 @@ public partial interface I<#= entity.Name #>MongoRepository : IMongoRepository<E
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.IRespositories.cs",
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.irepositories"); #>

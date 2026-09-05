@@ -32,4 +32,6 @@ global using Lazy.Crud.<#= agg.Replace("Agg","") #>.Application.DTO.Aggregates.<
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: $"{AggName}.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.global-usings"); #>

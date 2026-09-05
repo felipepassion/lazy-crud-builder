@@ -37,4 +37,6 @@ if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.SteppableRequestsDTO.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "application-dto.steppable-requests"); #>

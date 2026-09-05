@@ -1,4 +1,4 @@
-﻿<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"{entity.Name}{currentStep}.razor.css", true); #>
+﻿<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"{entity.Name}{currentStep}.razor.css", true, ownership: Ownership.GeneratorOwned, templateId: "webapi.basic-address-component"); #>
 @inherits BaseCadastro
 <#
 	var p = myProps.FirstOrDefault(x=>x.Value.Type.AsString.Split('.').Last().EndsWith("Address"));

@@ -37,4 +37,6 @@ var AggName2 = namespaces.Key.Split('.').First(x=>x.EndsWith("Agg"));
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.ProfilesListiningMapping.cs",
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.profiles-listining-mapping"); #>

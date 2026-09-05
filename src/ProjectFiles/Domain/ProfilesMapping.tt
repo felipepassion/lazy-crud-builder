@@ -39,4 +39,6 @@ public partial class <#= aggregateName #>Profile : Profile
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.ProfilesMapping.cs",
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.profiles-mapping"); #>

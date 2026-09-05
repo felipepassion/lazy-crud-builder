@@ -29,6 +29,6 @@
 }
 <#}#>
 <#
-    SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", "Cadastro.razor", true); 
-    SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"Cadastro.razor.css", true); 
+    SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", "Cadastro.razor", true, ownership: Ownership.GeneratorOwned, templateId: "webapi.mini-client-register-pages.page"); 
+    SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}/Cadastro", @$"Cadastro.razor.css", true, ownership: Ownership.GeneratorOwned, templateId: "webapi.mini-client-register-pages.css"); 
 #>

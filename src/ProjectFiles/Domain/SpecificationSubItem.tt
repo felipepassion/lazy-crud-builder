@@ -15,7 +15,12 @@ if(propType  == "string") { #>
 		}
 <#}#>	
 		public static Specification<<#= entity.Name #>> <#= name #>Equal(<#= propType #> value) {
+<# if (propType == "string" || propType == "string?") { #>
 			return new DirectSpecification<<#= entity.Name #>>(p => value.ToLower() == (p.<#= path #>.ToLower()));
+<# } else { #>
+			// An identifier is compared as a value: Guid has no ToLower, and case folding means nothing for it.
+			return new DirectSpecification<<#= entity.Name #>>(p => p.<#= path #> == value);
+<# } #>
 		}
 		public static Specification<<#= entity.Name #>> <#= name #>NotEqual(<#= propType #> value) {
 			return new DirectSpecification<<#= entity.Name #>>(p => p.<#= path #> != value);

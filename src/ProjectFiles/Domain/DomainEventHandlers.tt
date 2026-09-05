@@ -27,4 +27,6 @@ public partial class <#= entity.Name #>EventHandler : BaseEventHandler,
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.DomainEventHandlers.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.event-handlers"); #>

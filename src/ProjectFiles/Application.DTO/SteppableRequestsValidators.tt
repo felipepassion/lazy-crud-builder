@@ -42,7 +42,9 @@ public partial class <#=className#> : Base<#= AggName#>Validator<<#=entity.Name#
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.SteppableRequestsValidators.cs", 
-    recreateFileIfExists: true);
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "application-dto.steppable-requests-validators");
 if (entitiesT4.Any()) {
     foreach(var namespaces in groupEntitiesT4) { 
         var myNamespace = namespaces.Key.Replace("Entities","Validators").Replace("Domain","Application.DTO");
@@ -65,6 +67,8 @@ public partial class <#=className#> : Base<#= AggName#>Validator<<#=entity.Name#
 <#SaveOutputToSubFolder(
     folderName: $@"Aggregates\{AggName}\Validators", 
     outputFileName: @$"{entity.Name}Validator.cs", 
-    recreateFileIfExists: false);}
+    recreateFileIfExists: false,
+    ownership: Ownership.GeneratedOnce,
+    templateId: "application-dto.steppable-requests-validators.seed");}
     }   
 }#>

@@ -41,7 +41,9 @@ if(!string.IsNullOrWhiteSpace(property.Value.DocComment))
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.RequestsDTO.cs", 
-    recreateFileIfExists: true);
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "application-dto.requests");
 if (entitiesT4.Any()) {
     foreach(var namespaces in groupEntitiesT4) 
     { 
@@ -56,7 +58,9 @@ public partial class <#= entity.Name #>DTO : <#= MyParent(entity) #>DTO
 <#SaveOutputToSubFolder(
                 folderName: $@"Aggregates\{AggName}\Requests", 
                 outputFileName: @$"{entity.Name}DTO.cs", 
-                recreateFileIfExists: false);
+                recreateFileIfExists: false,
+                ownership: Ownership.GeneratedOnce,
+                templateId: "application-dto.requests.seed");
         }
     }
 }#>

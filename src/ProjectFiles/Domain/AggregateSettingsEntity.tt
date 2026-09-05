@@ -14,4 +14,6 @@ using Builder.Domain.Attributes.T4;
 <# SaveOutputToSubFolder(
     folderName: $"Aggregates/{AggName}/Entities/",
     outputFileName: @$"{myName}.cs",
-    recreateFileIfExists: false); #>
+    recreateFileIfExists: false,
+    ownership: Ownership.GeneratedOnce,
+    templateId: "domain.aggregate-settings-entity"); #>

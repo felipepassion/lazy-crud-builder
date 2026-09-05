@@ -1,0 +1,10 @@
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Authorization;
+global using System.Threading.Tasks;
+
+global using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+global using Lazy.Crud.CrossCutting.Infra.Utils.Extensions;
+global using Lazy.Crud.Builder.Application.Extensions;
+global using Lazy.Crud.Builder.Application.Aggregates.Common;
+global using Lazy.Crud.Builder.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: $"{AggName}.Api.GlobalUsings.cs", recreateFileIfExists: true, ownership: Ownership.GeneratorOwned, templateId: "api.global-usings"); #>

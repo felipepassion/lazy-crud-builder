@@ -78,4 +78,6 @@ public partial class <#= className #> : BaseAppService, I<#= className #> {
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.AppServices.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "application.app-services"); #>

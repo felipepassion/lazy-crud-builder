@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <# try {
 	var entities = GetMyAggregateEntities(withAttribute: "EndpointsT4").Where(x=>x.IsAbstract == false);
     var entitiesT4 = GetMyAggregateEntities(withAttribute: "EndpointsT4");
@@ -8,9 +8,9 @@
 	var AggName = myName + "Agg";
 	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
 #>
-<#@ include file="..\..\ProjectFiles\Application\ApplicationGlobalUsings.tt" #>
-<#@ include file="..\..\ProjectFiles\Application\AppServices.tt" #>
-<#@ include file="..\..\ProjectFiles\Application\IAppServices.tt" #>
+<#@ include file="..\Application\ApplicationGlobalUsings.tt" #>
+<#@ include file="..\Application\AppServices.tt" #>
+<#@ include file="..\Application\IAppServices.tt" #>
 <# } catch(System.Exception ex) { #>
 // T4 safe-guard: Application/DefaultCommands.tt suppressed an error.
 // Message: <#= ex.Message #>

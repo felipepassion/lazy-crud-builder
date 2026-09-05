@@ -37,4 +37,6 @@ public partial interface I<#= entity.Name #>AppService : IBaseAppService {
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.IAppServices.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "application.iapp-services"); #>

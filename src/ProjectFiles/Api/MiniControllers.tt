@@ -1,0 +1,124 @@
+<#@ import namespace="System.Threading.Tasks" #>
+<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
+<#
+var project = FindProject("Domain");
+var aggSettingsList = new List<CodeClass>();
+var path = Path.GetDirectoryName(project.FullName);
+var myName = project.Name.Replace(GetDefaultNamespace()+'.',"").Split('.').First();
+var AggName = myName + "Agg";
+aggSettingsList.AddRange(GetAggregateEntities(project, withAttribute:"EndpointsT4", withoutAttribute:"DisableControllers").Where(x=>x.IsAbstract == false));
+
+if (aggSettingsList.Any()) {
+
+var groupEntities = aggSettingsList.GroupBy(p => p.Namespace.FullName);
+#>
+using Microsoft.AspNetCore.Mvc;
+using Lazy.Crud.CrossCutting.Infra.Log.Contexts;
+using Lazy.Crud.Builder.Application.Aggregates.Common;
+using Lazy.Crud.CrossCutting.Infra.Utils.Extensions;
+using Lazy.Crud.Builder.Application.Extensions;
+using Lazy.Crud.Builder.Application.DTO.Http.Models.CommonAgg.Commands.Responses;
+<#foreach(var namespaces in groupEntities) {
+	var aggName = namespaces.Key.Split('.').FirstOrDefault(x=>x.EndsWith("Agg"));
+	var shortAggName = aggName.Replace("Agg","");
+#>
+namespace <#= GetDefaultNamespace() #>.<#=shortAggName#>.Api.Controllers {
+	using Domain.Aggregates.<#= aggName #>.Queries.Models;
+	using Application.Aggregates.<#= aggName #>.AppServices;
+	using Domain.Aggregates.<#= aggName #>.Entities;
+	using Application.DTO.Aggregates.<#= aggName #>.Requests;
+<#
+ foreach(var entity in namespaces) {
+	var responseName = $"{entity.Name}DTO";
+	var className = entity.Name + "Controller";
+	var props = GetProperties(entity);
+	var attrs = GetAttributesDict(entity)["EndpointsT4"];
+	var canGet = attrs.Any(x=>x.Value.Contains("HttpGet") || x.Value.Contains("All"));
+	var canCount = attrs.Any(x=>x.Value.Contains("Count") || x.Value.Contains("All"));
+	var canCreate = attrs.Any(x=>x.Value.Contains("HttpPost") || x.Value.Contains("All"));
+	var canSummary = false && attrs.Any(x=>x.Value.Contains("HttpListining") || x.Value.Contains("All"));
+	var canDelete = attrs.Any(x=>x.Value.Contains("HttpDelete") || x.Value.Contains("All"));
+	if(!(canGet || canCount || canCreate || canSummary)) continue;
+#>
+	[Microsoft.AspNetCore.Authorization.Authorize]
+	[ApiController]
+    [Route("api/[controller]")]
+	public partial class <#= className #> : BaseMiniController {
+<#
+	var repoTypeName = $"I{entity.Name}AppService";
+	var serviceVarName = $"_{ToCamelCase(entity.Name)}AppService";
+	if(props.ContainsKey("EmpresaId")){#>  <#}
+#>
+<#
+	if(canGet){#>
+		<#= repoTypeName #> <#= serviceVarName #>;
+		public <#= className #>(
+			IServiceProvider scope,
+            ILogRequestContext logRequestContext,
+			<#= repoTypeName #> <#= serviceVarName.Substring(1) #>)
+				: base(logRequestContext, scope)
+			{ 
+				<#= serviceVarName #> = <#= serviceVarName.Substring(1) #>; 
+<#if(props.ContainsKey("EmpresaId")){#>
+				_userService = userService; 
+<#}#>
+<#if(canCreate){#>
+<#}#>
+			}	
+		[HttpGet]
+		public async Task<IActionResult> Get([FromQuery] <#= entity.Name #>QueryModel request) {
+		    var obj = await <#= serviceVarName #>.Get(request);
+            return obj == null? NotFound() : Ok(GetHttpResponseDTO.Ok(obj));
+        }
+<#if(canCount){#>
+		[HttpGet("count")]
+		public async Task<GetHttpResponseDTO<object>> Count([FromQuery] <#= entity.Name #>QueryModel request) {
+            return GetHttpResponseDTO.Ok(await <#= serviceVarName #>.CountAsync(request));
+        }
+<#}#>
+		[HttpGet("search")]
+		[HttpGet("summary")]
+		public async Task<GetHttpResponseDTO<object>> Get([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {	    
+			var obj = await <#= serviceVarName #>.GetAll(request, page, size);
+            return GetHttpResponseDTO.Ok(obj);
+        }
+<#if(canSummary){#>
+		[HttpGet("summary")]
+		public async Task<GetHttpResponseDTO<object>> GetSummary([FromQuery] <#= entity.Name #>QueryModel request, int page = 0, int size = 5) {
+		    var obj = await <#= serviceVarName #>.GetAllSummary(request, page, size);
+            return GetHttpResponseDTO.Ok(obj);
+        }
+<#}#>
+		[HttpGet("select")]
+		public async Task<GetHttpResponseDTO<object>> Select([FromQuery] <#= entity.Name #>QueryModel request, int? page = null, int? size = null) {
+		    var obj = await <#= serviceVarName #>.Select(request, request.Selector.GetPropertySelector<<#= entity.Name #>>());
+            return GetHttpResponseDTO.Ok(obj);
+        }
+<#}
+	if(canCreate){#>
+		
+		[HttpPost]
+		public async Task<GetHttpResponseDTO<object>> Post(<#= entity.Name #>DTO request) {
+			var result = await <#= serviceVarName #>.Create(request);
+            return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+		}
+<#}	
+var DTOName = $"{entity.Name}QueryModel";
+	if(canDelete){#>
+        [HttpDelete("delete")]
+		public async Task<GetHttpResponseDTO<object>> Delete([FromQuery] <#=entity.Name#>QueryModel request) {
+            var result = await <#= serviceVarName #>.Delete(request);
+            return result.Success ? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+        }
+        [HttpDelete("range")]
+        public async Task<GetHttpResponseDTO<object>> DeleteRange(<#=entity.Name#>QueryModel request) {
+            var result = await <#= serviceVarName #>.DeleteRange(request);
+            return result.Success? GetHttpResponseDTO.Ok(result) : GetHttpResponseDTO.BadRequest(result);
+        }
+<#}#>
+	}
+<# } #>
+}
+<# } #>
+<# } #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: $"{AggName}.Controllers.cs", recreateFileIfExists: true, ownership: Ownership.GeneratorOwned, templateId: "api.mini-controllers"); #>

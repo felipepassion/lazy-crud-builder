@@ -1,5 +1,5 @@
 ﻿<#@ import namespace="System.Threading.Tasks" #>
-<#@ include file="..\project.tt" #><#
+<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #><#
 	var AggName = GetMyAggName();
     var aggSettingsList = new List<CodeClass>();
     var projects = FindDomainProjects().ToArray();

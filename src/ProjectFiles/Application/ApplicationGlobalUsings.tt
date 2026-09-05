@@ -9,4 +9,4 @@ global using <#= GetDefaultNamespace() #>.Builder.Application.Aggregates.Common;
 <# foreach(var agg in requestAggs) { #>
 global using Lazy.Crud.<#= agg.Replace("Agg","") #>.Application.DTO.Aggregates.<#= agg #>.Requests;
 <# } #>
-<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: $"{AggName}.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: $"{AggName}.cs", recreateFileIfExists: true, ownership: Ownership.GeneratorOwned, templateId: "application.global-usings"); #>

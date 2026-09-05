@@ -32,4 +32,4 @@ if (exists) continue; #>
 <# } #>
 <#    else  {#>
 <# } #>
-<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: @$"{AggName}.Respositories.cs", recreateFileIfExists: true); #>
+<# SaveOutputToSubFolder(folderName: GetGenerationOutputPath(), outputFileName: @$"{AggName}.Respositories.cs", recreateFileIfExists: true, ownership: Ownership.GeneratorOwned, templateId: "infra-data.repositories"); #>

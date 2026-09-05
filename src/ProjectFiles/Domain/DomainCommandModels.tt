@@ -59,4 +59,6 @@ public class <#= mySearchParent#> : BaseSearchableCommand<<#= myQueryModel #>> {
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.DomainCommandModels.cs", 
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.command-models"); #>

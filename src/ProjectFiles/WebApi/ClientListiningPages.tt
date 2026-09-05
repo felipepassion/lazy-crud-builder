@@ -16,5 +16,5 @@
     string Query => $"<#= hasParameter ? $"{parameterType.Key}Equal={'{'+parameterType.Key+'}'}" :"" #>";
 }
 <#}#>
-<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}", @$"Index.razor", true); #>
-<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}", @$"Index.razor.css", false); #>
+<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}", @$"Index.razor", true, ownership: Ownership.GeneratorOwned, templateId: "webapi.client-listining-pages.index"); #>
+<# SaveOutputToSubFolder($"{aggName}Agg/{entity.Name}", @$"Index.razor.css", false, ownership: Ownership.GeneratedOnce, templateId: "webapi.client-listining-pages.index-css"); #>

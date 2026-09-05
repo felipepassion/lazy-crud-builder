@@ -16,7 +16,7 @@ public partial class <#= entity.Name #>Specifications {
 	var propValue = property.Value;
 	var purePropNameType = propType.Replace("System.Collections.Generic.List<","").Replace(">","");
 	var path = property.Key;#>
-	<#@ include file="..\..\ProjectFiles\Domain\SpecificationItem.tt" #>
+	<#@ include file="..\Domain\SpecificationItem.tt" #>
 	<#}#>
 }
 <# } #>
@@ -26,4 +26,6 @@ public partial class <#= entity.Name #>Specifications {
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.Specifications.cs",
-    recreateFileIfExists: true); #>
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.specifications"); #>

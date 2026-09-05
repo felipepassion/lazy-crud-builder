@@ -1,5 +1,5 @@
 ﻿<#@ import namespace="System.Threading.Tasks" #>
-<#@ include file="..\project.tt" #>
+<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <#@ import namespace="System.Linq" #>
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;

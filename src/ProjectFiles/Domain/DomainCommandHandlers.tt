@@ -143,7 +143,9 @@ public partial class <#= entity.Name #>CommandHandler : Base<#= AggName #>Comman
 <# SaveOutputToSubFolder(
     folderName: GetGenerationOutputPath(), 
     outputFileName: @$"{AggName}.DomainCommandHandlers.cs", 
-    recreateFileIfExists: true); 
+    recreateFileIfExists: true,
+    ownership: Ownership.GeneratorOwned,
+    templateId: "domain.command-handlers"); 
 
 if (entitiesT4.Any()) {
     foreach(var namespaces in groupEntitiesT4) { 
@@ -164,6 +166,8 @@ public partial class <#=className#> : Base<#= AggName#>CommandHandler<<#=entity.
 <#SaveOutputToSubFolder(
     folderName: $@"Aggregates\{AggName}\CommandHandlers", 
     outputFileName: @$"{entity.Name}CommandHandler.cs", 
-    recreateFileIfExists: false);}
+    recreateFileIfExists: false,
+    ownership: Ownership.GeneratedOnce,
+    templateId: "domain.command-handlers.seed");}
     }   
 }#>

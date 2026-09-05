@@ -1,4 +1,4 @@
-﻿<#@ include file="..\project.tt" #>
+﻿<#@ include file="$(LazyCrudTemplatesRoot)project.tt" #>
 <# try {
 	var allEntities = GetEntities().Where(x=>x.IsAbstract == false);
 	var entities = GetEntities("Domain", withAttribute: "EndpointsT4");
@@ -11,10 +11,10 @@
 	var groupEntities = entities.GroupBy(p => p.Namespace.FullName);
 	var groupEntitiesT4 = entitiesT4.GroupBy(p => p.Namespace.FullName);
 #>
-<#@ include file="..\..\ProjectFiles\Infra.Data\InfraDataGlobalUsings.tt" #>
-<#@ include file="..\..\ProjectFiles\Infra.Data\IdentityContext.tt" #>
-<#@ include file="..\..\ProjectFiles\Infra.Data\Mappings.tt" #>
-<#@ include file="..\..\ProjectFiles\Infra.Data\Respositories.tt" #>
+<#@ include file="..\Infra.Data\InfraDataGlobalUsings.tt" #>
+<#@ include file="..\Infra.Data\IdentityContext.tt" #>
+<#@ include file="..\Infra.Data\Mappings.tt" #>
+<#@ include file="..\Infra.Data\Respositories.tt" #>
 <# } catch(System.Exception ex) { #>
 // T4 safe-guard: Infra.Data/DefaultCommands.tt suppressed an error.
 // Message: <#= ex.Message #>

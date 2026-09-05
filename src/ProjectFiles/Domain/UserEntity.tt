@@ -11,4 +11,6 @@ namespace Lazy.Crud.<#=myName#>.Domain.Aggregates.UsersAgg.Entities
 <# SaveOutputToSubFolder(
     folderName: $"Aggregates/UsersAgg/Entities/", 
     outputFileName: @$"User.cs", 
-    recreateFileIfExists: false); #>
+    recreateFileIfExists: false,
+    ownership: Ownership.GeneratedOnce,
+    templateId: "domain.user-entity"); #>
