@@ -44,8 +44,9 @@ public static class Program
 commands:
   toolchain [--vs-instance <path>] [--json]        resolve the Visual Studio T4 toolchain (exit 3 when unavailable)
   generate --solution <dir|sln> --aggregate <name> [--resolution protect|force|skip-modified]
-           [--templates local:<ProjectFilesDir>|nuget] [--report <file>] [--no-tests] [--skip-restore]
+           [--templates local:<ProjectFilesDir>|nuget] [--report <file>] [--no-tests] [--skip-restore] [--show-ide]
                                                     unattended generation through the resolved Visual Studio toolchain
+                                                    (--show-ide shows the automated IDE window; still no prompts, no person)
   sandbox create --output <dir> --aggregate <name> [--fixture <dir>] --version <v> [--feed <dir>]...
            [--templates local:<dir>|nuget] [--clean-room] [--packages-folder <dir>] [--platform-assembly <dll>]
            [--templates-package <id>] [--override <PackageId>=<version>]... [--no-tests] [--max-parallel <n>] [--no-restore]

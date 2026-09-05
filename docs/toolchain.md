@@ -74,7 +74,11 @@ Transformation runs inside an embedded Visual Studio automation session managed 
 5. Each transformation must produce its output: the runner snapshots the wrapper's residue file (`<wrapper>.generated.*`) before the call and polls until it changes, up to `WaitTimeoutMs` (default 5000 ms, `PollIntervalMs` default 150 ms). A transformation that produces nothing fails with `LC4004`, with 2 attempts per template.
 6. The solution is closed and Visual Studio is asked to quit; a process that does not exit within 30 seconds is terminated.
 
-Startup, solution opening and each custom tool call have their own timeouts; exceeding them ends the run with exit code 5 (`Timeout`).
+Startup, solution opening and each custom tool call have their own timeouts; exceeding them ends the run with exit code 5 (`Timeout`). Waiting for a solution to finish loading polls the project system with its own per-call budget; a poll that does not answer in time means the project system is still busy, not that the open failed, so it is reported and retried until the solution-open deadline is reached.
+
+### Watching a run
+
+`generate --show-ide` shows the automated IDE window instead of hiding it. Nothing else changes: `SuppressUI` is still set, `UserControl` is still cleared, no dialog can wait for a person and no one clicks anything — the flag exists so a run can be watched or recorded. When the run finishes, the session opens a few of the files it generated before closing, so a recording shows the result rather than an idle window. Use it for demonstrations and evidence; every other path, including the harness, keeps the window hidden.
 
 ## Pipeline invariants
 

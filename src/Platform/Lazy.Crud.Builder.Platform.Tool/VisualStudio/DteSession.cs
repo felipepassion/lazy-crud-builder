@@ -30,9 +30,16 @@ public sealed class DteSession : IDisposable
         ProgId = $"VisualStudio.DTE.{instance.MajorVersion}.0";
     }
 
-    public static DteSession Launch(VsInstance instance, Action<string> log, TimeSpan? startupTimeout = null)
+    /// <summary>
+    /// Shows the automated IDE instead of hiding it. Unattended still means unattended — nothing prompts and
+    /// nobody clicks — this only makes the window visible so a run can be filmed or watched. Evidence only;
+    /// every other path keeps the window hidden.
+    /// </summary>
+    public bool ShowIde { get; private set; }
+
+    public static DteSession Launch(VsInstance instance, Action<string> log, TimeSpan? startupTimeout = null, bool showIde = false)
     {
-        var session = new DteSession(instance, log);
+        var session = new DteSession(instance, log) { ShowIde = showIde };
         try
         {
             session.Start(startupTimeout ?? TimeSpan.FromMinutes(3));
@@ -50,7 +57,7 @@ public sealed class DteSession : IDisposable
         var psi = new ProcessStartInfo(Instance.DevEnvPath, "-Embedding")
         {
             UseShellExecute = false,
-            CreateNoWindow = true,
+            CreateNoWindow = !ShowIde,
             WorkingDirectory = Path.GetDirectoryName(Instance.DevEnvPath) ?? Environment.CurrentDirectory,
         };
         _process = System.Diagnostics.Process.Start(psi) ?? throw new InvalidOperationException("devenv.exe could not be started");
@@ -84,9 +91,17 @@ public sealed class DteSession : IDisposable
 
         _sta.Invoke(() =>
         {
+            // SuppressUI and UserControl stay as they are in both modes: no dialog may ever wait for a person,
+            // and the session must close when the run ends whether or not anyone is watching it.
             try { _dte!.SuppressUI = true; } catch (Exception ex) { _log("dte: SuppressUI failed -> " + ex.Message); }
             try { _dte!.UserControl = false; } catch (Exception ex) { _log("dte: UserControl failed -> " + ex.Message); }
-            try { _dte!.MainWindow.Visible = false; } catch (Exception ex) { _log("dte: MainWindow.Visible failed -> " + ex.Message); }
+            try { _dte!.MainWindow.Visible = ShowIde; } catch (Exception ex) { _log("dte: MainWindow.Visible failed -> " + ex.Message); }
+            if (ShowIde)
+            {
+                try { _dte!.MainWindow.WindowState = vsWindowState.vsWindowStateMaximize; } catch (Exception ex) { _log("dte: MainWindow.WindowState failed -> " + ex.Message); }
+                try { _dte!.MainWindow.Activate(); } catch (Exception ex) { _log("dte: MainWindow.Activate failed -> " + ex.Message); }
+                _log("dte: the IDE window is visible for this run (evidence mode); it is still driven with no human interaction");
+            }
         });
     }
 
@@ -403,6 +418,32 @@ public sealed class DteSession : IDisposable
             }
             return (IReadOnlyList<string>)result;
         }, TimeSpan.FromMinutes(1));
+    }
+
+    /// <summary>
+    /// Evidence mode only: opens some of the files the run produced in the visible IDE, so a recording of the
+    /// run shows the generated code rather than an idle window. Every step is best effort and none of it can
+    /// change what was generated — this happens after the pipeline, on files already written.
+    /// </summary>
+    public void RevealGeneratedFiles(IReadOnlyList<string> absolutePaths, int max = 4)
+    {
+        if (!ShowIde || absolutePaths.Count == 0) return;
+        foreach (var path in absolutePaths.Take(max))
+        {
+            try
+            {
+                _sta.Invoke(() =>
+                {
+                    var window = _dte!.ItemOperations.OpenFile(path, Constants.vsViewKindPrimary);
+                    window?.Activate();
+                }, TimeSpan.FromSeconds(30));
+                _log("dte: showing " + Path.GetFileName(path));
+                System.Threading.Thread.Sleep(2500);
+            }
+            catch (Exception ex) { _log("dte: could not show " + Path.GetFileName(path) + " -> " + ex.Message); }
+        }
+        try { _sta.Invoke(() => { _dte!.ExecuteCommand("View.SolutionExplorer"); }, TimeSpan.FromSeconds(20)); } catch { /* evidence only */ }
+        System.Threading.Thread.Sleep(2000);
     }
 
     public void CloseSolution()

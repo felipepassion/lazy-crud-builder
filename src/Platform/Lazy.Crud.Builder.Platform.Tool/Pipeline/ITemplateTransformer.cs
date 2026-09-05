@@ -70,10 +70,10 @@ public sealed class DteTemplateTransformer : ITemplateTransformer
     private readonly object _gate = new();
     private List<string> _previousErrorList = new();
 
-    public DteTemplateTransformer(VsInstance instance, Action<string> log)
+    public DteTemplateTransformer(VsInstance instance, Action<string> log, bool showIde = false)
     {
         _log = log;
-        _session = DteSession.Launch(instance, log);
+        _session = DteSession.Launch(instance, log, null, showIde);
         _log("dte: automation session ready (Visual Studio " + _session.Version + ", pid " + _session.ProcessId + ")");
     }
 
@@ -181,6 +181,9 @@ public sealed class DteTemplateTransformer : ITemplateTransformer
     }
 
     public void CloseSolution() => _session.CloseSolution();
+
+    /// <summary>Evidence mode only: show what the run produced in the visible IDE. No-op when hidden.</summary>
+    public void RevealGeneratedFiles(IReadOnlyList<string> absolutePaths) => _session.RevealGeneratedFiles(absolutePaths);
 
     public void Dispose() => _session.Dispose();
 }

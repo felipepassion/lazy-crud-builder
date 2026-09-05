@@ -137,8 +137,19 @@ public static class GenerateCommand
         PipelineResult result;
         try
         {
-            using var transformer = new DteTemplateTransformer(vs, log);
+            using var transformer = new DteTemplateTransformer(vs, log, o.Flag("show-ide"));
             result = new AggregatePipeline(new ProcessRunner(), log).RunAsync(options, transformer).GetAwaiter().GetResult();
+            if (o.Flag("show-ide"))
+            {
+                // The window is only up so the run can be watched; show what it produced before it closes.
+                var produced = ManifestStore.Load(SolutionRoot.ResolveManifestRoot(root, aggregate, new DiagnosticCollector()), aggregate, new DiagnosticCollector());
+                var files = produced.Loaded
+                    ? produced.Manifest!.Files.Where(f => f.RelativePath != null && f.RelativePath.EndsWith(".cs", StringComparison.OrdinalIgnoreCase))
+                        .Select(f => Path.GetFullPath(Path.Combine(root, f.RelativePath!.Replace('/', Path.DirectorySeparatorChar))))
+                        .Where(File.Exists).ToList()
+                    : new List<string>();
+                transformer.RevealGeneratedFiles(files);
+            }
         }
         catch (TimeoutException ex)
         {
