@@ -164,6 +164,43 @@ public class SandboxLayoutTests
         Assert.True(File.Exists(Path.Combine(root, "src", "Shop", "Tests", "Lazy.Crud.Shop.Tests.Domain", "DomainTest.tt")));
         try { Directory.Delete(root, true); } catch { }
     }
+
+    /// <summary>
+    /// One folder for the aggregate holding its layers, one Tests folder inside it holding its tests. Adding
+    /// projects without an explicit solution folder mirrors the directory path instead, and because a layer's
+    /// directory (Shop.Domain) is not named after its project (Lazy.Crud.Shop.Domain), every layer used to get a
+    /// solution folder of its own: one project per folder, the folder repeating the project's name. The sandbox
+    /// has to have the shape a consumer's solution has, or the battery validates a layout nobody gets.
+    /// </summary>
+    [Fact]
+    public void SolutionGroupsTheAggregateOnceAndItsTestsOnce()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "lazycrud-tests", Guid.NewGuid().ToString("N"));
+        var sln = SandboxBuilder.Build(new SandboxOptions
+        {
+            SandboxRoot = root, AggregateName = "Shop", FixtureDirectory = null, PlatformVersion = "1.1.0",
+            TemplateSource = new TemplateSource { Kind = TemplateSourceKind.NuGet, Location = "nuget", Version = "1.1.0" },
+            LocalFeeds = new[] { Path.GetTempPath() },
+        }, _ => { });
+
+        var folders = new List<string>();
+        var projects = new List<string>();
+        foreach (var line in File.ReadAllLines(sln).Where(l => l.StartsWith("Project(", StringComparison.Ordinal)))
+        {
+            var parts = line.Split('"');
+            if (parts.Length < 6) continue;
+            // The solution-folder type guid; everything else is a real project.
+            if (line.StartsWith("Project(\"{2150E333-8FDC-42A3-9474-1A3956D46DE8}\")", StringComparison.OrdinalIgnoreCase)) folders.Add(parts[3]);
+            else projects.Add(parts[3]);
+        }
+
+        Assert.Equal(new[] { "Shop", "Tests", "src" }, folders.OrderBy(f => f, StringComparer.Ordinal).ToArray());
+        Assert.Equal(16, projects.Count);
+        // No folder exists only to wrap the project that shares its name.
+        Assert.DoesNotContain(folders, f => projects.Any(p => p.EndsWith("." + f, StringComparison.OrdinalIgnoreCase)));
+
+        try { Directory.Delete(root, true); } catch { }
+    }
 }
 
 /// <summary>

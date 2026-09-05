@@ -39,6 +39,9 @@ public sealed class TestLayerSpec
 /// </summary>
 public static class AggregateLayout
 {
+    /// <summary>The directory, and the solution folder, that holds an aggregate's test projects.</summary>
+    public const string TestsFolderName = "Tests";
+
     /// <summary>Domain-first pipeline order (Domain is always first).</summary>
     public static readonly IReadOnlyList<LayerSpec> Layers = new[]
     {

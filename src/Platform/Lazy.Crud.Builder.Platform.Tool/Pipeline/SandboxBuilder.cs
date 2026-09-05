@@ -71,7 +71,7 @@ public static class SandboxBuilder
             foreach (var t in AggregateLayout.TestLayers)
             {
                 var projName = "Lazy.Crud." + o.AggregateName + "." + t.Id;
-                var projDir = Path.Combine(aggDir, "Tests", projName);
+                var projDir = Path.Combine(aggDir, AggregateLayout.TestsFolderName, projName);
                 Directory.CreateDirectory(projDir);
                 File.WriteAllText(Path.Combine(projDir, projName + ".csproj"), TestCsproj(o, t), Utf8Bom);
                 File.WriteAllText(Path.Combine(projDir, "SmokeTest.cs"),
@@ -276,14 +276,48 @@ public static class SandboxBuilder
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Builds the sandbox solution with the same shape a consumer's solution has: one folder for the aggregate
+    /// holding its layer projects, and a Tests folder inside it holding its test projects.
+    ///
+    /// Adding projects without --solution-folder mirrors the directory path instead, and because a layer's
+    /// directory (Products.Domain) is not named after its project (Lazy.Crud.Products.Domain), every layer ended
+    /// up wrapped in a solution folder of its own: one project per folder, the folder repeating the project's
+    /// name. The sandbox exists to reproduce what an external consumer receives, so a layout no consumer gets is
+    /// a layout the battery must not validate.
+    /// </summary>
     private static void CreateSolution(string root, string sln, Action<string> log)
     {
         if (File.Exists(sln)) File.Delete(sln);
         Run("dotnet", "new sln -n Sandbox --format sln --force", root, log);
-        var projects = Directory.GetFiles(Path.Combine(root, "src"), "*.csproj", SearchOption.AllDirectories);
-        var args = new StringBuilder("sln \"" + sln + "\" add");
-        foreach (var p in projects) args.Append(" \"").Append(p).Append('"');
-        Run("dotnet", args.ToString(), root, log);
+
+        var srcRoot = Path.Combine(root, "src");
+        var testsSegment = Path.DirectorySeparatorChar + AggregateLayout.TestsFolderName + Path.DirectorySeparatorChar;
+        foreach (var group in Directory.GetFiles(srcRoot, "*.csproj", SearchOption.AllDirectories)
+                     .GroupBy(p => SolutionFolderFor(srcRoot, p, testsSegment), StringComparer.OrdinalIgnoreCase)
+                     .OrderBy(g => g.Key, StringComparer.Ordinal))
+        {
+            var args = new StringBuilder("sln \"" + sln + "\" add");
+            if (!string.IsNullOrEmpty(group.Key)) args.Append(" --solution-folder \"").Append(group.Key).Append('"');
+            foreach (var p in group) args.Append(" \"").Append(p).Append('"');
+            Run("dotnet", args.ToString(), root, log);
+        }
+    }
+
+    /// <summary>
+    /// src/&lt;Aggregate&gt; for a layer project, src/&lt;Aggregate&gt;/Tests for a test project. Anything that is
+    /// not under an aggregate directory keeps the directory shape it already has.
+    /// </summary>
+    private static string SolutionFolderFor(string srcRoot, string projectFile, string testsSegment)
+    {
+        var relative = projectFile.Substring(srcRoot.Length).TrimStart(Path.DirectorySeparatorChar);
+        var segments = relative.Split(Path.DirectorySeparatorChar);
+        if (segments.Length < 2) return "src";
+        var aggregate = segments[0];
+        var isTest = projectFile.IndexOf(testsSegment, StringComparison.OrdinalIgnoreCase) >= 0;
+        return isTest
+            ? "src/" + aggregate + "/" + AggregateLayout.TestsFolderName
+            : "src/" + aggregate;
     }
 
     private static void Run(string file, string args, string cwd, Action<string> log)
