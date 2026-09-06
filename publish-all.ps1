@@ -3,13 +3,21 @@
   Publishes every .nupkg of the most recent version folder under the artifacts root to a NuGet feed.
 
 .DESCRIPTION
-  Scans the artifacts root (artifacts/nuget by default), picks the highest version sub-folder,
-  and pushes every .nupkg in it. The API key is NEVER stored in the repository: pass -ApiKey
-  explicitly or set the NUGET_API_KEY environment variable (the CI secret). The script fails
-  with a clear message when neither is present.
+  Pushes every .nupkg of one version folder under the artifacts root. The version is the central
+  one -- LazyCrudVersion in Directory.Build.props, the single source every package is built from --
+  and not "the highest folder present": the E2E harness packs a second, higher version to exercise
+  mixed-version restore, so picking the highest is how a test artifact reaches nuget.org, where
+  nothing can be taken back. Pass -Version to publish something else deliberately.
+
+  The API key is NEVER stored in the repository: pass -ApiKey explicitly or set the NUGET_API_KEY
+  environment variable (the CI secret). The script fails with a clear message when neither is
+  present.
 
 .PARAMETER OutputRoot
   Artifacts root. Default: artifacts/nuget
+
+.PARAMETER Version
+  Version folder to publish. Defaults to LazyCrudVersion in Directory.Build.props.
 
 .PARAMETER ApiKey
   NuGet API key. Falls back to $env:NUGET_API_KEY. Required for the push.
@@ -26,6 +34,7 @@
 #>
 [CmdletBinding()] param(
   [string]$OutputRoot = 'artifacts/nuget',
+  [string]$Version,
   [string]$ApiKey,
   [string]$Source = 'https://api.nuget.org/v3/index.json',
   [switch]$NoSkipDuplicate
@@ -35,7 +44,9 @@ $ErrorActionPreference = 'Stop'
 
 if (-not $ApiKey) { $ApiKey = $env:NUGET_API_KEY }
 if (-not $ApiKey) {
-  Write-Error 'No NuGet API key: pass -ApiKey or set the NUGET_API_KEY environment variable. Credentials are never stored in this repository.'
+  # Write-Error throws under ErrorActionPreference Stop, so the documented exit code never
+  # ran: the message goes to the error stream by hand and the script exits 2 as declared.
+  [Console]::Error.WriteLine('No NuGet API key: pass -ApiKey or set the NUGET_API_KEY environment variable. Credentials are never stored in this repository.')
   exit 2
 }
 
@@ -43,19 +54,29 @@ if (!(Test-Path $OutputRoot)) {
   throw "Artifacts folder not found: $OutputRoot"
 }
 
-$versionDirs = Get-ChildItem -Path $OutputRoot -Directory |
-  Where-Object { $_.Name -match '^\d+\.\d+' } |
-  Sort-Object {
-    try { [version](($_.Name -split '-')[0]) } catch { [version]'0.0.0' }
-  } -Descending
-
-if ($versionDirs.Count -eq 0) {
-  throw "No version sub-folder found in: $OutputRoot"
+if (-not $Version) {
+  $propsPath = Join-Path $PSScriptRoot 'Directory.Build.props'
+  $xml = [xml](Get-Content -Raw $propsPath)
+  $Version = ($xml.Project.PropertyGroup | ForEach-Object { $_.LazyCrudVersion } | Where-Object { $_ } |
+              ForEach-Object { if ($_ -is [System.Xml.XmlElement]) { $_.InnerText } else { [string]$_ } } | Select-Object -First 1)
+  if (-not $Version) { throw "LazyCrudVersion is not defined in $propsPath (the single version source)." }
+  $Version = ([string]$Version).Trim()
+  Write-Host "[INFO] Central version (LazyCrudVersion): $Version" -ForegroundColor Green
+} else {
+  Write-Host "[INFO] Version override: $Version" -ForegroundColor Yellow
 }
 
-$latestDir = $versionDirs[0]
-Write-Host "[INFO] Latest version detected: $($latestDir.Name)" -ForegroundColor Green
+$latestDir = Get-Item -Path (Join-Path $OutputRoot $Version) -ErrorAction SilentlyContinue
+if (-not $latestDir) {
+  $available = (Get-ChildItem -Path $OutputRoot -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^\d+\.\d+' } | Select-Object -ExpandProperty Name) -join ', '
+  throw "No package folder for version ${Version} under ${OutputRoot} (present: ${available}). Run pack-all.ps1 first, or pass -Version deliberately."
+}
 Write-Host "[INFO] Folder: $($latestDir.FullName)" -ForegroundColor Cyan
+
+$wrongVersion = @(Get-ChildItem -Path $latestDir.FullName -Filter *.nupkg -File | Where-Object { $_.Name -notmatch [regex]::Escape(".$Version.nupkg") + '$' })
+if ($wrongVersion.Count -gt 0) {
+  throw "The folder holds package(s) that are not version ${Version}: $(($wrongVersion | Select-Object -ExpandProperty Name) -join ', '). Repack before publishing."
+}
 
 $packages = Get-ChildItem -Path $latestDir.FullName -Filter *.nupkg -File |
   Where-Object { $_.Name -notmatch '\.symbols\.' }
@@ -92,7 +113,7 @@ foreach ($pkg in $packages) {
 
 Write-Host ''
 Write-Host '========== SUMMARY ==========' -ForegroundColor Cyan
-Write-Host "  Version:   $($latestDir.Name)"
+Write-Host "  Version:   $Version"
 Write-Host "  Succeeded: $successCount"
 Write-Host "  Failed:    $failCount"
 if ($failed.Count -gt 0) {

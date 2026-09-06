@@ -140,7 +140,9 @@ if (-not $SkipValidation) {
 if ($Publish) {
   if (-not $ApiKey) { $ApiKey = $env:NUGET_API_KEY }
   if (-not $ApiKey) {
-    Write-Error 'No NuGet API key: pass -ApiKey or set the NUGET_API_KEY environment variable. Credentials are never stored in this repository.'
+    # Write-Error throws under ErrorActionPreference Stop, so the documented exit code never
+    # ran: the message goes to the error stream by hand and the script exits 2 as declared.
+    [Console]::Error.WriteLine('No NuGet API key: pass -ApiKey or set the NUGET_API_KEY environment variable. Credentials are never stored in this repository.')
     exit 2
   }
   $source = 'https://api.nuget.org/v3/index.json'

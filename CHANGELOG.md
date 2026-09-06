@@ -60,6 +60,14 @@ changes are recorded against the `contractVersion` they change.
   and shared templates (`project.tt`, `Tests/Tests.Common.ttinclude`) ship only from it.
 - The first regeneration after upgrading rewrites every generated file with the marker v2 header.
   The body is unchanged; the golden-output test asserts that only the header differs.
+- `publish-all.ps1` pushed "the highest version folder under `artifacts/nuget`". The E2E harness
+  packs a second, higher version to exercise mixed-version restore, so after a battery run that
+  script's target was the test artifact -- and a push to nuget.org cannot be taken back. It now
+  publishes the central version (`LazyCrudVersion`), refuses a folder holding any other version, and
+  takes `-Version` for a deliberate override.
+- Both publish scripts documented exit code 2 when no credential is present but exited 1:
+  `Write-Error` throws under `ErrorActionPreference = Stop`, so the `exit 2` never ran. The message
+  is written to the error stream directly and the declared code is what CI sees.
 - `Lazy.Crud.Builder.Templates` and `Lazy.Crud.Templates` packed two files named `README.md` at the
   package root -- the repository README that `Directory.Build.props` adds to every package, and their
   own -- which left the reader to decide which one `PackageReadmeFile` resolves to. Each now removes
