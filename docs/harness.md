@@ -66,6 +66,7 @@ The harness uses the shared table; a code means the same thing in the runner and
 | 6 | `ContractMismatch` | A resolved descriptor's `contractVersion` is outside the supported range |
 | 7 | `OwnershipConflict` | A run failed because files are drifted or unverified where that was not the expected outcome |
 | 8 | `HarnessFailure` | The harness itself failed, as opposed to a scenario failing |
+| 9 | `GenerationDefect` | Generation produced an output that carries no content where the existing file has some (`LC2012`); the write was refused and nothing was lost, but the run produced a defective artifact |
 
 ## Scenarios
 
@@ -100,6 +101,7 @@ Intentional failure (recorded as passes when they fail as designed):
 | F3 | `--resolution skip-modified` preserves the modified file, generates the rest and succeeds listing the skip |
 | F4 | An unverified file whose content differs is protected with `LC2002`, not `LC2001`, and is unchanged on disk |
 | F5 | An unverified file whose content is identical is adopted without intervention (`LC2008`) and the manifest records a real hash |
+| F6 | A template edited to resolve no model emits a body of imports and nothing else; the shipped writer refuses the overwrite with `LC2012`, the run exits 9, `--force` does not get around it, the generated file is byte-identical afterwards, and the declared contentless output (global usings) still regenerates |
 
 Toolchain:
 

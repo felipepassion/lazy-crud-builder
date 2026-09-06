@@ -18,7 +18,7 @@ Every failure, protection decision and notable event in the generation path is a
 
 Diagnostics reach three sinks at once: the in-memory collector of the run (available as structured data to tests and to the report), the host (console or IDE), and the machine-readable file `{solutionRoot}/.lazycrud/diagnostics/{Aggregate}.diagnostics.json`, a JSON array the shared writer appends to from inside the T4 host and the runner clears before each run. A failure to write that file is itself reported (`LC1010`) and never masks the original diagnostic. The `generate` report (`--report <file>`) includes every diagnostic of the run under `Diagnostics` with `Code`, `Severity`, `Path`, `Message` and `Data`.
 
-Exit codes derive from diagnostics: an error `LC2001` or `LC2002` exits 7 (`OwnershipConflict`); `LC4001` exits 3 (`PrerequisiteUnavailable`); `LC5001` corresponds to 6 (`ContractMismatch`); any other error exits 1 (`AssertionFailure`).
+Exit codes derive from diagnostics: an error `LC2012` exits 9 (`GenerationDefect`) and is checked first, because a collapsed output is a defective transformation and not a conflict with the developer; an error `LC2001` or `LC2002` exits 7 (`OwnershipConflict`); `LC4001` exits 3 (`PrerequisiteUnavailable`); `LC5001` corresponds to 6 (`ContractMismatch`); any other error exits 1 (`AssertionFailure`).
 
 ## Codes
 
@@ -51,6 +51,7 @@ Exit codes derive from diagnostics: an error `LC2001` or `LC2002` exits 7 (`Owne
 | `LC2008` | information | An unverified file whose regenerated body matched the on-disk body adopted its baseline without a destructive write (only the header is rewritten when missing or v1). | Nothing. |
 | `LC2009` | warning | The marker is missing or malformed but the body matches the recorded hash; the file is regenerated with a valid marker. Not content drift. | Nothing. |
 | `LC2010` | information | A path classified `Manual` was requested for writing and refused. | Nothing; `Manual` paths are never written. |
+| `LC2012` | error | A regenerated body carries no content (empty, whitespace only, or nothing but comments and import directives) while the file it would replace carries some; the write was refused and nothing was lost. This is the signature of a transformation that lost its model and emitted only the template's static preamble. `data`: `templateId`, `layer`, `aggregate`, `sourceTemplate`, `reason` (`empty`, `whitespace-only`, `no-significant-content`), `rule`, `currentHash`, `regeneratedHash`, `currentSignificantLines`, `regeneratedSignificantLines`, `regeneratedBodyLength`, `resolutions` (`none`). | Rerun the generation; the same run usually produces the full body. If it repeats, the template or the model it resolves is at fault. No resolution flag overrides the refusal -- `--force` resolves an ownership conflict, and this is not one. A template whose correct output is directives only declares `emptyOutputAllowed` in the registry instead. |
 | `LC2011` | information | A `GeneratorOwned` file has no trustworthy baseline (for example it carries only a v1 marker); recognized as generated but not authorized for overwrite, resolved by content comparison when regenerated. | Nothing until `LC2002` or `LC2008` follows. |
 
 ### 3xxx: templates, settings and model resolution

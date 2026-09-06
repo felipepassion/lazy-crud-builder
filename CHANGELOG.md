@@ -30,6 +30,28 @@ changes are recorded against the `contractVersion` they change.
   unattended generation runner, descriptor/fixture generation and validation checks.
 - Contract fixtures and JSON Schemas under `contracts/` for cross-repository consumers.
 - The single-command E2E harness (`scripts/e2e.ps1`).
+- **Collapse guard.** A `GeneratorOwned` file that carries content is never replaced by a regenerated
+  body that carries none. The check runs ahead of the drift states and applies to all of them,
+  including `verified`, which drift protection deliberately allows to be overwritten; a transformation
+  that loses its model emits the template's static preamble and stops, and the well-formed contentless
+  file it offers is indistinguishable from a legitimate change by hash alone. A body is contentless
+  when no line of it is content: blank lines, whole-line comments and import or preprocessor
+  directives do not count, and anything the rule cannot classify does. Refused with the new
+  diagnostic `LC2012` and the new exit code `9` (`GenerationDefect`), naming the file, template,
+  layer, aggregate, both hashes, the significant-line count on each side and the reason. No
+  resolution flag overrides it: `--force` resolves an ownership conflict and this is not one. A
+  template whose correct output is directives only -- the seven `*.global-usings` templates -- declares
+  the new optional registry field `emptyOutputAllowed` and is exempt.
+  Found by the closeout battery on 2026-09-05 (`artifacts/e2e/20260905-022527`, scenario F5), where
+  three Application.DTO templates emitted a body with no declaration in it. The `unverified`
+  protection caught that run; a `verified` file would have been overwritten.
+
+  These three additions -- `LC2012`, exit code `9` and `emptyOutputAllowed` -- are **additive under
+  contractVersion 1**: no existing field, diagnostic or exit code changed meaning, and a consumer
+  written against contract 1 still parses the descriptor. Per the rule in
+  [docs/release.md](docs/release.md), that is not an increment. The `contracts/fixtures/v1/` and
+  `contracts/schemas/v1/` artifacts were regenerated before 1.1.0 was ever published, so no published
+  fixture changed.
 
 ### Changed
 
@@ -38,6 +60,10 @@ changes are recorded against the `contractVersion` they change.
   and shared templates (`project.tt`, `Tests/Tests.Common.ttinclude`) ship only from it.
 - The first regeneration after upgrading rewrites every generated file with the marker v2 header.
   The body is unchanged; the golden-output test asserts that only the header differs.
+- `Lazy.Crud.Builder.Templates` and `Lazy.Crud.Templates` packed two files named `README.md` at the
+  package root -- the repository README that `Directory.Build.props` adds to every package, and their
+  own -- which left the reader to decide which one `PackageReadmeFile` resolves to. Each now removes
+  the inherited item and ships only its own.
 
 ### Deprecated
 

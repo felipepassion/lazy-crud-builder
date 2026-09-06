@@ -17,6 +17,8 @@ The platform descriptor is the canonical machine-readable contract of a Lazy CRU
 
 The supported range is declared in `compatibility`: `supportedContractVersionMin` 1, `supportedContractVersionMax` 1, `minimumUpgradableContractVersion` 1. A consumer negotiates as follows: a descriptor whose `contractVersion` is above the consumer's maximum, or below the descriptor's own `minimumUpgradableContractVersion` or the consumer's minimum, is rejected with `LC5001` (exit code 6, `ContractMismatch`).
 
+Additions in 1.1.0 that did **not** increment it, because a consumer written against contract 1 still parses the document and no existing code changed meaning: the optional registry field `emptyOutputAllowed`, the diagnostic code `LC2012` and the exit code `9` (`GenerationDefect`).
+
 What an increment implies: `contractVersion` increases only when a field is removed or its meaning changes in a way that breaks a conforming consumer (or a hash, ownership, marker, diagnostic or exit-code semantic changes). The change is recorded in the changelog as contract-breaking, new fixtures and schemas are published under `contracts/fixtures/v<N>/` and `contracts/schemas/v<N>/` while the previous ones remain retrievable, and consumers must be updated before they accept the new documents. Adding an optional field (for example `compatibility.hostRequirements`) does not increment it; a consumer written against the previous contract still parses the document.
 
 ## Document structure
@@ -88,6 +90,7 @@ Registry entry:
 | `packageId` | Package carrying the template | `Lazy.Crud.Builder.Domain` |
 | `inPackagePath` | Full path inside that package | `contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommandHandlers.tt` |
 | `kind` | `writer` (produces a file through the shared writer), `entry` (orchestration template that includes others and writes nothing itself) or `include` (shared helper with no output) | `writer` |
+| `emptyOutputAllowed` | True when this template's correct output carries no significant content (a global-usings file is entirely import directives), so a contentless body is not evidence of a collapsed transformation and `LC2012` does not apply. Absent means false. | `false`; `true` for the seven `*.global-usings` templates |
 
 One source file can have several writer entries when it writes several outputs (for example `domain.command-handlers` and `domain.command-handlers.seed`, the second being the `GeneratedOnce` seed).
 

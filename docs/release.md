@@ -43,6 +43,12 @@ $env:NUGET_API_KEY = '<key from your secret store>'
 pwsh pack-all.ps1 -Publish
 ```
 
+Then prove the published artifact from the internet, not from the pack output:
+
+```powershell
+pwsh scripts/public-clean-room.ps1
+```
+
 or, to push the latest version folder already produced:
 
 ```powershell
@@ -51,7 +57,15 @@ pwsh publish-all.ps1
 
 `publish-all.ps1` picks the highest version folder under `artifacts/nuget`, pushes every `.nupkg` with `--skip-duplicate` (disable with `-NoSkipDuplicate`) to `https://api.nuget.org/v3/index.json` (override with `-Source`), and prints a summary.
 
-8. **Tag and record.** Tag the commit with the version and move the changelog section from Unreleased to released.
+8. **Write the release record.** One machine-readable file per version, `contracts/releases/<version>.json`, is what a consuming repository reads instead of a changelog: the version, `platformVersion`, `contractVersion`, the schema versions, the templates package and its aliases, every produced `.nupkg` with its SHA-256, the commit that produced them, and -- queried against the public source, never assumed -- whether each package id actually answers for that version there.
+
+```powershell
+pwsh scripts/release-record.ps1
+```
+
+`status` is `published` only when every declared package is on the source; otherwise it is `prepared`. `dotnet nuget push --skip-duplicate` exiting zero is not evidence of publication, and the record never treats it as such. Run it again after publishing to flip the status, and commit the result.
+
+9. **Tag and record.** Tag the commit with the version and move the changelog section from Unreleased to released.
 
 ## Validation gates
 
@@ -64,6 +78,7 @@ pwsh publish-all.ps1
 | Golden | `tests/golden/README.md` | Byte-identical reference output apart from the header region |
 | Harness | `pwsh scripts/e2e.ps1` | Positive, compatibility, failure, toolchain and clean-room scenarios end to end |
 | Clean room | scenario C1 of the harness | The public artifact works exactly as an external user receives it |
+| Public clean room | `pwsh scripts/public-clean-room.ps1` (after publishing) | The packages restored from nuget.org, with no local source and an isolated cache, generate through the real toolchain and are byte-identical to what was built |
 
 ## Security
 

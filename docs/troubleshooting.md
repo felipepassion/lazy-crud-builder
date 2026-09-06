@@ -47,6 +47,23 @@ The default never destroys the edit; the diff between the file and the regenerat
 
 **Remedy.** Review the diff, then `--resolution force` to take the regenerated content or `--resolution skip-modified` to keep the file. Once resolved, the manifest records a real baseline and the file behaves as verified or drifted from then on.
 
+## LC2012: the regenerated output collapsed (exit 9)
+
+**Meaning.** The transformation produced a body with nothing in it -- empty, whitespace only, or nothing
+but comments and import directives -- while the file it would have replaced carries real content. The
+write was refused and **nothing was lost**. This is not a conflict with an edit of yours: it is the
+signature of a template that lost the model it resolves and emitted only its static preamble. The
+diagnostic names the file, `templateId`, `layer`, `aggregate`, the reason, both hashes and how many
+significant lines each side has.
+
+**Remedy.** Rerun the generation. In the run this rule was written for, the very next run reproduced
+the full body byte for byte. If it repeats for the same template, the fault is in that template or in
+the model it resolves -- open the aggregate in Visual Studio and check that the Domain entities the
+template iterates are present and compile. `--force` does **not** override this refusal, by design: it
+resolves an ownership conflict, and a defective transformation is not one. If a template you own is
+*meant* to emit only directives (a global-usings file), declare `emptyOutputAllowed` for it in the
+platform template registry rather than working around the guard.
+
 ## LC3001: template resolution failed
 
 **Meaning.** The configured template source could not be resolved. The message names the configured source, the package id requested (and the canonical id it maps to), the version, and every location probed: the `globalPackagesFolder` of the solution's `nuget.config`, `NUGET_PACKAGES`, then `%USERPROFILE%\.nuget\packages`, each under `<packageid>/<version>/contentFiles/any/any/LazyCrudTemplates/project.tt`. Package resolution never falls back to a local source tree. The same code is used when local mode is configured but no tree containing `project.tt` was found, and when local mode is requested while `DisableLocalTemplateFallback` is `True` (clean room).
@@ -101,5 +118,6 @@ The default never destroys the edit; the diff between the file and the regenerat
 | 6 | `ContractMismatch` | A descriptor `contractVersion` is outside the supported range, or versions disagree |
 | 7 | `OwnershipConflict` | Drifted, unverified or unknown-ownership files require an explicit resolution |
 | 8 | `HarnessFailure` | The tool or the harness itself failed (internal error) |
+| 9 | `GenerationDefect` | Generation produced an output that carries no content where the existing file has some (`LC2012`); nothing was overwritten |
 
 The table is shared with the extension repository's CLI and harness: a code means the same thing everywhere.

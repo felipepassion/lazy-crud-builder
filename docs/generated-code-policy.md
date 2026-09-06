@@ -70,6 +70,41 @@ Before writing a `GeneratorOwned` file the writer computes the frozen hash of th
 
 An absent baseline never authorizes a destructive overwrite. Unknown ownership in a migrated manifest is treated as user-owned and reported (`LC2003`).
 
+## The collapse guard: an output that says nothing never replaces one that says something
+
+Drift protection answers one question -- *did a human change this file?* -- and a `verified` file is
+deliberately overwritable, because that is what regeneration is for. It therefore cannot see the other
+way a good file is lost: a transformation that resolves no model emits the template's static preamble
+and stops, and what it offers the writer is a syntactically valid file that declares nothing. The
+hashes differ, the state is `verified`, and without a second rule the write goes through.
+
+So before any state is considered, and for every state including `verified`, the writer refuses to
+replace a file that carries content with a regenerated body that carries none:
+
+| Term | Frozen meaning |
+| --- | --- |
+| significant line | A body line that is not blank, not a whole-line comment in the file's comment syntax, and not an import or preprocessor directive (`using`, `global using`, `extern alias`, `@using`, `#...`) |
+| contentless body | A body with no significant line. The `reason` reported is `empty`, `whitespace-only` or `no-significant-content` |
+| collapse | A contentless regenerated body where the file on disk has at least one significant line |
+
+A collapse is refused with `LC2012` (error) and the run exits 9 (`GenerationDefect`). The diagnostic
+names the file, `templateId`, `layer`, `aggregate` and source template, both hashes, the significant
+line counts on each side, and the rule id. **No resolution flag overrides it** -- `--force` resolves an
+ownership conflict, and a defective transformation is not one. The remedy is to rerun the generation;
+in the case this rule was written for, the same sandbox reproduced the full body byte for byte on the
+next run.
+
+The rule is conservative by construction: a line it cannot classify counts as content, so a body is
+only ever called contentless when every one of its lines is demonstrably not content. It is not a
+threshold -- a file that shrinks because an entity was removed still declares something, and is
+written normally.
+
+A template whose *correct* output carries no significant content -- a global-usings file, whose whole
+body is import directives -- declares `emptyOutputAllowed` in the platform template registry and is
+exempt. The seven global-usings templates are the ones that declare it today. The declaration is
+explicit and never inferred, and a test asserts that every contentless output in the golden corpus is
+covered by one.
+
 ## Resolutions
 
 The default resolution, `protect`, leaves every drifted and unverified file untouched, reports every affected file (not only the first) and fails the run. The runner accepts two explicit alternatives:
@@ -84,6 +119,8 @@ dotnet Lazy.Crud.Builder.Platform.Tool.dll generate --solution . --aggregate Pro
 | `protect` (default) | Nothing is overwritten; the run fails with exit code 7 | `LC2001` or `LC2002` |
 | `force` | The drifted or unverified file is overwritten with the regenerated content; the previous content is lost | `LC2006` (warning) |
 | `skip-modified` | The affected file is left untouched, every other file is generated, the run succeeds listing the skips | `LC2007` (warning) |
+
+None of the three reaches a collapsed output: `LC2012` is refused before a resolution is consulted.
 
 Build-driven generation exposes the same choice as `-p:LazyCrudResolution=force` or `skip-modified`. No resolution ever touches a `Manual` file or an existing `GeneratedOnce` file.
 

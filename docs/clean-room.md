@@ -39,6 +39,16 @@ The clean room does not assume the artifact is complete; it asserts it against t
 - the attribute catalog assembles from the restored descriptor plus the restored XML documentation file (`lib/net10.0/Lazy.Crud.Builder.Application.DTO.xml`) with no platform source file;
 - an aggregate generates headlessly from restored artifacts, the produced files carry marker v2 and manifest entries with matching hashes, and the sandbox builds and its generated tests pass.
 
+## The public clean room
+
+Scenario C1 runs against the pack output standing in for the public feed. That proves the package set is self-sufficient, but nothing was downloaded, so it cannot prove that the bytes an external user receives are the ones that work. `scripts/public-clean-room.ps1` closes that gap after a release is pushed: the same sandbox with `--clean-room` and **no** `--feed`, which leaves `https://api.nuget.org/v3/index.json` as the only source in the generated `nuget.config`, with its own empty package cache.
+
+```powershell
+pwsh scripts/public-clean-room.ps1
+```
+
+It polls the source until every declared package answers for the version (publication is asynchronous, and a push that exited zero is not yet restorable), creates the sandbox, asserts the room is clean, generates through the resolved Visual Studio toolchain, reads the descriptor out of the *downloaded* package and resolves every registry entry inside it, verifies markers, manifest and hashes -- computed with the downloaded `Lazy.Crud.Builder.Platform` assembly, not a local build -- builds and tests the generated solution, and finally hashes the downloaded `.nupkg` files against `contracts/releases/<version>.json` so the run states whether the internet served what this repository built. Exit 0 proves it, exit 5 means the version is not on the source yet, exit 1 means something failed; evidence lands in `artifacts/public-clean-room/<stamp>/`.
+
 ## Reproducing it by hand
 
 The sandbox the harness builds can be created with the runner. From a repository checkout after `pwsh pack-all.ps1`:

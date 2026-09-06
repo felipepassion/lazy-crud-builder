@@ -49,4 +49,6 @@ Before a `GeneratorOwned` file is written it resolves into exactly one state, co
 | `unverified` | The file exists but no trustworthy baseline is recorded (no entry, `Unknown` hash after migration, v1-only marker) | Identical regenerated body: adopted (`LC2008`); different: protected (`LC2002`), exit code 7 |
 | `missing` | Recorded but absent from disk | Regenerated, not reported as drift |
 
-Resolutions: `--resolution protect` (default), `--resolution force` (`LC2006` per overwrite), `--resolution skip-modified` (`LC2007` per skip). No resolution reaches `GeneratedOnce` or `Manual` files. See [Generated code policy](../generated-code-policy.md) and [Content hash](hash.md).
+Ahead of every one of those states, including `verified`, the writer refuses to replace a file that has significant content with a regenerated body that has none (`LC2012`, exit code 9). A significant line is one that is not blank, not a whole-line comment and not an import or preprocessor directive; a template whose correct output is directives only declares `emptyOutputAllowed` in the registry and is exempt. See [Generated code policy](../generated-code-policy.md#the-collapse-guard-an-output-that-says-nothing-never-replaces-one-that-says-something).
+
+Resolutions: `--resolution protect` (default), `--resolution force` (`LC2006` per overwrite), `--resolution skip-modified` (`LC2007` per skip). No resolution reaches `GeneratedOnce` or `Manual` files, and none overrides `LC2012`. See [Generated code policy](../generated-code-policy.md) and [Content hash](hash.md).
