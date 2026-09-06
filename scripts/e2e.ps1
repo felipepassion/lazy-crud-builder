@@ -1,4 +1,4 @@
-#!/usr/bin/env pwsh
+﻿#!/usr/bin/env pwsh
 <#
 .SYNOPSIS
   The Lazy CRUD end-to-end battery: one unattended command that proves the platform from public-
@@ -7,13 +7,14 @@
 
 .DESCRIPTION
   Runs, in order: prerequisites (.NET SDK, Visual Studio T4 toolchain), pack (public-equivalent
-  artifacts), and the scenarios T1, P1-P7, R1-R5, F1-F5, T2, C1 (see docs/harness.md). Every run
+  artifacts), and the scenarios T1, P1-P7, R1-R5, F1-F6, T2, C1 (see docs/harness.md). Every run
   writes artifacts/e2e/<yyyyMMdd-HHmmss>/summary.json (source of truth), digest.txt, logs/ and
   reports/, and prints a final greppable line: RESULT: OK (passed=N failed=0) or RESULT: FAIL (...).
-  Intentional-failure scenarios (F1, F4, T2) are recorded as passes when they fail as designed.
+  Intentional-failure scenarios (F1, F4, F6, T2) are recorded as passes when they fail as designed.
 
   Exit codes (shared table): 0 success, 1 assertion failure, 3 prerequisite unavailable,
-  4 invalid fixture or sandbox, 5 timeout, 6 contract mismatch, 7 ownership conflict, 8 harness failure.
+  4 invalid fixture or sandbox, 5 timeout, 6 contract mismatch, 7 ownership conflict, 8 harness failure,
+  9 generation defect (a collapsed output was refused).
 
 .PARAMETER Scenario
   Run a single scenario id (for example F1). Prerequisites still run.
@@ -490,6 +491,61 @@ Add-Scenario 'F5' 'Unverified file with identical content is adopted silently an
   Assert ($null -ne $entry -and $entry.contentHash -match '^[a-f0-9]{64}$') 'adopted file has no recorded hash'
 }
 
+Add-Scenario 'F6' 'A template that resolves no model emits a contentless body; the shipped writer refuses the overwrite and the generated file survives' -IntentionalFailure {
+  # The defect this proves is real (artifacts/e2e/20260905-022527, F5): three Application.DTO templates
+  # emitted a body with no declaration in it. It is reproduced here at its cause, not simulated at the
+  # writer: a copy of the template tree is edited so ListiningsDTO.tt takes the "no entities" branch,
+  # and a real Visual Studio transformation runs it. The writer that refuses is the shipped one, loaded
+  # by project.tt inside the T4 host.
+  $templates = Join-Path $sandboxRoot 'templates-collapse'
+  Copy-Item (Join-Path $repo 'src/ProjectFiles') $templates -Recurse -Force
+  $sbx = New-Sandbox 'sbx-collapse' @() "local:$templates"
+
+  $g1 = Invoke-Generate $sbx 'F6-seed'
+  Assert ($g1.Exit -eq 0) "seed generation exit $($g1.Exit) ($($g1.Report.ExitCodeName))"
+  Assert-Transformed $g1 'F6-seed'
+  $m = Get-Manifest $sbx
+  $target = ($m.Doc.files | Where-Object { $_.templateId -eq 'application-dto.listinings' } | Select-Object -First 1)
+  Assert ($null -ne $target) 'the seed run did not generate the listings DTO file'
+  $path = Join-Path $sbx $target.relativePath
+  $before = [System.IO.File]::ReadAllText($path)
+  Assert ($before -match 'class \w+ListiningDTO') 'the seeded file has no generated declaration to lose'
+  # Verified state: without the guard this file is overwritten without question.
+  Assert ((Get-ContentHash $path).Value -eq $target.contentHash) 'the seeded file is not in the verified state'
+
+  # The one edit: the model-driven section of the template stops producing anything, exactly as it did
+  # when the code model came back empty. Everything before it - the using block - is still emitted.
+  $tt = Join-Path $templates 'Application.DTO/ListiningsDTO.tt'
+  $text = [System.IO.File]::ReadAllText($tt)
+  Assert ($text -match 'if \(entities\.Any\(\)\) \{') 'the listings template no longer guards on the resolved entities'
+  [System.IO.File]::WriteAllText($tt, ($text -replace 'if \(entities\.Any\(\)\) \{', 'if (entities.Take(0).Any()) {'))
+
+  $g = Invoke-Generate $sbx 'F6'
+  Assert ($g.Exit -eq 9) "expected exit 9 (GenerationDefect) but got $($g.Exit) ($($g.Report.ExitCodeName))"
+  $d = Get-Diags $g.Report 'LC2012'
+  Assert (@($d | Where-Object { $_.Path -eq $target.relativePath }).Count -ge 1) "LC2012 does not name $($target.relativePath)"
+  $hit = @($d | Where-Object { $_.Path -eq $target.relativePath })[0]
+  Assert ($hit.Data.templateId -eq 'application-dto.listinings') 'LC2012 does not carry the templateId'
+  Assert ($hit.Data.layer -eq 'Application.DTO' -and $hit.Data.aggregate -eq 'Products') 'LC2012 does not carry the layer and aggregate'
+  Assert ($hit.Data.reason -eq 'no-significant-content') "LC2012 reason is $($hit.Data.reason)"
+  Assert ($hit.Data.currentHash.Length -eq 64 -and $hit.Data.regeneratedHash.Length -eq 64) 'LC2012 lacks the hashes'
+  Assert ([int]$hit.Data.currentSignificantLines -gt 0 -and [int]$hit.Data.regeneratedSignificantLines -eq 0) 'LC2012 significant-line counts are wrong'
+  Assert ($hit.Data.resolutions -eq 'none') 'LC2012 offers a resolution flag'
+  Assert ($g.Report.TransformedTemplates.Count -gt 0) 'no template was transformed: the refusal did not come from a real transformation'
+  Assert ([System.IO.File]::ReadAllText($path) -eq $before) 'the generated file was overwritten by the contentless body'
+
+  # Force must not be a way around it.
+  $gf = Invoke-Generate $sbx 'F6-force' @('--resolution', 'force')
+  Assert ($gf.Exit -eq 9) "force run expected exit 9 but got $($gf.Exit) ($($gf.Report.ExitCodeName))"
+  Assert ([System.IO.File]::ReadAllText($path) -eq $before) 'force overwrote the file with the contentless body'
+  Assert ((Get-Diags $gf.Report 'LC2006' | Where-Object { $_.Path -eq $target.relativePath }).Count -eq 0) 'the forced-overwrite diagnostic was emitted for a collapsed output'
+
+  # A global-usings file is contentless by design and keeps regenerating in the same run.
+  $usings = ($m.Doc.files | Where-Object { $_.templateId -eq 'application-dto.global-usings' } | Select-Object -First 1)
+  Assert ($null -ne $usings) 'no global-usings entry to check the exemption against'
+  Assert ((Get-Diags $g.Report 'LC2012' | Where-Object { $_.Path -eq $usings.relativePath }).Count -eq 0) 'the declared contentless output was reported as a collapse'
+}
+
 Add-Scenario 'T2' 'Unresolvable toolchain fails early with the prerequisite code and an actionable diagnostic; nothing generated' -IntentionalFailure {
   $sbx = New-Sandbox 'sbx-noVS' @()
   $reportPath = Join-Path $reportDir 'T2.json'
@@ -571,7 +627,7 @@ function Finish([int]$code) {
   $summary.skipped = @($results | Where-Object { $_.status -eq 'skipped' }).Count
   $summary.scenarios = @($results)
   $summary.exitCode = $code
-  $summary.exitCodeName = @{0='Success';1='AssertionFailure';3='PrerequisiteUnavailable';4='InvalidFixtureOrSandbox';5='Timeout';6='ContractMismatch';7='OwnershipConflict';8='HarnessFailure'}[$code]
+  $summary.exitCodeName = @{0='Success';1='AssertionFailure';3='PrerequisiteUnavailable';4='InvalidFixtureOrSandbox';5='Timeout';6='ContractMismatch';7='OwnershipConflict';8='HarnessFailure';9='GenerationDefect'}[$code]
   $summary.finishedUtc = (Get-Date).ToUniversalTime().ToString('o')
   $summary.verdict = if ($code -eq 0) { "RESULT: OK (passed=$($summary.passed) failed=$($summary.failed))" } else { "RESULT: FAIL (passed=$($summary.passed) failed=$($summary.failed) exit=$code $($summary.exitCodeName))" }
   $summary | ConvertTo-Json -Depth 8 | Set-Content -Path (Join-Path $runDir 'summary.json')

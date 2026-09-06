@@ -131,3 +131,46 @@ The caller SHALL be able to resolve drift and unverified states explicitly, and 
 
 - **WHEN** the force flag is supplied
 - **THEN** files classified `Manual` are still not written or deleted
+
+### Requirement: A contentless output never replaces a file that has content
+
+Drift protection answers whether a human changed a file, and a `verified` file is deliberately overwritable. It therefore cannot see a transformation that resolved no model and emitted only its template's static preamble: the body is new, well formed and says nothing. Ahead of the state resolution, and for every state including `verified`, the generator SHALL refuse to replace a file whose body carries content with a regenerated body that carries none.
+
+A body carries content when at least one of its lines is significant. A line SHALL be significant unless it is blank, a whole-line comment in the file's comment syntax, or an import or preprocessor directive. The rule SHALL be conservative: a line it cannot classify counts as significant. The rule SHALL NOT be a threshold — a body that shrinks but still declares something is written normally.
+
+The refusal SHALL be reported with a diagnostic code distinct from drift and from unverified, SHALL identify the file, template, layer and aggregate, both hashes and the significant-line count on each side, and SHALL map to its own exit code, because the run produced a defective artifact rather than meeting a conflict with the developer. No resolution flag SHALL override it. A template whose correct output carries no significant content SHALL declare that in the template registry and SHALL be exempt.
+
+#### Scenario: Verified file survives a contentless regeneration
+
+- **WHEN** a `GeneratorOwned` file is `verified` and the regenerated body carries no significant line
+- **THEN** the file is not overwritten
+- **AND** the diagnostic names the file, the `templateId`, the layer, the aggregate, both hashes and the significant-line count of each side
+- **AND** the run reports the exit code reserved for a defective generation, not the ownership-conflict code
+
+#### Scenario: Unverified file survives a contentless regeneration
+
+- **WHEN** a `GeneratorOwned` file is `unverified` and the regenerated body carries no significant line
+- **THEN** the file is not overwritten
+- **AND** the collapse is reported rather than the unverified difference
+
+#### Scenario: Force does not override the refusal
+
+- **WHEN** the force flag is supplied and the regenerated body carries no significant line
+- **THEN** the file is still not overwritten
+- **AND** no forced-overwrite diagnostic is emitted for it
+
+#### Scenario: A declared contentless output regenerates normally
+
+- **WHEN** a template declares that its correct output carries no significant content and it regenerates such a body
+- **THEN** the file is written
+- **AND** no collapse diagnostic is emitted
+
+#### Scenario: A new file is never a collapse
+
+- **WHEN** no file exists at the output path and the regenerated body carries no significant line
+- **THEN** the file is written, because no content is lost
+
+#### Scenario: A smaller body that still declares something is written
+
+- **WHEN** the regenerated body has fewer significant lines than the file on disk but at least one
+- **THEN** the file is overwritten as an ordinary regeneration

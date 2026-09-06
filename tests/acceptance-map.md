@@ -66,6 +66,7 @@ Naming:
 | Absent baseline never authorizes overwrite | `test:GenerationWriterTests.UnverifiedDifferentContentIsProtectedWithDistinctCode`, `test:GenerationWriterTests.MigratedV1EntryWithUnknownHashIsProtectedWhenContentDiffers`, `harness:F4` |
 | Actionable diagnostics with stable codes | `test:ExitCodeTests.EveryDiagnosticCodeIsDescribed`, `harness:F1`, `harness:F4` |
 | Explicit resolution flags | `test:GenerationWriterTests.ForceOverwritesDriftAndReportsIt`, `test:GenerationWriterTests.SkipModifiedPreservesTheFileAndSucceeds`, `harness:F2`, `harness:F3`, `harness:F5` |
+| A contentless output never replaces a file that has content | `test:OutputCollapseTests.VerifiedFileIsNotOverwrittenByACollapsedBody`, `test:OutputCollapseTests.UnverifiedFileIsNotOverwrittenByACollapsedBody`, `test:OutputCollapseTests.ForceDoesNotOverrideTheCollapseRefusal`, `test:OutputCollapseTests.ATemplateThatDeclaresAContentlessOutputIsNotAFalsePositive`, `test:OutputCollapseTests.ANewFileIsNeverACollapseBecauseNothingWouldBeLost`, `test:OutputCollapseTests.AShrinkingBodyThatStillDeclaresSomethingIsWritten`, `test:OutputCollapseTests.EveryContentlessTemplateOutputInTheReferenceCorpusIsDeclared`, `harness:F6` |
 
 ## e2e-verification-harness
 
