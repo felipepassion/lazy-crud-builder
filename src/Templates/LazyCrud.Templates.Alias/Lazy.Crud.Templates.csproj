@@ -24,6 +24,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--
+      Directory.Build.props packs the repository README into every package. This package ships its
+      own, and two entries named README.md at the package root leave the reader to pick one: the
+      inherited item is removed here so PackageReadmeFile resolves to this package's README.
+    -->
+    <None Remove="$(LazyCrudRepoRoot)README.md" />
     <None Include="..\LazyCrud.Templates\LICENSE.TXT" Pack="true" PackagePath="/" />
     <None Include="README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
