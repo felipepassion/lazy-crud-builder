@@ -50,6 +50,11 @@ mono_crash.*
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+# ...except the release records, which are a published contract and not a build output:
+# contracts/releases/<version>.json is what the consuming repository reads to learn what a
+# release physically is (package ids, hashes, the commit that produced them).
+!contracts/releases/
+!contracts/releases/*.json
 x64/
 x86/
 [Ww][Ii][Nn]32/
