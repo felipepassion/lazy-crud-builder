@@ -18,9 +18,10 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
     /// <summary>One registered template output. Ids are stable; they never change silently.</summary>
     public sealed class TemplateRegistryEntry
     {
-        public TemplateRegistryEntry(string id, string layer, string sourceFile, string outputPattern, Ownership ownership, TemplateKind kind)
+        public TemplateRegistryEntry(string id, string layer, string sourceFile, string outputPattern, Ownership ownership, TemplateKind kind, bool emptyOutputAllowed = false)
         {
             Id = id; Layer = layer; SourceFile = sourceFile; OutputPattern = outputPattern; Ownership = ownership; Kind = kind;
+            EmptyOutputAllowed = emptyOutputAllowed;
         }
 
         /// <summary>Stable template id, for example <c>domain.command-handlers</c>.</summary>
@@ -33,6 +34,14 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
         public string OutputPattern { get; }
         public Ownership Ownership { get; }
         public TemplateKind Kind { get; }
+        /// <summary>
+        /// The template's correct output carries no significant content of its own -- a global-usings
+        /// file, whose whole body is import directives, is the case that exists today. Only such a
+        /// template may write a contentless body over a file that has content; for every other
+        /// template that is the signature of a transformation that lost its model, and it is refused
+        /// with <c>LC2012</c>. Declared here, never inferred.
+        /// </summary>
+        public bool EmptyOutputAllowed { get; }
 
         /// <summary>The package that carries this template.</summary>
         public string PackageId { get { return TemplateRegistry.PackageForSource(SourceFile); } }
@@ -59,6 +68,9 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
 
         private static TemplateRegistryEntry W(string id, string layer, string source, string output, Ownership ownership)
             => new TemplateRegistryEntry(id, layer, source, output, ownership, TemplateKind.Writer);
+        /// <summary>A writer template whose correct output carries no significant content (see <see cref="TemplateRegistryEntry.EmptyOutputAllowed"/>).</summary>
+        private static TemplateRegistryEntry WEmpty(string id, string layer, string source, string output, Ownership ownership)
+            => new TemplateRegistryEntry(id, layer, source, output, ownership, TemplateKind.Writer, emptyOutputAllowed: true);
         private static TemplateRegistryEntry E(string id, string layer, string source)
             => new TemplateRegistryEntry(id, layer, source, null, Ownership.GeneratorOwned, TemplateKind.Entry);
         private static TemplateRegistryEntry I(string id, string layer, string source)
@@ -80,7 +92,7 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
             W("domain.user-entity", "Domain", "Domain/UserEntity.tt", "Aggregates/UsersAgg/Entities/User.cs", Ownership.GeneratedOnce),
             W("domain.legacy-commands.entities", "Domain", "Domain/Commands.tt", "../../../{Aggregate}/{Aggregate}.Domain/DefaultEntities.tt", Ownership.GeneratorOwned),
             W("domain.legacy-commands.commands", "Domain", "Domain/Commands.tt", "../../../{Aggregate}/{Aggregate}.{Layer}/DefaultCommands.tt", Ownership.GeneratorOwned),
-            W("domain.global-usings", "Domain", "Domain/DomainGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
+            WEmpty("domain.global-usings", "Domain", "Domain/DomainGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
             W("domain.command-handlers", "Domain", "Domain/DomainCommandHandlers.tt", "{OutputPath}/{Agg}.DomainCommandHandlers.cs", Ownership.GeneratorOwned),
             W("domain.command-handlers.seed", "Domain", "Domain/DomainCommandHandlers.tt", "Aggregates/{Agg}/CommandHandlers/{Entity}CommandHandler.cs", Ownership.GeneratedOnce),
             W("domain.command-models", "Domain", "Domain/DomainCommandModels.tt", "{OutputPath}/{Agg}.DomainCommandModels.cs", Ownership.GeneratorOwned),
@@ -97,13 +109,13 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
 
             // Application
             E("application.default-commands", "Application", "Application/DefaultCommands.tt"),
-            W("application.global-usings", "Application", "Application/ApplicationGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
+            WEmpty("application.global-usings", "Application", "Application/ApplicationGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
             W("application.app-services", "Application", "Application/AppServices.tt", "{OutputPath}/{Agg}.AppServices.cs", Ownership.GeneratorOwned),
             W("application.iapp-services", "Application", "Application/IAppServices.tt", "{OutputPath}/{Agg}.IAppServices.cs", Ownership.GeneratorOwned),
 
             // Application.DTO
             E("application-dto.default-commands", "Application.DTO", "Application.DTO/DefaultCommands.tt"),
-            W("application-dto.global-usings", "Application.DTO", "Application.DTO/ApplicationDtoGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
+            WEmpty("application-dto.global-usings", "Application.DTO", "Application.DTO/ApplicationDtoGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
             W("application-dto.csv-mapper", "Application.DTO", "Application.DTO/CsvMapper.tt", "{OutputPath}/{Agg}.ListiningDTO.cs", Ownership.GeneratorOwned),
             W("application-dto.listinings", "Application.DTO", "Application.DTO/ListiningsDTO.tt", "{OutputPath}/{Agg}.ListiningDTO.cs", Ownership.GeneratorOwned),
             W("application-dto.requests", "Application.DTO", "Application.DTO/RequestsDTO.tt", "{OutputPath}/{Agg}.RequestsDTO.cs", Ownership.GeneratorOwned),
@@ -117,22 +129,22 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
             // Infra.Data
             E("infra-data.default-commands", "Infra.Data", "Infra.Data/DefaultCommands.tt"),
             W("infra-data.identity-context", "Infra.Data", "Infra.Data/IdentityContext.tt", "{OutputPath}/{Agg}.IdentityContext.cs", Ownership.GeneratorOwned),
-            W("infra-data.global-usings", "Infra.Data", "Infra.Data/InfraDataGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
+            WEmpty("infra-data.global-usings", "Infra.Data", "Infra.Data/InfraDataGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
             W("infra-data.mappings", "Infra.Data", "Infra.Data/Mappings.tt", "{OutputPath}/{Agg}.Mappings.cs", Ownership.GeneratorOwned),
             W("infra-data.repositories", "Infra.Data", "Infra.Data/Respositories.tt", "{OutputPath}/{Agg}.Respositories.cs", Ownership.GeneratorOwned),
 
             // Infra.IoC
             E("infra-ioc.default-commands", "Infra.IoC", "Infra.IoC/DefaultCommands.tt"),
-            W("infra-ioc.global-usings", "Infra.IoC", "Infra.IoC/InfraIoCGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
+            WEmpty("infra-ioc.global-usings", "Infra.IoC", "Infra.IoC/InfraIoCGlobalUsings.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
             W("infra-ioc.ioc-factory", "Infra.IoC", "Infra.IoC/IoCFactory.tt", "{OutputPath}/{Agg}.IoCFactory.cs", Ownership.GeneratorOwned),
 
             // Api.Queries
             E("api-queries.default-commands", "Api.Queries", "Api.Queries/DefaultCommands.tt"),
-            W("api-queries.global-usings", "Api.Queries", "Api.Queries/ApiQueriesGlobalUsings.tt", "T4/{Agg}.cs", Ownership.GeneratorOwned),
+            WEmpty("api-queries.global-usings", "Api.Queries", "Api.Queries/ApiQueriesGlobalUsings.tt", "T4/{Agg}.cs", Ownership.GeneratorOwned),
             W("api-queries.query-models", "Api.Queries", "Api.Queries/QueryModels.tt", "{OutputPath}/{Agg}.QueryModels.cs", Ownership.GeneratorOwned),
 
             // Api
-            W("api.global-usings", "Api", "Api/ApiGlobalUsings.tt", "{OutputPath}/{Agg}.Api.GlobalUsings.cs", Ownership.GeneratorOwned),
+            WEmpty("api.global-usings", "Api", "Api/ApiGlobalUsings.tt", "{OutputPath}/{Agg}.Api.GlobalUsings.cs", Ownership.GeneratorOwned),
             W("api.mini-controllers", "Api", "Api/MiniControllers.tt", "{OutputPath}/{Agg}.Controllers.cs", Ownership.GeneratorOwned),
             W("api.mini-ioc-factory", "Api", "Api/MiniIoCFactory.tt", "{OutputPath}/{Agg}.cs", Ownership.GeneratorOwned),
             // The migration script embeds the moment it was generated, so its content is never reproducible;

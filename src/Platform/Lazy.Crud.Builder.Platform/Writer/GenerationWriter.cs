@@ -50,6 +50,8 @@ namespace Lazy.Crud.Builder.Platform.Writer
         SkippedByFlag = 4,
         Failed = 5,
         RefusedManual = 6,
+        /// <summary>The regenerated body carried no content and the existing file was preserved (LC2012).</summary>
+        RefusedCollapsed = 7,
     }
 
     public sealed class WriteResult
@@ -64,7 +66,7 @@ namespace Lazy.Crud.Builder.Platform.Writer
         public List<Diagnostic> Diagnostics { get; } = new List<Diagnostic>();
         /// <summary>Host-written mode only: the exact text the host must write (marker included, or the protected file's current content).</summary>
         public string EmittedText { get; set; }
-        public bool Succeeded { get { return Outcome != WriteOutcome.Failed && Outcome != WriteOutcome.Protected; } }
+        public bool Succeeded { get { return Outcome != WriteOutcome.Failed && Outcome != WriteOutcome.Protected && Outcome != WriteOutcome.RefusedCollapsed; } }
     }
 
     /// <summary>
@@ -192,7 +194,17 @@ namespace Lazy.Crud.Builder.Platform.Writer
                     return WriteFile(request, sink, result, manifest, relativePath, absolutePath, ownership, syntax, body, newHash, null);
                 }
 
-                // 3. GeneratorOwned: verify before overwriting.
+                // 3. GeneratorOwned, collapse guard: a body that carries no content never replaces a
+                //    file that has some. This runs before the drift states on purpose. Drift protection
+                //    answers "did a human change this?" and deliberately lets a verified file be
+                //    rewritten; it therefore cannot see a transformation that lost its model and emitted
+                //    nothing but the template's preamble, whose output is a well-formed contentless file.
+                //    Refused for every state, and no resolution flag overrides it: force resolves an
+                //    ownership conflict, and this is not one -- the generated content is defective.
+                if (exists && RefuseCollapse(request, sink, result, registryEntry, relativePath, absolutePath, syntax, body, newHash))
+                    return false;
+
+                // 4. GeneratorOwned: verify before overwriting.
                 var state = DriftInspector.Inspect(request.SolutionRoot, relativePath, entry);
                 result.State = state.State;
                 switch (state.State)
@@ -234,6 +246,54 @@ namespace Lazy.Crud.Builder.Platform.Writer
                 }
                 return false;
             });
+        }
+
+        /// <summary>
+        /// Refuses to replace a file that carries content with a regenerated body that carries none.
+        /// Returns true when the write was refused.
+        /// </summary>
+        private static bool RefuseCollapse(WriteRequest request, IDiagnosticSink sink, WriteResult result, Descriptor.TemplateRegistryEntry registryEntry,
+            string relativePath, string absolutePath, CommentSyntax syntax, string body, ContentHash newHash)
+        {
+            if (registryEntry != null && registryEntry.EmptyOutputAllowed) return false;
+            if (!BodySignificance.IsContentless(body, syntax)) return false;
+
+            string current;
+            try { current = File.ReadAllText(absolutePath); }
+            catch (Exception ex)
+            {
+                // The file cannot be read, so it cannot be shown to carry content. Refusing here would
+                // block a legitimate regeneration over an unreadable file; the write path reports its
+                // own failure if the file is equally unwritable.
+                sink.Report(new Diagnostic(DiagnosticCodes.FileWriteFailed, DiagnosticSeverity.Warning, relativePath,
+                    "The existing file could not be read while checking the regenerated content for collapse: " + ex.GetType().Name + ": " + ex.Message + "."));
+                return false;
+            }
+
+            var currentBody = BodySignificance.BodyOf(current);
+            var currentSignificant = BodySignificance.CountSignificantLines(currentBody, syntax);
+            if (currentSignificant == 0) return false;
+
+            result.Outcome = WriteOutcome.RefusedCollapsed;
+            if (request.HostWrites) result.EmittedText = current;
+            sink.Report(new Diagnostic(DiagnosticCodes.OutputCollapsed, DiagnosticSeverity.Error, relativePath,
+                "The transformation produced a body that carries no content (" + BodySignificance.Reason(body) + ") while the file on disk carries "
+                + currentSignificant + " line(s) of it, so the file was NOT overwritten and nothing was lost. This is a defective transformation, not an edit of yours: "
+                + "rerun the generation, and if it repeats, look at the template and the model it resolves. No resolution flag overrides this refusal; if the template is "
+                + "meant to produce a body of directives only, declare it in the platform template registry.")
+                .With("templateId", request.TemplateId ?? string.Empty)
+                .With("layer", request.Layer ?? string.Empty)
+                .With("aggregate", request.AggregateName ?? string.Empty)
+                .With("sourceTemplate", request.SourceTemplate ?? string.Empty)
+                .With("reason", BodySignificance.Reason(body))
+                .With("rule", BodySignificance.RuleId)
+                .With("currentHash", ContentHasher.Compute(current).Value)
+                .With("regeneratedHash", newHash.Value)
+                .With("currentSignificantLines", currentSignificant.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                .With("regeneratedSignificantLines", "0")
+                .With("regeneratedBodyLength", (body ?? string.Empty).Length.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                .With("resolutions", "none"));
+            return true;
         }
 
         private static bool Protect(WriteRequest request, IDiagnosticSink sink, WriteResult result, GenerationManifest manifest,

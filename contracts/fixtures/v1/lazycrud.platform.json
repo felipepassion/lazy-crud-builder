@@ -171,7 +171,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Templates",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/project.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "shared.tests-common",
@@ -182,7 +183,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Templates",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Tests.Common.ttinclude",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.default-entities",
@@ -193,7 +195,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DefaultEntities.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.default-commands",
@@ -204,7 +207,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DefaultCommands.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.domain-commands",
@@ -215,7 +219,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommands.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.reset-this-aggregate",
@@ -226,7 +231,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/ResetThisAggregate.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.aggregate-settings-entity",
@@ -237,7 +243,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/AggregateSettingsEntity.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.default-folders",
@@ -248,7 +255,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DefaultFolders.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.user-entity",
@@ -259,7 +267,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/UserEntity.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.legacy-commands.entities",
@@ -270,7 +279,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Commands.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.legacy-commands.commands",
@@ -281,7 +291,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Commands.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.global-usings",
@@ -292,7 +303,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainGlobalUsings.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": true
       },
       {
         "id": "domain.command-handlers",
@@ -303,7 +315,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommandHandlers.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.command-handlers.seed",
@@ -314,7 +327,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommandHandlers.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.command-models",
@@ -325,7 +339,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommandModels.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.event-handlers",
@@ -336,7 +351,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainEventHandlers.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.event-models",
@@ -347,7 +363,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/DomainEventModels.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.filters",
@@ -358,7 +375,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Filters.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.irepositories",
@@ -369,7 +387,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/IRespositories.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.profiles-listining-mapping",
@@ -380,7 +399,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/ProfilesListiningMapping.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.profiles-mapping",
@@ -391,7 +411,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/ProfilesMapping.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.specifications",
@@ -402,7 +423,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Specifications.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.specification-item",
@@ -413,7 +435,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/SpecificationItem.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.specification-sub-item",
@@ -424,7 +447,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/SpecificationSubItem.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "domain.csv-mapping-profiles",
@@ -435,7 +459,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/CSVMappingProfiles.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application.default-commands",
@@ -446,7 +471,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application/DefaultCommands.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application.global-usings",
@@ -457,7 +483,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application/ApplicationGlobalUsings.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": true
       },
       {
         "id": "application.app-services",
@@ -468,7 +495,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application/AppServices.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application.iapp-services",
@@ -479,7 +507,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application/IAppServices.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.default-commands",
@@ -490,7 +519,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/DefaultCommands.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.global-usings",
@@ -501,7 +531,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/ApplicationDtoGlobalUsings.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": true
       },
       {
         "id": "application-dto.csv-mapper",
@@ -512,7 +543,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/CsvMapper.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.listinings",
@@ -523,7 +555,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/ListiningsDTO.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.requests",
@@ -534,7 +567,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/RequestsDTO.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.requests.seed",
@@ -545,7 +579,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/RequestsDTO.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.responses",
@@ -556,7 +591,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/ResponsesDTO.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.steppable-requests",
@@ -567,7 +603,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/SteppableRequestsDTO.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.steppable-requests-validators",
@@ -578,7 +615,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/SteppableRequestsValidators.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.steppable-requests-validators.seed",
@@ -589,7 +627,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/SteppableRequestsValidators.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "application-dto.updates",
@@ -600,7 +639,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Application.DTO/UpdatesDTO.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "infra-data.default-commands",
@@ -611,7 +651,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.Data",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/DefaultCommands.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "infra-data.identity-context",
@@ -622,7 +663,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.Data",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/IdentityContext.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "infra-data.global-usings",
@@ -633,7 +675,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.Data",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/InfraDataGlobalUsings.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": true
       },
       {
         "id": "infra-data.mappings",
@@ -644,7 +687,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.Data",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/Mappings.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "infra-data.repositories",
@@ -655,7 +699,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.Data",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.Data/Respositories.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "infra-ioc.default-commands",
@@ -666,7 +711,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.IoC",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.IoC/DefaultCommands.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "infra-ioc.global-usings",
@@ -677,7 +723,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.IoC",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.IoC/InfraIoCGlobalUsings.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": true
       },
       {
         "id": "infra-ioc.ioc-factory",
@@ -688,7 +735,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.IoC",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Infra.IoC/IoCFactory.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "api-queries.default-commands",
@@ -699,7 +747,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api.Queries",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api.Queries/DefaultCommands.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "api-queries.global-usings",
@@ -710,7 +759,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api.Queries",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api.Queries/ApiQueriesGlobalUsings.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": true
       },
       {
         "id": "api-queries.query-models",
@@ -721,7 +771,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api.Queries",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api.Queries/QueryModels.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "api.global-usings",
@@ -732,7 +783,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api/ApiGlobalUsings.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": true
       },
       {
         "id": "api.mini-controllers",
@@ -743,7 +795,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api/MiniControllers.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "api.mini-ioc-factory",
@@ -754,7 +807,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api/MiniIoCFactory.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "api.mini-migrations",
@@ -765,7 +819,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Api/MiniMigrations.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.domain",
@@ -776,7 +831,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Domain/Tests.Domain.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.application",
@@ -787,7 +843,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Application/Tests.Application.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.application-dto",
@@ -798,7 +855,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Application.DTO",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Application.DTO/Tests.DTO.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.infra-data",
@@ -809,7 +867,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.Data",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Infra.Data/Tests.InfraData.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.infra-ioc",
@@ -820,7 +879,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Infra.IoC",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Infra.IoC/Tests.InfraIoC.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.api",
@@ -831,7 +891,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Api/Tests.Api.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.api-queries",
@@ -842,7 +903,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Api.Queries",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Api.Queries/Tests.ApiQueries.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.enumerations",
@@ -853,7 +915,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Enumeration",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Enumerations/Tests.Enumerations.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "tests.enumerations.none",
@@ -864,7 +927,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.Enumeration",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Tests/Enumerations/Tests.Enumerations.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-address-component",
@@ -875,7 +939,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicAddressComponent.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-configuracao-component",
@@ -886,7 +951,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicConfiguracaoComponent.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-contacts-component",
@@ -897,7 +963,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicContactsComponent.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-date-time-input",
@@ -908,7 +975,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicDateTimeInput.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-enum-input",
@@ -919,7 +987,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicEnumInput.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-foreign-data-drop-down-with-auto-complete",
@@ -930,7 +999,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicForeignDataDropDownWithAutoComplete.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-foreign-data-selector",
@@ -941,7 +1011,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicForeignDataSelector.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-form-css",
@@ -952,7 +1023,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicForm.css.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-form",
@@ -963,7 +1035,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicForm.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-form-input-chooser",
@@ -974,7 +1047,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicFormInputChooser.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-form-input-general-chooser",
@@ -985,7 +1059,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicFormInputGeneralChooser.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-form-list-chooser",
@@ -996,7 +1071,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicFormListChooser.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-image-input",
@@ -1007,7 +1083,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicImageInput.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-listbox-component",
@@ -1018,7 +1095,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicListboxComponent.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-mini-listing-picker-component",
@@ -1029,7 +1107,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicMiniListingPickerComponent.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-switch-toggler-input",
@@ -1040,7 +1119,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicSwitchTogglerInput.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-tab-bar-content-component",
@@ -1051,7 +1131,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicTabBarContentComponent.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-text-input",
@@ -1062,7 +1143,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicTextInput.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.basic-text-input-title",
@@ -1073,7 +1155,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/BasicTextInputTitle.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.client-ioc-factory",
@@ -1084,7 +1167,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientIoCFactory.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.client-listining-pages.index",
@@ -1095,7 +1179,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientListiningPages.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.client-listining-pages.index-css",
@@ -1106,7 +1191,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientListiningPages.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.client-pages-generator",
@@ -1117,7 +1203,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientPagesGenerator.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.client-register-pages.page",
@@ -1128,7 +1215,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientRegisterPages.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.client-register-pages.css",
@@ -1139,7 +1227,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/ClientRegisterPages.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.controllers",
@@ -1150,7 +1239,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/Controllers.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.dashboard-controllers",
@@ -1161,7 +1251,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/DashboardControllers.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.form-templates-switcher.css",
@@ -1172,7 +1263,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/FormTemplatesSwitcher.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.form-templates-switcher.page",
@@ -1183,7 +1275,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/FormTemplatesSwitcher.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.ioc-factory",
@@ -1194,7 +1287,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/IoCFactory.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.microservice-controller",
@@ -1205,7 +1299,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MicroserviceController.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.migrations",
@@ -1216,7 +1311,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/Migrations.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-basic-form-css",
@@ -1227,7 +1323,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniBasicForm.css.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-basic-form",
@@ -1238,7 +1335,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniBasicForm.tt",
-        "kind": "include"
+        "kind": "include",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-client-ioc-factory",
@@ -1249,7 +1347,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniClientIoCFactory.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-client-pages-generator",
@@ -1260,7 +1359,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniClientPagesGenerator.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-client-register-pages.page",
@@ -1271,7 +1371,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniClientRegisterPages.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-client-register-pages.css",
@@ -1282,7 +1383,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniClientRegisterPages.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-controllers",
@@ -1293,7 +1395,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniControllers.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-form-templates-switcher.css",
@@ -1304,7 +1407,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniFormTemplatesSwitcher.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-form-templates-switcher.page",
@@ -1315,7 +1419,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniFormTemplatesSwitcher.tt",
-        "kind": "writer"
+        "kind": "writer",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-ioc-factory",
@@ -1326,7 +1431,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniIoCFactory.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       },
       {
         "id": "webapi.mini-migrations",
@@ -1337,7 +1443,8 @@
         "templateVersion": "1.1.0",
         "packageId": "Lazy.Crud.Builder.WebApi",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/WebApi/MiniMigrations.tt",
-        "kind": "entry"
+        "kind": "entry",
+        "emptyOutputAllowed": false
       }
     ]
   },

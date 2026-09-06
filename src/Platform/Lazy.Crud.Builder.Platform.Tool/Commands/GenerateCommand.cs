@@ -196,6 +196,9 @@ public static class GenerateCommand
             };
         }
 
+        // A collapsed output is a defective transformation, not a conflict with the developer, and it
+        // is reported first so it is never mistaken for one.
+        if (diagnostics.Items.Any(d => d.Severity == DiagnosticSeverity.Error && d.Code == DiagnosticCodes.OutputCollapsed)) return Finish(ExitCodes.GenerationDefect);
         var ownershipCodes = new[] { DiagnosticCodes.Drifted, DiagnosticCodes.Unverified };
         if (diagnostics.Items.Any(d => d.Severity == DiagnosticSeverity.Error && ownershipCodes.Contains(d.Code))) return Finish(ExitCodes.OwnershipConflict);
         if (diagnostics.HasErrors || !result.Succeeded) return Finish(ExitCodes.AssertionFailure);

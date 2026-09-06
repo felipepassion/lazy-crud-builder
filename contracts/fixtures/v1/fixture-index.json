@@ -22,7 +22,8 @@
     "Timeout": 5,
     "ContractMismatch": 6,
     "OwnershipConflict": 7,
-    "HarnessFailure": 8
+    "HarnessFailure": 8,
+    "GenerationDefect": 9
   },
   "diagnosticCodes": {
     "LC1001": "Writing a generated file failed.",
@@ -46,6 +47,7 @@
     "LC2009": "The marker is missing or malformed but the body matches.",
     "LC2010": "A Manual path was refused for writing.",
     "LC2011": "A file carries only a v1 marker.",
+    "LC2012": "A regenerated body carries no content and the existing file was preserved.",
     "LC3001": "The template source could not be resolved.",
     "LC3002": "Local template development mode is active.",
     "LC3003": "A deprecated templates package id resolved to the canonical id.",

@@ -41,6 +41,11 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
         public string PackageId { get; set; }
         public string InPackagePath { get; set; }
         public string Kind { get; set; }
+        /// <summary>
+        /// True when this template's correct output carries no significant content, so a contentless
+        /// body is not evidence of a collapsed transformation. Absent means false. See LC2012.
+        /// </summary>
+        public bool EmptyOutputAllowed { get; set; }
     }
 
     public sealed class TemplatesDescriptor
@@ -172,6 +177,7 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
                 j["id"] = r.Id; j["layer"] = r.Layer; j["sourceFile"] = r.SourceFile; j["outputPattern"] = r.OutputPattern;
                 j["ownership"] = r.Ownership; j["templateVersion"] = r.TemplateVersion; j["packageId"] = r.PackageId;
                 j["inPackagePath"] = r.InPackagePath; j["kind"] = r.Kind;
+                j["emptyOutputAllowed"] = r.EmptyOutputAllowed;
                 return (object)j;
             }).ToList();
             o["templates"] = t;
@@ -267,6 +273,7 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
                         OutputPattern = r.GetString("outputPattern"), Ownership = r.GetString("ownership"),
                         TemplateVersion = r.GetString("templateVersion"), PackageId = r.GetString("packageId"),
                         InPackagePath = r.GetString("inPackagePath"), Kind = r.GetString("kind"),
+                        EmptyOutputAllowed = r.GetBoolean("emptyOutputAllowed") ?? false,
                     });
                 }
             }

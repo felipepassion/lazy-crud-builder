@@ -100,6 +100,7 @@ public static class DescriptorBuilder
                 PackageId = e.PackageId,
                 InPackagePath = e.InPackagePath,
                 Kind = e.Kind.ToString().ToLowerInvariant(),
+                EmptyOutputAllowed = e.EmptyOutputAllowed,
             }).ToList(),
         };
 

@@ -26,6 +26,12 @@ namespace Lazy.Crud.Builder.Platform
         public const int OwnershipConflict = 7;
         /// <summary>The harness itself failed (internal error), as opposed to a scenario failing.</summary>
         public const int HarnessFailure = 8;
+        /// <summary>
+        /// Generation produced an output that carries no content where the existing file has some. The
+        /// write was refused and nothing was lost, but the run generated a defective artifact and must
+        /// not be treated as successful.
+        /// </summary>
+        public const int GenerationDefect = 9;
 
         public static readonly IReadOnlyDictionary<int, string> Table = new Dictionary<int, string>
         {
@@ -38,6 +44,7 @@ namespace Lazy.Crud.Builder.Platform
             [ContractMismatch] = "ContractMismatch",
             [OwnershipConflict] = "OwnershipConflict",
             [HarnessFailure] = "HarnessFailure",
+            [GenerationDefect] = "GenerationDefect",
         };
 
         public static string Name(int code)
