@@ -13,6 +13,7 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <RollForward>LatestMajor</RollForward>
+    <UserSecretsId>f28e32c8-da91-4fda-9a68-f52413af8e46</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
