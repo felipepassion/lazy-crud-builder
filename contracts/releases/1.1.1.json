@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "version": "1.1.1",
+  "status": "published",
+  "generatedAtUtc": "2026-09-07T07:57:51.1069378Z",
+  "source": "https://api.nuget.org/v3/index.json",
+  "platformVersion": "1.1.1",
+  "contractVersion": 1,
+  "descriptorSchemaVersion": 1,
+  "manifestSchemaVersion": 2,
+  "templatesPackageId": "Lazy.Crud.Builder.Templates",
+  "templatesAliasPackageIds": [
+    "Lazy.Crud.Templates"
+  ],
+  "commit": "f08ae77984bce9d253fc9511a745062e95564a57",
+  "commitReachableFromRemote": false,
+  "repositoryUrl": "https://github.com/felipepassion/lazy-crud-builder",
+  "packageCount": 18,
+  "declaredCount": 18,
+  "missingPackages": [],
+  "undeclaredPackages": [],
+  "packages": [
+    {
+      "packageId": "Lazy.Crud.Builder.Api",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Api.1.1.1.nupkg",
+      "sizeBytes": 20581,
+      "sha256": "d6d798c4fc895403de2d0d1e4a39237b03bc410f1e002ba7378bab313e644fcf",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Api.Queries",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Api.Queries.1.1.1.nupkg",
+      "sizeBytes": 19257,
+      "sha256": "5a2bc3606d7cf9654dfa0c6cb23bbccd68ac34279dcc541256a891e7c816e297",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Application",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Application.1.1.1.nupkg",
+      "sizeBytes": 25694,
+      "sha256": "9eb0f8883146e730118c574cbc3b75038b12e14cabce3e7c01640d535c17bc5b",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Application.DTO",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Application.DTO.1.1.1.nupkg",
+      "sizeBytes": 95875,
+      "sha256": "661023c86125eea830b7ac69f11dc814c6af85101a457847ddedab859c446dac",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Application.DTO.Http.Models",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Application.DTO.Http.Models.1.1.1.nupkg",
+      "sizeBytes": 16662,
+      "sha256": "9fe9bcb6f3712d8490b79d5fee49c233d233731062a537e78b142b2425568184",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Application.Validators",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Application.Validators.1.1.1.nupkg",
+      "sizeBytes": 15739,
+      "sha256": "6c712c377fb09031c4f588ceac3d050bba90f73d68fc5afd33fc07f4fd7311ac",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Domain",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Domain.1.1.1.nupkg",
+      "sizeBytes": 54485,
+      "sha256": "040832ca6a23bccdc836e2340c498e83c09f61b0a897eba5c8c0d8dac50928ae",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Enumeration",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Enumeration.1.1.1.nupkg",
+      "sizeBytes": 17235,
+      "sha256": "c1b051e6d38cea8a1f817a2010785fb22761533f7957345a53c3c54ad595e282",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Infra.Data",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Infra.Data.1.1.1.nupkg",
+      "sizeBytes": 40278,
+      "sha256": "975c9bc93f28d49a4ee13d840186f6a615c06247f2e6b04ea979f936d49d8d08",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Infra.IoC",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Infra.IoC.1.1.1.nupkg",
+      "sizeBytes": 130369,
+      "sha256": "3744abafd973657aa775b228de2fa9c904392025932bb89446b764803543642c",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Platform",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Platform.1.1.1.nupkg",
+      "sizeBytes": 72397,
+      "sha256": "406fba3fbe1f13da61cae23d8d5c7b230d9aa6f6e9d67bad383d8f3b09822818",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.Templates",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.Templates.1.1.1.nupkg",
+      "sizeBytes": 1073862,
+      "sha256": "c6f797d3cf4baf75172d440be2a25cc44b98374ba4ad4639e1cd6cbaa2d83521",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Builder.WebApi",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Builder.WebApi.1.1.1.nupkg",
+      "sizeBytes": 59983,
+      "sha256": "c6de2e7d0edad3c725d75a8ad3683448f2fe4a7798368c2e215a6192dbc117c9",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.CrossCutting.Application.Mail",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.CrossCutting.Application.Mail.1.1.1.nupkg",
+      "sizeBytes": 16417,
+      "sha256": "36f93357328982c9c5f09636b55bfb647f01a3b41954ee03bdece528bb120006",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.CrossCutting.Domain",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.CrossCutting.Domain.1.1.1.nupkg",
+      "sizeBytes": 15950,
+      "sha256": "e0ff2bd278972fbee139bb166f1880f4812276a97de2fe0486668e3e14ecf0ac",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.CrossCutting.Infra.Log",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.CrossCutting.Infra.Log.1.1.1.nupkg",
+      "sizeBytes": 20004,
+      "sha256": "2990262dbd82092f8f4267baafce7747908ecb9bc3c074692f4acdec00fdae3f",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.CrossCutting.Infra.Utils",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.CrossCutting.Infra.Utils.1.1.1.nupkg",
+      "sizeBytes": 25728,
+      "sha256": "b4105a9cd3f63a42f4bd02308f675ddbbde8ffdf088d6fcaaffebceb02cc5fbd",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    },
+    {
+      "packageId": "Lazy.Crud.Templates",
+      "version": "1.1.1",
+      "fileName": "Lazy.Crud.Templates.1.1.1.nupkg",
+      "sizeBytes": 9280,
+      "sha256": "5cb8a0a6c6ad11af3b1bc5cab8b8f29bcf1b28f7a8c4d04c38b9b722f3b06f98",
+      "declared": true,
+      "publishedOnSource": true,
+      "sourceCheck": "queried",
+      "latestOnSource": "1.1.1"
+    }
+  ]
+}

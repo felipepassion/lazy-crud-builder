@@ -193,10 +193,17 @@ try {
   $v = Invoke-Proc 'dotnet' @($tool, 'validate', 'manifest', '--file', $manifestPath, '--repo', $repo) $repo 300 'validate-manifest'
   Assert ($v.ExitCode -eq 0) "the manifest does not validate against the published schema (log $($v.LogPath))"
   $manifestText = Get-Content -Raw $manifestPath
-  Assert ($manifestText -notmatch '[A-Za-z]:\') 'the manifest carries an absolute path'
+  Assert (-not [regex]::IsMatch($manifestText, '[A-Za-z]:' + [regex]::Escape('\'))) 'the manifest carries an absolute path'
   $manifest = $manifestText | ConvertFrom-Json -Depth 16
   Assert ($manifest.schemaVersion -eq 2) "manifest schemaVersion is $($manifest.schemaVersion)"
-  Add-Type -Path (Join-Path $packagesFolder "lazy.crud.builder.platform/$Version/lib/netstandard2.0/Lazy.Crud.Builder.Platform.dll")
+  # The writer that produced these files is the one shipped inside the templates package, under
+  # tools/: the standalone Platform package is not in a consumer's restore graph, so hashing with it
+  # would be hashing with something the consumer never downloaded.
+  $writerDll = Join-Path $packagesFolder "lazy.crud.builder.templates/$Version/tools/net10.0/Lazy.Crud.Builder.Platform.dll"
+  if (-not (Test-Path $writerDll)) { $writerDll = Join-Path $packagesFolder "lazy.crud.builder.platform/$Version/lib/netstandard2.0/Lazy.Crud.Builder.Platform.dll" }
+  Assert (Test-Path $writerDll) "the downloaded writer assembly was not found in the isolated cache"
+  Log "hashing with the downloaded writer: $($writerDll.Substring($packagesFolder.Length).TrimStart('\','/'))"
+  Add-Type -Path $writerDll
   $markerless = [System.Collections.Generic.List[string]]::new()
   foreach ($f in $manifest.files) {
     $path = Join-Path $sbx $f.relativePath
@@ -218,26 +225,40 @@ try {
     Assert ($t.ExitCode -eq 0) "the generated tests failed (log $($t.LogPath))"
   }
 
-  # ---- 8. the bytes served are the bytes built ------------------------------------------------------
+  # ---- 8. what the internet served is what this repository built ------------------------------------
+  #    Not a byte comparison of the .nupkg: nuget.org appends its own repository signature
+  #    (.signature.p7s) to every package it accepts, so the container it serves can never be identical
+  #    to the one that was pushed. What must be identical is everything inside it, entry by entry.
   $recordPath = Join-Path $repo "contracts/releases/$Version.json"
-  if (Test-Path $recordPath) {
-    $record = Get-Content -Raw $recordPath | ConvertFrom-Json -Depth 16
-    $checked = 0; $mismatched = [System.Collections.Generic.List[string]]::new()
-    foreach ($p in $record.packages) {
-      $nupkg = Join-Path $packagesFolder ("$($p.packageId.ToLowerInvariant())/$Version/$($p.packageId.ToLowerInvariant()).$Version.nupkg")
-      if (-not (Test-Path $nupkg)) { continue }   # not part of this consumer's graph
-      $checked++
-      $hash = (Get-FileHash -Algorithm SHA256 -Path $nupkg).Hash.ToLowerInvariant()
-      if ($hash -ne $p.sha256) { [void]$mismatched.Add("$($p.packageId): built $($p.sha256), served $hash") }
-    }
-    foreach ($m in $mismatched) { Log "HASH MISMATCH $m" }
-    Assert ($mismatched.Count -eq 0) "$($mismatched.Count) downloaded package(s) differ from what this repository built"
-    Log "$checked downloaded package(s) hash-identical to the release record"
-    $notes.Add("$checked package(s) verified byte-identical to contracts/releases/$Version.json")
-  } else {
-    $notes.Add('no release record to compare downloaded bytes against')
+  $checked = 0; $problems = [System.Collections.Generic.List[string]]::new()
+  Add-Type -AssemblyName System.IO.Compression.FileSystem
+  foreach ($f in (Get-ChildItem (Join-Path $repo "artifacts/nuget/$Version") -Filter *.nupkg -File)) {
+    $id = $f.Name.Substring(0, $f.Name.Length - ".$Version.nupkg".Length)
+    $servedPath = Join-Path $packagesFolder ("$($id.ToLowerInvariant())/$Version/$($id.ToLowerInvariant()).$Version.nupkg")
+    if (-not (Test-Path $servedPath)) { continue }   # not in this consumer's restore graph
+    $checked++
+    $built = [System.IO.Compression.ZipFile]::OpenRead($f.FullName)
+    $served = [System.IO.Compression.ZipFile]::OpenRead($servedPath)
+    try {
+      $servedEntries = @{}
+      foreach ($e in $served.Entries) { $servedEntries[$e.FullName] = $e }
+      foreach ($e in $built.Entries) {
+        if (-not $servedEntries.ContainsKey($e.FullName)) { $problems.Add("$id : the served package lacks $($e.FullName)"); continue }
+        $hb = (Get-FileHash -InputStream $e.Open() -Algorithm SHA256).Hash
+        $hs = (Get-FileHash -InputStream $servedEntries[$e.FullName].Open() -Algorithm SHA256).Hash
+        if ($hb -ne $hs) { $problems.Add("$id : $($e.FullName) differs") }
+      }
+      $extra = @($served.Entries.FullName | Where-Object { $_ -ne '.signature.p7s' -and -not ($built.Entries.FullName -contains $_) })
+      foreach ($x in $extra) { $problems.Add("$id : the served package carries an unexpected $x") }
+      $signed = @($served.Entries.FullName) -contains '.signature.p7s'
+      if (-not $signed) { $problems.Add("$id : the served package is not signed by the source") }
+    } finally { $built.Dispose(); $served.Dispose() }
   }
-
+  foreach ($m in $problems) { Log "CONTENT MISMATCH $m" }
+  Assert ($problems.Count -eq 0) "$($problems.Count) difference(s) between what was built and what the source served"
+  Log "$checked downloaded package(s) identical to what was built, entry by entry, and each signed by the source"
+  $notes.Add("$checked package(s) verified content-identical to artifacts/nuget/$Version, each carrying the source's repository signature")
+  if (-not (Test-Path $recordPath)) { $notes.Add('no release record present') }
   $verdict = 'passed'
 }
 catch {

@@ -18,9 +18,11 @@ every reference in this repository names 1.1.1. Nothing that follows changed bet
   different key. Both defaults are removed: `pack-all.ps1` and `publish-all.ps1` now read the key
   from `-ApiKey` or the `NUGET_API_KEY` environment variable and fail with a clear message when it
   is absent. `scripts/credential-scan.ps1` fails the build on any credential literal.
-- **External prerequisite (owner action, not done by this change):** both exposed keys must be
-  rotated on nuget.org and the replacement stored as the `NUGET_API_KEY` CI secret. Until rotation
-  happens, the keys in git history remain usable by anyone who reads them.
+- **Resolved 2026-09-07.** A new publish credential was issued and 1.1.1 was published with it; the
+  credential lives in the user's secret store and never in this repository. The leaked key was purged
+  from the local history before the first push, so it never reached the remote -- but it existed in
+  plain text on a developer machine and **must still be revoked on nuget.org**, which only the account
+  holder can do.
 
 ### Added (contractVersion 1)
 
