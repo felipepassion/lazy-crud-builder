@@ -343,6 +343,7 @@ gates and the battery on the real toolchain, fixed what they found, and committe
 
 **Open, with evidence**
 
+- ~~Intermittent degraded Application.DTO output.~~ **Closed 2026-09-07, see the closeout below.**
 - Intermittent degraded Application.DTO output. In one battery run (`artifacts/e2e/20260905-022527`, F5)
   three DTO templates emitted a marker-only body; regenerating the same sandbox reproduced the full body
   byte for byte, and two later batteries passed. The unverified protection caught it and refused the write,
@@ -351,3 +352,53 @@ gates and the battery on the real toolchain, fixed what they found, and committe
   generated code without question. Closing it needs a rule that refuses to overwrite a non-empty generated
   body with an empty one, which appends a diagnostic code and therefore a contract revision. Not done here.
 - Rotating the two exposed NuGet publish keys remains the account holder's, as recorded in section 0.
+
+## Closeout - 2026-09-07: the collapsed-output hole is closed
+
+**The defect, reproduced exactly.** A `GeneratorOwned` file that carries content is never replaced by a
+regenerated body that carries none. The check runs ahead of the drift states and applies to all of them,
+including `verified`, which drift protection deliberately allows to be overwritten and which was the
+exposure the previous closeout left open. A body is contentless when no line of it is content: blank
+lines, whole-line comments and import or preprocessor directives do not count, and anything the rule
+cannot classify does, so the refusal is only ever raised on a body demonstrably empty of content. The
+rule is not a threshold; a file that shrinks because an entity was removed still declares something.
+Refused with `LC2012` and exit code 9 (`GenerationDefect`), naming file, template, layer, aggregate,
+both hashes, the significant-line count on each side and the reason. No resolution flag overrides it.
+The seven `*.global-usings` templates, whose correct output is directives only, declare
+`emptyOutputAllowed` in the registry; a test asserts every contentless output in the golden corpus is
+covered by such a declaration.
+
+**A collapse is retried before it is believed.** A transformation that loses its model is the same class
+of transient host failure the pipeline already retries. It re-transforms the template whose output was
+refused; a retry that produces content records `LC2013` (warning) and downgrades the superseded `LC2012`
+to information, so the run is green with the recovery on the record. Only a collapse that survives every
+attempt keeps the error and exits 9.
+
+**Evidence.**
+
+- The defect caught in the wild, unprompted: battery `artifacts/e2e/20260907-013918`, scenario F2, an
+  ordinary `--resolution force` regeneration of an unmodified template tree. `LC2012` on
+  `ProductsAgg.ListiningDTO.cs`, on-disk hash `6f37411b...`, regenerated `d709d3bc...` -- the same pair
+  recorded in the 2026-09-05 F5 incident. Nine lines of good generated code survived a force that would
+  have destroyed them before this change. That run also proved the guard alone was not enough: the
+  refusal, correct in itself, failed a scenario about drift resolution. Hence the retry.
+- Harness scenario F6 proves it in a real Visual Studio transformation rather than a stub: a copy of the
+  template tree with one edit (`ListiningsDTO.tt` takes its "no entities" branch), 18 templates
+  transformed, `LC2012` with the full diagnostic, exit 9, `--force` also exit 9, the generated file
+  byte-identical afterwards, and the declared contentless output still regenerating.
+- Unit tests: `OutputCollapseTests` (12 cases) for the rule and the writer, `PipelineTests` (3 cases) for
+  the retry, the persistent case and the cross-layer correlation. The third found two defects in the
+  first draft of the retry: an entry already in the diagnostics file counted as a recovery, and repeated
+  collapses of the same path were deduplicated into a silent one.
+- Release gate green on a clean tree: `artifacts/e2e/20260907-021034`, `RESULT: OK (passed=22 failed=0)`,
+  Visual Studio Professional 2026 18.10.12120.281, plus 128 of 128 unit tests, `validate tree` 24 of 24,
+  `validate fixtures` 8 of 8, acceptance map OK, credential scan clean.
+
+`LC2012`, `LC2013`, exit code 9 and `emptyOutputAllowed` are additive under `contractVersion` 1 -- no
+existing field, diagnostic or exit code changed meaning -- which is what `docs/release.md` says an
+increment is for. The `v1` fixtures were regenerated from the build before 1.1.0 was ever published, so
+no published fixture changed.
+
+**Still open:** publishing 1.1.0. Everything up to the push is proved (see
+`contracts/releases/1.1.0.json`); the push itself has no credential in this environment, and rotating
+the two exposed keys remains the account holder's action.
