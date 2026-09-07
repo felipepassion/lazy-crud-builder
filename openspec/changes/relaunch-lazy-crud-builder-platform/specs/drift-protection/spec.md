@@ -170,6 +170,18 @@ The refusal SHALL be reported with a diagnostic code distinct from drift and fro
 - **WHEN** no file exists at the output path and the regenerated body carries no significant line
 - **THEN** the file is written, because no content is lost
 
+#### Scenario: A collapse is retried before it is believed
+
+- **WHEN** a transformation produces a contentless body and the write is refused
+- **THEN** the generator re-transforms that template within its retry budget
+- **AND** a retry that produces content records a diagnostic distinct from the refusal, leaves the file correct and does not fail the run
+- **AND** a collapse that survives every attempt keeps the refusal diagnostic and its exit code
+
+#### Scenario: A collapse in one layer does not retry another
+
+- **WHEN** one layer's transformation collapses while another layer is transforming a template of the same file name
+- **THEN** only the layer whose output collapsed is retried
+
 #### Scenario: A smaller body that still declares something is written
 
 - **WHEN** the regenerated body has fewer significant lines than the file on disk but at least one

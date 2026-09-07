@@ -214,6 +214,89 @@ public class PipelineTests
     }
 
     [Fact]
+    public async Task ACollapsedOutputIsRetriedAndTheRecoveryIsRecorded()
+    {
+        // The writer runs inside the T4 host and reports a refused contentless body through the
+        // machine-readable diagnostics file. This is the only channel the pipeline has to see it, so the
+        // fake transformer writes exactly what the real writer would -- once -- and the pipeline must
+        // treat it as the transient host failure it is.
+        var (root, options) = Arrange(includeTests: false);
+        using var _ = root;
+        var file = DiagnosticsFile.For(options.SolutionRoot, options.AggregateName);
+        var transformer = new FakeTransformer();
+        var collapses = 0;
+        transformer.Behavior = path =>
+        {
+            if (Path.GetFileName(path).Equals("DefaultCommands.tt", StringComparison.OrdinalIgnoreCase)
+                && Path.GetDirectoryName(path)!.EndsWith("Products.Domain", StringComparison.OrdinalIgnoreCase)
+                && collapses++ == 0)
+            {
+                file.Report(new Diagnostic(DiagnosticCodes.OutputCollapsed, DiagnosticSeverity.Error,
+                        "src/Products/Products.Domain/LazyCode/ProductsAgg.Filters.cs", "contentless body refused")
+                    .With("sourceTemplate", "DefaultCommands.tt").With("layer", "Domain"));
+            }
+            return null;
+        };
+
+        var result = await new AggregatePipeline(new FakeProcessRunner(), m => { }).RunAsync(options, transformer);
+
+        Assert.True(result.Succeeded);
+        Assert.Equal(2, result.Steps.First(s => s.Phase == "domain-phase-2").Attempts);
+        var recovery = Assert.Single(result.Diagnostics.Items, d => d.Code == DiagnosticCodes.OutputCollapseRetried);
+        Assert.Equal(DiagnosticSeverity.Warning, recovery.Severity);
+        Assert.Equal("src/Products/Products.Domain/LazyCode/ProductsAgg.Filters.cs", recovery.Path);
+        Assert.Equal("DefaultCommands.tt", recovery.Data["sourceTemplate"]);
+        Assert.Equal("Domain", recovery.Data["layer"]);
+    }
+
+    [Fact]
+    public async Task ACollapseThatSurvivesEveryAttemptFailsTheStep()
+    {
+        var (root, options) = Arrange(includeTests: false);
+        using var _ = root;
+        var file = DiagnosticsFile.For(options.SolutionRoot, options.AggregateName);
+        var transformer = new FakeTransformer();
+        transformer.Behavior = path =>
+        {
+            // The same file every time, which is what a template that keeps losing its model produces.
+            if (Path.GetFileName(path).Equals("DefaultEntities.tt", StringComparison.OrdinalIgnoreCase))
+            {
+                file.Report(new Diagnostic(DiagnosticCodes.OutputCollapsed, DiagnosticSeverity.Error,
+                        "src/Products/Products.Domain/LazyCode/ProductsAgg.Filters.cs", "contentless body refused")
+                    .With("sourceTemplate", "DefaultEntities.tt").With("layer", "Domain"));
+            }
+            return null;
+        };
+
+        var result = await new AggregatePipeline(new FakeProcessRunner(), m => { }).RunAsync(options, transformer);
+
+        Assert.False(result.Succeeded);
+        var step = result.Steps.First(s => s.Phase == "domain-phase-1");
+        Assert.False(step.Succeeded);
+        Assert.Contains("no content", step.Detail);
+        Assert.DoesNotContain(result.Diagnostics.Items, d => d.Code == DiagnosticCodes.OutputCollapseRetried);
+    }
+
+    [Fact]
+    public async Task ACollapseInAnotherLayerDoesNotRetryThisOne()
+    {
+        var (root, options) = Arrange(includeTests: false);
+        using var _ = root;
+        var file = DiagnosticsFile.For(options.SolutionRoot, options.AggregateName);
+        // Several layers seed a wrapper named DefaultCommands.tt, so the source template alone is not a
+        // correlation: the layer the writer records is what keeps one layer's defect out of another's loop.
+        file.Report(new Diagnostic(DiagnosticCodes.OutputCollapsed, DiagnosticSeverity.Error,
+                "src/Products/Products.Application.DTO/LazyCode/ProductsAgg.ListiningDTO.cs", "contentless body refused")
+            .With("sourceTemplate", "DefaultCommands.tt").With("layer", "Application.DTO"));
+
+        var result = await new AggregatePipeline(new FakeProcessRunner(), m => { }).RunAsync(options, new FakeTransformer());
+
+        Assert.True(result.Succeeded);
+        Assert.Equal(1, result.Steps.First(s => s.Phase == "domain-phase-2").Attempts);
+        Assert.DoesNotContain(result.Diagnostics.Items, d => d.Code == DiagnosticCodes.OutputCollapseRetried);
+    }
+
+    [Fact]
     public async Task TransformationThatProducesNothingFails()
     {
         var (root, options) = Arrange(includeTests: false);

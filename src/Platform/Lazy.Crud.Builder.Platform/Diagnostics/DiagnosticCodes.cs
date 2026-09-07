@@ -55,6 +55,8 @@ namespace Lazy.Crud.Builder.Platform.Diagnostics
         public const string LegacyMarkerDetected = "LC2011";
         /// <summary>A regenerated body carries no content and would have replaced a file that has some; the write was refused.</summary>
         public const string OutputCollapsed = "LC2012";
+        /// <summary>A collapsed output was retried and the retry produced a body with content; nothing was overwritten and the run continues.</summary>
+        public const string OutputCollapseRetried = "LC2013";
 
         // 3xxx — templates, settings and model resolution
         /// <summary>The configured template source could not be resolved.</summary>
@@ -118,6 +120,7 @@ namespace Lazy.Crud.Builder.Platform.Diagnostics
             [ManualPathRefused] = "A Manual path was refused for writing.",
             [LegacyMarkerDetected] = "A file carries only a v1 marker.",
             [OutputCollapsed] = "A regenerated body carries no content and the existing file was preserved.",
+            [OutputCollapseRetried] = "A collapsed output was retried and the retry produced content.",
             [TemplateResolutionFailed] = "The template source could not be resolved.",
             [LocalTemplateMode] = "Local template development mode is active.",
             [DeprecatedTemplatesPackageId] = "A deprecated templates package id resolved to the canonical id.",

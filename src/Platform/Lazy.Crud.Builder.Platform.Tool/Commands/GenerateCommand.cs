@@ -179,8 +179,25 @@ public static class GenerateCommand
         foreach (var d in result.Diagnostics.Items) diagnostics.Report(d);
 
         // 6. Diagnostics emitted by the writer inside the T4 host.
+        //    A collapse the pipeline retried away is kept on the record but no longer an error: the file
+        //    it refused to overwrite was regenerated correctly on a later attempt, and the run's verdict
+        //    is about the final state, not about an attempt that was superseded.
+        var recovered = new HashSet<string>(
+            result.Diagnostics.Items.Where(d => d.Code == DiagnosticCodes.OutputCollapseRetried).Select(d => d.Path),
+            StringComparer.OrdinalIgnoreCase);
         var writerDiagnostics = diagFile.Read();
-        foreach (var d in writerDiagnostics) diagnostics.Report(d);
+        foreach (var d in writerDiagnostics)
+        {
+            if (d.Code == DiagnosticCodes.OutputCollapsed && recovered.Contains(d.Path))
+            {
+                var superseded = new Diagnostic(d.Code, DiagnosticSeverity.Information, d.Path,
+                    d.Message + " Superseded: a later attempt of the same run produced content for this file (LC2013).");
+                foreach (var kv in d.Data) superseded.With(kv.Key, kv.Value);
+                diagnostics.Report(superseded.With("superseded", "true"));
+                continue;
+            }
+            diagnostics.Report(d);
+        }
 
         // 7. Manifest summary.
         var final = ManifestStore.Load(manifestRoot, aggregate, diagnostics);

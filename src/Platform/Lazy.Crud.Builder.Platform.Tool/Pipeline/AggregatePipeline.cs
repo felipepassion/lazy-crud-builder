@@ -281,6 +281,19 @@ public sealed class AggregatePipeline
     {
         var step = Step(result, phase, Path.GetFileName(templatePath));
         var attempts = Math.Max(1, o.TransformAttempts);
+        // A transformation that loses its model emits its template's preamble and stops. The writer
+        // refuses to write that over a file that has content (LC2012), so nothing is lost -- and the
+        // same sandbox reproduces the full body on the next attempt, which makes it exactly the class
+        // of transient host failure this loop already exists for. Collapses are correlated to this
+        // wrapper by the source template and layer the writer records, so a collapse in another layer
+        // running in parallel never triggers a retry here.
+        var wrapper = Path.GetFileName(templatePath);
+        var layerId = phase.Contains(':') ? phase.Substring(phase.LastIndexOf(':') + 1) : "Domain";
+        // Only what this call causes counts: entries already in the file when it starts belong to
+        // someone else, and the file is append-only within a run, so growth beyond the baseline is
+        // this attempt's. Occurrences, not distinct paths -- the same file collapsing twice is two.
+        var collapseBaseline = CollapsedOutputs(o, wrapper, layerId);
+        var observedCollapses = new List<string>();
         for (int attempt = 1; attempt <= attempts; attempt++)
         {
             ct.ThrowIfCancellationRequested();
@@ -326,6 +339,32 @@ public sealed class AggregatePipeline
                     Done(step, false, "the host reported ErrorGeneratingOutput");
                     return false;
                 }
+                var collapsedNow = CollapsedOutputs(o, wrapper, layerId);
+                if (collapsedNow.Count > collapseBaseline.Count)
+                {
+                    var newlyCollapsed = collapsedNow.Skip(collapseBaseline.Count).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+                    foreach (var c in newlyCollapsed)
+                        if (!observedCollapses.Contains(c, StringComparer.OrdinalIgnoreCase)) observedCollapses.Add(c);
+                    collapseBaseline = collapsedNow;
+                    if (attempt < attempts)
+                        throw new InvalidOperationException("the transformation produced a body with no content for " + string.Join(", ", newlyCollapsed) + " (LC2012); the file was not overwritten");
+                    // Out of attempts: the refusal stands, the files on disk are the good ones, and the
+                    // LC2012 the writer recorded is what fails the run.
+                    Done(step, false, "the transformation kept producing a body with no content for " + string.Join(", ", newlyCollapsed));
+                    return false;
+                }
+                if (observedCollapses.Count > 0)
+                {
+                    // An earlier attempt collapsed and this one did not: say so, so the run is green with
+                    // the recovery on the record rather than green in silence.
+                    foreach (var recovered in observedCollapses)
+                    {
+                        _log($"{phase}: {wrapper} produced a body with no content for {recovered} on an earlier attempt; the retry produced content");
+                        result.Diagnostics.Report(new Diagnostic(DiagnosticCodes.OutputCollapseRetried, DiagnosticSeverity.Warning, recovered,
+                            "The transformation produced a body with no content for this file and the write was refused (LC2012); it was retried and the retry produced content, so the file is correct and nothing was overwritten. Attempt " + attempt + " of " + attempts + ".")
+                            .With("sourceTemplate", wrapper).With("layer", layerId).With("attempts", attempt.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+                    }
+                }
                 if (outcome.HostException != null)
                 {
                     // The output is on disk and the Error List is clean: the project system failed after the
@@ -353,6 +392,35 @@ public sealed class AggregatePipeline
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// The output paths this wrapper's layer has had refused as contentless so far in this run, read
+    /// from the machine-readable diagnostics file the writer appends to from inside the T4 host. The
+    /// writer runs in another process, so this file is the only channel it has back to the pipeline.
+    /// </summary>
+    private static List<string> CollapsedOutputs(PipelineOptions o, string wrapperFileName, string layerId)
+    {
+        try
+        {
+            return DiagnosticsFile.For(o.SolutionRoot, o.AggregateName).Read()
+                .Where(d => d.Code == DiagnosticCodes.OutputCollapsed
+                            && string.Equals(Value(d, "sourceTemplate"), wrapperFileName, StringComparison.OrdinalIgnoreCase)
+                            && string.Equals(Value(d, "layer"), layerId, StringComparison.OrdinalIgnoreCase))
+                .Select(d => d.Path)
+                .ToList();
+        }
+        catch (Exception)
+        {
+            // An unreadable diagnostics file must not turn a healthy transformation into a retry loop.
+            return new List<string>();
+        }
+    }
+
+    private static string? Value(Diagnostic d, string key)
+    {
+        string? v;
+        return d.Data.TryGetValue(key, out v) ? v : null;
     }
 
     // ------------------------------------------------------------------ residue / output wait ------

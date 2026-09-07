@@ -48,6 +48,7 @@
     "LC2010": "A Manual path was refused for writing.",
     "LC2011": "A file carries only a v1 marker.",
     "LC2012": "A regenerated body carries no content and the existing file was preserved.",
+    "LC2013": "A collapsed output was retried and the retry produced content.",
     "LC3001": "The template source could not be resolved.",
     "LC3002": "Local template development mode is active.",
     "LC3003": "A deprecated templates package id resolved to the canonical id.",
