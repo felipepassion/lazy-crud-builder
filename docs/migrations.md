@@ -9,19 +9,19 @@ The platform has one version for every package (`LazyCrudVersion`), one contract
 - Manifests are never rejected: an older manifest is read, migrated in memory and rewritten in the current schema after the next successful generation.
 - A contract-breaking change increments `contractVersion`; consumers written against an older contract see `LC5001` (`ContractMismatch`, exit 6) instead of misreading a document. Additive fields never increment it.
 
-## 1.0.x to 1.1.0
+## 1.0.x to 1.1.1
 
 ### 1. Align the package versions
 
-Set every Lazy CRUD package reference to 1.1.0. Three packages may stay at any version from 1.0.29 to 1.1.0 next to runtime packages at 1.1.0: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain`. `Lazy.Crud.Builder.Templates` must be 1.1.0 whenever any layer package is 1.1.0; a pin such as the historical `Lazy.Crud.Builder.Templates` 1.0.1 next to 1.1.0 layer packages is not supported.
+Set every Lazy CRUD package reference to 1.1.1. Three packages may stay at any version from 1.0.29 to 1.1.1 next to runtime packages at 1.1.1: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain`. `Lazy.Crud.Builder.Templates` must be 1.1.1 whenever any layer package is 1.1.1; a pin such as the historical `Lazy.Crud.Builder.Templates` 1.0.1 next to 1.1.1 layer packages is not supported.
 
-Every 1.1.0 package embeds a platform descriptor. When packages of different versions are installed and their descriptors disagree, the highest `platformVersion` wins and `LC5002` names every conflicting version; aligning the versions removes the warning.
+Every 1.1.1 package embeds a platform descriptor. When packages of different versions are installed and their descriptors disagree, the highest `platformVersion` wins and `LC5002` names every conflicting version; aligning the versions removes the warning.
 
 ### 2. Templates package identity
 
-The canonical templates package is `Lazy.Crud.Builder.Templates`. Solutions whose `lazy.settings` names the historical id `Lazy.Crud.Templates` keep resolving: 1.1.0 publishes that id as a deprecated dependency-only alias, and the runner reports `LC3003` while resolving it to the canonical package. Update `TemplatesNuGetPackageId` to `Lazy.Crud.Builder.Templates`; the alias is removed two minor releases after 1.1.0.
+The canonical templates package is `Lazy.Crud.Builder.Templates`. Solutions whose `lazy.settings` names the historical id `Lazy.Crud.Templates` keep resolving: 1.1.1 publishes that id as a deprecated dependency-only alias, and the runner reports `LC3003` while resolving it to the canonical package. Update `TemplatesNuGetPackageId` to `Lazy.Crud.Builder.Templates`; the alias is removed two minor releases after 1.1.1.
 
-If you consumed templates from packages before 1.1.0, note that the shared files (`project.tt`, `Tests/Tests.Common.ttinclude`) now ship only in the templates package. Layer packages no longer carry them, which removes the content-file collision a solution referencing several layer packages used to receive. The undocumented `contentFiles/any/any/T4/` glob was removed; no shipped package ever contained that folder.
+If you consumed templates from packages before 1.1.1, note that the shared files (`project.tt`, `Tests/Tests.Common.ttinclude`) now ship only in the templates package. Layer packages no longer carry them, which removes the content-file collision a solution referencing several layer packages used to receive. The undocumented `contentFiles/any/any/T4/` glob was removed; no shipped package ever contained that folder.
 
 ### 3. lazy.settings
 
@@ -31,7 +31,7 @@ If you consumed templates from packages before 1.1.0, note that the shared files
 
 ### 4. The first regeneration rewrites every header
 
-1.1.0 emits the marker v2 header on every `GeneratorOwned` and `GeneratedOnce` file. The first regeneration after upgrading therefore rewrites every generated file: the header is new, the body is unchanged. Expect a large but header-only diff in your repository; the golden-output test in this repository asserts that only the header region differs for the reference aggregate. Commit that diff as the upgrade commit.
+1.1.1 emits the marker v2 header on every `GeneratorOwned` and `GeneratedOnce` file. The first regeneration after upgrading therefore rewrites every generated file: the header is new, the body is unchanged. Expect a large but header-only diff in your repository; the golden-output test in this repository asserts that only the header region differs for the reference aggregate. Commit that diff as the upgrade commit.
 
 The header is excluded from the content hash, so this rewrite does not register as drift on later runs.
 
@@ -64,7 +64,7 @@ Legacy files that carried only the historical test-template header are recognize
 
 ### 7. Local template forks
 
-A solution that generates from its own copy of the templates project (local template mode with `TemplatesLocalProjectFilesPath`, as Tio-Sam does) keeps working unchanged: local mode is still supported and reported (`LC3002`). To take the 1.1.0 behavior (markers, manifest v2, drift protection, diagnostics), rebase the fork on the 1.1.0 templates, reference the 1.1.0 packages and point `LazyCrudTemplatesRoot` (and `LazyCrudPlatformAssembly` when the fork lives outside the package) at the fork in `Directory.Build.props`. See [Safe customization](customization.md).
+A solution that generates from its own copy of the templates project (local template mode with `TemplatesLocalProjectFilesPath`, as Tio-Sam does) keeps working unchanged: local mode is still supported and reported (`LC3002`). To take the 1.1.1 behavior (markers, manifest v2, drift protection, diagnostics), rebase the fork on the 1.1.1 templates, reference the 1.1.1 packages and point `LazyCrudTemplatesRoot` (and `LazyCrudPlatformAssembly` when the fork lives outside the package) at the fork in `Directory.Build.props`. See [Safe customization](customization.md).
 
 ### 8. Tooling
 
@@ -72,7 +72,7 @@ Generation from the command line now goes through the unattended runner shipped 
 
 ## Checklist
 
-1. Update package references to 1.1.0 (mixed pins only where the matrix allows).
+1. Update package references to 1.1.1 (mixed pins only where the matrix allows).
 2. Update `TemplatesNuGetPackageId`, `TemplatesSource` and `UseNugetTemplates` in `lazy.settings`.
 3. `dotnet restore`.
 4. Run `toolchain` to confirm the machine, then `generate` per aggregate with the default resolution.

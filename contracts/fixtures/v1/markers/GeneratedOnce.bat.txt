@@ -5,8 +5,8 @@ REM Aggregate: Products
 REM Layer: Domain
 REM TemplateId: domain.command-handlers.seed
 REM Ownership: GeneratedOnce
-REM GeneratorVersion: 1.1.0
-REM TemplateVersion: 1.1.0
+REM GeneratorVersion: 1.1.1
+REM TemplateVersion: 1.1.1
 REM SourceTemplate: Domain/DomainCommandHandlers.tt
 REM Policy: Scaffolded once and now user-owned. This file will not be regenerated; your edits are preserved.
 REM Customize: edit this file freely; delete it if you want the generator to scaffold it again.

@@ -79,7 +79,7 @@ platform template registry rather than working around the guard.
 
 **Meaning.** `TemplatesNuGetPackageId` names `Lazy.Crud.Templates`, which is a deprecated dependency-only alias. Resolution continues against the canonical `Lazy.Crud.Builder.Templates`.
 
-**Remedy.** Change the setting to `Lazy.Crud.Builder.Templates`. The alias is removed two minor releases after 1.1.0.
+**Remedy.** Change the setting to `Lazy.Crud.Builder.Templates`. The alias is removed two minor releases after 1.1.1.
 
 ## LC5002: descriptor conflict
 
@@ -100,7 +100,7 @@ platform template registry rather than working around the guard.
 | `LC4004` | A transformation produced none of its expected outputs within `WaitTimeoutMs` (default 5000 ms, 2 attempts) | Check the Error List output in the report, raise `WaitTimeoutMs` on slow machines, make sure the wrapper is a project item with the `TextTemplatingFileGenerator` custom tool |
 | `LC4005` | The T4 engine reported an error, the solution could not be opened, or the aggregate has no Domain project | Fix the template or model error quoted in the message; the Domain layer is required first |
 | `LC5001` | The descriptor `contractVersion` is outside the supported range | Update the tool or upgrade the packages, as the message says |
-| `LC5003` | No platform descriptor could be resolved from the installed packages | Install a `Lazy.Crud.Builder.*` package of version 1.1.0 or later |
+| `LC5003` | No platform descriptor could be resolved from the installed packages | Install a `Lazy.Crud.Builder.*` package of version 1.1.1 or later |
 | `LC5004` | A capability was disabled by configuration (`GeneratedCodeMarkers=False`) | Informational |
 | `LC1001`, `LC1002` | A generated file or its directory could not be written | Close the program locking the file, fix permissions, rerun |
 

@@ -86,7 +86,7 @@ pwsh scripts/release-record.ps1
 
 ## The alias deprecation timeline
 
-`Lazy.Crud.Templates` is published from 1.1.0 as a dependency-only alias of `Lazy.Crud.Builder.Templates` so that configurations naming the historical id keep resolving (`LC3003` reports the deprecation). It is scheduled for removal two minor releases after 1.1.0. Until then it is packed and published with every release, listed in the descriptor under `templates.aliasPackageIds` and `nonLayerPackages`, and verified by harness scenario R2. The release that removes it drops it from `pack-all.ps1`, from `DescriptorBuilder.NonLayerPackages` and from the descriptor's alias list, and records the removal as breaking in the changelog.
+`Lazy.Crud.Templates` is published from 1.1.1 as a dependency-only alias of `Lazy.Crud.Builder.Templates` so that configurations naming the historical id keep resolving (`LC3003` reports the deprecation). It is scheduled for removal two minor releases after 1.1.1. Until then it is packed and published with every release, listed in the descriptor under `templates.aliasPackageIds` and `nonLayerPackages`, and verified by harness scenario R2. The release that removes it drops it from `pack-all.ps1`, from `DescriptorBuilder.NonLayerPackages` and from the descriptor's alias list, and records the removal as breaking in the changelog.
 
 ## contractVersion rules
 
@@ -109,4 +109,4 @@ The fixtures ship inside `Lazy.Crud.Builder.Templates` under `contracts/`, are r
 
 ## Changelog rules
 
-`CHANGELOG.md` records every notable change against the platform version, under the headings Security, Added, Changed, Deprecated, Removed and Fixed as needed. Contract-breaking changes are recorded against the `contractVersion` they change and are labeled breaking. Dead-configuration removals that cannot affect any consumer are still recorded (as 1.1.0 records the removal of the `contentFiles/any/any/T4/` glob). External prerequisites that a release depends on but that the implementer cannot perform (key rotation, a consumer confirming its dependency shape) are recorded as such, with the owner.
+`CHANGELOG.md` records every notable change against the platform version, under the headings Security, Added, Changed, Deprecated, Removed and Fixed as needed. Contract-breaking changes are recorded against the `contractVersion` they change and are labeled breaking. Dead-configuration removals that cannot affect any consumer are still recorded (as 1.1.1 records the removal of the `contentFiles/any/any/T4/` glob). External prerequisites that a release depends on but that the implementer cannot perform (key rotation, a consumer confirming its dependency shape) are recorded as such, with the owner.

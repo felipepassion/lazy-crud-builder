@@ -5,7 +5,7 @@
     Override for local experiments with: dotnet pack -p:LazyCrudVersion=1.2.3
   -->
   <PropertyGroup>
-    <LazyCrudVersion Condition="'$(LazyCrudVersion)' == ''">1.1.0</LazyCrudVersion>
+    <LazyCrudVersion Condition="'$(LazyCrudVersion)' == ''">1.1.1</LazyCrudVersion>
     <Version>$(LazyCrudVersion)</Version>
     <LazyCrudRepoRoot>$(MSBuildThisFileDirectory)</LazyCrudRepoRoot>
     <LazyCrudDescriptorPath>$(MSBuildThisFileDirectory)artifacts\platform\lazycrud.platform.json</LazyCrudDescriptorPath>

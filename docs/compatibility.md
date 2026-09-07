@@ -6,9 +6,9 @@ Every row on this page is either verified by an automated check (the harness, th
 
 | Platform version | contractVersion | Descriptor schemaVersion | Manifest schemaVersion written | Manifest schema versions read | Target framework | .NET SDK |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1.1.0 | contractVersion 1 (supported range 1 to 1, minimum upgradable 1) | 1 | 2 | 1 (migrated in memory, rewritten as 2) and 2 | `net10.0` | 10.0 |
+| 1.1.1 | contractVersion 1 (supported range 1 to 1, minimum upgradable 1) | 1 | 2 | 1 (migrated in memory, rewritten as 2) and 2 | `net10.0` | 10.0 |
 
-## Packages at 1.1.0
+## Packages at 1.1.1
 
 All packages share the single version source `LazyCrudVersion` and are packed together by `pack-all.ps1`.
 
@@ -31,13 +31,13 @@ All packages share the single version source `LazyCrudVersion` and are packed to
 | `Lazy.Crud.CrossCutting.Application.Mail` | cross-cutting runtime package | |
 | `Lazy.Crud.Builder.Platform` | contracts library (also shipped under `tools/net10.0/` of the templates package) | |
 | `Lazy.Crud.Builder.Templates` | canonical templates package: `project.tt`, `Tests/Tests.Common.ttinclude`, runner, props and targets, contracts, descriptor | |
-| `Lazy.Crud.Templates` | deprecated dependency-only alias of `Lazy.Crud.Builder.Templates`; removal two minor releases after 1.1.0 | |
+| `Lazy.Crud.Templates` | deprecated dependency-only alias of `Lazy.Crud.Builder.Templates`; removal two minor releases after 1.1.1 | |
 
 ## Mixed package versions
 
 | Combination | Supported | Verified by |
 | --- | --- | --- |
-| `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain` at any version from 1.0.29 to 1.1.0, alongside every other runtime package at 1.1.0 | Yes | Harness scenario R3 (restore, build and generation with the representative Tio-Sam pins) |
+| `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain` at any version from 1.0.29 to 1.1.1, alongside every other runtime package at 1.1.1 | Yes | Harness scenario R3 (restore, build and generation with the representative Tio-Sam pins) |
 | `Lazy.Crud.Builder.Templates` at a version different from a layer package that ships templates | No. The templates package must equal the version of every `Lazy.Crud.Builder.*` layer package that ships templates. | `validate packages`; descriptor `mixedVersionRanges` |
 | Layer packages at different versions from each other | No | Descriptor conflict diagnostic `LC5002` names every disagreeing version; the highest `platformVersion` is canonical |
 
@@ -46,7 +46,7 @@ All packages share the single version source `LazyCrudVersion` and are packed to
 | Consumer | Status | Shape | Notes |
 | --- | --- | --- | --- |
 | CopilotSpeaker | Verified | Same aggregate shape as the reference aggregate | Covered by the positive scenarios P1 to P7. |
-| Tio-Sam | Verified | Mixed pins: 1.0.32 for most packages, 1.0.29 for `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain`; declares `Lazy.Crud.Builder.Templates` 1.0.1; generates in local template mode from its own fork of the templates project | Its legacy setup keeps working unchanged (local mode is supported and reported). Upgrading to 1.1.0 requires aligning the templates package version with the layer packages and rebasing the fork; see [Migrations](migrations.md). Its mixed pins are the row verified by R3. |
+| Tio-Sam | Verified | Mixed pins: 1.0.32 for most packages, 1.0.29 for `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain`; declares `Lazy.Crud.Builder.Templates` 1.0.1; generates in local template mode from its own fork of the templates project | Its legacy setup keeps working unchanged (local mode is supported and reported). Upgrading to 1.1.1 requires aligning the templates package version with the layer packages and rebasing the fork; see [Migrations](migrations.md). Its mixed pins are the row verified by R3. |
 | Nutri.Veda | Unverified | Its dependency shape could not be confirmed from the local checkout (no Lazy CRUD package reference was found there) | Listed as not covered by this matrix until the owner confirms the actual coupling. Nothing on this page should be read as a compatibility claim for Nutri.Veda. |
 | Lazy CRUD extension (VSIX and CLI) | Adopts contractVersion 1 | Consumes the descriptor, manifest v2, marker v2, hash, diagnostics and exit-code contracts | Tests against the fixtures under `contracts/fixtures/v1/` and `contracts/schemas/v1/`; the fixtures win when prose and fixture disagree. |
 
@@ -65,7 +65,7 @@ Generation in every mode, including headless and CLI, requires the host below. "
 
 ## Contract negotiation
 
-| Field (descriptor `compatibility`) | Value at 1.1.0 | Meaning |
+| Field (descriptor `compatibility`) | Value at 1.1.1 | Meaning |
 | --- | --- | --- |
 | `supportedContractVersionMin` | 1 | Lowest contract a consumer of this build may present |
 | `supportedContractVersionMax` | 1 | Highest contract this build understands; a descriptor above it fails with `LC5001` (exit 6, "update the tool") |

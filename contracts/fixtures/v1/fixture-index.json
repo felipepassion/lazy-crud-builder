@@ -1,6 +1,6 @@
 {
   "contractVersion": 1,
-  "platformVersion": "1.1.0",
+  "platformVersion": "1.1.1",
   "descriptorSchema": "../../schemas/v1/lazycrud.platform.schema.json",
   "manifestSchema": "../../schemas/v1/manifest-v2.schema.json",
   "hashAlgorithm": "SHA-256",

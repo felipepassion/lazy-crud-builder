@@ -5,8 +5,8 @@
 // Layer: Domain
 // TemplateId: domain.command-handlers.seed
 // Ownership: GeneratedOnce
-// GeneratorVersion: 1.1.0
-// TemplateVersion: 1.1.0
+// GeneratorVersion: 1.1.1
+// TemplateVersion: 1.1.1
 // SourceTemplate: Domain/DomainCommandHandlers.tt
 // Policy: Scaffolded once and now user-owned. This file will not be regenerated; your edits are preserved.
 // Customize: edit this file freely; delete it if you want the generator to scaffold it again.

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "aggregateName": "Products",
   "generatedAtUtc": "2026-05-09T09:44:52.3962907Z",
-  "generatorVersion": "1.1.0",
+  "generatorVersion": "1.1.1",
   "contractVersion": 1,
   "solutionRootMarker": "Sandbox.sln",
   "files": [

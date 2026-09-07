@@ -4,7 +4,12 @@ All notable changes to the Lazy CRUD platform are recorded here. The platform fo
 version for every package (`LazyCrudVersion` in `Directory.Build.props`). Contract-breaking
 changes are recorded against the `contractVersion` they change.
 
-## [1.1.0] - Unreleased
+## [1.1.1] - Unreleased
+
+The relaunch ships as 1.1.1. 1.1.0 was prepared and gated but never pushed to nuget.org, so it
+exists nowhere a consumer can reach; the version was incremented before the first publication and
+every reference in this repository names 1.1.1. Nothing that follows changed between the two.
+
 
 ### Security
 
@@ -60,7 +65,7 @@ changes are recorded against the `contractVersion` they change.
   contractVersion 1**: no existing field, diagnostic or exit code changed meaning, and a consumer
   written against contract 1 still parses the descriptor. Per the rule in
   [docs/release.md](docs/release.md), that is not an increment. The `contracts/fixtures/v1/` and
-  `contracts/schemas/v1/` artifacts were regenerated before 1.1.0 was ever published, so no published
+  `contracts/schemas/v1/` artifacts were regenerated before 1.1.1 was ever published, so no published
   fixture changed.
 
 ### Changed
@@ -86,7 +91,7 @@ changes are recorded against the `contractVersion` they change.
 ### Deprecated
 
 - `Lazy.Crud.Templates` is published as a dependency-only alias of `Lazy.Crud.Builder.Templates`.
-  It carries no content and is scheduled for removal two minor releases after 1.1.0.
+  It carries no content and is scheduled for removal two minor releases after 1.1.1.
 
 ### Removed
 

@@ -56,7 +56,7 @@ The sandbox the harness builds can be created with the runner. From a repository
 ```powershell
 $tool = "src\Platform\Lazy.Crud.Builder.Platform.Tool\bin\Release\net10.0\Lazy.Crud.Builder.Platform.Tool.dll"
 $sandbox = "$env:TEMP\lazycrud-clean-room"
-dotnet $tool sandbox create --output $sandbox --aggregate Products --fixture tests\fixtures\reference-aggregate --version 1.1.0 --feed artifacts\nuget\1.1.0 --templates nuget --clean-room --packages-folder "$sandbox\packages"
+dotnet $tool sandbox create --output $sandbox --aggregate Products --fixture tests\fixtures\reference-aggregate --version 1.1.1 --feed artifacts\nuget\1.1.1 --templates nuget --clean-room --packages-folder "$sandbox\packages"
 $env:NUGET_PACKAGES = "$sandbox\packages"
 dotnet $tool generate --solution $sandbox --aggregate Products --templates nuget --report "$sandbox\generate.json"
 dotnet build "$sandbox\Sandbox.sln"

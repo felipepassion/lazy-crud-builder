@@ -22,7 +22,7 @@ downloaded (or from a checkout's `artifacts/nuget/<version>/` feed), one command
 consumer solution, and a second one generates it:
 
 ```powershell
-dotnet <tool>\Lazy.Crud.Builder.Platform.Tool.dll scaffold --output Shop --aggregate Shop --version 1.1.0
+dotnet <tool>\Lazy.Crud.Builder.Platform.Tool.dll scaffold --output Shop --aggregate Shop --version 1.1.1
 dotnet <tool>\Lazy.Crud.Builder.Platform.Tool.dll generate --solution Shop --aggregate Shop --report Shop\generate.json
 dotnet build Shop\Sandbox.sln
 ```
@@ -51,7 +51,7 @@ An aggregate lives under `src/{Aggregate}/`, one project per layer named `{Aggre
 
 Create one project directory and `.csproj` per layer under `src/Products/`. Every layer package is referenced with `GeneratePathProperty="true"` so that MSBuild exposes `$(PkgLazy_Crud_Builder_<Layer>)`, the property the wrapper templates use to include the shipped templates.
 
-| Layer | `.csproj` | SDK | Package references (version 1.1.0 unless stated) | Project references | Wrapper templates |
+| Layer | `.csproj` | SDK | Package references (version 1.1.1 unless stated) | Project references | Wrapper templates |
 | --- | --- | --- | --- | --- | --- |
 | Domain | `Products.Domain/Products.Domain.csproj` | Microsoft.NET.Sdk | `Lazy.Crud.Builder.Domain`, `Lazy.Crud.Builder.Templates`, Microsoft.EntityFrameworkCore.Relational 10.0.10, Serilog 4.4.0 | Application.DTO | `DefaultEntities.tt`, `DefaultCommands.tt` |
 | Application | `Products.Application/Products.Application.csproj` | Microsoft.NET.Sdk | `Lazy.Crud.Builder.Application`, Microsoft.EntityFrameworkCore.Relational 10.0.10, Npgsql.EntityFrameworkCore.PostgreSQL 10.0.3, Serilog 4.4.0 | Infra.Data | `DefaultCommands.tt` |
@@ -74,8 +74,8 @@ The templates package is a transitive dependency of every layer package; the dir
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Lazy.Crud.Builder.Domain" Version="1.1.0" GeneratePathProperty="true" />
-    <PackageReference Include="Lazy.Crud.Builder.Templates" Version="1.1.0" GeneratePathProperty="true" />
+    <PackageReference Include="Lazy.Crud.Builder.Domain" Version="1.1.1" GeneratePathProperty="true" />
+    <PackageReference Include="Lazy.Crud.Builder.Templates" Version="1.1.1" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.10" />
     <PackageReference Include="Serilog" Version="4.4.0" />
   </ItemGroup>
@@ -102,8 +102,8 @@ The Api project uses the web SDK and additionally registers the controller wrapp
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Lazy.Crud.Builder.Api" Version="1.1.0" GeneratePathProperty="true" />
-    <PackageReference Include="Lazy.Crud.Builder.Templates" Version="1.1.0" GeneratePathProperty="true" />
+    <PackageReference Include="Lazy.Crud.Builder.Api" Version="1.1.1" GeneratePathProperty="true" />
+    <PackageReference Include="Lazy.Crud.Builder.Templates" Version="1.1.1" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10" PrivateAssets="all" />
@@ -241,7 +241,7 @@ Create `src/Mods/lazy.settings`. It selects package-based template resolution. T
       <Value Profile="(Default)">Lazy.Crud.Builder.Templates</Value>
     </Setting>
     <Setting Name="TemplatesNuGetVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1.1.0</Value>
+      <Value Profile="(Default)">1.1.1</Value>
     </Setting>
     <Setting Name="MaxParallelT4" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">1</Value>
@@ -286,7 +286,7 @@ Restore brings the packages, the templates and the runner into the package cache
 ## 7. Verify the toolchain and generate
 
 ```powershell
-$tool = "$env:USERPROFILE\.nuget\packages\lazy.crud.builder.templates\1.1.0\tools\net10.0\Lazy.Crud.Builder.Platform.Tool.dll"
+$tool = "$env:USERPROFILE\.nuget\packages\lazy.crud.builder.templates\1.1.1\tools\net10.0\Lazy.Crud.Builder.Platform.Tool.dll"
 dotnet $tool toolchain
 dotnet $tool generate --solution . --aggregate Products --report artifacts\generate.json
 ```

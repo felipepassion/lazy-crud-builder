@@ -69,14 +69,14 @@ hand-copied schemas.
 
 ## Re-running against a locally rebuilt feed
 
-A package is cached by id and version, so rebuilding `1.1.0` locally does not reach a consumer that
-already restored `1.1.0`: NuGet keeps serving the copy it extracted the first time. Delete the
+A package is cached by id and version, so rebuilding `1.1.1` locally does not reach a consumer that
+already restored `1.1.1`: NuGet keeps serving the copy it extracted the first time. Delete the
 extracted folders of the version under test before restoring again, or the run silently exercises the
 previous build:
 
 ```powershell
 Get-ChildItem "$env:USERPROFILE\.nuget\packages" -Directory -Filter 'lazy.crud.*' |
-  ForEach-Object { Join-Path $_.FullName '1.1.0' } |
+  ForEach-Object { Join-Path $_.FullName '1.1.1' } |
   Where-Object { Test-Path $_ } |
   Remove-Item -Recurse -Force
 ```
