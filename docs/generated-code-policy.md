@@ -87,7 +87,7 @@ replace a file that carries content with a regenerated body that carries none:
 | contentless body | A body with no significant line. The `reason` reported is `empty`, `whitespace-only` or `no-significant-content` |
 | collapse | A contentless regenerated body where the file on disk has at least one significant line |
 
-A collapse is refused with `LC2012` (error) and the run exits 9 (`GenerationDefect`). The diagnostic
+A collapse is refused with `LC2012` (error). Before that refusal is believed, the pipeline **retries the template that produced it** -- a transformation that loses its model is the same class of transient host failure the pipeline already retries, and the run that first exposed this reproduced the full body byte for byte on the next attempt. A retry that produces content records `LC2013` (warning), leaves the superseded `LC2012` in the record as information, and the run is green with the recovery visible. A collapse that survives every attempt keeps `LC2012` and the run exits 9 (`GenerationDefect`). The diagnostic
 names the file, `templateId`, `layer`, `aggregate` and source template, both hashes, the significant
 line counts on each side, and the rule id. **No resolution flag overrides it** -- `--force` resolves an
 ownership conflict, and a defective transformation is not one. The remedy is to rerun the generation;

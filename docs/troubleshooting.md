@@ -56,8 +56,7 @@ signature of a template that lost the model it resolves and emitted only its sta
 diagnostic names the file, `templateId`, `layer`, `aggregate`, the reason, both hashes and how many
 significant lines each side has.
 
-**Remedy.** Rerun the generation. In the run this rule was written for, the very next run reproduced
-the full body byte for byte. If it repeats for the same template, the fault is in that template or in
+**Remedy.** The pipeline already retried the template for you -- seeing this code means the collapse survived every attempt, so rerunning is unlikely to help on its own. (A collapse a retry resolved is reported as `LC2013`, a warning, and does not fail the run.) If it repeats for the same template, the fault is in that template or in
 the model it resolves -- open the aggregate in Visual Studio and check that the Domain entities the
 template iterates are present and compile. `--force` does **not** override this refusal, by design: it
 resolves an ownership conflict, and a defective transformation is not one. If a template you own is

@@ -46,7 +46,17 @@ changes are recorded against the `contractVersion` they change.
   three Application.DTO templates emitted a body with no declaration in it. The `unverified`
   protection caught that run; a `verified` file would have been overwritten.
 
-  These three additions -- `LC2012`, exit code `9` and `emptyOutputAllowed` -- are **additive under
+  A collapse is **retried before it is believed**: the pipeline re-transforms the template that
+  produced it, because a transformation that loses its model is the same class of transient host
+  failure it already retries for engine errors and missing output. A retry that produces content
+  records `LC2013` (warning), downgrades the superseded `LC2012` to information and leaves the run
+  green with the recovery on the record; only a collapse that survives every attempt stays an error
+  and exits 9. Without this, the guard turned an intermittent defect into a failing run: the battery
+  of 2026-09-07 hit the real degraded Application.DTO transformation during an ordinary `--force`
+  regeneration -- same file, same hash pair as the 2026-09-05 incident -- and the refusal, correct in
+  itself, failed a scenario that had nothing to do with it.
+
+  These four additions -- `LC2012`, `LC2013`, exit code `9` and `emptyOutputAllowed` -- are **additive under
   contractVersion 1**: no existing field, diagnostic or exit code changed meaning, and a consumer
   written against contract 1 still parses the descriptor. Per the rule in
   [docs/release.md](docs/release.md), that is not an increment. The `contracts/fixtures/v1/` and
