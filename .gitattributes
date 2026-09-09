@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# The published contract set is byte-exact: the fixture wins over prose, consumers pin the SHA-256 of
+# every file (LazyCrudExtension tests/fixtures/platform-contract/pin.json), and the same bytes ship
+# inside Lazy.Crud.Builder.Templates. Line-ending conversion has no business here. It also left the
+# tree dirty after every build: Directory.Build.targets regenerates the JSON fixtures with LF while
+# text=auto checks them out as CRLF, so `git status` reported six modified fixtures for a build that
+# changed nothing. Marker fixtures are CRLF because the marker header itself is; that is content.
+contracts/** -text
