@@ -9,7 +9,7 @@
   "descriptorSchemaVersion": 1,
   "manifestSchemaVersion": 2,
   "source": "https://api.nuget.org/v3/index.json",
-  "verifiedAtUtc": "2026-09-09T03:06:05.5630785Z",
+  "verifiedAtUtc": "2026-09-09T03:09:04.4822308Z",
   "verifiedBy": "release-guard audit (independent of the publishing run)",
   "packages": {
     "declaredCount": 18,
@@ -149,6 +149,7 @@
     "builder unit suite": "Lazy.Crud.Builder.Platform.Tests 128/128",
     "extension engine suite": "LazyCrud.Engine.Tests 167/167",
     "extension surface parity": "LazyCrud.Parity.Tests 5/5",
+    "extension command-line end to end": "LazyCrud.Cli.E2E.Tests 21/21 (drives the real CLI over a scaffolded solution)",
     "collapse guard, verified state": "OutputCollapseTests.VerifiedFileIsNotOverwrittenByACollapsedBody",
     "collapse guard, unverified state": "OutputCollapseTests.UnverifiedFileIsNotOverwrittenByACollapsedBody",
     "collapse guard, force does not win": "OutputCollapseTests.ForceDoesNotOverrideTheCollapseRefusal",
@@ -166,7 +167,7 @@
     "builder": {
       "path": "lazy-crud-builder",
       "branch": "main",
-      "head": "61ec37b322d60d1eeaf03b62a157bfe92ecbd3e4",
+      "head": "adf00c7f3c1c909bdc427854c54c88cd37c7a0ac",
       "clean": true,
       "pushed": false
     },
@@ -177,6 +178,9 @@
       "pushed": false,
       "note": "another session has uncommitted work in this tree (a pre-scaffold platform-bootstrap change); none of it is staged or committed here"
     }
+  },
+  "concurrency": {
+    "note": "this audit ran while two other sessions worked on the same machine: one has uncommitted platform-bootstrap work in the LazyCrudExtension tree (not staged or committed here), and one was running its own public-proof gate out of C:\\lazycrud-gate-a using the Release build of the extension CLI. Nothing in this audit touched either. The Debug output this audit rebuilt and the Release output that gate uses do not share a directory."
   },
   "provenance": {
     "nuspecRepositoryUrl": "https://github.com/felipepassion/lazy-crud-builder",
