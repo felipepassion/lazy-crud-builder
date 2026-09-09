@@ -19,6 +19,7 @@ contracts/
   fixtures/v1/markers/<Ownership>.<ext>.txt  marker v2 examples for GeneratorOwned and GeneratedOnce in every supported comment syntax
   fixtures/v1/hash-vectors.json              inputs with expected contentHash values (LF/CRLF equivalence, BOM, marker exclusion, unmarked file, changed body)
   releases/<version>.json                    what a release physically is: package ids with the SHA-256 of each .nupkg, platformVersion/contractVersion, the commit that produced them, and whether the public source actually carries that version
+  releases/<version>.verification.json       the post-publication audit of that release, written by whoever verified it rather than by whoever published it: how many of the declared packages actually restore from nuget.org, whether what the source serves is what this repository built, the contract parity result against the consuming repository, the clean-room run and the Visual Studio toolchain it used, the guards that were exercised, and blockers (empty means a consumer may adopt the version)
 ```
 
 Fixtures for a previous `contractVersion` stay under their own `fixtures/v<N>/` directory when a

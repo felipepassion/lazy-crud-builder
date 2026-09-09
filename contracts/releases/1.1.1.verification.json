@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "kind": "public-release-verification",
+  "verdict": "PUBLIC_RELEASE_VERIFIED",
+  "blockers": [],
+  "releaseVersion": "1.1.1",
+  "platformVersion": "1.1.1",
+  "contractVersion": 1,
+  "descriptorSchemaVersion": 1,
+  "manifestSchemaVersion": 2,
+  "source": "https://api.nuget.org/v3/index.json",
+  "verifiedAtUtc": "2026-09-09T03:06:05.5630785Z",
+  "verifiedBy": "release-guard audit (independent of the publishing run)",
+  "packages": {
+    "declaredCount": 18,
+    "restoredCount": 18,
+    "listedCount": 18,
+    "packageIds": [
+      "Lazy.Crud.Builder.Api",
+      "Lazy.Crud.Builder.Api.Queries",
+      "Lazy.Crud.Builder.Application",
+      "Lazy.Crud.Builder.Application.DTO",
+      "Lazy.Crud.Builder.Application.DTO.Http.Models",
+      "Lazy.Crud.Builder.Application.Validators",
+      "Lazy.Crud.Builder.Domain",
+      "Lazy.Crud.Builder.Enumeration",
+      "Lazy.Crud.Builder.Infra.Data",
+      "Lazy.Crud.Builder.Infra.IoC",
+      "Lazy.Crud.Builder.Platform",
+      "Lazy.Crud.Builder.Templates",
+      "Lazy.Crud.Builder.WebApi",
+      "Lazy.Crud.CrossCutting.Application.Mail",
+      "Lazy.Crud.CrossCutting.Domain",
+      "Lazy.Crud.CrossCutting.Infra.Log",
+      "Lazy.Crud.CrossCutting.Infra.Utils",
+      "Lazy.Crud.Templates"
+    ],
+    "templatesPackageId": "Lazy.Crud.Builder.Templates",
+    "templatesAliasPackageIds": [
+      "Lazy.Crud.Templates"
+    ],
+    "everyPackageLatestIs1_1_1": true,
+    "internalDependenciesPinnedExactly": true,
+    "targetFrameworks": [
+      "net10.0 (17 packages)",
+      "netstandard2.0 (Lazy.Crud.Builder.Platform, the writer a T4 host loads)"
+    ],
+    "repositorySignedBySource": true,
+    "servedContentIdenticalToBuilt": {
+      "method": "entry-by-entry SHA-256 of every zip entry, ignoring the .signature.p7s nuget.org appends",
+      "result": "18/18 identical",
+      "note": "whole-file .nupkg hashes cannot match: the source adds a repository signature (+13092 bytes on every package). The release record hashes the built container and matches it 18/18."
+    },
+    "releaseRecordHashesMatchBuiltPackages": "18/18"
+  },
+  "contractParity": {
+    "result": "aligned",
+    "authority": "contracts/ in lazy-crud-builder, published inside Lazy.Crud.Builder.Templates 1.1.1",
+    "fixtureFileCount": 24,
+    "extensionPin": {
+      "path": "tests/fixtures/platform-contract/pin.json",
+      "sourceKind": "builder-published-artifact",
+      "location": "https://api.nuget.org/v3-flatcontainer/lazy.crud.builder.templates/1.1.1/lazy.crud.builder.templates.1.1.1.nupkg",
+      "commit": "f08ae77984bce9d253fc9511a745062e95564a57 (Lazy.Crud.Builder.Templates 1.1.1 on nuget.org; nuspec repository commit)",
+      "retrievedAtUtc": "2026-09-09T01:59:36.9008418Z",
+      "files": {
+        "fixtures/v1/fixture-index.json": "cda50c7114088d6a6a97d6ce3ca0150da35439f3db781acb47fa6d7162fba8b6",
+        "fixtures/v1/hash-vectors.json": "164291e7a75ecb6ecd9337323542f7c51badf83d107bdca9d132bfc9badd367c",
+        "fixtures/v1/lazycrud.platform.json": "41644458fc15dc7926459f1dbc6d5c99776a8480e2cd4e7fe048211a032c0c0c",
+        "fixtures/v1/manifest-v1-input.json": "f652f21d942b325571277a0d05db85b80e70f5c2759f079f600a7c0efc857065",
+        "fixtures/v1/manifest-v1-migrated.json": "d8abd8a908c2af0cd55125cf74a94cf5b6849d28ab57f10c04b0b2768a825abe",
+        "fixtures/v1/manifest-v2.json": "3def50a0cc91a2e20a1f54599684f7314f52d341e00ba554021c026137e4097b",
+        "fixtures/v1/markers/GeneratedOnce.bat.txt": "b97ebf2766084df4be056f788d2b5313d61535d33ddf47e6dc42ad35a6b1e8a5",
+        "fixtures/v1/markers/GeneratedOnce.cs.txt": "881d81c52f259a5fd6f5240d5da1a65ca7aec16b0b5e9a269129588858ffa33f",
+        "fixtures/v1/markers/GeneratedOnce.css.txt": "9f2d79951b5f5325a4fc5407e43eba160d5c4a6133c44907b70240d61b2fc179",
+        "fixtures/v1/markers/GeneratedOnce.md.txt": "73f65ea48e27f4bb0af0245e4d4107718eaf66c3cb2fe5632f359528a6a838ae",
+        "fixtures/v1/markers/GeneratedOnce.ps1.txt": "4ba6c20d52ab8ffd3e229c85c82ff9d7229276d542d56fdbaab2f4810cfcd434",
+        "fixtures/v1/markers/GeneratedOnce.razor.txt": "406b44d0f291b1be65f8281d09ba24053443b59683c1d00ae2dbddf713bb183f",
+        "fixtures/v1/markers/GeneratedOnce.sql.txt": "bdae573f0e2ba44307eed576fdc7dfed98e0a04aa5a11393fecf6dc153e0cd19",
+        "fixtures/v1/markers/GeneratedOnce.tt.txt": "cbcfbb82c5917971b4df34acb9da29548fe3b03f3bee6bf21a9f77f318a81305",
+        "fixtures/v1/markers/GeneratorOwned.bat.txt": "7d4158bf86705d39094a365469a2e0c95281cb2248461824e3e53a9d49250aa2",
+        "fixtures/v1/markers/GeneratorOwned.cs.txt": "d1f9c8ce0bf772913e23db35c124edab11d010f0c01be4c3ded11f6e97c0374e",
+        "fixtures/v1/markers/GeneratorOwned.css.txt": "c48f55b37845b180c1b4daf8e54e457d741c21ab6a4c486736cb401c38ca523f",
+        "fixtures/v1/markers/GeneratorOwned.md.txt": "bba6981e3b9e93b3850690c21318b73ab3fd721ef062ed853bd6593a5d258f39",
+        "fixtures/v1/markers/GeneratorOwned.ps1.txt": "c02b8c58c6bcfb17f82bf48ce75118535998cec7b3d02ac5a3ef243ccdcf59e3",
+        "fixtures/v1/markers/GeneratorOwned.razor.txt": "ac2db903fc3f51d8aee7a4ba91efac9bfbff71e119f83fa3dc1c5eeb690f7b18",
+        "fixtures/v1/markers/GeneratorOwned.sql.txt": "8b249dbd34b548aa78e9ae6f237f9501063e360b34bac550e73681b6f46ebac6",
+        "fixtures/v1/markers/GeneratorOwned.tt.txt": "9ee4429e7103cbc255309ce4fc90cf3d5f7ce38d6ad5bddd24c9cbda9a45c5f3",
+        "schemas/v1/lazycrud.platform.schema.json": "0d82d6be1acb5fe456170bc0df0b3ac78f5993a74abb55c9c0d176a27ce88524",
+        "schemas/v1/manifest-v2.schema.json": "947b8c7a3b7891fdd0f41b548aea4b383bc7462b13e627518a0954a74b15a55c"
+      }
+    },
+    "cloneBytesEqualPublishedPackageBytes": {
+      "compared": 26,
+      "identical": 26,
+      "note": "before the .gitattributes fix, 6 of these differed by line endings only"
+    },
+    "checked": [
+      "descriptor identity (schemaVersion/contractVersion/platformVersion, templates package id and aliases)",
+      "manifest v2 schema and fixture, plus the v1 -> v2 migration pair",
+      "marker v2 fixtures for GeneratorOwned and GeneratedOnce in 8 comment syntaxes",
+      "ownership vocabulary (GeneratorOwned / GeneratedOnce / Manual)",
+      "hash semantics (SHA-256, body-lf-marker-excluded and body-lf) via the published hash vectors",
+      "exit-code table 0-9, including 9 GenerationDefect",
+      "diagnostic-code table LC1001-LC5005, including LC2012 and LC2013",
+      "attribute catalog identity (43 attributes) and its XML documentation shipping in the package",
+      "template registry (107 entries, 10 carrying packages, emptyOutputAllowed on all)",
+      "package aliases (Lazy.Crud.Templates -> Lazy.Crud.Builder.Templates)",
+      "compatibility negotiation (contract range 1..1, mixed-version ranges, host requirements)"
+    ]
+  },
+  "cleanRoom": {
+    "result": "passed",
+    "runId": "20260908-225255",
+    "source": "https://api.nuget.org/v3/index.json",
+    "isolatedCache": true,
+    "builderSourceInSandbox": false,
+    "localTemplateFallback": "refused",
+    "templateSourceKind": "NuGet",
+    "templateSourceVersion": "1.1.1",
+    "templatesResolvedFromIsolatedCache": true,
+    "templatesTransformed": 18,
+    "manifestFiles": 43,
+    "manifestSchemaVersion": 2,
+    "generatorVersion": "1.1.1",
+    "hashedWith": "lazy.crud.builder.templates/1.1.1/tools/net10.0/Lazy.Crud.Builder.Platform.dll (downloaded, not built here)",
+    "generatedSolutionBuilds": true,
+    "generatedTestsPass": true,
+    "notes": [
+      "15 package(s) verified content-identical to artifacts/nuget/1.1.1, each carrying the source's repository signature"
+    ]
+  },
+  "toolchain": {
+    "resolved": true,
+    "discoverySource": "vswhere",
+    "displayName": "Visual Studio Professional 2026",
+    "installationVersion": "18.10.12120.281",
+    "channel": "prerelease",
+    "channelId": "VisualStudio.18.Preview",
+    "productId": "Microsoft.VisualStudio.Product.Professional",
+    "installationPath": "C:\\Program Files\\Microsoft Visual Studio\\18\\Insiders",
+    "devenvPath": "C:\\Program Files\\Microsoft Visual Studio\\18\\Insiders\\Common7\\IDE\\devenv.exe",
+    "textTransformPath": "C:\\Program Files\\Microsoft Visual Studio\\18\\Insiders\\Common7\\IDE\\TextTransform.exe",
+    "requiredComponent": "Microsoft.VisualStudio.Component.TextTemplating",
+    "dotnetSdk": "10.0.400",
+    "note": "the only Visual Studio on this host is a prerelease Insiders channel, so a discovery query without -prerelease returns nothing; both repositories query prerelease and Insiders. A plain dotnet build never stands in for transformation."
+  },
+  "guards": {
+    "builder unit suite": "Lazy.Crud.Builder.Platform.Tests 128/128",
+    "extension engine suite": "LazyCrud.Engine.Tests 167/167",
+    "extension surface parity": "LazyCrud.Parity.Tests 5/5",
+    "collapse guard, verified state": "OutputCollapseTests.VerifiedFileIsNotOverwrittenByACollapsedBody",
+    "collapse guard, unverified state": "OutputCollapseTests.UnverifiedFileIsNotOverwrittenByACollapsedBody",
+    "collapse guard, force does not win": "OutputCollapseTests.ForceDoesNotOverrideTheCollapseRefusal",
+    "collapse guard, declared empty output": "OutputCollapseTests.ATemplateThatDeclaresAContentlessOutputIsNotAFalsePositive",
+    "collapse guard, whole corpus": "OutputCollapseTests.EveryContentlessTemplateOutputInTheReferenceCorpusIsDeclared",
+    "collapse retry and recovery": "PipelineTests.ACollapsedOutputIsRetriedAndTheRecoveryIsRecorded / ACollapseThatSurvivesEveryAttemptFailsTheStep",
+    "collapse guard in a real transformation": "E2E F6 PASS (501.8s): a template resolved no model, the shipped writer refused, the non-empty generated file survived",
+    "GeneratedOnce": "GenerationWriterTests.GeneratedOnceIsCreatedWhenAbsentAndLeftWhenPresent (+ LegacyBooleanFalseMeansGeneratedOnce...)",
+    "Manual": "GenerationWriterTests.ManualIsNeverWrittenEvenWithForce",
+    "prerequisite negative": "E2E T2 PASS (32.8s): unresolvable toolchain exits 3 before transforming anything",
+    "no silent local fallback": "IncludeDirectiveParityTests.PackageModeNeverDegradesToTheLocalTreeWhenNothingIsRestored + TemplateResolutionTests",
+    "include-directive convergence": "IncludeDirectiveParityTests (24 cases, driven from the canonical table)"
+  },
+  "repositories": {
+    "builder": {
+      "path": "lazy-crud-builder",
+      "branch": "main",
+      "head": "61ec37b322d60d1eeaf03b62a157bfe92ecbd3e4",
+      "clean": true,
+      "pushed": false
+    },
+    "extension": {
+      "path": "LazyCrudExtension",
+      "branch": "master",
+      "head": "d1ec72bbeb3406ad3ff09e092ba13f2d4fc1c869",
+      "pushed": false,
+      "note": "another session has uncommitted work in this tree (a pre-scaffold platform-bootstrap change); none of it is staged or committed here"
+    }
+  },
+  "provenance": {
+    "nuspecRepositoryUrl": "https://github.com/felipepassion/lazy-crud-builder",
+    "nuspecRepositoryCommit": "f08ae77984bce9d253fc9511a745062e95564a57",
+    "commitReachableFromRemote": false,
+    "caveat": "every published nuspec stamps commit f08ae77, which exists only on this machine: the Builder remote main is at 9d3bbbd. The packages restore and verify; the source they name cannot be audited by anyone else until that commit is pushed. Not a blocker for consumption, and no push was made here."
+  },
+  "consumerGuidance": {
+    "source": "https://api.nuget.org/v3/index.json",
+    "pinEveryPackageAt": "1.1.1",
+    "templatesPackageReference": "Lazy.Crud.Builder.Templates 1.1.1 with GeneratePathProperty=\"true\" (the $(Pkg...) properties the wrappers include through)",
+    "aliasIsDeprecated": "Lazy.Crud.Templates 1.1.1 resolves to the canonical package and reports LC3003",
+    "generationRequires": "Visual Studio with Microsoft.VisualStudio.Component.TextTemplating; a plain dotnet build transforms nothing",
+    "buildDrivenGeneration": "dotnet build -p:LazyCrudTransformOnBuild=true (runs the unattended runner from the templates package tools/)",
+    "exitCodeToWatch": "9 = GenerationDefect (LC2012): a transformation produced a contentless body and the write was refused. Nothing was lost; --force does not apply."
+  }
+}
