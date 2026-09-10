@@ -37,16 +37,17 @@ All packages share the single version source `LazyCrudVersion` and are packed to
 
 | Combination | Supported | Verified by |
 | --- | --- | --- |
-| `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain` at any version from 1.0.29 to 1.1.1, alongside every other runtime package at 1.1.1 | Yes | Harness scenario R3 (restore, build and generation with the representative Tio-Sam pins) |
-| `Lazy.Crud.Builder.Templates` at a version different from a layer package that ships templates | No. The templates package must equal the version of every `Lazy.Crud.Builder.*` layer package that ships templates. | `validate packages`; descriptor `mixedVersionRanges` |
-| Layer packages at different versions from each other | No | Descriptor conflict diagnostic `LC5002` names every disagreeing version; the highest `platformVersion` is canonical |
+| `Lazy.Crud.Builder.Api` one patch version behind every other package, the templates package included (for example 1.1.1 alongside 1.1.2) | Yes. Nothing depends on it, so NuGet restores the lower pin. Its templates run from its own package with the shared templates and the writer of the newer templates package; its older embedded descriptor is reported as `LC5002`, and the highest `platformVersion` stays canonical. | Harness scenario R3 (restore, generation and build with `Lazy.Crud.Builder.Api` at the current version and every other package at the next patch version); `MixedVersionMatrixTests` |
+| `Lazy.Crud.Builder.Templates` at a version different from any other package that ships templates | No. `Lazy.Crud.Builder.Api` is the only package that may lag the templates package, and only as above. `Lazy.Crud.Builder.Domain`, `Lazy.Crud.Builder.Application`, `Lazy.Crud.Builder.Application.DTO`, `Lazy.Crud.Builder.Api.Queries` and `Lazy.Crud.Builder.Enumeration` are dependencies of other packages, and every package that depends on them requires at least its own version of them, so a lower pin is a downgrade NuGet rejects (`NU1605`). `Lazy.Crud.Builder.Infra.Data`, `Lazy.Crud.Builder.Infra.IoC` and `Lazy.Crud.Builder.WebApi` have no dependents, but nothing verifies their older templates against a newer templates package. | `validate packages`; descriptor `mixedVersionRanges`; `MixedVersionMatrixTests` |
+| Any other package below the rest, including `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain` at 1.0.x alongside 1.1.1 (the Tio-Sam pins) | No. The platform's dependencies are minimum versions: `Lazy.Crud.Builder.Application` requires `Lazy.Crud.Builder.Application.Validators`, `Lazy.Crud.Builder.Application.DTO` requires `Lazy.Crud.Builder.Application.DTO.Http.Models` and `Lazy.Crud.Builder.Application.Validators`, and `Lazy.Crud.Builder.Application.DTO.Http.Models` requires `Lazy.Crud.CrossCutting.Domain`, each at least at its own version, so a lower pin is a downgrade NuGet rejects (`NU1605`). | The dependencies the published 1.1.1 packages declare |
+| Any other layer packages at different versions from each other | No | Descriptor conflict diagnostic `LC5002` names every disagreeing version; the highest `platformVersion` is canonical |
 
 ## Consumers
 
 | Consumer | Status | Shape | Notes |
 | --- | --- | --- | --- |
 | CopilotSpeaker | Verified | Same aggregate shape as the reference aggregate | Covered by the positive scenarios P1 to P7. |
-| Tio-Sam | Verified | Mixed pins: 1.0.32 for most packages, 1.0.29 for `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain`; declares `Lazy.Crud.Builder.Templates` 1.0.1; generates in local template mode from its own fork of the templates project | Its legacy setup keeps working unchanged (local mode is supported and reported). Upgrading to 1.1.1 requires aligning the templates package version with the layer packages and rebasing the fork; see [Migrations](migrations.md). Its mixed pins are the row verified by R3. |
+| Tio-Sam | Verified | Mixed pins: 1.0.32 for most packages, 1.0.29 for `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain`; declares `Lazy.Crud.Builder.Templates` 1.0.1; generates in local template mode from its own fork of the templates project | Its legacy setup keeps working unchanged (local mode is supported and reported). Upgrading to 1.1.1 requires aligning the templates package version with the layer packages and rebasing the fork, and moving the three packages it pins at 1.0.29 to 1.1.1 as well, since the 1.1.1 packages that depend on them require 1.1.1; see [Migrations](migrations.md). |
 | Nutri.Veda | Unverified | Its dependency shape could not be confirmed from the local checkout (no Lazy CRUD package reference was found there) | Listed as not covered by this matrix until the owner confirms the actual coupling. Nothing on this page should be read as a compatibility claim for Nutri.Veda. |
 | Lazy CRUD extension (VSIX and CLI) | Adopts contractVersion 1 | Consumes the descriptor, manifest v2, marker v2, hash, diagnostics and exit-code contracts | Tests against the fixtures under `contracts/fixtures/v1/` and `contracts/schemas/v1/`; the fixtures win when prose and fixture disagree. |
 
@@ -80,7 +81,7 @@ A `contractVersion` increment happens only for a breaking contract change (a fie
 | Row | Check |
 | --- | --- |
 | Platform, packages, templates identity | `validate tree` and `validate packages` in `pack-all.ps1`; `OwnershipAndRegistryTests` and `SupportTests` |
-| Mixed pins | Harness R3 |
+| Mixed pins | Harness R3 (`Lazy.Crud.Builder.Api` one patch version behind); `MixedVersionMatrixTests` (the matrix, the descriptor and R3 name the same package, R3's sandbox references it, and nothing depends on it) |
 | v1 manifests | Harness R1 (accepted and upgraded), F4 and F5 (unverified handling) |
 | Deprecated alias | Harness R2 (`Lazy.Crud.Templates` resolves with `LC3003`) |
 | Byte-identical output apart from headers | Harness R4 and the golden-output test |

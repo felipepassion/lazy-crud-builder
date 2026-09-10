@@ -88,7 +88,7 @@ Compatibility regression:
 | --- | --- |
 | R1 | A v1 manifest (the published fixture with absolute paths and empty hashes) is accepted, upgraded to v2 matching the published expected output, with no drift and no unverified failure when the files are unmodified |
 | R2 | The deprecated templates package id `Lazy.Crud.Templates` resolves, with a deprecation notice (`LC3003`) |
-| R3 | A supported mixed-version combination (the Tio-Sam pins) restores, builds and generates |
+| R3 | The supported mixed-version combination restores, builds and generates: `Lazy.Crud.Builder.Api` one patch version behind every other package; its older descriptor is reported as `LC5002` and the highest `platformVersion` is canonical |
 | R4 | The reference aggregate's output is byte-identical to the golden output apart from the marker headers |
 | R5 | A project referencing several layer packages restores and builds with no duplicate template content |
 

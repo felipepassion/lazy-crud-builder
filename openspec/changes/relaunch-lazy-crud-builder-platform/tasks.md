@@ -157,6 +157,7 @@ These require access the implementing agent does not have. They are listed witho
 - [x] 11.14 Fix or delete `pack-infra.ps1`, which packs the non-existent `src/Core/Core.Infra.IoC`.
 - [x] 11.15 Author the compatibility matrix covering platform versions, contract versions, manifest schema versions and supported mixed-version combinations, and record the Nutri.Veda verification outcome.
 - [x] 11.16 Add an automated check exercising each documented combination, including the Tio-Sam mixed pin (`1.0.32` with `1.0.29`).
+  - Corrected: R3 never exercised the Tio-Sam pin, and no check can. The 1.1.1 packages that depend on `Application.DTO.Http.Models`, `Application.Validators` and `CrossCutting.Domain` require them at 1.1.1, so pinning them at 1.0.29 next to 1.1.1 is a downgrade NuGet rejects (NU1605). The matrix now documents that pin as unsupported, and the one mixed combination that restores, `Lazy.Crud.Builder.Api` one patch version behind every other package, is the one R3 exercises; `MixedVersionMatrixTests` keeps the matrix, the descriptor and R3 in agreement (CHANGELOG [Unreleased]).
 
 ## 12. Visual Studio T4 toolchain prerequisite
 

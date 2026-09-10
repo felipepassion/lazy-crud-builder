@@ -2335,10 +2335,9 @@
     "minimumManifestSchemaVersion": 1,
     "manifestSchemaVersion": 2,
     "mixedVersionRanges": [
-      "Lazy.Crud.Builder.Application.DTO.Http.Models: 1.0.29 to 1.1.1 alongside runtime packages at 1.1.1",
-      "Lazy.Crud.Builder.Application.Validators: 1.0.29 to 1.1.1 alongside runtime packages at 1.1.1",
-      "Lazy.Crud.CrossCutting.Domain: 1.0.29 to 1.1.1 alongside runtime packages at 1.1.1",
-      "Lazy.Crud.Builder.Templates must equal the version of every Lazy.Crud.Builder.* layer package that ships templates"
+      "Lazy.Crud.Builder.Api: one patch version behind every other package, which are all at 1.1.1; nothing depends on it, so NuGet restores the lower pin, and its older embedded descriptor is reported as LC5002",
+      "Lazy.Crud.Builder.Templates must equal the version of every other package that ships templates",
+      "Every other package is at one version: the platform's dependencies are minimum versions, so pinning a package below the version another package requires of it is a downgrade NuGet rejects (NU1605)"
     ],
     "hostRequirements": {
       "platform": "windows",

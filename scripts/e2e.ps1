@@ -364,9 +364,13 @@ Add-Scenario 'R2' 'Deprecated templates package id resolves with a deprecation n
   Assert-Transformed $g 'R2'
 }
 
-Add-Scenario 'R3' 'Supported mixed package versions restore, build and generate; descriptor winner reported' {
+Add-Scenario 'R3' 'Supported mixed package versions restore, build and generate (Lazy.Crud.Builder.Api one patch version behind); descriptor winner reported' {
   if (-not (Test-Path $mixedFeed)) { throw [System.IO.InvalidDataException]::new("second version feed missing: $mixedFeed") }
-  $sbx = New-Sandbox 'sbx-mixed' @('--feed', $mixedFeed, '--override', "Lazy.Crud.Builder.Api=$version", '--override', "Lazy.Crud.Builder.WebApi=$version", '--version', $mixedVersion)
+  # The one supported mix (docs/compatibility.md, the descriptor's mixedVersionRanges, MixedVersionMatrixTests):
+  # Lazy.Crud.Builder.Api at the current version and every other package at the next patch version. Nothing depends
+  # on Api, so its lower pin restores. A Lazy.Crud.Builder.WebApi pin used to sit here too; the sandbox has no WebApi
+  # project, so it never took effect.
+  $sbx = New-Sandbox 'sbx-mixed' @('--feed', $mixedFeed, '--override', "Lazy.Crud.Builder.Api=$version", '--version', $mixedVersion)
   $g = Invoke-Generate $sbx 'R3'
   Assert ($g.Exit -eq 0) "mixed-version generation exit $($g.Exit) ($($g.Report.ExitCodeName))"
   Assert ($g.Report.Descriptor.PlatformVersion -eq $mixedVersion) "descriptor winner is $($g.Report.Descriptor.PlatformVersion), expected $mixedVersion"

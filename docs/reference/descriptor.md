@@ -126,7 +126,7 @@ At 1.1.1: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Ap
 | `minimumUpgradableContractVersion` | 1 | Lowest contract version this build upgrades from |
 | `minimumManifestSchemaVersion` | 1 | Lowest manifest schema read (v1 is migrated) |
 | `manifestSchemaVersion` | 2 | Manifest schema written |
-| `mixedVersionRanges[]` | four statements | The supported mixed pins: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain` from 1.0.29 to 1.1.1 alongside runtime packages at 1.1.1; the templates package must equal the version of every layer package that ships templates |
+| `mixedVersionRanges[]` | three statements | The supported mixed pins, as the [compatibility matrix](../compatibility.md#mixed-package-versions) states them: `Lazy.Crud.Builder.Api` may be one patch version behind every other package; the templates package must equal the version of every other package that ships templates; every other package is at one version, because pinning a package below the version another package requires of it is a downgrade NuGet rejects (`NU1605`) |
 | `hostRequirements` | object | `platform` (`windows`), `visualStudioVersions` (`17.x (Visual Studio 2022)`, `18.x (Visual Studio 2026)`), `visualStudioChannels` (`release`, `preview`, `insiders`), `t4Component` (`Microsoft.VisualStudio.Component.TextTemplating`), `t4ComponentDisplayName` (`Text Template Transformation`), `dotnetSdk` (`10.0`), `headlessDefinition` (the sentence defining headless as unattended, not Visual Studio-free). Additive and optional; it does not by itself require a contract version increment. |
 
 ## Example (excerpt)

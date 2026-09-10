@@ -5,7 +5,7 @@ The platform has one version for every package (`LazyCrudVersion`), one contract
 ## General rules
 
 - Upgrade every `Lazy.Crud.Builder.*` and `Lazy.Crud.CrossCutting.*` reference in a solution together. The only supported mixed pins are listed in the [compatibility matrix](compatibility.md).
-- The templates package (`Lazy.Crud.Builder.Templates`) must equal the version of every layer package that ships templates. Restore the solution after changing versions so the wrapper includes resolve against the new package paths.
+- The templates package (`Lazy.Crud.Builder.Templates`) must equal the version of every package that ships templates, except `Lazy.Crud.Builder.Api`, which may be one patch version behind every other package (see [Compatibility](compatibility.md#mixed-package-versions)). Restore the solution after changing versions so the wrapper includes resolve against the new package paths.
 - Manifests are never rejected: an older manifest is read, migrated in memory and rewritten in the current schema after the next successful generation.
 - A contract-breaking change increments `contractVersion`; consumers written against an older contract see `LC5001` (`ContractMismatch`, exit 6) instead of misreading a document. Additive fields never increment it.
 
@@ -13,7 +13,7 @@ The platform has one version for every package (`LazyCrudVersion`), one contract
 
 ### 1. Align the package versions
 
-Set every Lazy CRUD package reference to 1.1.1. Three packages may stay at any version from 1.0.29 to 1.1.1 next to runtime packages at 1.1.1: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain`. `Lazy.Crud.Builder.Templates` must be 1.1.1 whenever any layer package is 1.1.1; a pin such as the historical `Lazy.Crud.Builder.Templates` 1.0.1 next to 1.1.1 layer packages is not supported.
+Set every Lazy CRUD package reference to 1.1.1, including `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and `Lazy.Crud.CrossCutting.Domain`, which some 1.0.x solutions pin lower: the 1.1.1 packages that depend on them require 1.1.1, and NuGet rejects a lower pin as a downgrade (`NU1605`). `Lazy.Crud.Builder.Templates` must be 1.1.1 whenever any layer package is 1.1.1; a pin such as the historical `Lazy.Crud.Builder.Templates` 1.0.1 next to 1.1.1 layer packages is not supported.
 
 Every 1.1.1 package embeds a platform descriptor. When packages of different versions are installed and their descriptors disagree, the highest `platformVersion` wins and `LC5002` names every conflicting version; aligning the versions removes the warning.
 

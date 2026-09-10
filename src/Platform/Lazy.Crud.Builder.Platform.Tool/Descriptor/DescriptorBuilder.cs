@@ -39,6 +39,28 @@ public static class DescriptorBuilder
         TemplateRegistry.DeprecatedTemplatesPackageId,
     };
 
+    /// <summary>
+    /// The packages a consumer may pin one patch version behind every other package. Two things hold for these and for
+    /// no other package: nothing depends on them, since the platform's dependencies are minimum versions and a lower pin
+    /// of a package another package requires is a downgrade NuGet rejects (NU1605); and harness scenario R3 restores,
+    /// generates and builds that combination. Such a package's templates run from its own, older package with the
+    /// shared templates and the writer of the newer templates package. docs/compatibility.md, the descriptor's
+    /// mixedVersionRanges and R3 name exactly these (MixedVersionMatrixTests).
+    /// </summary>
+    public static readonly IReadOnlyList<string> PackagesThatMayLagOnePatch = new[] { "Lazy.Crud.Builder.Api" };
+
+    /// <summary>The supported mixed pins, as the matrix in docs/compatibility.md states them.</summary>
+    public static List<string> MixedVersionStatements(string platformVersion)
+    {
+        var statements = PackagesThatMayLagOnePatch
+            .Select(id => id + ": one patch version behind every other package, which are all at " + platformVersion +
+                          "; nothing depends on it, so NuGet restores the lower pin, and its older embedded descriptor is reported as LC5002")
+            .ToList();
+        statements.Add(TemplateRegistry.CanonicalTemplatesPackageId + " must equal the version of every other package that ships templates");
+        statements.Add("Every other package is at one version: the platform's dependencies are minimum versions, so pinning a package below the version another package requires of it is a downgrade NuGet rejects (NU1605)");
+        return statements;
+    }
+
     public const string HeadlessDefinition =
         "Headless means unattended: no prompt, no window to focus, no person driving the IDE. It does not mean Visual Studio is absent. " +
         "Generation always runs through the T4 tooling of the resolved Visual Studio installation (embedded devenv.exe automation session); a plain build never substitutes for transformation.";
@@ -115,13 +137,7 @@ public static class DescriptorBuilder
             MinimumUpgradableContractVersion = PlatformInfo.MinimumUpgradableContractVersion,
             MinimumManifestSchemaVersion = PlatformInfo.MinimumManifestSchemaVersion,
             ManifestSchemaVersion = PlatformInfo.ManifestSchemaVersion,
-            MixedVersionRanges = new List<string>
-            {
-                "Lazy.Crud.Builder.Application.DTO.Http.Models: 1.0.29 to " + platformVersion + " alongside runtime packages at " + platformVersion,
-                "Lazy.Crud.Builder.Application.Validators: 1.0.29 to " + platformVersion + " alongside runtime packages at " + platformVersion,
-                "Lazy.Crud.CrossCutting.Domain: 1.0.29 to " + platformVersion + " alongside runtime packages at " + platformVersion,
-                "Lazy.Crud.Builder.Templates must equal the version of every Lazy.Crud.Builder.* layer package that ships templates",
-            },
+            MixedVersionRanges = MixedVersionStatements(platformVersion),
             HostRequirements = new HostRequirementsDescriptor
             {
                 Platform = "windows",

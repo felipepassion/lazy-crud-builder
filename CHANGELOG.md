@@ -21,6 +21,24 @@ changes are recorded against the `contractVersion` they change.
   `application-dto.listinings`, both `{Agg}.ListiningDTO.cs`) stay `Unknown`, and are never guessed.
   Found by the LazyCrudExtension headless tier (scenario 20.22), whose own migration received the same
   rule in its commit `3773419`.
+- **The mixed-version matrix no longer claims a combination NuGet cannot restore.** The matrix in
+  `docs/compatibility.md` and the descriptor's `compatibility.mixedVersionRanges` said
+  `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators` and
+  `Lazy.Crud.CrossCutting.Domain` may stay at any version from 1.0.29 alongside runtime packages at 1.1.1,
+  verified by harness scenario R3. The packages that depend on them require at least their own version
+  (`Application` requires `Application.Validators`; `Application.DTO` requires `Application.DTO.Http.Models` and
+  `Application.Validators`; `Application.DTO.Http.Models` requires `CrossCutting.Domain`; all minimum versions), so
+  a lower pin is a downgrade NuGet rejects (NU1605). R3 never exercised that row: it pinned
+  `Lazy.Crud.Builder.Api` and `Lazy.Crud.Builder.WebApi` one patch version behind every other package, and since
+  the sandbox has no WebApi project, only the Api pin took effect. The matrix, the descriptor, the migration guide,
+  the harness description and the LC5002 remedy now state what R3 verifies, `Lazy.Crud.Builder.Api` one patch version behind every
+  other package, and the templates rule names that one exception and why no other package that ships templates
+  may lag. R3 drops the WebApi pin. `MixedVersionMatrixTests` keeps the three in agreement: R3 pins exactly the
+  packages the descriptor names, the sandbox references each of them, and nothing depends on any of them.
+  Lowering the three packages' dependency lower bounds to 1.0.29 instead was rejected: NuGet resolves a
+  dependency to the lowest version its range allows, so every consumer that does not pin them would have
+  received 1.0.29. Found by the LazyCrudExtension headless tier, whose scenario 20.25 could restore only R3's
+  combination.
 
 ### Changed (contractVersion 1, not breaking)
 
@@ -29,6 +47,13 @@ changes are recorded against the `contractVersion` they change.
   ambiguous within its layer and still `Unknown`; and an entity-named request DTO, resolved through
   `{Entity}`. The cases already in the set migrate exactly as before. A consumer that pins the fixture
   set by hash re-pins when a version carrying it is published.
+- The descriptor's `compatibility.mixedVersionRanges` carries three statements instead of four:
+  `Lazy.Crud.Builder.Api` one patch version behind every other package; `Lazy.Crud.Builder.Templates` equal to
+  every other package that ships templates; every other package at one version, since pinning a package below
+  the version another package requires of it is a downgrade NuGet rejects (NU1605). The field keeps its type
+  and meaning, statements for people rather than a machine-readable range, so `contractVersion` stays 1; the v1
+  descriptor fixture changes in exactly those lines. A consumer that mirrors the statements, or pins the fixture
+  set by hash, updates when a version carrying them is published.
 
 ## [1.1.1] - Unreleased
 

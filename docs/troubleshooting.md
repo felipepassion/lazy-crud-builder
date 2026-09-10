@@ -85,7 +85,7 @@ platform template registry rather than working around the guard.
 
 **Meaning.** The installed packages embed platform descriptors with different `platformVersion` values (mixed package versions). The highest platform version is canonical; the diagnostic names every version and the package it came from.
 
-**Remedy.** Align the package versions. The only supported mixed pins are the three packages listed in the [compatibility matrix](compatibility.md).
+**Remedy.** Align the package versions. The one supported mixed pin is `Lazy.Crud.Builder.Api` one patch version behind every other package, which reports this diagnostic by design; see the [compatibility matrix](compatibility.md#mixed-package-versions).
 
 ## Other codes you may meet
 
