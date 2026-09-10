@@ -39,6 +39,46 @@
       "contentHash": null,
       "hashAlgorithm": null,
       "hashScope": null
+    },
+    {
+      "relativePath": "src/Products/Products.Domain/LazyCode/ProductsAgg.cs",
+      "layer": "Domain",
+      "templateId": "domain.global-usings",
+      "templateVersion": null,
+      "ownership": "GeneratorOwned",
+      "contentHash": null,
+      "hashAlgorithm": null,
+      "hashScope": null
+    },
+    {
+      "relativePath": "src/Products/Products.Application/LazyCode/ProductsAgg.cs",
+      "layer": "Application",
+      "templateId": "application.global-usings",
+      "templateVersion": null,
+      "ownership": "GeneratorOwned",
+      "contentHash": null,
+      "hashAlgorithm": null,
+      "hashScope": null
+    },
+    {
+      "relativePath": "src/Products/Products.Application.DTO/LazyCode/ProductsAgg.ListiningDTO.cs",
+      "layer": "Application.DTO",
+      "templateId": null,
+      "templateVersion": null,
+      "ownership": "Unknown",
+      "contentHash": null,
+      "hashAlgorithm": null,
+      "hashScope": null
+    },
+    {
+      "relativePath": "src/Products/Products.Application.DTO/Aggregates/ProductsAgg/Requests/ProductDTO.cs",
+      "layer": "Application.DTO",
+      "templateId": "application-dto.requests.seed",
+      "templateVersion": null,
+      "ownership": "GeneratedOnce",
+      "contentHash": null,
+      "hashAlgorithm": null,
+      "hashScope": null
     }
   ]
 }

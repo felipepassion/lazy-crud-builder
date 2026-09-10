@@ -69,9 +69,11 @@ namespace Lazy.Crud.Builder.Platform.Manifests
                     entry.RelativePath = relative;
                 }
 
-                // Template identity: only from an unambiguous registry match, never guessed.
+                // Template identity: only from an unambiguous registry match, never guessed. The layer the
+                // entry itself recorded is what separates templates that write a file of the same name into
+                // different layers; it is data from the manifest, not a guess.
                 TemplateRegistryEntry registry = null;
-                if (!entry.Unresolved) registry = TemplateRegistry.TryMatchOutput(relative, m.AggregateName);
+                if (!entry.Unresolved) registry = TemplateRegistry.TryMatchOutput(relative, m.AggregateName, layer);
                 if (registry != null)
                 {
                     entry.TemplateId = registry.Id;

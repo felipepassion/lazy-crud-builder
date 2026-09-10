@@ -87,6 +87,52 @@ public class OwnershipAndRegistryTests
     }
 
     [Fact]
+    public void ANameSeveralTemplatesShareIsSettledByTheRecordedLayer()
+    {
+        // {Agg}.cs is written by a template in each of several layers; the layer a v1 entry recorded settles which.
+        Assert.Equal("domain.global-usings", TemplateRegistry.TryMatchOutput("src/Products/Products.Domain/LazyCode/ProductsAgg.cs", "Products", "Domain")!.Id);
+        Assert.Equal("application.global-usings", TemplateRegistry.TryMatchOutput("src/Products/Products.Application/LazyCode/ProductsAgg.cs", "Products", "Application")!.Id);
+        Assert.Equal("api.mini-ioc-factory", TemplateRegistry.TryMatchOutput("src/Products/Products.Api/LazyCode/ProductsAgg.cs", "Products", "api")!.Id);
+
+        // Two writers in the SAME layer write this name: the layer cannot settle it, so it is still never guessed.
+        Assert.Null(TemplateRegistry.TryMatchOutput("src/Products/Products.Application.DTO/LazyCode/ProductsAgg.ListiningDTO.cs", "Products", "Application.DTO"));
+
+        // A layer in which no template writes the name settles nothing either.
+        Assert.Null(TemplateRegistry.TryMatchOutput("src/Products/Products.Domain/LazyCode/ProductsAgg.cs", "Products", "Nowhere"));
+
+        // An output named after an entity is a concrete file in a v1 manifest, and it is matched as one.
+        Assert.Equal("application-dto.requests.seed",
+            TemplateRegistry.TryMatchOutput("src/Products/Products.Application.DTO/Aggregates/ProductsAgg/Requests/ProductDTO.cs", "Products", "Application.DTO")!.Id);
+    }
+
+    [Fact]
+    public void AV1MigrationSettlesSharedNamesByLayerAndLeavesTheAmbiguousOneUnknown()
+    {
+        const string root = @"C:\lazycrud-fixture\solution";
+        static string Entry(string file, string layer) =>
+            "    { \"FullPath\": \"" + (root + "\\src\\Products\\" + file).Replace("\\", "\\\\") + "\", \"TemplateName\": \"Unknown\", \"Layer\": \"" + layer + "\", \"ContentHash\": \"\" }";
+
+        var v1 = "{\n  \"AggregateName\": \"Products\",\n  \"GeneratedFiles\": [\n" +
+                 Entry("Products.Domain\\LazyCode\\ProductsAgg.cs", "Domain") + ",\n" +
+                 Entry("Products.Application\\LazyCode\\ProductsAgg.cs", "Application") + ",\n" +
+                 Entry("Products.Application.DTO\\LazyCode\\ProductsAgg.ListiningDTO.cs", "Application.DTO") + "\n" +
+                 "  ]\n}";
+
+        var diagnostics = new Lazy.Crud.Builder.Platform.Diagnostics.DiagnosticCollector();
+        var m = Lazy.Crud.Builder.Platform.Manifests.ManifestMigration.MigrateV1(v1, root, "Products", diagnostics);
+
+        Assert.Equal("domain.global-usings", m.Files[0].TemplateId);
+        Assert.Equal("GeneratorOwned", m.Files[0].Ownership);
+        Assert.Equal("application.global-usings", m.Files[1].TemplateId);
+        Assert.Equal("GeneratorOwned", m.Files[1].Ownership);
+
+        // Genuinely ambiguous from a v1 record: two writers in its own layer produce this name.
+        Assert.Null(m.Files[2].TemplateId);
+        Assert.Equal("Unknown", m.Files[2].Ownership);
+        Assert.Single(diagnostics.Items, d => d.Code == Lazy.Crud.Builder.Platform.Diagnostics.DiagnosticCodes.MigrationUnknownOwnership);
+    }
+
+    [Fact]
     public void TryMatchOutputIsUnambiguousOrNull()
     {
         Assert.Equal("domain.command-handlers", TemplateRegistry.TryMatchOutput("src/Products/Products.Domain/LazyCode/ProductsAgg.DomainCommandHandlers.cs", "Products")!.Id);

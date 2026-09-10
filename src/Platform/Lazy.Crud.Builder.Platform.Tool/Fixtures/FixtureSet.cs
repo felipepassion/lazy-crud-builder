@@ -112,6 +112,30 @@ public static class FixtureSet
         "      \"TemplateName\": \"OutputRedirection\",\n" +
         "      \"Layer\": \"Redirected\",\n" +
         "      \"ContentHash\": \"\"\n" +
+        "    },\n" +
+        "    {\n" +
+        "      \"FullPath\": \"C:\\\\lazycrud-fixture\\\\solution\\\\src\\\\Products\\\\Products.Domain\\\\LazyCode\\\\ProductsAgg.cs\",\n" +
+        "      \"TemplateName\": \"Unknown\",\n" +
+        "      \"Layer\": \"Domain\",\n" +
+        "      \"ContentHash\": \"\"\n" +
+        "    },\n" +
+        "    {\n" +
+        "      \"FullPath\": \"C:\\\\lazycrud-fixture\\\\solution\\\\src\\\\Products\\\\Products.Application\\\\LazyCode\\\\ProductsAgg.cs\",\n" +
+        "      \"TemplateName\": \"Unknown\",\n" +
+        "      \"Layer\": \"Application\",\n" +
+        "      \"ContentHash\": \"\"\n" +
+        "    },\n" +
+        "    {\n" +
+        "      \"FullPath\": \"C:\\\\lazycrud-fixture\\\\solution\\\\src\\\\Products\\\\Products.Application.DTO\\\\LazyCode\\\\ProductsAgg.ListiningDTO.cs\",\n" +
+        "      \"TemplateName\": \"Unknown\",\n" +
+        "      \"Layer\": \"Application.DTO\",\n" +
+        "      \"ContentHash\": \"\"\n" +
+        "    },\n" +
+        "    {\n" +
+        "      \"FullPath\": \"C:\\\\lazycrud-fixture\\\\solution\\\\src\\\\Products\\\\Products.Application.DTO\\\\Aggregates\\\\ProductsAgg\\\\Requests\\\\ProductDTO.cs\",\n" +
+        "      \"TemplateName\": \"Unknown\",\n" +
+        "      \"Layer\": \"Application.DTO\",\n" +
+        "      \"ContentHash\": \"\"\n" +
         "    }\n" +
         "  ]\n" +
         "}\n";

@@ -20,6 +20,30 @@
       "TemplateName": "OutputRedirection",
       "Layer": "Redirected",
       "ContentHash": ""
+    },
+    {
+      "FullPath": "C:\\lazycrud-fixture\\solution\\src\\Products\\Products.Domain\\LazyCode\\ProductsAgg.cs",
+      "TemplateName": "Unknown",
+      "Layer": "Domain",
+      "ContentHash": ""
+    },
+    {
+      "FullPath": "C:\\lazycrud-fixture\\solution\\src\\Products\\Products.Application\\LazyCode\\ProductsAgg.cs",
+      "TemplateName": "Unknown",
+      "Layer": "Application",
+      "ContentHash": ""
+    },
+    {
+      "FullPath": "C:\\lazycrud-fixture\\solution\\src\\Products\\Products.Application.DTO\\LazyCode\\ProductsAgg.ListiningDTO.cs",
+      "TemplateName": "Unknown",
+      "Layer": "Application.DTO",
+      "ContentHash": ""
+    },
+    {
+      "FullPath": "C:\\lazycrud-fixture\\solution\\src\\Products\\Products.Application.DTO\\Aggregates\\ProductsAgg\\Requests\\ProductDTO.cs",
+      "TemplateName": "Unknown",
+      "Layer": "Application.DTO",
+      "ContentHash": ""
     }
   ]
 }

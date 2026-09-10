@@ -14,7 +14,7 @@ contracts/
   fixtures/v1/fixture-index.json             index: contractVersion, platformVersion, exit codes, diagnostic codes, file list
   fixtures/v1/lazycrud.platform.json         a valid descriptor for the current contractVersion (layers, registry, attributes)
   fixtures/v1/manifest-v2.json               a valid manifest v2 document written by the production writer
-  fixtures/v1/manifest-v1-input.json         a v1 manifest (absolute FullPath entries, empty hashes, one unresolvable path)
+  fixtures/v1/manifest-v1-input.json         a v1 manifest (absolute FullPath entries, empty hashes, one unresolvable path, one file name written in two layers, one written by two templates of the same layer)
   fixtures/v1/manifest-v1-migrated.json      the expected v2 output of migrating manifest-v1-input.json (root C:\lazycrud-fixture\solution)
   fixtures/v1/markers/<Ownership>.<ext>.txt  marker v2 examples for GeneratorOwned and GeneratedOnce in every supported comment syntax
   fixtures/v1/hash-vectors.json              inputs with expected contentHash values (LF/CRLF equivalence, BOM, marker exclusion, unmarked file, changed body)

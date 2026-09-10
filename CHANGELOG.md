@@ -4,6 +4,32 @@ All notable changes to the Lazy CRUD platform are recorded here. The platform fo
 version for every package (`LazyCrudVersion` in `Directory.Build.props`). Contract-breaking
 changes are recorded against the `contractVersion` they change.
 
+## [Unreleased]
+
+### Fixed
+
+- **The v1 manifest migration identifies a template by the layer the entry recorded.** The migration
+  matched a v1 entry to its registry template by output file name alone and gave up on any collision.
+  `{OutputPath}/{Agg}.cs` is written by a template in each of several layers, so every one of those
+  entries was recorded as `Unknown` ownership (LC1008); the shared writer then treated the
+  generator's own files as the developer's, every layer reported LC4004, and the first generation
+  after upgrading a real solution's v1 manifest failed. A name collision is now narrowed by the
+  entry's recorded `Layer` (case-insensitive), and an output whose pattern contains `{Entity}` or
+  `{Step}` is matched with those placeholders standing for one identifier each, since a v1 manifest
+  names concrete files. A template is still returned only when exactly one candidate remains: two
+  writers in the same layer that produce the same name (`application-dto.csv-mapper` and
+  `application-dto.listinings`, both `{Agg}.ListiningDTO.cs`) stay `Unknown`, and are never guessed.
+  Found by the LazyCrudExtension headless tier (scenario 20.22), whose own migration received the same
+  rule in its commit `3773419`.
+
+### Changed (contractVersion 1, not breaking)
+
+- The v1 contract fixtures gain four migration cases: `{Agg}.cs` in the Domain and in the Application
+  layer, each resolved to its own layer's template; `{Agg}.ListiningDTO.cs` in Application.DTO,
+  ambiguous within its layer and still `Unknown`; and an entity-named request DTO, resolved through
+  `{Entity}`. The cases already in the set migrate exactly as before. A consumer that pins the fixture
+  set by hash re-pins when a version carrying it is published.
+
 ## [1.1.1] - Unreleased
 
 The relaunch ships as 1.1.1. 1.1.0 was prepared and gated but never pushed to nuget.org, so it

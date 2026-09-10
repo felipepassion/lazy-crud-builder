@@ -292,27 +292,62 @@ namespace Lazy.Crud.Builder.Platform.Descriptor
         /// Best-effort match of an existing output path (for example a v1 manifest entry) to the
         /// writer template that produces it. Returns null when no unambiguous match exists;
         /// migration never invents a template id.
+        ///
+        /// A file name alone does not identify the template: {Agg}.cs is written by a template in each of
+        /// several layers. Matched by name and abandoned on any collision, every one of those came out of a
+        /// v1 migration as Unknown ownership -- although a v1 entry records the layer it was generated into,
+        /// which is exactly what tells them apart. Unknown means user-owned, so the generator's own files
+        /// were restored as the developer's and the first generation after an upgrade failed in every layer.
+        ///
+        /// So a collision is narrowed by the layer when the caller knows it, and an output named after an
+        /// entity or a step is matched with those placeholders standing for one identifier each, since a v1
+        /// manifest names concrete files, never patterns. The rule that makes this safe is unchanged: a
+        /// template is returned only when exactly one candidate remains. Two writers in the same layer that
+        /// write the same name are still ambiguous, and still never guessed.
         /// </summary>
-        public static TemplateRegistryEntry TryMatchOutput(string relativePath, string aggregateName)
+        public static TemplateRegistryEntry TryMatchOutput(string relativePath, string aggregateName, string layer = null)
         {
             if (string.IsNullOrEmpty(relativePath)) return null;
             var fileName = relativePath.Replace('\\', '/');
             fileName = fileName.Substring(fileName.LastIndexOf('/') + 1);
             var agg = (aggregateName ?? string.Empty) + "Agg";
-            TemplateRegistryEntry match = null;
+
+            var candidates = new System.Collections.Generic.List<TemplateRegistryEntry>();
             foreach (var e in _entries)
             {
                 if (e.Kind != TemplateKind.Writer || e.OutputPattern == null) continue;
-                if (e.OutputPattern.IndexOf("{Entity}", StringComparison.Ordinal) >= 0 || e.OutputPattern.IndexOf("{Step}", StringComparison.Ordinal) >= 0) continue;
                 var patternFile = e.OutputPattern.Substring(e.OutputPattern.LastIndexOf('/') + 1)
                     .Replace("{Agg}", agg).Replace("{Aggregate}", aggregateName ?? string.Empty);
-                if (string.Equals(patternFile, fileName, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (match != null) return null; // ambiguous
-                    match = e;
-                }
+                if (OutputFileMatches(patternFile, fileName)) candidates.Add(e);
             }
-            return match;
+
+            if (candidates.Count > 1 && !string.IsNullOrWhiteSpace(layer))
+            {
+                var inLayer = new System.Collections.Generic.List<TemplateRegistryEntry>();
+                foreach (var c in candidates)
+                    if (string.Equals(c.Layer, layer, StringComparison.OrdinalIgnoreCase)) inLayer.Add(c);
+                candidates = inLayer;
+            }
+
+            return candidates.Count == 1 ? candidates[0] : null; // none, or still ambiguous
+        }
+
+        /// <summary>A concrete file name against a registry output name, where {Entity} and {Step} each stand for one identifier.</summary>
+        private static bool OutputFileMatches(string patternFile, string fileName)
+        {
+            if (patternFile.IndexOf('{') < 0)
+                return string.Equals(patternFile, fileName, StringComparison.OrdinalIgnoreCase);
+
+            const string Identifier = "[A-Za-z_][A-Za-z0-9_]*";
+            var escaped = System.Text.RegularExpressions.Regex.Escape(patternFile)
+                .Replace(System.Text.RegularExpressions.Regex.Escape("{Entity}"), Identifier)
+                .Replace(System.Text.RegularExpressions.Regex.Escape("{Step}"), Identifier);
+
+            // Any other placeholder is one this matcher does not know how to bind: no match, rather than a guess.
+            if (escaped.IndexOf("\\{", StringComparison.Ordinal) >= 0) return false;
+
+            return System.Text.RegularExpressions.Regex.IsMatch(fileName, "^" + escaped + "$",
+                System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant);
         }
     }
 }
