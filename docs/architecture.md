@@ -6,7 +6,7 @@ Lazy CRUD is a compiler whose source language is a domain model. Keeping the fou
 | --- | --- | --- |
 | Input | Entity classes and attributes | `src/{Aggregate}/{Aggregate}.Domain/Aggregates/{Aggregate}Agg/Entities/*.cs` in the consumer solution |
 | Compiler | T4 templates | `src/ProjectFiles/**/*.tt` in this repository; shipped as `contentFiles/any/any/LazyCrudTemplates/<Layer>/` in each layer package, shared files in `Lazy.Crud.Builder.Templates` |
-| Runtime | `Lazy.Crud.Builder.*` and `Lazy.Crud.CrossCutting.*` packages, version 1.1.1, target `net10.0` | NuGet |
+| Runtime | `Lazy.Crud.Builder.*` and `Lazy.Crud.CrossCutting.*` packages, version 1.2.0, target `net11.0` | NuGet |
 | Artifact | Generated code, the manifest and the diagnostics file | `{OutputPath}` (default `LazyCode/`) in each layer project, `.lazycrud/` under the solution root |
 
 The templates and the tools never read a hand-written table of layers, package ids or template ids. The platform descriptor `lazycrud.platform.json`, generated from the build and embedded in every package, is the single vocabulary every surface reads. See [Platform descriptor](reference/descriptor.md).

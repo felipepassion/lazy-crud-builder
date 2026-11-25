@@ -439,42 +439,42 @@
       "Projects": [
         {
           "Suffix": "Api",
-          "TargetFramework": "net10.0",
+          "TargetFramework": "net11.0",
           "IsWeb": true
         },
         {
           "Suffix": "Api.Queries",
-          "TargetFramework": "net10.0",
+          "TargetFramework": "net11.0",
           "IsWeb": false
         },
         {
           "Suffix": "Application",
-          "TargetFramework": "net10.0",
+          "TargetFramework": "net11.0",
           "IsWeb": false
         },
         {
           "Suffix": "Application.DTO",
-          "TargetFramework": "net10.0",
+          "TargetFramework": "net11.0",
           "IsWeb": false
         },
         {
           "Suffix": "Domain",
-          "TargetFramework": "net10.0",
+          "TargetFramework": "net11.0",
           "IsWeb": false
         },
         {
           "Suffix": "Enumerations",
-          "TargetFramework": "net10.0",
+          "TargetFramework": "net11.0",
           "IsWeb": false
         },
         {
           "Suffix": "Infra.Data",
-          "TargetFramework": "net10.0",
+          "TargetFramework": "net11.0",
           "IsWeb": false
         },
         {
           "Suffix": "Infra.IoC",
-          "TargetFramework": "net10.0",
+          "TargetFramework": "net11.0",
           "IsWeb": false
         }
       ],

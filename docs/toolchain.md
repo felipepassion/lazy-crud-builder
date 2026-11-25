@@ -12,7 +12,7 @@ An installed Visual Studio with the Text Template Transformation component is an
 | Component | `Microsoft.VisualStudio.Component.TextTemplating`, displayed as "Text Template Transformation" in the Visual Studio Installer |
 | Files that must exist in the instance | `Common7\IDE\devenv.exe` and `Common7\IDE\TextTransform.exe` |
 | Instance state | complete and launchable |
-| .NET SDK | 10.0 |
+| .NET SDK | 11.0 |
 
 The requirement is declared in the descriptor under `compatibility.hostRequirements` (`platform`, `visualStudioVersions`, `visualStudioChannels`, `t4Component`, `t4ComponentDisplayName`, `dotnetSdk`, `headlessDefinition`), so a tool can check it before starting work instead of discovering it through a failure.
 

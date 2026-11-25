@@ -7,7 +7,7 @@
     Layer-specific templates ship in their layer's runtime package, which depends on this package.
   -->
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <Title>Lazy.Crud.Builder.Templates</Title>
     <PackageId>Lazy.Crud.Builder.Templates</PackageId>
     <Description>Lazy CRUD canonical templates package: shared T4 templates (project.tt, Tests.Common.ttinclude), the shared generation writer, the unattended Visual Studio T4 runner and the platform contract fixtures. Layer templates ship in the Lazy.Crud.Builder.* layer packages, which depend on this package.</Description>
@@ -60,12 +60,12 @@
   -->
   <Target Name="LazyCrudCollectTools" BeforeTargets="_GetPackageFiles;GenerateNuspec">
     <PropertyGroup>
-      <_LazyCrudToolBin>$(MSBuildThisFileDirectory)..\..\Platform\Lazy.Crud.Builder.Platform.Tool\bin\$(Configuration)\net10.0\</_LazyCrudToolBin>
+      <_LazyCrudToolBin>$(MSBuildThisFileDirectory)..\..\Platform\Lazy.Crud.Builder.Platform.Tool\bin\$(Configuration)\net11.0\</_LazyCrudToolBin>
     </PropertyGroup>
     <Error Condition="!Exists('$(_LazyCrudToolBin)Lazy.Crud.Builder.Platform.Tool.dll')" Text="The Platform tool output was not found at '$(_LazyCrudToolBin)'. Build the solution before packing Lazy.Crud.Builder.Templates." />
     <ItemGroup>
       <_LazyCrudToolFiles Include="$(_LazyCrudToolBin)**\*.dll;$(_LazyCrudToolBin)**\*.json;$(_LazyCrudToolBin)**\*.exe" Exclude="$(_LazyCrudToolBin)**\*.pdb" />
-      <None Include="@(_LazyCrudToolFiles)" Pack="true" PackagePath="tools/net10.0/%(RecursiveDir)" />
+      <None Include="@(_LazyCrudToolFiles)" Pack="true" PackagePath="tools/net11.0/%(RecursiveDir)" />
     </ItemGroup>
   </Target>
 </Project>

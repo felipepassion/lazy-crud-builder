@@ -9,6 +9,22 @@ The platform has one version for every package (`LazyCrudVersion`), one contract
 - Manifests are never rejected: an older manifest is read, migrated in memory and rewritten in the current schema after the next successful generation.
 - A contract-breaking change increments `contractVersion`; consumers written against an older contract see `LC5001` (`ContractMismatch`, exit 6) instead of misreading a document. Additive fields never increment it.
 
+## 1.1.1 to 1.2.0
+
+1.2.0 moves the platform to .NET 11. No contract changes: `contractVersion` stays 1, the manifest schema written stays 2 and the descriptor schema stays 1, so a 1.1.1 manifest is read as is.
+
+### 1. Target framework and SDK
+
+Every package now targets `net11.0` (1.1.1 targeted `net10.0`), and the runner ships under `tools/net11.0/` of `Lazy.Crud.Builder.Templates`. A consumer project must target `net11.0` or later and build with the .NET 11 SDK. The generated project files and the harness sandbox target `net11.0`.
+
+### 2. EF Core 11 family
+
+The runtime packages are compiled against EF Core 11: `Microsoft.EntityFrameworkCore.*` 11.0.0, `Npgsql.EntityFrameworkCore.PostgreSQL` and `Npgsql` 11.0.0, `EFCore.NamingConventions` 11.0.0, and `Microsoft.AspNetCore.*.EntityFrameworkCore` 11.0.0. Move the whole family in the consumer together with the Lazy CRUD packages: keeping EF Core 10 next to 1.2.0 is a downgrade NuGet rejects (`NU1605`/`NU1107`), and `EFCore.NamingConventions` 10.x refuses EF Core 11 (`NU1608`). Move `dotnet-ef` to 11.0.0 as well before adding or applying migrations.
+
+### 3. First regeneration
+
+The marker headers record `GeneratorVersion` and `TemplateVersion` 1.2.0, so the first regeneration rewrites the header of every generated file; the bodies, and therefore the content hashes, do not change.
+
 ## 1.0.x to 1.1.1
 
 ### 1. Align the package versions

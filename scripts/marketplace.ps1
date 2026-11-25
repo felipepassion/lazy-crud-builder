@@ -97,7 +97,7 @@ if (-not $Feed) { $Feed = Join-Path $repo "artifacts/nuget/$PackageVersion" }
 if (-not (Test-Path $Feed)) { throw "package feed not found: $Feed (run pack-all.ps1 first, or pass -Feed)" }
 if (-not $Output) { $Output = Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) "lazycrud/marketplace/$stamp" }
 
-$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net10.0/Lazy.Crud.Builder.Platform.Tool.dll"
+$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net11.0/Lazy.Crud.Builder.Platform.Tool.dll"
 if (-not (Test-Path $tool)) { throw "platform tool not built: $tool (dotnet build LazyCrudBuilder.sln -c $Configuration)" }
 
 $fixtures = Join-Path $repo 'tests/fixtures/marketplace'

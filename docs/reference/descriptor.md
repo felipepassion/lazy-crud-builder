@@ -9,15 +9,15 @@ The platform descriptor is the canonical machine-readable contract of a Lazy CRU
 
 ## Versioning
 
-| Field | Value at 1.1.1 | Meaning |
+| Field | Value at 1.2.0 | Meaning |
 | --- | --- | --- |
 | `schemaVersion` | 1 | The descriptor document schema |
 | `contractVersion` | 1 | The version of the shared cross-repository contract this document expresses; consumers negotiate against it |
-| `platformVersion` | `1.1.1` | The Lazy CRUD platform version; equal by construction to the NuGet version of every package of the release (single version source) |
+| `platformVersion` | `1.2.0` | The Lazy CRUD platform version; equal by construction to the NuGet version of every package of the release (single version source) |
 
 The supported range is declared in `compatibility`: `supportedContractVersionMin` 1, `supportedContractVersionMax` 1, `minimumUpgradableContractVersion` 1. A consumer negotiates as follows: a descriptor whose `contractVersion` is above the consumer's maximum, or below the descriptor's own `minimumUpgradableContractVersion` or the consumer's minimum, is rejected with `LC5001` (exit code 6, `ContractMismatch`).
 
-Additions in 1.1.1 that did **not** increment it, because a consumer written against contract 1 still parses the document and no existing code changed meaning: the optional registry field `emptyOutputAllowed`, the diagnostic code `LC2012` and the exit code `9` (`GenerationDefect`).
+Additions in 1.2.0 that did **not** increment it, because a consumer written against contract 1 still parses the document and no existing code changed meaning: the optional registry field `emptyOutputAllowed`, the diagnostic code `LC2012` and the exit code `9` (`GenerationDefect`).
 
 What an increment implies: `contractVersion` increases only when a field is removed or its meaning changes in a way that breaks a conforming consumer (or a hash, ownership, marker, diagnostic or exit-code semantic changes). The change is recorded in the changelog as contract-breaking, new fixtures and schemas are published under `contracts/fixtures/v<N>/` and `contracts/schemas/v<N>/` while the previous ones remain retrievable, and consumers must be updated before they accept the new documents. Adding an optional field (for example `compatibility.hostRequirements`) does not increment it; a consumer written against the previous contract still parses the document.
 
@@ -52,7 +52,7 @@ What an increment implies: `contractVersion` increases only when a field is remo
 | `templateContentPath` | Path of the layer templates inside that package, or null | `contentFiles/any/any/LazyCrudTemplates/Application.DTO/` |
 | `outputPathPattern` | Where generated output is written | `src/{Aggregate}/{Aggregate}.Application.DTO/{OutputPath}` |
 
-Layer ids at 1.1.1: `Domain`, `Application`, `Application.DTO`, `Infra.Data`, `Infra.IoC`, `Api.Queries`, `Enumerations`, `Api`.
+Layer ids at 1.2.0: `Domain`, `Application`, `Application.DTO`, `Infra.Data`, `Infra.IoC`, `Api.Queries`, `Enumerations`, `Api`.
 
 ### `testLayers[]`
 
@@ -67,15 +67,15 @@ Layer ids at 1.1.1: `Domain`, `Application`, `Application.DTO`, `Infra.Data`, `I
 
 ### `templates`
 
-| Field | Meaning | Value at 1.1.1 |
+| Field | Meaning | Value at 1.2.0 |
 | --- | --- | --- |
 | `packageId` | The canonical templates package | `Lazy.Crud.Builder.Templates` |
 | `aliasPackageIds[]` | Deprecated ids that resolve to the canonical one | `Lazy.Crud.Templates` |
-| `version` | Templates version | `1.1.1` |
+| `version` | Templates version | `1.2.0` |
 | `contentRoot` | Root of the templates inside packages | `contentFiles/any/any/LazyCrudTemplates/` |
 | `sharedFiles[]` | Files shipped only by the templates package | `project.tt`, `Tests/Tests.Common.ttinclude` |
 | `outputPatternTokens[]` | Tokens used by `outputPattern` | `{Aggregate}`, `{Agg}`, `{Entity}`, `{Step}`, `{OutputPath}`, `{TestOutputPath}` |
-| `registry[]` | One entry per template (107 at 1.1.1) | see below |
+| `registry[]` | One entry per template (107 at 1.2.0) | see below |
 
 Registry entry:
 
@@ -86,7 +86,7 @@ Registry entry:
 | `sourceFile` | Template source path under the content root, forward slashes | `Domain/DomainCommandHandlers.tt` |
 | `outputPattern` | Output location relative to the layer project, or null for entry and include templates | `{OutputPath}/{Agg}.DomainCommandHandlers.cs` |
 | `ownership` | `GeneratorOwned`, `GeneratedOnce` or `Manual` | `GeneratorOwned` |
-| `templateVersion` | Version of the template | `1.1.1` |
+| `templateVersion` | Version of the template | `1.2.0` |
 | `packageId` | Package carrying the template | `Lazy.Crud.Builder.Domain` |
 | `inPackagePath` | Full path inside that package | `contentFiles/any/any/LazyCrudTemplates/Domain/DomainCommandHandlers.tt` |
 | `kind` | `writer` (produces a file through the shared writer), `entry` (orchestration template that includes others and writes nothing itself) or `include` (shared helper with no output) | `writer` |
@@ -111,15 +111,15 @@ The prose is not duplicated in the descriptor. See [Aggregates, entities and att
 
 ### `capabilities[]`
 
-At 1.1.1: `platform-descriptor`, `generated-code-ownership`, `generated-code-markers`, `generation-manifest-v2`, `drift-protection`, `generation-diagnostics`, `attribute-metadata-contract`, `contract-fixtures`, `unattended-t4-generation`, `templates-alias-resolution`.
+At 1.2.0: `platform-descriptor`, `generated-code-ownership`, `generated-code-markers`, `generation-manifest-v2`, `drift-protection`, `generation-diagnostics`, `attribute-metadata-contract`, `contract-fixtures`, `unattended-t4-generation`, `templates-alias-resolution`.
 
 ### `nonLayerPackages[]`
 
-At 1.1.1: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators`, `Lazy.Crud.Builder.WebApi`, `Lazy.Crud.CrossCutting.Domain`, `Lazy.Crud.CrossCutting.Infra.Log`, `Lazy.Crud.CrossCutting.Infra.Utils`, `Lazy.Crud.CrossCutting.Application.Mail`, `Lazy.Crud.Builder.Platform`, `Lazy.Crud.Builder.Templates`, `Lazy.Crud.Templates`.
+At 1.2.0: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators`, `Lazy.Crud.Builder.WebApi`, `Lazy.Crud.CrossCutting.Domain`, `Lazy.Crud.CrossCutting.Infra.Log`, `Lazy.Crud.CrossCutting.Infra.Utils`, `Lazy.Crud.CrossCutting.Application.Mail`, `Lazy.Crud.Builder.Platform`, `Lazy.Crud.Builder.Templates`, `Lazy.Crud.Templates`.
 
 ### `compatibility`
 
-| Field | Value at 1.1.1 | Meaning |
+| Field | Value at 1.2.0 | Meaning |
 | --- | --- | --- |
 | `supportedContractVersionMin` | 1 | Lowest contract version accepted |
 | `supportedContractVersionMax` | 1 | Highest contract version understood |
@@ -135,7 +135,7 @@ At 1.1.1: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Ap
 {
   "schemaVersion": 1,
   "contractVersion": 1,
-  "platformVersion": "1.1.1",
+  "platformVersion": "1.2.0",
   "layers": [
     {
       "id": "Domain",
@@ -150,7 +150,7 @@ At 1.1.1: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Ap
   "templates": {
     "packageId": "Lazy.Crud.Builder.Templates",
     "aliasPackageIds": ["Lazy.Crud.Templates"],
-    "version": "1.1.1",
+    "version": "1.2.0",
     "contentRoot": "contentFiles/any/any/LazyCrudTemplates/",
     "registry": [
       {
@@ -159,7 +159,7 @@ At 1.1.1: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Ap
         "sourceFile": "Domain/Filters.tt",
         "outputPattern": "{OutputPath}/{Agg}.Filters.cs",
         "ownership": "GeneratorOwned",
-        "templateVersion": "1.1.1",
+        "templateVersion": "1.2.0",
         "packageId": "Lazy.Crud.Builder.Domain",
         "inPackagePath": "contentFiles/any/any/LazyCrudTemplates/Domain/Filters.tt",
         "kind": "writer"
@@ -177,7 +177,7 @@ At 1.1.1: `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Ap
       "visualStudioVersions": ["17.x (Visual Studio 2022)", "18.x (Visual Studio 2026)"],
       "visualStudioChannels": ["release", "preview", "insiders"],
       "t4Component": "Microsoft.VisualStudio.Component.TextTemplating",
-      "dotnetSdk": "10.0"
+      "dotnetSdk": "11.0"
     }
   }
 }

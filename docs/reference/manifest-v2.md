@@ -15,7 +15,7 @@ The generation manifest records every file the generator wrote for one aggregate
 | `schemaVersion` | integer, `2` | Document schema. A v1 document has no `schemaVersion` (or `1`). |
 | `aggregateName` | string | The aggregate |
 | `generatedAtUtc` | string, ISO 8601 UTC | Time of the last save |
-| `generatorVersion` | string | The platform version that wrote the document (`1.1.1`), from the single version source, never a placeholder |
+| `generatorVersion` | string | The platform version that wrote the document (`1.2.0`), from the single version source, never a placeholder |
 | `contractVersion` | integer | The `contractVersion` of the platform descriptor used for the run (`1`) |
 | `solutionRootMarker` | string or null, optional | How relative paths are anchored: the file name of the solution the root was derived from, for example `Sandbox.sln` |
 | `files[]` | array | One entry per recorded file |
@@ -27,7 +27,7 @@ The generation manifest records every file the generator wrote for one aggregate
 | `relativePath` | string or null | Path relative to the solution root with forward slashes, for example `src/Products/Products.Domain/LazyCode/ProductsAgg.Filters.cs`. Null only for unresolved migrated entries. Never an absolute path, a drive letter or a backslash. |
 | `layer` | string | Layer id, for example `Domain`, `Tests.Domain`; may be empty for legacy entries |
 | `templateId` | string or null | Stable template id from the descriptor registry, for example `domain.filters`; `legacy:<TemplateName>` or null for migrated entries with no registry match |
-| `templateVersion` | string or null | Template version (`1.1.1`); null for migrated entries not yet regenerated |
+| `templateVersion` | string or null | Template version (`1.2.0`); null for migrated entries not yet regenerated |
 | `ownership` | string | `GeneratorOwned`, `GeneratedOnce`, `Manual` or `Unknown` (migration only) |
 | `contentHash` | string or null | Lowercase hexadecimal SHA-256 computed under the frozen rule; null when unknown |
 | `hashAlgorithm` | string or null | `SHA-256` |
@@ -48,7 +48,7 @@ The fixture, produced by the implementation:
   "schemaVersion": 2,
   "aggregateName": "Products",
   "generatedAtUtc": "2026-01-01T00:00:00.0000000Z",
-  "generatorVersion": "1.1.1",
+  "generatorVersion": "1.2.0",
   "contractVersion": 1,
   "solutionRootMarker": "Sandbox.sln",
   "files": [
@@ -56,7 +56,7 @@ The fixture, produced by the implementation:
       "relativePath": "src/Products/Products.Domain/LazyCode/ProductsAgg.Filters.cs",
       "layer": "Domain",
       "templateId": "domain.filters",
-      "templateVersion": "1.1.1",
+      "templateVersion": "1.2.0",
       "ownership": "GeneratorOwned",
       "contentHash": "5728dc3dfc6273dddf7b145bf2ff69cbc8ab5cd03982ad87245f6e3fca83117d",
       "hashAlgorithm": "SHA-256",
@@ -66,7 +66,7 @@ The fixture, produced by the implementation:
       "relativePath": "src/Products/Products.Domain/Aggregates/ProductsAgg/Entities/Products.cs",
       "layer": "Domain",
       "templateId": "domain.aggregate-settings-entity",
-      "templateVersion": "1.1.1",
+      "templateVersion": "1.2.0",
       "ownership": "GeneratedOnce",
       "contentHash": "e6e5c36e2a7dbd8b3d97d4228100b8c25163f0181069bf324fae0e0ce8066e46",
       "hashAlgorithm": "SHA-256",
@@ -76,7 +76,7 @@ The fixture, produced by the implementation:
       "relativePath": "src/Products/Products.Api/Migrations.generated.bat",
       "layer": "Api",
       "templateId": "api.mini-migrations",
-      "templateVersion": "1.1.1",
+      "templateVersion": "1.2.0",
       "ownership": "GeneratorOwned",
       "contentHash": "54b654a8ad7f3d0ab59a31cdbc2f0edc289de3b393aa3c7754f5ba1ad6d3c7ed",
       "hashAlgorithm": "SHA-256",

@@ -36,7 +36,7 @@ if (-not $Version) {
     $Version = ([string]($xml.Project.PropertyGroup | ForEach-Object { $_.LazyCrudVersion } | Where-Object { $_ } | ForEach-Object { if ($_ -is [System.Xml.XmlElement]) { $_.InnerText } else { [string]$_ } } | Select-Object -First 1)).Trim()
 }
 if (-not $Output) { $Output = Join-Path (Get-Location) $AggregateName }
-$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net10.0/Lazy.Crud.Builder.Platform.Tool.dll"
+$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net11.0/Lazy.Crud.Builder.Platform.Tool.dll"
 if (-not (Test-Path $tool)) { throw "Platform tool not built: $tool (dotnet build LazyCrudBuilder.sln -c $Configuration)" }
 $args = @('scaffold', '--output', $Output, '--aggregate', $AggregateName, '--version', $Version)
 if ($Feed) { $args += @('--feed', $Feed) }

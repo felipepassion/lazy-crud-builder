@@ -119,12 +119,12 @@ public static class AggregateLayout
     /// <summary>Third-party package versions pinned for sandbox consumers (aligned with the platform's central versions).</summary>
     public static readonly IReadOnlyDictionary<string, string> ThirdPartyVersions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
-        ["Microsoft.EntityFrameworkCore.Relational"] = "10.0.10",
-        ["Microsoft.EntityFrameworkCore.Design"] = "10.0.10",
-        ["Npgsql.EntityFrameworkCore.PostgreSQL"] = "10.0.3",
+        ["Microsoft.EntityFrameworkCore.Relational"] = "11.0.0",
+        ["Microsoft.EntityFrameworkCore.Design"] = "11.0.0",
+        ["Npgsql.EntityFrameworkCore.PostgreSQL"] = "11.0.0",
         ["Serilog"] = "4.4.0",
-        ["Microsoft.AspNetCore.Mvc.NewtonsoftJson"] = "10.0.10",
-        ["Microsoft.Extensions.DependencyInjection.Abstractions"] = "10.0.10",
+        ["Microsoft.AspNetCore.Mvc.NewtonsoftJson"] = "11.0.0",
+        ["Microsoft.Extensions.DependencyInjection.Abstractions"] = "11.0.0",
         ["Swashbuckle.AspNetCore"] = "7.3.1",
         ["Microsoft.NET.Test.Sdk"] = "17.13.0",
         ["xunit"] = "2.9.3",

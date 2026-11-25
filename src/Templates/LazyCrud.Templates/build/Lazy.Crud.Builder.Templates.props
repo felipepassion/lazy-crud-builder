@@ -15,8 +15,8 @@
   <PropertyGroup>
     <LazyCrudTemplatesPackageRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..'))</LazyCrudTemplatesPackageRoot>
     <LazyCrudTemplatesRoot Condition="'$(LazyCrudTemplatesRoot)' == ''">$(LazyCrudTemplatesPackageRoot)contentFiles\any\any\LazyCrudTemplates\</LazyCrudTemplatesRoot>
-    <LazyCrudPlatformAssembly Condition="'$(LazyCrudPlatformAssembly)' == ''">$(LazyCrudTemplatesPackageRoot)tools\net10.0\Lazy.Crud.Builder.Platform.dll</LazyCrudPlatformAssembly>
-    <LazyCrudToolDll Condition="'$(LazyCrudToolDll)' == ''">$(LazyCrudTemplatesPackageRoot)tools\net10.0\Lazy.Crud.Builder.Platform.Tool.dll</LazyCrudToolDll>
+    <LazyCrudPlatformAssembly Condition="'$(LazyCrudPlatformAssembly)' == ''">$(LazyCrudTemplatesPackageRoot)tools\net11.0\Lazy.Crud.Builder.Platform.dll</LazyCrudPlatformAssembly>
+    <LazyCrudToolDll Condition="'$(LazyCrudToolDll)' == ''">$(LazyCrudTemplatesPackageRoot)tools\net11.0\Lazy.Crud.Builder.Platform.Tool.dll</LazyCrudToolDll>
     <LazyCrudDescriptorFile Condition="'$(LazyCrudDescriptorFile)' == ''">$(LazyCrudTemplatesPackageRoot)lazycrud\lazycrud.platform.json</LazyCrudDescriptorFile>
   </PropertyGroup>
 </Project>

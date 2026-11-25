@@ -4,10 +4,30 @@ All notable changes to the Lazy CRUD platform are recorded here. The platform fo
 version for every package (`LazyCrudVersion` in `Directory.Build.props`). Contract-breaking
 changes are recorded against the `contractVersion` they change.
 
-## [Unreleased]
+## [1.2.0] - 2026-11-25
+
+1.2.0 moves the platform to .NET 11. The contracts do not change (`contractVersion` 1, manifest schema 2,
+descriptor schema 1); the target framework and the database stack do, so a consumer still on `net10.0` stays
+on 1.1.1. See [Migrations](docs/migrations.md#111-to-120).
+
+### Changed (breaking for net10.0 consumers)
+
+- **Every package targets `net11.0`** (was `net10.0`), and the runner ships under `tools/net11.0/` of
+  `Lazy.Crud.Builder.Templates`. The descriptor's `compatibility.hostRequirements.dotnetSdk` is `11.0`, the
+  harness sandbox and the generated project files target `net11.0`, and CI installs the .NET 11 SDK.
+- **EF Core 11 family.** The runtime packages are compiled against `Microsoft.EntityFrameworkCore.*` 11.0.0,
+  `Npgsql` and `Npgsql.EntityFrameworkCore.PostgreSQL` 11.0.0, `EFCore.NamingConventions` 11.0.0 and the
+  `Microsoft.AspNetCore.*` / `Microsoft.Extensions.*` 11.0.0 packages. 1.1.1 depended on
+  `EFCore.NamingConventions` 10.0.1, whose EF Core range `[10,11)` made every 1.1.1 consumer unable to move to
+  EF Core 11 without an `NU1608` and a runtime failure. The project files the generator writes for a consumer
+  name the same 11.0.0 versions.
 
 ### Fixed
 
+- **The harness sandbox solution builds on the .NET 11 SDK.** `dotnet sln add` follows project references by
+  default, so a layer's references were added before their own explicit turn in the list, and the .NET 11 SDK
+  rejects that second add ("Solution folder 'src' already contains a project with the filename ..."). The
+  sandbox lists every project explicitly anyway, so it now passes `--include-references false`.
 - **The v1 manifest migration identifies a template by the layer the entry recorded.** The migration
   matched a v1 entry to its registry template by output file name alone and gave up on any collision.
   `{OutputPath}/{Agg}.cs` is written by a template in each of several layers, so every one of those

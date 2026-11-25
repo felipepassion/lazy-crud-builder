@@ -34,7 +34,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path $PSScriptRoot -Parent
 if (-not $Solution) { $Solution = $repo }
-$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net10.0/Lazy.Crud.Builder.Platform.Tool.dll"
+$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net11.0/Lazy.Crud.Builder.Platform.Tool.dll"
 if (-not (Test-Path $tool)) {
     Write-Host "Building the platform tool ($Configuration)..." -ForegroundColor Cyan
     & dotnet build (Join-Path $repo 'src/Platform/Lazy.Crud.Builder.Platform.Tool/Lazy.Crud.Builder.Platform.Tool.csproj') -c $Configuration --nologo -v q

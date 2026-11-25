@@ -56,7 +56,7 @@
           Condition="'$(MSBuildProjectName)' == 'Lazy.Crud.Builder.Platform.Tool' and '$(LazyCrudSkipDescriptorGeneration)' != 'true'">
     <PropertyGroup>
       <_LazyCrudToolDll>$(TargetDir)$(TargetFileName)</_LazyCrudToolDll>
-      <_LazyCrudDtoAssembly>$(LazyCrudRepoRoot)src\Builder\Builder.Application.DTO\bin\$(Configuration)\net10.0\Lazy.Crud.Builder.Application.DTO.dll</_LazyCrudDtoAssembly>
+      <_LazyCrudDtoAssembly>$(LazyCrudRepoRoot)src\Builder\Builder.Application.DTO\bin\$(Configuration)\net11.0\Lazy.Crud.Builder.Application.DTO.dll</_LazyCrudDtoAssembly>
     </PropertyGroup>
     <Exec Command="dotnet &quot;$(_LazyCrudToolDll)&quot; descriptor generate --repo &quot;$(LazyCrudRepoRoot).&quot; --version $(LazyCrudVersion) --attributes-assembly &quot;$(_LazyCrudDtoAssembly)&quot; --output &quot;$(LazyCrudDescriptorPath)&quot; --fixtures &quot;$(LazyCrudRepoRoot)contracts&quot;"
           StandardOutputImportance="low" />

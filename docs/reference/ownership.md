@@ -24,7 +24,7 @@ Every file the generator writes is classified with exactly one ownership value. 
 
 A template with no registry entry is reported (`LC2004`) and its output is treated as user-owned: a `GeneratorOwned` request from an unregistered template is downgraded to `GeneratedOnce` (created only when absent).
 
-Registry entries with `GeneratedOnce` at 1.1.1: `domain.aggregate-settings-entity` (`Aggregates/{Agg}/Entities/{Aggregate}.cs`), `domain.user-entity` (`Aggregates/UsersAgg/Entities/User.cs`), `domain.command-handlers.seed` (`Aggregates/{Agg}/CommandHandlers/{Entity}CommandHandler.cs`), `application-dto.requests.seed` (`Aggregates/{Agg}/Requests/{Entity}DTO.cs`), `application-dto.steppable-requests-validators.seed` (`Aggregates/{Agg}/Validators/{Entity}Validator.cs`) and `webapi.client-listining-pages.index-css` (`{Agg}/{Entity}/Index.razor.css`). Every other writer entry is `GeneratorOwned`. No shipped template declares `Manual`; the value exists so that a path can be declared off-limits.
+Registry entries with `GeneratedOnce` at 1.2.0: `domain.aggregate-settings-entity` (`Aggregates/{Agg}/Entities/{Aggregate}.cs`), `domain.user-entity` (`Aggregates/UsersAgg/Entities/User.cs`), `domain.command-handlers.seed` (`Aggregates/{Agg}/CommandHandlers/{Entity}CommandHandler.cs`), `application-dto.requests.seed` (`Aggregates/{Agg}/Requests/{Entity}DTO.cs`), `application-dto.steppable-requests-validators.seed` (`Aggregates/{Agg}/Validators/{Entity}Validator.cs`) and `webapi.client-listining-pages.index-css` (`{Agg}/{Entity}/Index.razor.css`). Every other writer entry is `GeneratorOwned`. No shipped template declares `Manual`; the value exists so that a path can be declared off-limits.
 
 ## Where ownership is visible
 

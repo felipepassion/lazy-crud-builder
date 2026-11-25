@@ -102,7 +102,7 @@ function Get-CentralVersion {
 }
 
 if (-not $Version) { $Version = Get-CentralVersion }
-$tool = Join-Path $repo 'src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net10.0/Lazy.Crud.Builder.Platform.Tool.dll'
+$tool = Join-Path $repo 'src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net11.0/Lazy.Crud.Builder.Platform.Tool.dll'
 Assert (Test-Path $tool) "the platform tool is not built: $tool"
 $descriptorPath = Join-Path $repo 'artifacts/platform/lazycrud.platform.json'
 Assert (Test-Path $descriptorPath) "no descriptor at $descriptorPath"
@@ -184,7 +184,7 @@ try {
     if (-not (Test-Path $pkgDir)) { continue }
     Assert (Test-Path (Join-Path $pkgDir $e.inPackagePath)) "registry entry $($e.id) does not resolve inside the downloaded $($e.packageId)"
   }
-  $xmlPath = Join-Path $packagesFolder "lazy.crud.builder.application.dto/$Version/lib/net10.0/Lazy.Crud.Builder.Application.DTO.xml"
+  $xmlPath = Join-Path $packagesFolder "lazy.crud.builder.application.dto/$Version/lib/net11.0/Lazy.Crud.Builder.Application.DTO.xml"
   Assert (Test-Path $xmlPath) 'the attribute XML documentation was not downloaded'
 
   # ---- 6. markers, manifest, hashes ----------------------------------------------------------------
@@ -199,7 +199,7 @@ try {
   # The writer that produced these files is the one shipped inside the templates package, under
   # tools/: the standalone Platform package is not in a consumer's restore graph, so hashing with it
   # would be hashing with something the consumer never downloaded.
-  $writerDll = Join-Path $packagesFolder "lazy.crud.builder.templates/$Version/tools/net10.0/Lazy.Crud.Builder.Platform.dll"
+  $writerDll = Join-Path $packagesFolder "lazy.crud.builder.templates/$Version/tools/net11.0/Lazy.Crud.Builder.Platform.dll"
   if (-not (Test-Path $writerDll)) { $writerDll = Join-Path $packagesFolder "lazy.crud.builder.platform/$Version/lib/netstandard2.0/Lazy.Crud.Builder.Platform.dll" }
   Assert (Test-Path $writerDll) "the downloaded writer assembly was not found in the isolated cache"
   Log "hashing with the downloaded writer: $($writerDll.Substring($packagesFolder.Length).TrimStart('\','/'))"

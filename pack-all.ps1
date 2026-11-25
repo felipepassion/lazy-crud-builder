@@ -105,7 +105,7 @@ if (-not $SkipRestore) {
 Invoke-Native 'BUILD' (@('build', 'LazyCrudBuilder.sln', '-c', 'Release', '--no-restore', '--nologo', '-v', 'q') + $versionArgs)
 
 # 2. Validate the descriptor against the tree before packing.
-$tool = Join-Path $repoRoot 'src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net10.0/Lazy.Crud.Builder.Platform.Tool.dll'
+$tool = Join-Path $repoRoot 'src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net11.0/Lazy.Crud.Builder.Platform.Tool.dll'
 if (-not (Test-Path $tool)) { throw "Platform tool not found after build: $tool" }
 if (-not $SkipValidation) {
   Invoke-Native 'VALIDATE:tree' @($tool, 'validate', 'tree', '--repo', $repoRoot)

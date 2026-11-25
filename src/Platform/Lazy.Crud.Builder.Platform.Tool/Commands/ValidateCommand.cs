@@ -127,7 +127,7 @@ public static class TreeChecks
         report.Add("packaging.shared-templates-single-package", layerCsprojs.Where(p => Regex.IsMatch(File.ReadAllText(p), @"ProjectFiles\\project\.tt|Tests\.Common\.ttinclude")).Select(p => "layer project packs a shared template: " + p.Substring(repo.Length + 1)));
 
         // Attribute metadata (from the built assembly when available).
-        var asm = o.Get("attributes-assembly") ?? Path.Combine(repo, "src", "Builder", "Builder.Application.DTO", "bin", o.Get("configuration") ?? "Release", "net10.0", "Lazy.Crud.Builder.Application.DTO.dll");
+        var asm = o.Get("attributes-assembly") ?? Path.Combine(repo, "src", "Builder", "Builder.Application.DTO", "bin", o.Get("configuration") ?? "Release", "net11.0", "Lazy.Crud.Builder.Application.DTO.dll");
         if (File.Exists(asm))
         {
             var inspections = AttributeCatalogBuilder.Inspect(asm, m => { });
@@ -210,7 +210,7 @@ public static class TreeChecks
         {
             var text = File.ReadAllText(readme);
             if (Regex.IsMatch(text, @"\.NET Core 8\.0")) problems.Add("README.md still claims .NET Core 8.0");
-            if (!text.Contains("net10.0")) problems.Add("README.md does not state the net10.0 target framework");
+            if (!text.Contains("net11.0")) problems.Add("README.md does not state the net11.0 target framework");
             if (!text.Contains(TemplateRegistry.CanonicalTemplatesPackageId)) problems.Add("README.md does not name the canonical templates package");
         }
         foreach (var f in Directory.GetFiles(Path.Combine(repo, "docs"), "*.md", SearchOption.AllDirectories).Concat(new[] { readme }))
@@ -333,8 +333,8 @@ public static class PackageChecks
             var t = new List<string>();
             if (!tset.Contains("build/" + d.Templates.PackageId + ".props")) t.Add("build/" + d.Templates.PackageId + ".props missing");
             if (!tset.Contains("build/" + d.Templates.PackageId + ".targets")) t.Add("build/" + d.Templates.PackageId + ".targets missing");
-            if (!tset.Contains("tools/net10.0/Lazy.Crud.Builder.Platform.dll")) t.Add("tools/net10.0/Lazy.Crud.Builder.Platform.dll missing");
-            if (!tset.Contains("tools/net10.0/Lazy.Crud.Builder.Platform.Tool.dll")) t.Add("tools/net10.0/Lazy.Crud.Builder.Platform.Tool.dll missing");
+            if (!tset.Contains("tools/net11.0/Lazy.Crud.Builder.Platform.dll")) t.Add("tools/net11.0/Lazy.Crud.Builder.Platform.dll missing");
+            if (!tset.Contains("tools/net11.0/Lazy.Crud.Builder.Platform.Tool.dll")) t.Add("tools/net11.0/Lazy.Crud.Builder.Platform.Tool.dll missing");
             if (!tset.Any(e => e.StartsWith("contracts/fixtures/v" + d.ContractVersion + "/", StringComparison.OrdinalIgnoreCase))) t.Add("contract fixtures missing from the templates package");
             report.Add("packages.templates-package-layout", t);
         }
@@ -349,7 +349,7 @@ public static class PackageChecks
         }
 
         // XML documentation ships with the attributes package.
-        report.Add("packages.attributes-xml-documentation", entries.TryGetValue(AttributeCatalogBuilder.AttributesPackageId, out var aset2) && aset2.Contains("lib/net10.0/Lazy.Crud.Builder.Application.DTO.xml") ? Array.Empty<string>() : new[] { "lib/net10.0/Lazy.Crud.Builder.Application.DTO.xml missing" });
+        report.Add("packages.attributes-xml-documentation", entries.TryGetValue(AttributeCatalogBuilder.AttributesPackageId, out var aset2) && aset2.Contains("lib/net11.0/Lazy.Crud.Builder.Application.DTO.xml") ? Array.Empty<string>() : new[] { "lib/net11.0/Lazy.Crud.Builder.Application.DTO.xml missing" });
 
         // Layer packages depend on the templates package without excluding build/contentfiles assets.
         var depProblems = new List<string>();

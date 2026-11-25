@@ -68,7 +68,7 @@ function Get-CentralVersion {
 }
 $version = Get-CentralVersion
 $mixedVersion = ($version -replace '(\d+)\.(\d+)\.(\d+).*', { "{0}.{1}.{2}" -f $_.Groups[1].Value, $_.Groups[2].Value, ([int]$_.Groups[3].Value + 1) })
-$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net10.0/Lazy.Crud.Builder.Platform.Tool.dll"
+$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net11.0/Lazy.Crud.Builder.Platform.Tool.dll"
 $platformDll = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform/bin/$Configuration/netstandard2.0/Lazy.Crud.Builder.Platform.dll"
 $feed = Join-Path $repo "artifacts/nuget/$version"
 $mixedFeed = Join-Path $repo "artifacts/nuget/$mixedVersion"
@@ -604,8 +604,8 @@ Add-Scenario 'C1' 'Clean room: public-equivalent feed only, isolated cache, no l
     if (-not (Test-Path $pkgDir)) { continue }   # package not needed by this consumer
     Assert (Test-Path (Join-Path $pkgDir $e.inPackagePath)) "registry entry $($e.id) does not resolve in $($e.packageId)"
   }
-  Assert (Test-Path (Join-Path $packagesFolder "lazy.crud.builder.application.dto/$version/lib/net10.0/Lazy.Crud.Builder.Application.DTO.xml")) 'attribute XML documentation not restored'
-  $xml = [xml](Get-Content -Raw (Join-Path $packagesFolder "lazy.crud.builder.application.dto/$version/lib/net10.0/Lazy.Crud.Builder.Application.DTO.xml"))
+  Assert (Test-Path (Join-Path $packagesFolder "lazy.crud.builder.application.dto/$version/lib/net11.0/Lazy.Crud.Builder.Application.DTO.xml")) 'attribute XML documentation not restored'
+  $xml = [xml](Get-Content -Raw (Join-Path $packagesFolder "lazy.crud.builder.application.dto/$version/lib/net11.0/Lazy.Crud.Builder.Application.DTO.xml"))
   foreach ($a in $rd.attributes) {
     $member = $xml.doc.members.member | Where-Object { $_.name -eq $a.documentationId }
     Assert ($null -ne $member -and -not [string]::IsNullOrWhiteSpace($member.summary) -and -not [string]::IsNullOrWhiteSpace($member.category)) "documentationId does not resolve to summary and category: $($a.documentationId)"

@@ -11,7 +11,7 @@ A clean room is defined by the absence of private sources, not by a bare machine
 | Operating system | Windows |
 | Visual Studio | 2022 (17.x) or 2026 (18.x), on any channel: release, preview or Insiders |
 | Component | `Microsoft.VisualStudio.Component.TextTemplating` (Text Template Transformation) |
-| .NET SDK | 10.0 |
+| .NET SDK | 11.0 |
 | PowerShell | 7 (`pwsh`), to run the harness |
 | Network | Access to `https://api.nuget.org/v3/index.json` for the third-party packages the generated projects use (EF Core, Npgsql, Serilog, Swashbuckle, xunit), unless a mirror stands in for it |
 | The feed under test | Either the public feed with the Lazy CRUD packages published, or a local folder feed containing the exact pack output (`artifacts/nuget/<version>/`) standing in for it |
@@ -36,7 +36,7 @@ The clean room does not assume the artifact is complete; it asserts it against t
 - every package the descriptor declares (`layers[].packageId`, `layers[].templatePackageId`, `templates.packageId`, `templates.aliasPackageIds[]`, `nonLayerPackages[]`) is present on the feed under test, and a missing package fails the validation naming it (no local or cached substitute);
 - the platform descriptor is readable from a restored runtime package at `lazycrud/lazycrud.platform.json`, declares `schemaVersion`, `contractVersion` and `platformVersion`, and its platform version equals the version under test;
 - every registry template is located using only `packageId` and `inPackagePath` (`contentFiles/any/any/LazyCrudTemplates/...`), and the templates package carries the shared templates at `templates.contentRoot`;
-- the attribute catalog assembles from the restored descriptor plus the restored XML documentation file (`lib/net10.0/Lazy.Crud.Builder.Application.DTO.xml`) with no platform source file;
+- the attribute catalog assembles from the restored descriptor plus the restored XML documentation file (`lib/net11.0/Lazy.Crud.Builder.Application.DTO.xml`) with no platform source file;
 - an aggregate generates headlessly from restored artifacts, the produced files carry marker v2 and manifest entries with matching hashes, and the sandbox builds and its generated tests pass.
 
 ## The public clean room
@@ -54,9 +54,9 @@ It polls the source until every declared package answers for the version (public
 The sandbox the harness builds can be created with the runner. From a repository checkout after `pwsh pack-all.ps1`:
 
 ```powershell
-$tool = "src\Platform\Lazy.Crud.Builder.Platform.Tool\bin\Release\net10.0\Lazy.Crud.Builder.Platform.Tool.dll"
+$tool = "src\Platform\Lazy.Crud.Builder.Platform.Tool\bin\Release\net11.0\Lazy.Crud.Builder.Platform.Tool.dll"
 $sandbox = "$env:TEMP\lazycrud-clean-room"
-dotnet $tool sandbox create --output $sandbox --aggregate Products --fixture tests\fixtures\reference-aggregate --version 1.1.1 --feed artifacts\nuget\1.1.1 --templates nuget --clean-room --packages-folder "$sandbox\packages"
+dotnet $tool sandbox create --output $sandbox --aggregate Products --fixture tests\fixtures\reference-aggregate --version 1.2.0 --feed artifacts\nuget\1.2.0 --templates nuget --clean-room --packages-folder "$sandbox\packages"
 $env:NUGET_PACKAGES = "$sandbox\packages"
 dotnet $tool generate --solution $sandbox --aggregate Products --templates nuget --report "$sandbox\generate.json"
 dotnet build "$sandbox\Sandbox.sln"

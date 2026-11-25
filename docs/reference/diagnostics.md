@@ -64,7 +64,7 @@ Exit codes derive from diagnostics: an error `LC2012` exits 9 (`GenerationDefect
 | `LC3001` | error | The configured template source could not be resolved: the package is not restored (every probed location is listed), no local tree containing `project.tt` was found, or local mode was requested while `DisableLocalTemplateFallback` is `True`. Package resolution never falls back to a local tree. | Restore with a feed containing `Lazy.Crud.Builder.Templates` at the configured version; check `TemplatesNuGetPackageId`, `TemplatesNuGetVersion`, `TemplatesLocalProjectFilesPath`. |
 | `LC3002` | information | Local template development mode is in use (explicitly selected); templates resolve from a source tree. | Nothing; expected outside package mode. |
 | `LC3003` | warning | A deprecated templates package id (`Lazy.Crud.Templates`) was resolved to the canonical `Lazy.Crud.Builder.Templates`. | Update `TemplatesNuGetPackageId`. |
-| `LC3004` | reserved | `lazy.settings` could not be located from the template location. Defined in the code table for template hosts; not emitted by the 1.1.1 runner or writer (the runner falls back to defaults when the file is absent). | Place `lazy.settings` at `src/Mods/lazy.settings` or `Mods/lazy.settings` under the solution root. |
+| `LC3004` | reserved | `lazy.settings` could not be located from the template location. Defined in the code table for template hosts; not emitted by the 1.2.0 runner or writer (the runner falls back to defaults when the file is absent). | Place `lazy.settings` at `src/Mods/lazy.settings` or `Mods/lazy.settings` under the solution root. |
 | `LC3005` | warning | A project or type in the model could not be resolved (tolerated): for example no entity file found after Domain phase 1, so Domain phase 2 generates nothing. | Check the entity folder `Aggregates/{Aggregate}Agg/Entities` and the `EndpointsT4` attributes. |
 | `LC3006` | information | The resolved template source (kind, location, version) for the run. | Nothing. |
 
@@ -86,7 +86,7 @@ Exit codes derive from diagnostics: an error `LC2012` exits 9 (`GenerationDefect
 | `LC5002` | warning | Installed packages embed descriptors that disagree; the highest `platformVersion` is canonical. Data: each source with its version. | Align the package versions. |
 | `LC5003` | error | No platform descriptor could be resolved, or a copy could not be parsed. | Install a `Lazy.Crud.Builder.*` package of version 1.1.1 or later; reinstall the package. |
 | `LC5004` | information | A capability was disabled by configuration (`GeneratedCodeMarkers=False`): the file is written without a marker and hashed as a whole body. | Nothing; re-enable the setting to get markers back. |
-| `LC5005` | reserved | A manifest entry references a `templateId` absent from the registry. Defined in the code table; not emitted by the 1.1.1 runner or writer. | Regenerate so the entry is re-recorded by a registered template. |
+| `LC5005` | reserved | A manifest entry references a `templateId` absent from the registry. Defined in the code table; not emitted by the 1.2.0 runner or writer. | Regenerate so the entry is re-recorded by a registered template. |
 
 ## Reading the diagnostics of a run
 

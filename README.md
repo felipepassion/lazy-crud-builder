@@ -1,6 +1,6 @@
 # Lazy CRUD Builder
 
-Lazy CRUD is a domain-to-architecture compiler for .NET. You write the domain model: plain entity classes decorated with attributes. The platform compiles that model into a complete, layered aggregate: domain command and event handlers, application services, DTOs and validators, EF Core mappings and repositories, dependency injection, query models, controllers, migrations and a test project per layer. The generated code targets `net10.0` and runs on the `Lazy.Crud.Builder.*` and `Lazy.Crud.CrossCutting.*` runtime packages, version 1.1.1.
+Lazy CRUD is a domain-to-architecture compiler for .NET. You write the domain model: plain entity classes decorated with attributes. The platform compiles that model into a complete, layered aggregate: domain command and event handlers, application services, DTOs and validators, EF Core mappings and repositories, dependency injection, query models, controllers, migrations and a test project per layer. The generated code targets `net11.0` and runs on the `Lazy.Crud.Builder.*` and `Lazy.Crud.CrossCutting.*` runtime packages, version 1.2.0.
 
 | Role | What it is in Lazy CRUD |
 | --- | --- |
@@ -17,14 +17,14 @@ Read this before you generate anything. Generation requires the following in eve
 
 - Windows.
 - An installed **Visual Studio 2022 (17.x) or Visual Studio 2026 (18.x)** on any channel (release, preview or Insiders) with the **Text Template Transformation** component, id `Microsoft.VisualStudio.Component.TextTemplating`. The templates resolve your entity model through the Visual Studio code model (DTE), so every transformation runs the T4 tooling of the resolved installation inside an embedded, unattended Visual Studio automation session.
-- The **.NET SDK 10.0**.
+- The **.NET SDK 11.0**.
 
 "Headless" means unattended: no prompt, no window a person has to focus, no clicks. It does not mean Visual Studio is absent. A plain `dotnet build` never substitutes for transformation. When the toolchain cannot be resolved, the runner fails before transforming anything with diagnostic `LC4001` and exit code 3 (`PrerequisiteUnavailable`). Discovery rules, the selection rule and the override variable are in [Toolchain](docs/toolchain.md).
 
-Check a machine before starting (the runner ships inside `Lazy.Crud.Builder.Templates` under `tools/net10.0/`):
+Check a machine before starting (the runner ships inside `Lazy.Crud.Builder.Templates` under `tools/net11.0/`):
 
 ```powershell
-dotnet "$env:USERPROFILE\.nuget\packages\lazy.crud.builder.templates\1.1.1\tools\net10.0\Lazy.Crud.Builder.Platform.Tool.dll" toolchain
+dotnet "$env:USERPROFILE\.nuget\packages\lazy.crud.builder.templates\1.2.0\tools\net11.0\Lazy.Crud.Builder.Platform.Tool.dll" toolchain
 ```
 
 ## Quickstart
@@ -37,7 +37,7 @@ The [Quickstart](docs/quickstart.md) takes an empty solution to a generated, com
 4. Run the generation runner, then build and test:
 
 ```powershell
-dotnet "$env:USERPROFILE\.nuget\packages\lazy.crud.builder.templates\1.1.1\tools\net10.0\Lazy.Crud.Builder.Platform.Tool.dll" generate --solution . --aggregate Products --report artifacts\generate.json
+dotnet "$env:USERPROFILE\.nuget\packages\lazy.crud.builder.templates\1.2.0\tools\net11.0\Lazy.Crud.Builder.Platform.Tool.dll" generate --solution . --aggregate Products --report artifacts\generate.json
 dotnet build
 dotnet test
 ```
@@ -63,7 +63,7 @@ One aggregate produces eight layer projects, transformed Domain first, plus one 
 
 ## Packages
 
-All packages share one version, 1.1.1, defined once as `LazyCrudVersion` in `Directory.Build.props`, and target `net10.0`. Every package embeds the platform descriptor at `lazycrud/lazycrud.platform.json`.
+All packages share one version, 1.2.0, defined once as `LazyCrudVersion` in `Directory.Build.props`, and target `net11.0`. Every package embeds the platform descriptor at `lazycrud/lazycrud.platform.json`.
 
 | Package | Role |
 | --- | --- |
@@ -71,7 +71,7 @@ All packages share one version, 1.1.1, defined once as `LazyCrudVersion` in `Dir
 | `Lazy.Crud.Builder.Application.DTO.Http.Models`, `Lazy.Crud.Builder.Application.Validators`, `Lazy.Crud.Builder.WebApi` | Non-layer runtime packages. |
 | `Lazy.Crud.CrossCutting.Domain`, `Lazy.Crud.CrossCutting.Infra.Log`, `Lazy.Crud.CrossCutting.Infra.Utils`, `Lazy.Crud.CrossCutting.Application.Mail` | Cross-cutting runtime packages. |
 | `Lazy.Crud.Builder.Platform` | The contracts library: ownership, marker v2, the frozen content hash, manifest v2, diagnostics and the shared generation writer. |
-| `Lazy.Crud.Builder.Templates` | The canonical templates package: `project.tt`, `Tests/Tests.Common.ttinclude`, the runner under `tools/net10.0/`, the MSBuild props and targets, the contract fixtures and schemas under `contracts/`, and the descriptor. |
+| `Lazy.Crud.Builder.Templates` | The canonical templates package: `project.tt`, `Tests/Tests.Common.ttinclude`, the runner under `tools/net11.0/`, the MSBuild props and targets, the contract fixtures and schemas under `contracts/`, and the descriptor. |
 | `Lazy.Crud.Templates` | Deprecated dependency-only alias of `Lazy.Crud.Builder.Templates`. It carries no content and is scheduled for removal two minor releases after 1.1.1. |
 
 ## Documentation
@@ -83,7 +83,7 @@ Start here:
 - [Aggregates, entities and attributes](docs/model.md): the declarative model reference.
 - [Generated code policy](docs/generated-code-policy.md): ownership, markers, what is safe to edit.
 - [Safe customization](docs/customization.md): change generated behavior without losing it on regeneration.
-- [Migrations](docs/migrations.md): moving between platform versions, including 1.0.x to 1.1.1.
+- [Migrations](docs/migrations.md): moving between platform versions, including 1.0.x to 1.1.1 and 1.1.1 to 1.2.0.
 - [Testing](docs/testing.md): generated test projects, unit tests, the golden test and the harness.
 - [Compatibility matrix](docs/compatibility.md): versions, consumers, mixed pins and host prerequisites.
 - [Troubleshooting](docs/troubleshooting.md): diagnostics by code and how to read `.lazycrud/diagnostics`.

@@ -5,7 +5,7 @@ The harness is the single command that proves the whole chain: sandbox creation 
 ## Prerequisites
 
 - Windows with Visual Studio 2022 (17.x) or 2026 (18.x) on any channel (release, preview or Insiders) and the `Microsoft.VisualStudio.Component.TextTemplating` component. The harness performs real transformations; it never skips generation or substitutes a plain build. When the toolchain is unavailable it fails explicitly with exit code 3.
-- The .NET SDK 10.0.
+- The .NET SDK 11.0.
 - PowerShell 7 (`pwsh`).
 - The packages under test: the harness consumes only public-equivalent artifacts, that is the local pack output under `artifacts/nuget/<version>/` standing in for the public feed. Produce it with `pwsh pack-all.ps1` first.
 

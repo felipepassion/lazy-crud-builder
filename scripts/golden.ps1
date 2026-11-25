@@ -54,7 +54,7 @@ if (-not $PackageVersion) { $PackageVersion = Get-CentralVersion }
 if (-not $Feed) { $Feed = Join-Path $repo "artifacts/nuget/$PackageVersion" }
 if (-not (Test-Path $Feed)) { throw "package feed not found: $Feed (run pack-all.ps1 first, or pass -Feed)" }
 
-$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net10.0/Lazy.Crud.Builder.Platform.Tool.dll"
+$tool = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/$Configuration/net11.0/Lazy.Crud.Builder.Platform.Tool.dll"
 if (-not (Test-Path $tool)) { throw "Platform tool not built: $tool (dotnet build LazyCrudBuilder.sln -c $Configuration)" }
 $platformAssembly = Join-Path $repo "src/Platform/Lazy.Crud.Builder.Platform/bin/$Configuration/netstandard2.0/Lazy.Crud.Builder.Platform.dll"
 $templates = Join-Path $repo 'src/ProjectFiles'

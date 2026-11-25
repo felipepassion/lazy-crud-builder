@@ -162,7 +162,7 @@ public static class SandboxBuilder
     {
         var sb = new StringBuilder();
         sb.Append("<Project Sdk=\"").Append(layer.Sdk).Append("\">\r\n");
-        sb.Append("  <PropertyGroup>\r\n    <TargetFramework>net10.0</TargetFramework>\r\n    <ImplicitUsings>enable</ImplicitUsings>\r\n    <Nullable>disable</Nullable>\r\n    <NoWarn>$(NoWarn);1701;1702;8618;1998;8602;8625;8629;CS1591;CS8632;CS0108;CS0114</NoWarn>\r\n    <IsPackable>false</IsPackable>\r\n  </PropertyGroup>\r\n");
+        sb.Append("  <PropertyGroup>\r\n    <TargetFramework>net11.0</TargetFramework>\r\n    <ImplicitUsings>enable</ImplicitUsings>\r\n    <Nullable>disable</Nullable>\r\n    <NoWarn>$(NoWarn);1701;1702;8618;1998;8602;8625;8629;CS1591;CS8632;CS0108;CS0114</NoWarn>\r\n    <IsPackable>false</IsPackable>\r\n  </PropertyGroup>\r\n");
         sb.Append("  <ItemGroup>\r\n");
         sb.Append("    <PackageReference Include=\"").Append(layer.RuntimePackageId).Append("\" Version=\"").Append(Version(o, layer.RuntimePackageId)).Append("\" GeneratePathProperty=\"true\" />\r\n");
         foreach (var p in layer.ExtraPlatformPackages)
@@ -200,7 +200,7 @@ public static class SandboxBuilder
     {
         var target = o.AggregateName + "." + t.TargetLayer;
         var sb = new StringBuilder();
-        sb.Append("<Project Sdk=\"Microsoft.NET.Sdk\">\r\n  <PropertyGroup>\r\n    <TargetFramework>net10.0</TargetFramework>\r\n    <ImplicitUsings>enable</ImplicitUsings>\r\n    <Nullable>disable</Nullable>\r\n    <IsPackable>false</IsPackable>\r\n    <IsTestProject>true</IsTestProject>\r\n    <NoWarn>$(NoWarn);CS1591;CS8632;xUnit1004</NoWarn>\r\n  </PropertyGroup>\r\n");
+        sb.Append("<Project Sdk=\"Microsoft.NET.Sdk\">\r\n  <PropertyGroup>\r\n    <TargetFramework>net11.0</TargetFramework>\r\n    <ImplicitUsings>enable</ImplicitUsings>\r\n    <Nullable>disable</Nullable>\r\n    <IsPackable>false</IsPackable>\r\n    <IsTestProject>true</IsTestProject>\r\n    <NoWarn>$(NoWarn);CS1591;CS8632;xUnit1004</NoWarn>\r\n  </PropertyGroup>\r\n");
         sb.Append("  <ItemGroup>\r\n");
         sb.Append("    <PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"").Append(AggregateLayout.ThirdPartyVersions["Microsoft.NET.Test.Sdk"]).Append("\" />\r\n");
         sb.Append("    <PackageReference Include=\"xunit\" Version=\"").Append(AggregateLayout.ThirdPartyVersions["xunit"]).Append("\" />\r\n");
@@ -285,6 +285,11 @@ public static class SandboxBuilder
     /// up wrapped in a solution folder of its own: one project per folder, the folder repeating the project's
     /// name. The sandbox exists to reproduce what an external consumer receives, so a layout no consumer gets is
     /// a layout the battery must not validate.
+    ///
+    /// Every project is listed explicitly in its own group, so references are not followed
+    /// (--include-references false). Following them, the default since the .NET 10 SDK, pulls a layer's
+    /// referenced projects in before their own turn in the list, and the .NET 11 SDK rejects the later explicit
+    /// add of the same file ("Solution folder 'src' already contains a project with the filename ...").
     /// </summary>
     private static void CreateSolution(string root, string sln, Action<string> log)
     {
@@ -297,7 +302,7 @@ public static class SandboxBuilder
                      .GroupBy(p => SolutionFolderFor(srcRoot, p, testsSegment), StringComparer.OrdinalIgnoreCase)
                      .OrderBy(g => g.Key, StringComparer.Ordinal))
         {
-            var args = new StringBuilder("sln \"" + sln + "\" add");
+            var args = new StringBuilder("sln \"" + sln + "\" add --include-references false");
             if (!string.IsNullOrEmpty(group.Key)) args.Append(" --solution-folder \"").Append(group.Key).Append('"');
             foreach (var p in group) args.Append(" \"").Append(p).Append('"');
             Run("dotnet", args.ToString(), root, log);

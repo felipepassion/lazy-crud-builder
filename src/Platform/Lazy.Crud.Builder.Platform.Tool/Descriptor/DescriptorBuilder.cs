@@ -145,7 +145,7 @@ public static class DescriptorBuilder
                 VisualStudioChannels = new List<string> { "release", "preview", "insiders" },
                 T4Component = VsToolchainResolution.RequiredComponentId,
                 T4ComponentDisplayName = VsToolchainResolution.RequiredComponentDisplayName,
-                DotnetSdk = "10.0",
+                DotnetSdk = "11.0",
                 HeadlessDefinition = HeadlessDefinition,
             },
         };

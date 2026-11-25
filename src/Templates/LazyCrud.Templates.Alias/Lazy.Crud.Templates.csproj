@@ -7,7 +7,7 @@
     releases after 1.1.0 (see docs/release.md).
   -->
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <Title>Lazy.Crud.Templates (deprecated alias)</Title>
     <PackageId>Lazy.Crud.Templates</PackageId>
     <Description>DEPRECATED alias. Use Lazy.Crud.Builder.Templates. This package carries no content: it only depends on Lazy.Crud.Builder.Templates so that existing configurations naming Lazy.Crud.Templates keep resolving. It will be removed two minor releases after 1.1.0.</Description>

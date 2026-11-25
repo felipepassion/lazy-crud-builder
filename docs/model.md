@@ -81,7 +81,7 @@ All 43 attributes ship in the `Lazy.Crud.Builder.Application.DTO` package (assem
 The platform publishes the catalog in two halves that consumers join by `documentationId`:
 
 - **Identity and structure** in the descriptor's `attributes[]`: `name`, `fullName`, `namespace`, `packageId`, `category`, `applicability`, `overloads[]` (each with `parameters[]` of `name`, `type`, `required`) and `documentationId` (the XML documentation member id in `T:` form).
-- **Prose** (`summary`, `param`, `remarks`) in the XML documentation file shipped in the package at `lib/net10.0/Lazy.Crud.Builder.Application.DTO.xml`.
+- **Prose** (`summary`, `param`, `remarks`) in the XML documentation file shipped in the package at `lib/net11.0/Lazy.Crud.Builder.Application.DTO.xml`.
 
 Every attribute has a `<summary>` and a `<category>` from the controlled vocabulary below, every constructor parameter has a `<param>`, every catalog entry derives from `System.Attribute`, and the build fails (`descriptor generate`, `validate tree`) on any gap. Applicability comes from the declared `AttributeUsage`: `MenuSection` and `SubMenuSection` apply to classes only (single use, inherited); every other attribute declares no usage restriction and is published as `All`.
 

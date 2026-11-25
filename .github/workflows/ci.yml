@@ -25,7 +25,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: "11.0.x"
 
       - name: Credential scan (fails on any key literal; self-tests on a planted key)
         shell: pwsh
@@ -41,13 +41,13 @@ jobs:
         run: dotnet test src/Platform/Lazy.Crud.Builder.Platform.Tests/Lazy.Crud.Builder.Platform.Tests.csproj -c Release --no-build --logger "trx;LogFileName=platform-tests.trx" --results-directory artifacts/test-results
 
       - name: Validate tree (registry, ownership coverage, silent catches, versions, attributes, docs, fixtures)
-        run: dotnet src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net10.0/Lazy.Crud.Builder.Platform.Tool.dll validate tree --repo . --report artifacts/validation/tree.json
+        run: dotnet src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net11.0/Lazy.Crud.Builder.Platform.Tool.dll validate tree --repo . --report artifacts/validation/tree.json
 
       - name: Acceptance map resolves (every spec requirement has evidence that still exists)
         run: pwsh scripts/acceptance-map-check.ps1
 
       - name: Validate fixtures against schemas and the current build
-        run: dotnet src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net10.0/Lazy.Crud.Builder.Platform.Tool.dll validate fixtures --repo . --attributes-assembly src/Builder/Builder.Application.DTO/bin/Release/net10.0/Lazy.Crud.Builder.Application.DTO.dll --report artifacts/validation/fixtures.json
+        run: dotnet src/Platform/Lazy.Crud.Builder.Platform.Tool/bin/Release/net11.0/Lazy.Crud.Builder.Platform.Tool.dll validate fixtures --repo . --attributes-assembly src/Builder/Builder.Application.DTO/bin/Release/net11.0/Lazy.Crud.Builder.Application.DTO.dll --report artifacts/validation/fixtures.json
 
       - name: Fixtures are committed and current (no drift between contracts/ and the build)
         shell: pwsh
@@ -88,7 +88,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: "11.0.x"
       - name: Toolchain prerequisite (fails with exit 3 when unavailable)
         run: dotnet run --project src/Platform/Lazy.Crud.Builder.Platform.Tool -- toolchain
       - name: Run the full battery (positive, compatibility, intentional failure, toolchain, clean room)
@@ -113,7 +113,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: "11.0.x"
       - uses: actions/download-artifact@v4
         with:
           name: lazycrud-packages

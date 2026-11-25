@@ -72,7 +72,7 @@ Rules for a fork:
 
 - Keep the writer call sites. Every `SaveOutput` and `SaveOutputToSubFolder` call carries an explicit `ownership` and `templateId` that must agree with the descriptor registry; a template whose id is not registered has its output treated as user-owned and reported with `LC2004`.
 - Do not hand-write marker headers; the shared writer emits them.
-- Version the fork with the packages. The templates package must equal the version of every layer package that ships templates; a fork made for 1.0.x keeps working in local mode but does not gain the 1.1.1 markers, manifest v2 or drift protection until it is rebased on the 1.1.1 templates. See [Migrations](migrations.md).
+- Version the fork with the packages. The templates package must equal the version of every layer package that ships templates; a fork made for 1.0.x keeps working in local mode but does not gain the 1.2.0 markers, manifest v2 or drift protection until it is rebased on the 1.2.0 templates. See [Migrations](migrations.md).
 
 ## What never to do
 

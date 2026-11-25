@@ -40,7 +40,7 @@ dotnet Lazy.Crud.Builder.Platform.Tool.dll hash --file src\Products\Products.Dom
 
 ### Unit tests: Lazy.Crud.Builder.Platform.Tests
 
-`src/Platform/Lazy.Crud.Builder.Platform.Tests` (xunit, `net10.0`) tests the contracts library and the runner without Visual Studio:
+`src/Platform/Lazy.Crud.Builder.Platform.Tests` (xunit, `net11.0`) tests the contracts library and the runner without Visual Studio:
 
 | Test class | Covers |
 | --- | --- |
@@ -65,8 +65,8 @@ dotnet test src\Platform\Lazy.Crud.Builder.Platform.Tests
 `validate tree` is the CI gate over the source tree: registry versus shipped templates in both directions, explicit ownership and `templateId` on every writer call site and agreement with the registry, no silent catch in the shared write path, single version source, no dead packaging glob, shared templates only in the templates package, the attribute metadata contract, the credential scan, the required documentation set and the documentation drift check against the descriptor, and the committed fixtures against the current build. `validate packages` inspects a produced `.nupkg` set against the descriptor; `validate fixtures` compares committed fixtures with freshly produced ones and validates them against their schemas.
 
 ```powershell
-dotnet src\Platform\Lazy.Crud.Builder.Platform.Tool\bin\Release\net10.0\Lazy.Crud.Builder.Platform.Tool.dll validate tree --repo .
-dotnet src\Platform\Lazy.Crud.Builder.Platform.Tool\bin\Release\net10.0\Lazy.Crud.Builder.Platform.Tool.dll validate fixtures --repo .
+dotnet src\Platform\Lazy.Crud.Builder.Platform.Tool\bin\Release\net11.0\Lazy.Crud.Builder.Platform.Tool.dll validate tree --repo .
+dotnet src\Platform\Lazy.Crud.Builder.Platform.Tool\bin\Release\net11.0\Lazy.Crud.Builder.Platform.Tool.dll validate fixtures --repo .
 ```
 
 ### The E2E harness
@@ -95,4 +95,4 @@ other validation steps.
 
 ## Prerequisite for anything that transforms
 
-Unit tests and validations run anywhere the .NET SDK 10.0 is installed. The golden test and the harness transform templates, so they require Windows with Visual Studio 2022 (17.x) or 2026 (18.x) on any channel and the `Microsoft.VisualStudio.Component.TextTemplating` component; without it they fail early with exit code 3 rather than skipping. See [Toolchain](toolchain.md).
+Unit tests and validations run anywhere the .NET SDK 11.0 is installed. The golden test and the harness transform templates, so they require Windows with Visual Studio 2022 (17.x) or 2026 (18.x) on any channel and the `Microsoft.VisualStudio.Component.TextTemplating` component; without it they fail early with exit code 3 rather than skipping. See [Toolchain](toolchain.md).
